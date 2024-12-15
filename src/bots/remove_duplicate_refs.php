@@ -12,22 +12,25 @@ use function WpRefs\DelDuplicateRefs\remove_Duplicate_refs;
 
 use function WikiParse\Citations\getCitations;
 
-function get_html_attribute_value(string $text, string $param): string
+function get_attrs($text)
 {
-    if (empty($text)) {
-        return '';
+    $text = "<ref $text>";
+    $attrfind_tolerant = '/((?<=[\'"\s\/])[^\s\/>][^\s\/=>]*)(\s*=+\s*(\'[^\']*\'|"[^"]*"|(?![\'"])[^>\s]*))?(?:\s|\/(?!>))*/';
+    $attrs = [];
+
+    if (preg_match_all($attrfind_tolerant, $text, $matches, PREG_SET_ORDER)) {
+        foreach ($matches as $match) {
+            $attr_name = strtolower($match[1]);
+            $attr_value = isset($match[3]) ? $match[3] : "";
+            $attrs[$attr_name] = $attr_value;
+        }
     }
-
-    // Case-insensitive regular expression for attribute extraction
-    $pattern = sprintf('/(?i)%s\s*=\s*[\'"]?(?P<%s>[^\'" >]+)[\'"]?/', $param, $param);
-    $match = preg_match($pattern, $text, $matches);
-
-    if ($match) {
-        return $matches[$param];
-    }
-
-    return '';
+    // ---
+    var_export($attrs);
+    // ---
+    return $attrs;
 }
+
 function remove_Duplicate_refs(string $text): string
 {
     // ---
@@ -35,9 +38,7 @@ function remove_Duplicate_refs(string $text): string
     // ---
     $refs = [];
     // ---
-    $citations = getCitations($text);
-    // ---
-    $new_text = $text;
+    $citations = getCitations($new_text);
     // ---
     $numb = 0;
     // ---
@@ -45,7 +46,7 @@ function remove_Duplicate_refs(string $text): string
         // ---
         $cite_text = $citation->getCiteText();
         // ---
-        $cite_contents = $citation->getTemplate();
+        // $cite_contents = $citation->getTemplate();
         // ---
         $cite_attrs = $citation->getOptions();
         $cite_attrs = $cite_attrs ? trim($cite_attrs) : "";
@@ -58,7 +59,7 @@ function remove_Duplicate_refs(string $text): string
         // ---
         $cite_newtext = "<ref $cite_attrs />";
         // ---
-        echo "\n$cite_newtext";
+        // echo "\n$cite_newtext\n";
         // ---
         if (isset($refs[$cite_attrs])) {
             // ---
@@ -66,6 +67,82 @@ function remove_Duplicate_refs(string $text): string
         } else {
             $refs[$cite_attrs] = $cite_newtext;
         };
+    }
+    // ---
+    return $new_text;
+}
+
+function del_start_end(string $text, string $find): string
+{
+    // ---
+    $text = trim($text);
+    // ---
+    if (str_starts_with($text, $find) && str_ends_with($text, $find)) {
+        $text = substr($text, strlen($find)); // إزالة $find من البداية
+        $text = substr($text, 0, -strlen($find)); // إزالة $find من النهاية
+    }
+    // ---
+    return trim($text);
+}
+
+
+function fix_attr_value(string $text): string
+{
+    // ---
+    $text = trim($text);
+    // ---
+    $text = del_start_end($text, '"');
+    // ---
+    $text = del_start_end($text, "'");
+    // ---
+    echo "\n$text\n";
+    // ---
+    $text = (strpos($text, '"') === false) ? '"' . $text . '"' : "'" . $text . "'";
+    // ---
+    return trim($text);
+}
+
+function fix_refs_names(string $text): string
+{
+    // ---
+    $new_text = $text;
+    // ---
+    $citations = getCitations($text);
+    // ---
+    $new_text = $text;
+    // ---
+    foreach ($citations as $key => $citation) {
+        // ---
+        $cite_attrs = $citation->getOptions();
+        $cite_attrs = $cite_attrs ? trim($cite_attrs) : "";
+        // ---
+        $if_in = "<ref $cite_attrs>";
+        // ---
+        if (strpos($new_text, $if_in) === false) {
+            continue;
+        }
+        // ---
+        $attrs = get_attrs($cite_attrs);
+        // ---
+        if (empty($cite_attrs)) {
+            continue;
+        }
+        // ---
+        $new_cite_attrs = "";
+        // ---
+        foreach ($attrs as $key => $value) {
+            // ---
+            $value2 = fix_attr_value($value);
+            // ---
+            $new_cite_attrs .= " $key=$value2";
+            // ---
+        }
+        // ---
+        $new_cite_attrs = trim($new_cite_attrs);
+        // ---
+        $cite_newtext = "<ref $new_cite_attrs>";
+        // ---
+        $new_text = str_replace($if_in, $cite_newtext, $new_text);
     }
     // ---
     return $new_text;

@@ -12,6 +12,7 @@ use function WpRefs\WprefText\fix_page;
 use function WpRefs\Infobox\Expend_Infobox;
 use function WpRefs\FixPtMonth\pt_months;
 use function WpRefs\ES\fix_es;
+use function WpRefs\DelDuplicateRefs\fix_refs_names;
 use function WpRefs\DelDuplicateRefs\remove_Duplicate_refs;
 use function WpRefs\MoveDots\move_dots_text;
 use function WpRefs\MoveDots\add_lang_en;
@@ -27,6 +28,8 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang)
     }
     // ---
     // $text = remove_False_code($text);
+    // ---
+    // $text = fix_refs_names($text);
     // ---
     $text = remove_Duplicate_refs($text);
     // ---
