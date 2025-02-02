@@ -36,6 +36,8 @@ function remove_Duplicate_refs(string $text): string
     // ---
     $new_text = $text;
     // ---
+    $refs_to_check = [];
+    // ---
     $refs = [];
     // ---
     $citations = getCitations($new_text);
@@ -65,9 +67,20 @@ function remove_Duplicate_refs(string $text): string
             // ---
             $new_text = str_replace($cite_text, $cite_newtext, $new_text);
         } else {
+            $refs_to_check[$cite_newtext] = $cite_text;
+            // ---
             $refs[$cite_attrs] = $cite_newtext;
         };
     }
+    // ---
+    foreach ($refs_to_check as $key => $value) {
+        if (strpos($new_text, $value) === false) {
+            $pattern = '/' . preg_quote($key, '/') . '/';
+            $new_text = preg_replace($pattern, $value, $new_text, 1);
+        }
+    }
+    // ---
+    // echo count($citations);
     // ---
     return $new_text;
 }
@@ -95,7 +108,7 @@ function fix_attr_value(string $text): string
     // ---
     $text = del_start_end($text, "'");
     // ---
-    echo "\n$text\n";
+    // echo "\n$text\n";
     // ---
     $text = (strpos($text, '"') === false) ? '"' . $text . '"' : "'" . $text . "'";
     // ---
