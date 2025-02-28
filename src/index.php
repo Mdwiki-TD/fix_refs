@@ -11,14 +11,19 @@ use function WpRefs\WprefText\fix_page;
 
 use function WpRefs\Infobox\Expend_Infobox;
 use function WpRefs\FixPtMonth\pt_months;
+use function WpRefs\SW\sw_fixes;
 use function WpRefs\ES\fix_es;
+use function WpRefs\ES\es_section;
 use function WpRefs\DelDuplicateRefs\fix_refs_names;
 use function WpRefs\DelDuplicateRefs\remove_Duplicate_refs;
 use function WpRefs\MoveDots\move_dots_text;
 use function WpRefs\MoveDots\add_lang_en;
+use function WpRefs\MdCat\Add_MdWiki_Category;
 
-function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang)
+function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sourcetitle, $revid)
 {
+    // ---
+    $text_org = $text;
     // ---
     // print_s("fix page: $title, move_dots:$move_dots, expend_infobox:$infobox");
     // ---
@@ -49,7 +54,22 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang)
     // ---
     if ($lang === "es") {
         $text = fix_es($text, $title);
+        $text = es_section($sourcetitle, $text, $revid);
     }
     // ---
-    return $text;
+    if ($lang == 'sw') {
+        $text = sw_fixes($text);
+    };
+    // ---
+    $cat = Add_MdWiki_Category($lang);
+    // ---
+    if (!empty($cat)) {
+        $text .= "\n$cat\n";
+    }
+    // ---
+    if (!empty($text)) {
+        return $text;
+    }
+    // ---
+    return $text_org;
 }

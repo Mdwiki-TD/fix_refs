@@ -36,7 +36,7 @@ if (file_exists($fixwikirefs)) {
     }
 }
 
-function fix_page_here($text, $title, $langcode)
+function fix_page_here($text, $title, $langcode, $sourcetitle, $revid)
 {
     global $setting;
     // ---
@@ -46,7 +46,16 @@ function fix_page_here($text, $title, $langcode)
     $expand = isset($lang_default['expend']) && $lang_default['expend'] == 1;
     $add_en_lang = isset($lang_default['add_en_lang']) && $lang_default['add_en_lang'] == 1;
     // ---
-    $text = fix_page($text, $title, $move_dots, $expand, $add_en_lang, $langcode);
+    $text = fix_page($text, $title, $move_dots, $expand, $add_en_lang, $langcode, $sourcetitle, $revid);
+    // ---
+    return $text;
+}
+// $text = DoChangesToText($sourcetitle, $text, $lang, $revid);
+
+function DoChangesToText($sourcetitle, $title, $text, $lang, $revid)
+{
+    // ---
+    $text = fix_page_here($text, $title, $lang, $sourcetitle, $revid);
     // ---
     return $text;
 }
