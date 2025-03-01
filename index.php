@@ -5,6 +5,7 @@ namespace WpRefs\FixPage;
 usage:
 
 use function WpRefs\FixPage\fix_page_here;
+use function WpRefs\FixPage\DoChangesToText1;
 
 */
 
@@ -22,7 +23,7 @@ function json_load_file($filename)
 $fixwikirefs = "I:/mdwiki/mdwiki/confs/fixwikirefs.json";
 // ---
 if (!file_exists($fixwikirefs)) {
-    $fixwikirefs = "/mnt/nfs/labstore-secondary-tools-project/mdwiki/confs/fixwikirefs.json";
+    $fixwikirefs = __DIR__ . "/../../../confs/fixwikirefs.json";
 }
 // ---
 $setting = [];
@@ -50,9 +51,9 @@ function fix_page_here($text, $title, $langcode, $sourcetitle, $revid)
     // ---
     return $text;
 }
-// $text = DoChangesToText($sourcetitle, $text, $lang, $revid);
+// $text = DoChangesToText1($sourcetitle, $text, $lang, $revid);
 
-function DoChangesToText($sourcetitle, $title, $text, $lang, $revid)
+function DoChangesToText1($sourcetitle, $title, $text, $lang, $revid)
 {
     // ---
     $text = fix_page_here($text, $title, $lang, $sourcetitle, $revid);
