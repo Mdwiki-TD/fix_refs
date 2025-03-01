@@ -43,7 +43,7 @@ echo "
 if (empty($lang) || empty($text) || empty($revid) || empty($sourcetitle)) {
     // عرض نموذج لإرسال البيانات إلى text_changes.php
     echo <<<HTML
-        <form action='test.php' method='POST'>
+        <form action='index.php' method='POST'>
             <div class='container'>
                 <div class='row'>
                     <div class='col-md-3'>
