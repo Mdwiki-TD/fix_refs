@@ -104,21 +104,20 @@ if (empty($lang) || empty($text) || empty($revid) || empty($sourcetitle)) {
 } else {
     // استدعاء الدالة التي تجري التعديلات على النص
     $new_text = DoChangesToText1($sourcetitle, $title, $text, $lang, $revid);
-    // $new_text = htmlspecialchars($new_text, ENT_QUOTES, 'UTF-8');
+    $new_text_sanitized = htmlspecialchars($new_text, ENT_QUOTES, 'UTF-8');
     $no_changes = trim($new_text) === trim($text);
     echo <<<HTML
     <h2>New Text: (no_changes: $no_changes)</h2>
-        <textarea name="new_text" rows="15" cols="140">$new_text</textarea>
+        <textarea name="new_text" rows="15" cols="140">$new_text_sanitized</textarea>
     HTML;
 }
 // ---
-echo "
-                        </div>
-                    </div>
+echo <<<HTML
                 </div>
-            </body>
-";
+            </div>
+        </div>
+    </body>
+</html>
+HTML;
 
 ?>
-
-</html>

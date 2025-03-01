@@ -20,7 +20,7 @@ class ParserTemplates
 
         return $matches;
     }
-    public function parse_sub($text): void
+    private function parse_sub($text): void
     {
         $text_templates = $this->find_sub_templates($text);
         foreach ($text_templates[0] as $text_template) {

@@ -19,23 +19,33 @@ function json_load_file($filename)
     return json_decode($content, true);
 }
 
-// ---
-$fixwikirefs = "I:/mdwiki/mdwiki/confs/fixwikirefs.json";
-// ---
-if (!file_exists($fixwikirefs)) {
-    $fixwikirefs = __DIR__ . "/../../../confs/fixwikirefs.json";
-}
-// ---
-$setting = [];
-// ---
-// التحقق مما إذا كان الملف موجودًا
-if (file_exists($fixwikirefs)) {
-    try {
-        $setting = json_load_file($fixwikirefs);
-    } catch (\Exception $e) {
-        $setting = [];
+/**
+ * Load settings from configuration file
+ * @return array Configuration settings
+ */
+function load_settings()
+{
+    $locations = [
+        "I:/mdwiki/mdwiki/confs/fixwikirefs.json",
+        __DIR__ . "/../../../confs/fixwikirefs.json"
+    ];
+
+    foreach ($locations as $path) {
+        if (file_exists($path)) {
+            try {
+                return json_load_file($path);
+            } catch (\Exception $e) {
+                // Log error if needed
+                break;
+            }
+        }
     }
+
+    return [];
 }
+
+// Load settings
+$setting = load_settings();
 
 function fix_page_here($text, $title, $langcode, $sourcetitle, $revid)
 {
