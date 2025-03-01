@@ -67,7 +67,7 @@ function fix_es_months($text)
         // if $cite_temp startwith {{ and ends with }}
         if (strpos($cite_temp, "{{") === 0 && strpos($cite_temp, "}}") === strlen($cite_temp) - 2) {
             // ---
-            // echo "\n$cite_temp\n";
+            // echo_test("\n$cite_temp\n");
             // ---
             $new_temp = fix_one_cite_temp($cite_temp);
             // ---
@@ -99,8 +99,8 @@ function make_new_val($val)
             $month = trim($matches['m']);
             $year = trim($matches['y']);
             // ---
-            // echo "day:$val\n";
-            // echo "day:$day, month:$month, year:$year\n";
+            // echo_test("day:$val\n");
+            // echo_test("day:$day, month:$month, year:$year\n");
             // ---
             $translatedMonth = $es_months_lower[strtolower($month)] ?? "";
 

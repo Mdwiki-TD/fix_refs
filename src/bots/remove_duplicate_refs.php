@@ -61,7 +61,7 @@ function remove_Duplicate_refs(string $text): string
         // ---
         $cite_newtext = "<ref $cite_attrs />";
         // ---
-        // echo "\n$cite_newtext\n";
+        // echo_test("\n$cite_newtext\n");
         // ---
         if (isset($refs[$cite_attrs])) {
             // ---
@@ -108,7 +108,7 @@ function fix_attr_value(string $text): string
     // ---
     $text = del_start_end($text, "'");
     // ---
-    // echo "\n$text\n";
+    // echo_test("\n$text\n");
     // ---
     $text = (strpos($text, '"') === false) ? '"' . $text . '"' : "'" . $text . "'";
     // ---

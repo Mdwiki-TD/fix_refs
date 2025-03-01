@@ -150,7 +150,7 @@ function work_one_temp($temp, $name)
     // ---
     global $refs_temps, $args_to;
     // ---
-    // echo "\n$name\n";
+    // echo_test("\n$name\n");
     // ---
     $temp_name2 = isset($refs_temps[$name]) ? $refs_temps[$name] : $name;
     // ---
@@ -176,7 +176,7 @@ function fix_temps($text)
     // ---
     $temps_in = getTemplates($text);
     // ---
-    // echo "lenth temps_in:" . count($temps_in) . "\n";
+    // echo_test("lenth temps_in:" . count($temps_in) . "\n");
     // ---
     $new_text = $text;
     // ---
@@ -184,12 +184,12 @@ function fix_temps($text)
         // ---
         $name = $temp->getStripName();
         // ---
-        // echo "* name: $name\n";
+        // echo_test("* name: $name\n");
         // ---
         $old_text_template = $temp->getTemplateText();
         // ---
         if (!array_key_exists($name, $refs_temps) && !in_array($name, $refs_temps)) {
-            // echo "not found: $name\n";
+            // echo_test("not found: $name\n");
             continue;
         }
         // ---
