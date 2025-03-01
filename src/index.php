@@ -64,8 +64,8 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sou
     // ---
     $cat = Add_MdWiki_Category($lang);
     // ---
-    if (!empty($cat)) {
-        $text .= "\n$cat\n";
+    if (!empty($cat) && strpos($text, $cat) === false && strpos($text, "[[Category:Translated from MDWiki]]") === false) {
+        $text .= "\n[[$cat]]\n";
     }
     // ---
     if (!empty($text)) {

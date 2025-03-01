@@ -55,7 +55,5 @@ function Add_MdWiki_Category($lang)
     // ---
     $cat = $cats[$lang . "wiki"]["title"] ?? "Category:Translated from MDWiki";
     // ---
-    $cat = "[[$cat]]";
-    // ---
     return $cat;
 }
