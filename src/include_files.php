@@ -1,4 +1,5 @@
 <?php
+include_once __DIR__ . '/test_bot.php';
 
 include_once __DIR__ . '/WikiParse/include_it.php';
 

@@ -18,7 +18,7 @@ function refs_expend_work($first, $alltext = "")
         $alltext = $first;
     }
     $refs = get_full_refs($alltext);
-    echo  "get_full_refs:" . count($refs) . "<br>";
+    // echo  "get_full_refs:" . count($refs) . "<br>";
 
     $short_refs = getShortCitations($first);
     // echo  "short_refs:" . count($short_refs) . "<br>";

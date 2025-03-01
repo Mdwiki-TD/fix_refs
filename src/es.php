@@ -12,7 +12,7 @@ use function WpRefs\ES\fix_es;
 use function WpRefs\Bots\es_months\fix_es_months;
 use function WpRefs\Bots\es_refs\mv_es_refs;
 use function WikiParse\Template\getTemplates;
-
+use function WpRefs\TestBot\echo_test;
 // ---
 // Mapping templates
 $refs_temps = [
@@ -240,7 +240,7 @@ function fix_es($text, $title)
 
     // Check if the text has fewer than 10 lines
     if (substr_count($text, "\n") < 10 && $title != "test!") {
-        echo "less than 10 lines\n";
+        echo_test("less than 10 lines\n");
         // return $text;
     }
 
