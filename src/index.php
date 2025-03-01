@@ -9,6 +9,7 @@ use function WpRefs\WprefText\fix_page;
 
 */
 
+use function WpRefs\TestBot\echo_test;
 use function WpRefs\Infobox\Expend_Infobox;
 use function WpRefs\FixPtMonth\pt_months;
 use function WpRefs\SW\sw_fixes;
@@ -28,7 +29,7 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sou
     // print_s("fix page: $title, move_dots:$move_dots, expend_infobox:$infobox");
     // ---
     if ($infobox) {
-        echo "Expend_Infobox\n";
+        echo_test("Expend_Infobox\n");
         $text = Expend_Infobox($text, $title, "");
     }
     // ---
@@ -39,12 +40,12 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sou
     $text = remove_Duplicate_refs($text);
     // ---
     if ($move_dots) {
-        echo "move_dots\n";
+        echo_test("move_dots\n");
         $text = move_dots_text($text, $lang);
     }
     // ---
     if ($add_en_lang) {
-        echo "add_en_lang\n";
+        echo_test("add_en_lang\n");
         $text = add_lang_en($text);
     }
     // ---
@@ -63,8 +64,8 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sou
     // ---
     $cat = Add_MdWiki_Category($lang);
     // ---
-    if (!empty($cat)) {
-        $text .= "\n$cat\n";
+    if (!empty($cat) && strpos($text, $cat) === false && strpos($text, "[[Category:Translated from MDWiki]]") === false) {
+        $text .= "\n[[$cat]]\n";
     }
     // ---
     if (!empty($text)) {

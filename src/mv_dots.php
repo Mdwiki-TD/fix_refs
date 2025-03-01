@@ -13,7 +13,7 @@ use function WpRefs\MoveDots\add_lang_en;
 function move_dots_text($newtext, $lang)
 {
     // ---
-    echo "move_dots_text\n";
+    // echo_test("move_dots_text\n");
     // ---
     $dot = "(\.|\,)";
     // ---
@@ -26,7 +26,7 @@ function move_dots_text($newtext, $lang)
     $pattern = "/" . $dot . "\s*" . $regline . "/m";
     $replacement = "$2$1";
     // ---
-    echo "\n$pattern\n";
+    // echo_test("\n$pattern\n");
     // ---
     $newtext = preg_replace($pattern, $replacement, $newtext);
     // ---
