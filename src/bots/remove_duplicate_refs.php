@@ -85,12 +85,24 @@ function remove_Duplicate_refs(string $text): string
     return $new_text;
 }
 
+function endsWith($string, $endString)
+{
+    $len = strlen($endString);
+    return substr($string, -$len) === $endString;
+}
+
+function strstartswith($text, $start)
+{
+    return strpos($text, $start) === 0;
+}
+
 function del_start_end(string $text, string $find): string
 {
     // ---
     $text = trim($text);
     // ---
-    if (str_starts_with($text, $find) && str_ends_with($text, $find)) {
+    // if (str_starts_with($text, $find) && str_ends_with($text, $find)) {
+    if (strstartswith($text, $find) && endsWith($text, $find)) {
         $text = substr($text, strlen($find)); // إزالة $find من البداية
         $text = substr($text, 0, -strlen($find)); // إزالة $find من النهاية
     }
