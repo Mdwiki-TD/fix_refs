@@ -27,7 +27,8 @@ function load_settings()
 {
     $locations = [
         "I:/mdwiki/mdwiki/confs/fixwikirefs.json",
-        __DIR__ . "/../../../confs/fixwikirefs.json"
+        __DIR__ . "/../../confs/fixwikirefs.json",
+        "/data/project/mdwiki/confs/fixwikirefs.json"
     ];
 
     foreach ($locations as $path) {
@@ -40,7 +41,7 @@ function load_settings()
             }
         }
     }
-
+    echo "Can't load settings";
     return [];
 }
 
