@@ -12,6 +12,17 @@ use function WpRefs\DelDuplicateRefs\remove_Duplicate_refs;
 
 use function WikiParse\Citations\getCitations;
 
+function endsWith($string, $endString)
+{
+    $len = strlen($endString);
+    return substr($string, -$len) === $endString;
+}
+
+function strstartswith($text, $start)
+{
+    return strpos($text, $start) === 0;
+}
+
 function get_attrs($text)
 {
     $text = "<ref $text>";
@@ -85,16 +96,6 @@ function remove_Duplicate_refs(string $text): string
     return $new_text;
 }
 
-function endsWith($string, $endString)
-{
-    $len = strlen($endString);
-    return substr($string, -$len) === $endString;
-}
-
-function strstartswith($text, $start)
-{
-    return strpos($text, $start) === 0;
-}
 
 function del_start_end(string $text, string $find): string
 {
