@@ -68,6 +68,9 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sou
         $text .= "\n[[$cat]]\n";
     }
     // ---
+    // remove empty lines
+    $text = preg_replace('/^\s*\n/m', "\n", $text);
+    // ---
     if (!empty($text)) {
         return $text;
     }
