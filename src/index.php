@@ -28,7 +28,7 @@ function fix_preffix($text, $lang)
     // replace [[:{en}: by [[
     $text = preg_replace('/\[\[:en:/', "[[", $text);
     // replace [[:{lang}: by [[
-    $text = preg_replace('/\[\[:' . $lang . ':/', "[[", $text);
+    $text = preg_replace('/\[\[:' . preg_quote($lang, '/') . ':/', "[[", $text);
     // ---
     return $text;
 }
