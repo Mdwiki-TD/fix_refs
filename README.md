@@ -1,3 +1,5 @@
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Mdwiki-TD/fix_refs)
+
 # Fix Refs
 
 This repository used by [publish repo](https://github.com/Mdwiki-TD/publish) to fix references in wikitext format.

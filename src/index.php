@@ -21,6 +21,18 @@ use function WpRefs\MoveDots\move_dots_text;
 use function WpRefs\MoveDots\add_lang_en;
 use function WpRefs\MdCat\Add_MdWiki_Category;
 
+function fix_preffix($text, $lang)
+{
+    // [[:en:X-сцепленное_рецессивное_наследование|Х-сцепленным рецессивным]], [[:ru:Спинальная_мышечная_атрофия|аутосомно-доминантным]]
+    // ---
+    // replace [[:{en}: by [[
+    $text = preg_replace('/\[\[:en:/', "[[", $text);
+    // replace [[:{lang}: by [[
+    $text = preg_replace('/\[\[:' . preg_quote($lang, '/') . ':/', "[[", $text);
+    // ---
+    return $text;
+}
+
 function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sourcetitle, $revid)
 {
     // ---
@@ -70,6 +82,8 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sou
     // ---
     // remove empty lines
     $text = preg_replace('/^\s*\n/m', "\n", $text);
+    // ---
+    $text = fix_preffix($text, $lang);
     // ---
     if (!empty($text)) {
         return $text;
