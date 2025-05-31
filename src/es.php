@@ -203,7 +203,7 @@ function fix_temps($text)
 }
 
 
-function es_section($sourcetitle, $text, $revid)
+function es_section($sourcetitle, $text, $mdwiki_revid)
 {
     // ---
     // if text has /\{\{\s*Traducido ref\s*\|/ then return text
@@ -215,7 +215,7 @@ function es_section($sourcetitle, $text, $revid)
     // ---
     $date = "{{subst:CURRENTDAY}} de {{subst:CURRENTMONTHNAME}} de {{subst:CURRENTYEAR}}";
     // ---
-    $temp = "{{Traducido ref|mdwiki|$sourcetitle|oldid=$revid|trad=|fecha=$date}}";
+    $temp = "{{Traducido ref|mdwiki|$sourcetitle|oldid=$mdwiki_revid|trad=|fecha=$date}}";
     // ---
     // find /==\s*Enlaces\s*externos\s*==/ in text if exists add temp after it
     // if not exists add temp at the end of text

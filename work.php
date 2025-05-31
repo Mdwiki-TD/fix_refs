@@ -50,7 +50,7 @@ function load_settings()
 // Load settings
 $setting = load_settings();
 
-function fix_page_here($text, $title, $langcode, $sourcetitle, $revid)
+function fix_page_here($text, $title, $langcode, $sourcetitle, $mdwiki_revid)
 {
     global $setting;
     // ---
@@ -62,16 +62,16 @@ function fix_page_here($text, $title, $langcode, $sourcetitle, $revid)
     $expand = isset($lang_default['expend']) && $lang_default['expend'] == 1;
     $add_en_lang = isset($lang_default['add_en_lang']) && $lang_default['add_en_lang'] == 1;
     // ---
-    $text = fix_page($text, $title, $move_dots, $expand, $add_en_lang, $langcode, $sourcetitle, $revid);
+    $text = fix_page($text, $title, $move_dots, $expand, $add_en_lang, $langcode, $sourcetitle, $mdwiki_revid);
     // ---
     return $text;
 }
-// $text = DoChangesToText1($sourcetitle, $text, $lang, $revid);
+// $text = DoChangesToText1($sourcetitle, $text, $lang, $mdwiki_revid);
 
-function DoChangesToText1($sourcetitle, $title, $text, $lang, $revid)
+function DoChangesToText1($sourcetitle, $title, $text, $lang, $mdwiki_revid)
 {
     // ---
-    $text = fix_page_here($text, $title, $lang, $sourcetitle, $revid);
+    $text = fix_page_here($text, $title, $lang, $sourcetitle, $mdwiki_revid);
     // ---
     return $text;
 }

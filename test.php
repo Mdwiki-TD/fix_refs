@@ -24,7 +24,7 @@ use function WpRefs\FixPage\DoChangesToText1;
 
 $lang         = isset($_POST['lang']) ? trim($_POST['lang']) : '';
 $text         = isset($_POST['text']) ? trim($_POST['text']) : '';
-$revid        = isset($_POST['revid']) ? trim($_POST['revid']) : '';
+$mdwiki_revid        = isset($_POST['revid']) ? trim($_POST['revid']) : '';
 $sourcetitle  = isset($_POST['sourcetitle']) ? trim($_POST['sourcetitle']) : '';
 $title  = isset($_POST['title']) ? trim($_POST['title']) : '';
 
@@ -80,7 +80,7 @@ RhD陰性の妊婦に[[抗Dヒト免疫グロブリン|Rho(D)免疫グロブリ�
 TEXT;
 
 // ---
-if (empty($lang) || empty($text) || empty($revid) || empty($sourcetitle)) {
+if (empty($lang) || empty($text) || empty($mdwiki_revid) || empty($sourcetitle)) {
     // عرض نموذج لإرسال البيانات إلى text_changes.php
     echo <<<HTML
         <form action='test.php' method='POST'>
@@ -143,7 +143,7 @@ if (empty($lang) || empty($text) || empty($revid) || empty($sourcetitle)) {
     HTML;
 } else {
     // استدعاء الدالة التي تجري التعديلات على النص
-    $new_text = DoChangesToText1($sourcetitle, $title, $text, $lang, $revid);
+    $new_text = DoChangesToText1($sourcetitle, $title, $text, $lang, $mdwiki_revid);
     $new_text_sanitized = htmlspecialchars($new_text, ENT_QUOTES, 'UTF-8');
     $no_changes = trim($new_text) === trim($text);
     echo <<<HTML
