@@ -23,6 +23,7 @@ function json_load_file($filename)
  * Load settings from configuration file
  * @return array Configuration settings
  */
+
 function load_settings()
 {
     $locations = [
@@ -37,6 +38,7 @@ function load_settings()
                 return json_load_file($path);
             } catch (\Exception $e) {
                 // Log error if needed
+                error_log("Error loading settings: " . $e->getMessage());
                 break;
             }
         }
@@ -53,6 +55,8 @@ function fix_page_here($text, $title, $langcode, $sourcetitle, $revid)
     global $setting;
     // ---
     $lang_default = isset($setting[$langcode]) ? $setting[$langcode] : [];
+    // ---
+    // var_export($lang_default);
     // ---
     $move_dots = isset($lang_default['move_dots']) && $lang_default['move_dots'] == 1;
     $expand = isset($lang_default['expend']) && $lang_default['expend'] == 1;
