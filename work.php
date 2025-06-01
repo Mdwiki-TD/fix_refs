@@ -6,7 +6,7 @@ usage:
 
 use function WpRefs\FixPage\fix_page_here;
 use function WpRefs\FixPage\DoChangesToText1;
-
+// $text = DoChangesToText1($sourcetitle, $text, $lang, $mdwiki_revid);
 */
 
 include_once __DIR__ . '/src/include_files.php';
@@ -19,55 +19,58 @@ function json_load_file($filename)
     return json_decode($content, true);
 }
 
-/**
- * Load settings from configuration file
- * @return array Configuration settings
- */
-function load_settings()
+function load_settings_new()
 {
-    $locations = [
-        "I:/mdwiki/mdwiki/confs/fixwikirefs.json",
-        __DIR__ . "/../../confs/fixwikirefs.json",
-        "/data/project/mdwiki/confs/fixwikirefs.json"
-    ];
-
-    foreach ($locations as $path) {
-        if (file_exists($path)) {
-            try {
-                return json_load_file($path);
-            } catch (\Exception $e) {
-                // Log error if needed
-                break;
-            }
-        }
+    // ---
+    $url = "http://localhost:9001/api.php?get=language_settings";
+    // ---
+    if ($_SERVER['SERVER_NAME'] == 'mdwiki.toolforge.org') {
+        $url = "https://mdwiki.toolforge.org/api.php?get=language_settings";
     }
-    echo "Can't load settings";
-    return [];
+    // ---
+    $json = file_get_contents($url);
+    // ---
+    $json = json_decode($json, true);
+    // ---
+    $data = $json['results'] ?? [];
+    // ---
+    $new = [];
+    // ---
+    foreach ($data as $key => $value) {
+        $new[$value['lang_code']] = $value;
+    }
+    // ---
+    return $new;
 }
 
-// Load settings
-$setting = load_settings();
+$setting = load_settings_new();
 
-function fix_page_here($text, $title, $langcode, $sourcetitle, $revid)
+function fix_page_here($text, $title, $langcode, $sourcetitle, $mdwiki_revid)
 {
     global $setting;
     // ---
     $lang_default = isset($setting[$langcode]) ? $setting[$langcode] : [];
     // ---
+    // var_export($lang_default);
+    // ---
     $move_dots = isset($lang_default['move_dots']) && $lang_default['move_dots'] == 1;
     $expand = isset($lang_default['expend']) && $lang_default['expend'] == 1;
     $add_en_lang = isset($lang_default['add_en_lang']) && $lang_default['add_en_lang'] == 1;
     // ---
-    $text = fix_page($text, $title, $move_dots, $expand, $add_en_lang, $langcode, $sourcetitle, $revid);
+    $text = fix_page($text, $title, $move_dots, $expand, $add_en_lang, $langcode, $sourcetitle, $mdwiki_revid);
     // ---
     return $text;
 }
-// $text = DoChangesToText1($sourcetitle, $text, $lang, $revid);
+// $text = DoChangesToText1($sourcetitle, $title, $text, $lang, $mdwiki_revid);
 
-function DoChangesToText1($sourcetitle, $title, $text, $lang, $revid)
+function DoChangesToText1($sourcetitle, $title, $text, $lang, $mdwiki_revid)
 {
     // ---
-    $text = fix_page_here($text, $title, $lang, $sourcetitle, $revid);
+    $newtext = fix_page_here($text, $title, $lang, $sourcetitle, $mdwiki_revid);
     // ---
-    return $text;
+    if (empty($newtext)) {
+        $newtext = $text;
+    }
+    // ---
+    return $newtext;
 }

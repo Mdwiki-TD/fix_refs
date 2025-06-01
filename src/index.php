@@ -33,7 +33,7 @@ function fix_preffix($text, $lang)
     return $text;
 }
 
-function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sourcetitle, $revid)
+function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sourcetitle, $mdwiki_revid)
 {
     // ---
     $text_org = $text;
@@ -67,7 +67,7 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sou
     // ---
     if ($lang === "es") {
         $text = fix_es($text, $title);
-        $text = es_section($sourcetitle, $text, $revid);
+        $text = es_section($sourcetitle, $text, $mdwiki_revid);
     }
     // ---
     if ($lang == 'sw') {
