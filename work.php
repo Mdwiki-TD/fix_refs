@@ -6,7 +6,7 @@ usage:
 
 use function WpRefs\FixPage\fix_page_here;
 use function WpRefs\FixPage\DoChangesToText1;
-
+// $text = DoChangesToText1($sourcetitle, $text, $lang, $mdwiki_revid);
 */
 
 include_once __DIR__ . '/src/include_files.php';
@@ -66,7 +66,7 @@ function fix_page_here($text, $title, $langcode, $sourcetitle, $mdwiki_revid)
     // ---
     return $text;
 }
-// $text = DoChangesToText1($sourcetitle, $text, $lang, $mdwiki_revid);
+// $text = DoChangesToText1($sourcetitle, $title, $text, $lang, $mdwiki_revid);
 
 function DoChangesToText1($sourcetitle, $title, $text, $lang, $mdwiki_revid)
 {
