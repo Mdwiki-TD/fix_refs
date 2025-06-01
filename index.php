@@ -4,7 +4,14 @@
 use function WpRefs\FixPage\DoChangesToText1;
 
 */
+if (isset($_GET['test']) || $_SERVER['SERVER_NAME'] == 'localhost') {
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+}
+
 $header_path = __DIR__ . '/header.php';
+
 if (!file_exists($header_path)) {
     // "I:\mdwiki\mdwiki\public_html\header.php"
     $header_path = __DIR__ . '/../mdwiki/public_html/header.php';
@@ -19,6 +26,7 @@ $title  = isset($_GET['title']) ? trim($_GET['title']) : '';
 
 include_once __DIR__ . '/work.php';
 include_once __DIR__ . '/wikibots/wikitext.php';
+// include_once __DIR__ . '/wikibots/save.php';
 
 use function WpRefs\FixPage\DoChangesToText1;
 use function WpRefs\WikiText\get_wikipedia_text;
