@@ -19,36 +19,26 @@ function json_load_file($filename)
     return json_decode($content, true);
 }
 
-/**
- * Load settings from configuration file
- * @return array Configuration settings
- */
-
-function load_settings()
+function load_settings_new()
 {
-    $locations = [
-        "I:/mdwiki/mdwiki/confs/fixwikirefs.json",
-        __DIR__ . "/../../confs/fixwikirefs.json",
-        "/data/project/mdwiki/confs/fixwikirefs.json"
-    ];
-
-    foreach ($locations as $path) {
-        if (file_exists($path)) {
-            try {
-                return json_load_file($path);
-            } catch (\Exception $e) {
-                // Log error if needed
-                error_log("Error loading settings: " . $e->getMessage());
-                break;
-            }
-        }
+    $url = "https://mdwiki.toolforge.org/api.php?get=language_settings";
+    // ---
+    $json = file_get_contents($url);
+    // ---
+    $json = json_decode($json, true);
+    // ---
+    $data = $json['results'] ?? [];
+    // ---
+    $new = [];
+    // ---
+    foreach ($data as $key => $value) {
+        $new[$value['lang_code']] = $value;
     }
-    echo "Can't load settings";
-    return [];
+    // ---
+    return $new;
 }
 
-// Load settings
-$setting = load_settings();
+$setting = load_settings_new();
 
 function fix_page_here($text, $title, $langcode, $sourcetitle, $mdwiki_revid)
 {
