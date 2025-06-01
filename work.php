@@ -21,7 +21,12 @@ function json_load_file($filename)
 
 function load_settings_new()
 {
-    $url = "https://mdwiki.toolforge.org/api.php?get=language_settings";
+    // ---
+    $url = "http://localhost:9001/api.php?get=language_settings";
+    // ---
+    if ($_SERVER['SERVER_NAME'] == 'mdwiki.toolforge.org') {
+        $url = "https://mdwiki.toolforge.org/api.php?get=language_settings";
+    }
     // ---
     $json = file_get_contents($url);
     // ---
@@ -61,7 +66,11 @@ function fix_page_here($text, $title, $langcode, $sourcetitle, $mdwiki_revid)
 function DoChangesToText1($sourcetitle, $title, $text, $lang, $mdwiki_revid)
 {
     // ---
-    $text = fix_page_here($text, $title, $lang, $sourcetitle, $mdwiki_revid);
+    $newtext = fix_page_here($text, $title, $lang, $sourcetitle, $mdwiki_revid);
     // ---
-    return $text;
+    if (empty($newtext)) {
+        $newtext = $text;
+    }
+    // ---
+    return $newtext;
 }

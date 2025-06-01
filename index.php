@@ -91,13 +91,21 @@ if (empty($lang) || empty($title)) {
     HTML;
 } else {
     $text = get_wikipedia_text($title, $lang);
-    $new_text = DoChangesToText1($sourcetitle, $title, $text, $lang, $mdwiki_revid);
-    $new_text_sanitized = htmlspecialchars($new_text, ENT_QUOTES, 'UTF-8');
-    $no_changes = (trim($new_text) === trim($text)) ? "true" : "false";
-    echo <<<HTML
-    <h2>New Text: (no_changes: $no_changes)</h2>
-        <textarea name="new_text" rows="15" cols="100">$new_text_sanitized</textarea>
-    HTML;
+    // ---
+    if (empty($text)) {
+        echo <<<HTML
+        <h2>Wikitext not found</h2>
+        HTML;
+    } else {
+        // ---
+        $new_text = DoChangesToText1($sourcetitle, $title, $text, $lang, $mdwiki_revid);
+        $new_text_sanitized = htmlspecialchars($new_text, ENT_QUOTES, 'UTF-8');
+        $no_changes = (trim($new_text) === trim($text)) ? "true" : "false";
+        echo <<<HTML
+        <h2>New Text: (no_changes: $no_changes)</h2>
+            <textarea name="new_text" rows="15" cols="100">$new_text_sanitized</textarea>
+        HTML;
+    }
 }
 
 echo <<<HTML
