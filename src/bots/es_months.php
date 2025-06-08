@@ -91,7 +91,7 @@ function fix_cites_text($temp_text)
 }
 function start_end($cite_temp)
 {
-    return strpos($cite_temp, "{{") === 0 && strpos($cite_temp, "}}") === strlen($cite_temp) - 2;
+    return strpos($cite_temp, "{{") === 0 && strrpos($cite_temp, "}}") === strlen($cite_temp) - 2;
 }
 
 function fix_es_months($text)
