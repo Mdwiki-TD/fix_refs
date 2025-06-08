@@ -1,6 +1,12 @@
 <?php
 
 namespace WpRefs\FixPage;
+
+if (isset($_GET['test']) || $_SERVER['SERVER_NAME'] == 'localhost') {
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+}
 /*
 usage:
 
@@ -12,6 +18,29 @@ use function WpRefs\FixPage\DoChangesToText1;
 include_once __DIR__ . '/src/include_files.php';
 
 use function WpRefs\WprefText\fix_page;
+use function WpRefs\TestBot\echo_test;
+
+function get_curl(string $url): string
+{
+    $usr_agent = 'WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)';
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_USERAGENT, $usr_agent);
+
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+
+    $output = curl_exec($ch);
+    if ($output === FALSE) {
+        echo_test("<br>cURL Error: " . curl_error($ch) . "<br>$url");
+    }
+
+    curl_close($ch);
+
+    return $output;
+}
 
 function json_load_file($filename)
 {
@@ -26,9 +55,10 @@ function load_settings_new()
     // ---
     if (($_SERVER['SERVER_NAME'] ?? '') == 'mdwiki.toolforge.org') {
         $url = "https://mdwiki.toolforge.org/api.php?get=language_settings";
+        $json = get_curl($url);
+    } else {
+        $json = file_get_contents($url);
     }
-    // ---
-    $json = file_get_contents($url);
     // ---
     $json = json_decode($json, true);
     // ---

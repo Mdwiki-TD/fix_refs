@@ -141,7 +141,7 @@ function start_end($cite_temp)
 function pt_months($text)
 {
     // ---
-    echo_test("pt_months:");
+    // echo_test("pt_months:");
     // ---
     $citations = getCitations($text);
     // ---

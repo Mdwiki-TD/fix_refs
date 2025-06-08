@@ -57,8 +57,9 @@ function from_rest($title, $lang)
 
     $url = "https://{$lang}.wikipedia.org/w/rest.php/v1/page/{$title}";
 
-    $ch = curl_init($url);
+    $ch = curl_init();
 
+    curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_USERAGENT, $usr_agent);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
