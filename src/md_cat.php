@@ -3,7 +3,8 @@
 namespace WpRefs\MdCat;
 /*
 
-use function Publish\MdCat\Add_MdWiki_Category;
+use function WpRefs\MdCat\Add_MdWiki_Category;
+use function WpRefs\MdCat\get_url_curl;
 
 */
 
@@ -15,7 +16,9 @@ function get_url_curl(string $url): string
 {
     global $usr_agent;
 
-    $ch = curl_init($url);
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     // curl_setopt($ch, CURLOPT_COOKIEJAR, "cookie.txt");
     // curl_setopt($ch, CURLOPT_COOKIEFILE, "cookie.txt");
