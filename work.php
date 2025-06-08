@@ -1,6 +1,12 @@
 <?php
 
 namespace WpRefs\FixPage;
+
+if (isset($_GET['test']) || $_SERVER['SERVER_NAME'] == 'localhost') {
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+}
 /*
 usage:
 
@@ -48,7 +54,7 @@ function load_settings_new()
     $url = "http://localhost:9001/api.php?get=language_settings";
     // ---
     if (($_SERVER['SERVER_NAME'] ?? '') == 'mdwiki.toolforge.org') {
-        $url = "/api.php?get=language_settings";
+        $url = "https://mdwiki.toolforge.org/api.php?get=language_settings";
         $json = get_curl($url);
     } else {
         $json = file_get_contents($url);
