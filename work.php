@@ -25,7 +25,7 @@ function load_settings_new()
     $url = "http://localhost:9001/api.php?get=language_settings";
     // ---
     if (($_SERVER['SERVER_NAME'] ?? '') == 'mdwiki.toolforge.org') {
-        $url = "https://mdwiki.toolforge.org/api.php?get=language_settings";
+        $url = "/api.php?get=language_settings";
     }
     // ---
     $json = file_get_contents($url);
