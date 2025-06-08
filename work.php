@@ -24,7 +24,7 @@ function load_settings_new()
     // ---
     $url = "http://localhost:9001/api.php?get=language_settings";
     // ---
-    if ($_SERVER['SERVER_NAME'] == 'mdwiki.toolforge.org') {
+    if (($_SERVER['SERVER_NAME'] ?? '') == 'mdwiki.toolforge.org') {
         $url = "https://mdwiki.toolforge.org/api.php?get=language_settings";
     }
     // ---
@@ -50,6 +50,8 @@ function fix_page_here($text, $title, $langcode, $sourcetitle, $mdwiki_revid)
     global $setting;
     // ---
     $lang_default = isset($setting[$langcode]) ? $setting[$langcode] : [];
+    // ---
+    // if (empty($lang_default)) { echo 'no settings for ' . $langcode; };
     // ---
     // var_export($lang_default);
     // ---
