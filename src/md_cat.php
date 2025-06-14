@@ -54,6 +54,9 @@ function get_cats()
 function Add_MdWiki_Category($lang)
 {
     // ---
+	// https://it.wikipedia.org/w/index.php?title=Categoria:Translated_from_MDWiki&action=edit&redlink=1
+	if ($lang == "it") return "";
+    // ---
     $cats = get_cats();
     // ---
     $cat = $cats[$lang . "wiki"]["title"] ?? "Category:Translated from MDWiki";
