@@ -178,7 +178,9 @@ function pt_months($text)
 function rm_ref_spaces($newtext)
 {
     // ---
-    $dot = "(\.|\,|。)";
+    // \s*(\.|,|。|।)\s*((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)
+    // ---
+    $dot = "(\.|,|。|।)";
     // ---
     $regline = "((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)";
     // ---

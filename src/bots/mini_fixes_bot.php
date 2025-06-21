@@ -12,57 +12,37 @@ use function WpRefs\Bots\Mini\mini_fixes_after_fixing;
 function remove_space_before_ref_tags($text, $lang)
 {
     // ---
-    $new_text = $text;
+    $for_langs = ["sw", "bn", "ar"];
     // ---
-    // find == Marejeleo == replace by == Marejeo ==
-    // $new_text = preg_replace('/==\s*Marejeleo\s*==/i', '== Marejeo ==', $new_text);
+    // if (in_array($lang, $for_langs)) {
+    $text = preg_replace("/\s*(\.|,|。|।)\s*<ref/i", "$1<ref", $text);
+    // }
     // ---
-    $to_replace = [
-        "sw" => [
-            "Marejeleo" => "Marejeo"
-        ],
-        // Примечания" (references) instead of "Ссылки" (links) for the heading of the reference section
-        "ru" => [
-            "Ссылки" => "Примечания"
-        ]
-    ];
-    // ---
-    if (array_key_exists($lang, $to_replace)) {
-        foreach ($to_replace[$lang] as $key => $value) {
-            // $new_text = preg_replace("/==\s*$key\s*==/i", "== $value ==", $new_text);
-            $new_text = preg_replace("/==\s*" . preg_quote($key, '/') . "\s*==/i", "== $value ==", $new_text);
-        }
-    }
-    // ---
-    return $new_text;
+    return $text;
 }
 
 function fix_sections_titles($text, $lang)
 {
     // ---
-    $new_text = $text;
+    $text = $text;
     // ---
     // find == Marejeleo == replace by == Marejeo ==
-    // $new_text = preg_replace('/==\s*Marejeleo\s*==/i', '== Marejeo ==', $new_text);
+    // $text = preg_replace('/==\s*Marejeleo\s*==/i', '== Marejeo ==', $text);
     // ---
     $to_replace = [
-        "sw" => [
-            "Marejeleo" => "Marejeo"
-        ],
+        "sw" => ["Marejeleo" => "Marejeo"],
         // Примечания" (references) instead of "Ссылки" (links) for the heading of the reference section
-        "ru" => [
-            "Ссылки" => "Примечания"
-        ]
+        "ru" => ["Ссылки" => "Примечания"]
     ];
     // ---
     if (array_key_exists($lang, $to_replace)) {
         foreach ($to_replace[$lang] as $key => $value) {
-            // $new_text = preg_replace("/==\s*$key\s*==/i", "== $value ==", $new_text);
-            $new_text = preg_replace("/==\s*" . preg_quote($key, '/') . "\s*==/i", "== $value ==", $new_text);
+            // $text = preg_replace("/==\s*$key\s*==/i", "== $value ==", $text);
+            $text = preg_replace("/==\s*" . preg_quote($key, '/') . "\s*==/i", "== $value ==", $text);
         }
     }
     // ---
-    return $new_text;
+    return $text;
 }
 
 function refs_tags_spaces($text)

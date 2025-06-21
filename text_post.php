@@ -29,12 +29,21 @@ $fields = ['lang', 'title', 'text', 'revid', 'sourcetitle'];
 
 $data = [];
 
+$final_text = '';
+
 foreach ($fields as $field) {
     $value = trim($_POST[$field] ?? '');
     // ---
     // $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
     // ---
     $data[$field] = $value;
+    // ---
+    // Basic validation for required fields
+    if (in_array($field, ['lang', 'title', 'text']) && empty($value)) {
+        $final_text = "Missing required field: $field";
+        break;
+    }
+    // ---
 }
 
 $lang         = $data['lang'];
@@ -43,7 +52,6 @@ $text         = $data['text'];
 $mdwiki_revid = $data['revid'];
 $sourcetitle  = $data['sourcetitle'];
 
-$final_text = '';
 
 if (!empty($lang) && !empty($title) && !empty($text)) {
     // ---

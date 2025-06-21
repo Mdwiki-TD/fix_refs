@@ -18,9 +18,11 @@ function verify_csrf_token()
 {
 	// return true;
 	// ---
+	$csrf_key = "csrf_tokens";
+	// ---
 	// التحقق مما إذا كان هناك CSRF Tokens في الجلسة
-	if (!isset($_SESSION['csrf_tokens']) || !is_array($_SESSION['csrf_tokens'])) {
-		$_SESSION['csrf_tokens'] = [];
+	if (!isset($_SESSION[$csrf_key]) || !is_array($_SESSION[$csrf_key])) {
+		$_SESSION[$csrf_key] = [];
 		echo "No csrf tokens in session!";
 		return true;
 	}
@@ -35,9 +37,9 @@ function verify_csrf_token()
 	}
 
 	// التحقق مما إذا كان Token موجودًا في القائمة
-	if (in_array($submitted_token, $_SESSION['csrf_tokens'], true)) {
+	if (in_array($submitted_token, $_SESSION[$csrf_key], true)) {
 		// Token صحيح، إزالته من القائمة
-		$_SESSION['csrf_tokens'] = array_diff($_SESSION['csrf_tokens'], [$submitted_token]);
+		$_SESSION[$csrf_key] = array_diff($_SESSION[$csrf_key], [$submitted_token]);
 
 		// تحديث الجلسة بعد التعديل
 		// session_write_close();
