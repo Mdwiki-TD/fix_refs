@@ -13,7 +13,10 @@ use function WpRefs\TestBot\echo_debug;
 function echo_test($str)
 {
     // ---
-    if (isset($_POST['test']) || isset($_GET['test'])) {
+    $test = $_POST['test'] ?? $_GET['test'] ?? '';
+    // ---
+    // if (isset($_POST['test']) || isset($_GET['test'])) {
+    if (!empty($test)) {
         echo $str . "\n";
     }
     // ---

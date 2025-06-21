@@ -1,31 +1,7 @@
-<!DOCTYPE html>
-<HTML lang=en dir=ltr data-bs-theme="light" xmlns="http://www.w3.org/1999/xhtml">
+* <ref name="NHS2023" /> some texts  , <ref name="NHS2023Sym">{{Cite web}}</ref> hi!
 
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="robots" content="noindex">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title> Tools</title>
-    <link href='https://tools-static.wmflabs.org/cdnjs/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
-    <script src='https://tools-static.wmflabs.org/cdnjs/ajax/libs/jquery/3.7.0/jquery.min.js'></script>
-    <script src='https://tools-static.wmflabs.org/cdnjs/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js'></script>
-</head>
+* '''RH'''（ '''Rh-HDFN''' ）some texts 。 <ref name="NHS2023">{{Cite web|title=Rhesus disease|url=https://www.nhs.uk/conditions/rhesus-disease/|website=nhs.uk|access-date=19 October 2023|language=en|date=23 October 2017|archive-date=22 February 2023|archive-url=https://web.archive.org/web/20230222174905/https://www.nhs.uk/conditions/rhesus-disease/|url-status=live}} {{Webarchive|url=https://web.archive.org/web/20230222174905/https://www.nhs.uk/conditions/rhesus-disease/|date=22 February 2023}}</ref> <ref name="Jack2021">{{Cite journal|last=Jackson|first=ME|last2=Baker|first2=JM|title=Hemolytic Disease of the Fetus and Newborn: Historical and Current State.|journal=Clinics in laboratory medicine|date=March 2021|volume=41|issue=1|pages=133-151|doi=10.1016/j.cll.2020.10.009|pmid=33494881}}</ref>random string.  <ref name="NHS2023" /> some texts  , <ref name="NHS2023Sym">{{Cite web|title=Rhesus disease - Symptoms|url=https://www.nhs.uk/conditions/rhesus-disease/symptoms/|website=nhs.uk|access-date=19 October 2023|language=en|date=23 October 2017|archive-date=20 July 2023|archive-url=https://web.archive.org/web/20230720004500/https://www.nhs.uk/conditions/rhesus-disease/symptoms/|url-status=live}} {{Webarchive|url=https://web.archive.org/web/20230720004500/https://www.nhs.uk/conditions/rhesus-disease/symptoms/|date=20 July 2023}}</ref>hello world 。 <ref name="NHS2023" /> <ref name="Jack2021" />
 
-<?php
-
-echo "
-    <body>
-        <div id='maindiv' class='container'>
-            <div class='card'>
-                <div class='card-header aligncenter' style='font-weight:bold;'>
-                    input infos
-                </div>
-                <div class='card-body'>
-";
-
-// ---
-$test_text = <<<TEXT
 {{Infobox medical condition
 |name             =Rh disease
 |synonym          =Rh-hemolytic disease the newborn, Rh (D) disease<ref name=Jack2021/>
@@ -63,67 +39,3 @@ RhD陰性の妊婦に[[抗Dヒト免疫グロブリン|Rho(D)免疫グロブリ�
 <ref>{{Cite journal|title=Results of clinical trials of RhoGAM in women|journal=Transfusion|volume=8|issue=3|pages=151–153|date=1968-05-06|pmid=4173363|doi=10.1111/j.1537-2995.1968.tb04895.x}}</ref>
 <references />
 [[Category:Translated from MDWiki]]
-TEXT;
-
-
-// عرض نموذج لإرسال البيانات إلى text_changes.php
-echo <<<HTML
-    <form action='text_post.php' method='POST'>
-        <div class='container'>
-            <div class='row'>
-                <div class='col-md-3'>
-                    <div class='input-group mb-3'>
-                        <div class='input-group-prepend'>
-                            <span class='input-group-text'>Langcode</span>
-                        </div>
-                        <input class='form-control' type='text' name='lang' id='lang' value='ja' required />
-                    </div>
-                </div>
-                <div class='col-md-3'>
-                    <div class='input-group mb-3'>
-                        <div class='input-group-prepend'>
-                            <span class='input-group-text'>title</span>
-                        </div>
-                        <input class='form-control' type='text' id='title' name='title' value='利用者:Doc James/Rh血液型不適合' />
-                    </div>
-                </div>
-                <div class='col-md-3'>
-                    <div class='input-group mb-3'>
-                        <div class='input-group-prepend'>
-                            <span class='input-group-text'>sourcetitle</span>
-                        </div>
-                        <input class='form-control' type='text' id='sourcetitle' name='sourcetitle' value='Rhesus disease' required />
-                    </div>
-                </div>
-                <div class='col-md-3'>
-                    <div class='input-group mb-3'>
-                        <div class='input-group-prepend'>
-                            <span class='input-group-text'>revid</span>
-                        </div>
-                        <input class='form-control' type='text' id='revid' name='revid' value='1457313' required />
-                    </div>
-                </div>
-            </div>
-            <div class='row'>
-                <div class='col-md-3'>
-                    <h4 class='aligncenter'>
-                        <input class='btn btn-outline-primary' type='submit' value='start'>
-                    </h4>
-                </div>
-            </div>
-        </div>
-        <div class="mb-3">
-            <label for="text" class="form-label">Text:</label>
-            <textarea id="text" name="text" rows="5" class="form-control" required>$test_text</textarea>
-        </div>
-    </form>
-HTML;
-echo <<<HTML
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
-HTML;
-
-?>

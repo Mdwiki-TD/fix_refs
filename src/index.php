@@ -15,23 +15,14 @@ use function WpRefs\FixPtMonth\pt_fixes;
 use function WpRefs\SW\sw_fixes;
 use function WpRefs\ES\fix_es;
 use function WpRefs\ES\es_section;
-use function WpRefs\DelDuplicateRefs\fix_refs_names;
+// use function WpRefs\DelDuplicateRefs\fix_refs_names;
 use function WpRefs\DelDuplicateRefs\remove_Duplicate_refs;
 use function WpRefs\MoveDots\move_dots_text;
 use function WpRefs\MoveDots\add_lang_en;
-use function WpRefs\MdCat\Add_MdWiki_Category;
+use function WpRefs\MdCat\add_Translated_from_MDWiki;
+use function WpRefs\Bots\Mini\mini_fixes;
+use function WpRefs\Bots\Mini\mini_fixes_after_fixing;
 
-function fix_preffix($text, $lang)
-{
-    // [[:en:X-сцепленное_рецессивное_наследование|Х-сцепленным рецессивным]], [[:ru:Спинальная_мышечная_атрофия|аутосомно-доминантным]]
-    // ---
-    // replace [[:{en}: by [[
-    $text = preg_replace('/\[\[:en:/', "[[", $text);
-    // replace [[:{lang}: by [[
-    $text = preg_replace('/\[\[:' . preg_quote($lang, '/') . ':/', "[[", $text);
-    // ---
-    return $text;
-}
 
 function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sourcetitle, $mdwiki_revid)
 {
@@ -48,6 +39,8 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sou
     // $text = remove_False_code($text);
     // ---
     // $text = fix_refs_names($text);
+    // ---
+    $text = mini_fixes($text, $lang);
     // ---
     $text = remove_Duplicate_refs($text);
     // ---
@@ -74,16 +67,9 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sou
         $text = sw_fixes($text);
     };
     // ---
-    $cat = Add_MdWiki_Category($lang);
+    $text = add_Translated_from_MDWiki($text, $lang);
     // ---
-    if (!empty($cat) && strpos($text, $cat) === false && strpos($text, "[[Category:Translated from MDWiki]]") === false) {
-        $text .= "\n[[$cat]]\n";
-    }
-    // ---
-    // remove empty lines
-    $text = preg_replace('/^\s*\n/m', "\n", $text);
-    // ---
-    $text = fix_preffix($text, $lang);
+    $text = mini_fixes_after_fixing($text, $lang);
     // ---
     if (!empty($text)) {
         return $text;
