@@ -15,11 +15,12 @@ use function WpRefs\FixPtMonth\pt_fixes;
 use function WpRefs\SW\sw_fixes;
 use function WpRefs\ES\fix_es;
 use function WpRefs\ES\es_section;
-use function WpRefs\DelDuplicateRefs\fix_refs_names;
+// use function WpRefs\DelDuplicateRefs\fix_refs_names;
 use function WpRefs\DelDuplicateRefs\remove_Duplicate_refs;
 use function WpRefs\MoveDots\move_dots_text;
 use function WpRefs\MoveDots\add_lang_en;
 use function WpRefs\MdCat\Add_MdWiki_Category;
+use function WpRefs\Bots\Sections\fix_sections_titles;
 
 function fix_preffix($text, $lang)
 {
@@ -73,6 +74,8 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sou
     if ($lang == 'sw') {
         $text = sw_fixes($text);
     };
+    // ---
+    $text = fix_sections_titles($text, $lang);
     // ---
     $cat = Add_MdWiki_Category($lang);
     // ---
