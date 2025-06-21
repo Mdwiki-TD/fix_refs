@@ -1,12 +1,23 @@
 <?php
 
-namespace WpRefs\Bots\Sections;
+namespace WpRefs\Bots\Mini;
 /*
 usage:
 
-use function WpRefs\Bots\Sections\fix_sections_titles;
+use function WpRefs\Bots\Mini\fix_sections_titles;
+use function WpRefs\Bots\Mini\mini_fixes;
 
 */
+
+function mini_fixes($text)
+{
+    // ---
+    // replace </ref> <ref> by </ref><ref
+    $text = str_replace("</ref> <ref", "</ref><ref", $text);
+    $text = str_replace("> <ref", "><ref", $text);
+    // ---
+    return $text;
+}
 
 function fix_sections_titles($text, $lang)
 {

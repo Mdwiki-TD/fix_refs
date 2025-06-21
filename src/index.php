@@ -20,7 +20,8 @@ use function WpRefs\DelDuplicateRefs\remove_Duplicate_refs;
 use function WpRefs\MoveDots\move_dots_text;
 use function WpRefs\MoveDots\add_lang_en;
 use function WpRefs\MdCat\Add_MdWiki_Category;
-use function WpRefs\Bots\Sections\fix_sections_titles;
+use function WpRefs\Bots\Mini\fix_sections_titles;
+use function WpRefs\Bots\Mini\mini_fixes;
 
 function fix_preffix($text, $lang)
 {
@@ -34,15 +35,6 @@ function fix_preffix($text, $lang)
     return $text;
 }
 
-function mini_fixes($text)
-{
-    // ---
-    // replace </ref> <ref> by </ref><ref
-    $text = str_replace("</ref> <ref", "</ref><ref", $text);
-    $text = str_replace("> <ref", "><ref", $text);
-    // ---
-    return $text;
-}
 function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sourcetitle, $mdwiki_revid)
 {
     // ---
