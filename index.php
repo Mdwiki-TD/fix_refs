@@ -10,7 +10,7 @@ if (isset($_GET['test']) || $_SERVER['SERVER_NAME'] == 'localhost') {
     error_reporting(E_ALL);
 }
 
-$header_path = __DIR__ . '/header.php';
+$header_path = __DIR__ . '/../header.php';
 
 if (!file_exists($header_path)) {
     // "I:\mdwiki\mdwiki\public_html\header.php"
@@ -20,9 +20,16 @@ if (!file_exists($header_path)) {
 include_once $header_path;
 
 $lang         = isset($_GET['lang']) ? trim($_GET['lang']) : '';
-$mdwiki_revid        = isset($_GET['revid']) ? trim($_GET['revid']) : '';
+$mdwiki_revid = isset($_GET['revid']) ? trim($_GET['revid']) : '';
 $sourcetitle  = isset($_GET['sourcetitle']) ? trim($_GET['sourcetitle']) : '';
-$title  = isset($_GET['title']) ? trim($_GET['title']) : '';
+$title        = isset($_GET['title']) ? trim($_GET['title']) : '';
+
+$user = $GLOBALS['global_username'] ?? '';
+// ---
+$submit_or_login = (!empty($user))
+    ? "<input class='btn btn-outline-primary' type='submit' value='start'>"
+    : "<a class='btn btn-outline-primary' href='/auth/index.php?a=login'>login</a>";
+// ---
 
 include_once __DIR__ . '/work.php';
 include_once __DIR__ . '/wikibots/wikitext.php';
@@ -82,7 +89,7 @@ if (empty($lang) || empty($title)) {
                 <div class='row'>
                     <div class='col-md-3'>
                         <h4 class='aligncenter'>
-                            <input class='btn btn-outline-primary' type='submit' value='start'>
+                            $submit_or_login
                         </h4>
                     </div>
                 </div>

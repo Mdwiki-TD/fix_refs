@@ -5,7 +5,7 @@ if (isset($_GET['test']) || $_SERVER['SERVER_NAME'] == 'localhost') {
     error_reporting(E_ALL);
 }
 
-$header_path = __DIR__ . '/header.php';
+$header_path = __DIR__ . '/../header.php';
 
 if (!file_exists($header_path)) {
     // "I:\mdwiki\mdwiki\public_html\header.php"
@@ -16,7 +16,12 @@ include_once $header_path;
 
 $test_text = file_get_contents(__DIR__ . '/test.php.md') ?? '';
 // ---
-// عرض نموذج لإرسال البيانات إلى text_changes.php
+$user = $GLOBALS['global_username'] ?? '';
+// ---
+$submit_or_login = (!empty($user))
+    ? "<input class='btn btn-outline-primary' type='submit' value='start'>"
+    : "<a class='btn btn-outline-primary' href='/auth/index.php?a=login'>login</a>";
+// ---
 ?>
 
 <div class='card-header aligncenter' style='font-weight:bold;'>
@@ -70,7 +75,7 @@ $test_text = file_get_contents(__DIR__ . '/test.php.md') ?? '';
                 </div>
                 <div class='col-md-3'>
                     <h4 class='aligncenter'>
-                        <input class='btn btn-outline-primary' type='submit' value='start'>
+                        <?php echo $submit_or_login; ?>
                     </h4>
                 </div>
             </div>
