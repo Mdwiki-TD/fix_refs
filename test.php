@@ -65,7 +65,7 @@ $test_text = file_get_contents(__DIR__ . '/test.php.md') ?? '';
                         <div class='input-group-prepend'>
                             <span class='input-group-text'>test</span>
                         </div>
-                        <input class='form-control' type='text' id='test' name='test' value='1' />
+                        <input class='form-control' type='text' id='test' name='test' value='' />
                     </div>
                 </div>
                 <div class='col-md-3'>
