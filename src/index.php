@@ -34,6 +34,15 @@ function fix_preffix($text, $lang)
     return $text;
 }
 
+function mini_fixes($text)
+{
+    // ---
+    // replace </ref> <ref> by </ref><ref
+    $text = str_replace("</ref> <ref", "</ref><ref", $text);
+    $text = str_replace("> <ref", "><ref", $text);
+    // ---
+    return $text;
+}
 function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sourcetitle, $mdwiki_revid)
 {
     // ---
@@ -49,6 +58,8 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sou
     // $text = remove_False_code($text);
     // ---
     // $text = fix_refs_names($text);
+    // ---
+    $text = mini_fixes($text);
     // ---
     $text = remove_Duplicate_refs($text);
     // ---

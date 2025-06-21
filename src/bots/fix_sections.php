@@ -28,7 +28,8 @@ function fix_sections_titles($text, $lang)
     // ---
     if (array_key_exists($lang, $to_replace)) {
         foreach ($to_replace[$lang] as $key => $value) {
-            $new_text = preg_replace("/==\s*$key\s*==/i", "== $value ==", $new_text);
+            // $new_text = preg_replace("/==\s*$key\s*==/i", "== $value ==", $new_text);
+            $new_text = preg_replace("/==\s*" . preg_quote($key, '/') . "\s*==/i", "== $value ==", $new_text);
         }
     }
     // ---
