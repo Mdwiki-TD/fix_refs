@@ -3,8 +3,7 @@
 namespace WpRefs\MdCat;
 /*
 
-use function WpRefs\MdCat\Add_MdWiki_Category;
-use function WpRefs\MdCat\get_url_curl;
+use function WpRefs\MdCat\add_Translated_from_MDWiki;
 
 */
 
@@ -51,15 +50,27 @@ function get_cats()
     return $json;
 }
 
-function Add_MdWiki_Category($lang)
+function Get_MdWiki_Category($lang)
 {
     // ---
-	// https://it.wikipedia.org/w/index.php?title=Categoria:Translated_from_MDWiki&action=edit&redlink=1
-	if ($lang == "it") return "";
+    // https://it.wikipedia.org/w/index.php?title=Categoria:Translated_from_MDWiki&action=edit&redlink=1
+    if ($lang == "it") return "";
     // ---
     $cats = get_cats();
     // ---
     $cat = $cats[$lang . "wiki"]["title"] ?? "Category:Translated from MDWiki";
     // ---
     return $cat;
+}
+
+function add_Translated_from_MDWiki($text, $lang)
+{
+    // ---
+    $cat = Get_MdWiki_Category($lang);
+    // ---
+    if (!empty($cat) && strpos($text, $cat) === false && strpos($text, "[[Category:Translated from MDWiki]]") === false) {
+        $text .= "\n[[$cat]]\n";
+    }
+    // ---
+    return $text;
 }

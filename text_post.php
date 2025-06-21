@@ -1,9 +1,10 @@
 <?php
-header('Content-Type: text/plain; charset=utf-8');
 
 include_once __DIR__ . '/work.php';
+include_once __DIR__ . '/csrf.php';
 
 use function WpRefs\FixPage\DoChangesToText1;
+use function WpRefs\csrf\verify_csrf_token; // if (verify_csrf_token())  {
 /*
 $lang         = trim($_POST['lang'] ?? '');
 $title        = trim($_POST['title'] ?? '');
@@ -26,34 +27,42 @@ if (!empty($lang) && !empty($text) && !empty($title)) {
 
 $fields = ['lang', 'title', 'text', 'revid', 'sourcetitle'];
 
-// مصفوفة لتخزين القيم المنظفة
 $data = [];
 
-// تنظيف القيم: إزالة الفراغات + منع XSS
 foreach ($fields as $field) {
-    $value = $_POST[$field] ?? '';
-    $value = trim($value);
-    $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+    $value = trim($_POST[$field] ?? '');
+    // ---
+    // $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+    // ---
     $data[$field] = $value;
 }
 
-// استخراج المتغيرات من المصفوفة
 $lang         = $data['lang'];
 $title        = $data['title'];
 $text         = $data['text'];
 $mdwiki_revid = $data['revid'];
 $sourcetitle  = $data['sourcetitle'];
 
-// التحقق من وجود الحقول المطلوبة
-if ($lang !== '' && $title !== '' && $text !== '') {
-    $new_text = DoChangesToText1($sourcetitle, $title, $text, $lang, $mdwiki_revid);
+$final_text = '';
 
-    if ($new_text === $text) {
-        echo 'no changes';
-        return;
+if (!empty($lang) && !empty($title) && !empty($text)) {
+    // ---
+    if (verify_csrf_token()) {
+        $new_text = DoChangesToText1($sourcetitle, $title, $text, $lang, $mdwiki_revid);
+
+        if (trim($new_text) === trim($text)) {
+            $final_text = 'no changes';
+        } else {
+            $final_text = $new_text;
+        }
     }
-
-    echo $new_text;
 } else {
-    echo 'no text';
+    $final_text = 'no text';
+}
+
+if (!empty($final_text)) {
+
+    header('Content-Type: text/plain; charset=utf-8');
+
+    echo $final_text;
 }

@@ -4,7 +4,7 @@
 use function WpRefs\FixPage\DoChangesToText1;
 
 */
-if (isset($_GET['test']) || $_SERVER['SERVER_NAME'] == 'localhost') {
+if (!empty($_GET['test'] ?? $_POST['test'] ?? '') || $_SERVER['SERVER_NAME'] == 'localhost') {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
@@ -19,10 +19,10 @@ if (!file_exists($header_path)) {
 
 include_once $header_path;
 
-$lang         = isset($_GET['lang']) ? trim($_GET['lang']) : '';
-$mdwiki_revid = isset($_GET['revid']) ? trim($_GET['revid']) : '';
-$sourcetitle  = isset($_GET['sourcetitle']) ? trim($_GET['sourcetitle']) : '';
-$title        = isset($_GET['title']) ? trim($_GET['title']) : '';
+$lang         = trim($_POST['lang'] ?? '');
+$title        = trim($_POST['title'] ?? '');
+$mdwiki_revid = trim($_POST['revid'] ?? '');
+$sourcetitle  = trim($_POST['sourcetitle'] ?? '');
 
 $user = $GLOBALS['global_username'] ?? '';
 // ---
@@ -30,13 +30,15 @@ $submit_or_login = (!empty($user))
     ? "<input class='btn btn-outline-primary' type='submit' value='start'>"
     : "<a class='btn btn-outline-primary' href='/auth/index.php?a=login'>login</a>";
 // ---
-
+include_once __DIR__ . '/csrf.php';
 include_once __DIR__ . '/work.php';
 include_once __DIR__ . '/wikibots/wikitext.php';
 // include_once __DIR__ . '/wikibots/save.php';
 
 use function WpRefs\FixPage\DoChangesToText1;
 use function WpRefs\WikiText\get_wikipedia_text;
+use function WpRefs\csrf\generate_csrf_token;
+use function WpRefs\csrf\verify_csrf_token; // if (verify_csrf_token())  {
 
 echo "
     <div class='card'>
@@ -45,12 +47,46 @@ echo "
         </div>
         <div class='card-body'>
 ";
-
+// ---
+$footer = <<<HTML
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+HTML;
+// ---
+function make_result($lang, $title, $sourcetitle, $mdwiki_revid)
+{
+    // ---
+    $text = get_wikipedia_text($title, $lang);
+    // ---
+    if (empty($text)) {
+        return <<<HTML
+            <h2>Wikitext not found</h2>
+        HTML;
+    }
+    // ---
+    $new_text = DoChangesToText1($sourcetitle, $title, $text, $lang, $mdwiki_revid);
+    //---
+    $new_text_sanitized = htmlspecialchars($new_text, ENT_QUOTES, 'UTF-8');
+    //---
+    $no_changes = (trim($new_text) === trim($text)) ? "true" : "false";
+    //---
+    return <<<HTML
+        <h2>New Text: (no_changes: $no_changes)</h2>
+            <textarea name="new_text" rows="15" cols="100">$new_text_sanitized</textarea>
+    HTML;
+}
 
 if (empty($lang) || empty($title)) {
+    //---
+    $csrf_token = generate_csrf_token(); // <input name='csrf_token' value="$csrf_token" type="hidden"/>
+    //---
     // عرض نموذج لإرسال البيانات إلى text_changes.php
     echo <<<HTML
-        <form action='index.php' method='GET'>
+        <form action='index.php' method='POST'>
+            <input name='csrf_token' value="$csrf_token" type="hidden"/>
             <div class='container'>
                 <div class='row'>
                     <div class='col-md-3'>
@@ -96,29 +132,11 @@ if (empty($lang) || empty($title)) {
             </div>
         </form>
     HTML;
+    //---
 } else {
-    $text = get_wikipedia_text($title, $lang);
-    // ---
-    if (empty($text)) {
-        echo <<<HTML
-        <h2>Wikitext not found</h2>
-        HTML;
-    } else {
-        // ---
-        $new_text = DoChangesToText1($sourcetitle, $title, $text, $lang, $mdwiki_revid);
-        $new_text_sanitized = htmlspecialchars($new_text, ENT_QUOTES, 'UTF-8');
-        $no_changes = (trim($new_text) === trim($text)) ? "true" : "false";
-        echo <<<HTML
-        <h2>New Text: (no_changes: $no_changes)</h2>
-            <textarea name="new_text" rows="15" cols="100">$new_text_sanitized</textarea>
-        HTML;
+    if (verify_csrf_token()) {
+        echo make_result($lang, $title, $sourcetitle, $mdwiki_revid);
     }
 }
-
-echo <<<HTML
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
-HTML;
+//---
+echo $footer;

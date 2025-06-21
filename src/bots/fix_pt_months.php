@@ -178,12 +178,6 @@ function pt_months($text)
 function rm_ref_spaces($newtext)
 {
     // ---
-    // replace </ref> <ref> by </ref><ref
-    $newtext = str_replace("</ref> <ref", "</ref><ref", $newtext);
-    $newtext = str_replace("> <ref", "><ref", $newtext);
-    // ---
-    // echo_test("rm_ref_spaces\n");
-    // ---
     $dot = "(\.|\,|。)";
     // ---
     $regline = "((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)";

@@ -13,6 +13,9 @@ if (!file_exists($header_path)) {
 }
 
 include_once $header_path;
+include_once __DIR__ . '/csrf.php';
+
+use function WpRefs\csrf\generate_csrf_token;
 
 $test_text = file_get_contents(__DIR__ . '/test.php.md') ?? '';
 // ---
@@ -22,6 +25,8 @@ $submit_or_login = (!empty($user))
     ? "<input class='btn btn-outline-primary' type='submit' value='start'>"
     : "<a class='btn btn-outline-primary' href='/auth/index.php?a=login'>login</a>";
 // ---
+$csrf_token = generate_csrf_token(); // <input name='csrf_token' value="$csrf_token" type="hidden"/>
+//---
 ?>
 
 <div class='card-header aligncenter' style='font-weight:bold;'>
@@ -29,6 +34,7 @@ $submit_or_login = (!empty($user))
 </div>
 <div class='card-body'>
     <form action='text_post.php' method='POST'>
+        <input name='csrf_token' value="<?php echo $csrf_token; ?>" type="hidden"/>
         <div class='container'>
             <div class='row'>
                 <div class='col-md-3'>
