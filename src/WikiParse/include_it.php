@@ -1,9 +1,9 @@
 <?php
 
-foreach (glob(__DIR__ . "/parsewiki/DataModel/*.php") as $filename) {
+foreach (glob(__DIR__ . "/src/DataModel/*.php") as $filename) {
     include_once $filename;
 }
-foreach (glob(__DIR__ . "/parsewiki/*.php") as $filename) {
+foreach (glob(__DIR__ . "/src/*.php") as $filename) {
     include_once $filename;
 }
 
