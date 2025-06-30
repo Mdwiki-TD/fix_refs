@@ -107,7 +107,7 @@ function fix_es_months($text)
         // ---
         $cite_temp = $citation->getTemplate();
         // ---
-        echo_debug("\ncite_temp: $cite_temp\n");
+        // echo_debug("\ncite_temp: $cite_temp\n");
         // ---
         // if $cite_temp startwith {{ and ends with }}
         // if (start_end($cite_temp) || defined("DEBUG") || True) {
@@ -115,9 +115,7 @@ function fix_es_months($text)
         // $new_temp = fix_one_cite_temp($cite_temp);
         $new_temp = fix_cites_text($cite_temp);
         // ---
-        if ($new_temp != $cite_temp) {
-            echo_debug("new_temp != cite_temp\n");
-        }
+        // if ($new_temp != $cite_temp) echo_debug("new_temp != cite_temp\n");
         // ---
         $new_text = str_replace($cite_temp, $new_temp, $new_text);
         // }
