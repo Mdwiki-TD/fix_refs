@@ -73,28 +73,6 @@ class Template
         $this->parameters = $newParameters;
     }
 
-    public function toString(bool $newLine = false, $ljust = 0): string
-    {
-        $separator = $newLine ? "\n" : "";
-        $templateName = $newLine ? trim($this->name) : $this->name;
-
-        $result = "{{" . $templateName;
-        $index = 1;
-        foreach ($this->parameters as $key => $value) {
-            $formattedValue = $newLine ? trim($value) : $value;
-
-            if ($index == $key) {
-                $result .= "|" . $formattedValue;
-            } else {
-                $formattedKey = $ljust > 0 ? str_pad($key, $ljust, " ") : $key;
-                // $result .= $separator . "|" . $formattedKey . " = " . $formattedValue;
-                $result .= $separator . "|" . $formattedKey . "=" . $formattedValue;
-            }
-            $index++;
-        }
-        $result .= $separator . "}}";
-        return $result;
-    }
     private function formatParameters(string $separator, int $ljust, bool $newLine): string
     {
         $result = "";
@@ -115,7 +93,7 @@ class Template
         return $result;
     }
 
-    public function toString_new(bool $newLine = false, $ljust = 0): string
+    public function toString(bool $newLine = false, $ljust = 0): string
     {
         $separator = $newLine ? "\n" : "";
         $templateName = $newLine ? trim($this->name) : $this->name;
