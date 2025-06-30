@@ -15,8 +15,8 @@ This project is a PHP-based tool designed to process and correct Wikipedia artic
 - **Responsible for parsing Wikipedia syntax elements**
 - **Located in:** `src/WikiParse`
 - **Submodules:**
-  - **Parsing logic:** `src/WikiParse/parsewiki`
-  - **Data models:** `src/WikiParse/parsewiki/DataModel`
+  - **Parsing logic:** `src/WikiParse/src`
+  - **Data models:** `src/WikiParse/src/DataModel`
     - `Citation.php`
     - `ExternalLink.php`
     - `InternalLink.php`
@@ -28,7 +28,7 @@ This project is a PHP-based tool designed to process and correct Wikipedia artic
   - `src/WikiParse/Citations_reg.php`
   - `src/WikiParse/Template.php`
   - `src/WikiParse/include_it.php`
-  - Various parser files under `src/WikiParse/parsewiki`
+  - Various parser files under `src/WikiParse/src`
 
 ### 3. Bot Module
 - **Automated scripts for text fixes**
@@ -88,4 +88,4 @@ This project is a PHP-based tool designed to process and correct Wikipedia artic
 ## License
 This project is open-source and distributed under the [MIT License](LICENSE).
 
-# Diagram 
+# Diagram
