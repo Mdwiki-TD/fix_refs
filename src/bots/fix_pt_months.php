@@ -161,9 +161,7 @@ function pt_months($text)
         $new_temp = fix_cites_text($cite_temp);
         // $new_temp = fix_one_cite_text($cite_temp);
         // ---
-        if ($new_temp != $cite_temp) {
-            echo_debug("new_temp != cite_temp\n");
-        }
+        // if ($new_temp != $cite_temp) echo_debug("new_temp != cite_temp\n");
         // ---
         $new_text = str_replace($cite_temp, $new_temp, $new_text);
         // } else {

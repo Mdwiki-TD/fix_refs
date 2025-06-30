@@ -12,7 +12,7 @@ flowchart TD
     %% WikiParse Module Subgraph
     subgraph "WikiParse Module"
         WP["WikiParse Module (src/WikiParse)"]:::parser
-        PARSER["Parsing Logic (parsewiki)"]:::parser
+        PARSER["Parsing Logic (src)"]:::parser
         DM["Data Models (DataModel)"]:::parser
         subgraph "Parsing Files"
             CAT["Category.php"]:::parser
@@ -56,7 +56,7 @@ flowchart TD
 
     %% Connections
     CONFIG -->|"loadConfig"| CTRL1
-    
+
     %% Core Controller interactions
     CTRL1 -->|"calls_fix_page_here"| WP
     CTRL1 -->|"calls_fix_page_here"| BOT1
@@ -90,19 +90,19 @@ flowchart TD
 
     %% Click Events for WikiParse Module
     click WP "https://github.com/mdwiki-td/fix_refs/tree/main/src/WikiParse"
-    click PARSER "https://github.com/mdwiki-td/fix_refs/tree/main/src/WikiParse/parsewiki"
-    click DM "https://github.com/mdwiki-td/fix_refs/tree/main/src/WikiParse/parsewiki/DataModel"
+    click PARSER "https://github.com/mdwiki-td/fix_refs/tree/main/src/WikiParse/src"
+    click DM "https://github.com/mdwiki-td/fix_refs/tree/main/src/WikiParse/src/DataModel"
     click CAT "https://github.com/mdwiki-td/fix_refs/blob/main/src/WikiParse/Category.php"
     click CIT "https://github.com/mdwiki-td/fix_refs/blob/main/src/WikiParse/Citations.php"
     click CITREG "https://github.com/mdwiki-td/fix_refs/blob/main/src/WikiParse/Citations_reg.php"
     click TPL "https://github.com/mdwiki-td/fix_refs/blob/main/src/WikiParse/Template.php"
     click INC "https://github.com/mdwiki-td/fix_refs/blob/main/src/WikiParse/include_it.php"
-    click P_CAT "https://github.com/mdwiki-td/fix_refs/blob/main/src/WikiParse/parsewiki/ParserCategorys.php"
-    click P_CIT "https://github.com/mdwiki-td/fix_refs/blob/main/src/WikiParse/parsewiki/ParserCitations.php"
-    click P_EXT "https://github.com/mdwiki-td/fix_refs/blob/main/src/WikiParse/parsewiki/ParserExternalLinks.php"
-    click P_INT "https://github.com/mdwiki-td/fix_refs/blob/main/src/WikiParse/parsewiki/ParserInternalLinks.php"
-    click P_TPL "https://github.com/mdwiki-td/fix_refs/blob/main/src/WikiParse/parsewiki/ParserTemplate.php"
-    click P_TPLS "https://github.com/mdwiki-td/fix_refs/blob/main/src/WikiParse/parsewiki/ParserTemplates.php"
+    click P_CAT "https://github.com/mdwiki-td/fix_refs/blob/main/src/WikiParse/src/ParserCategorys.php"
+    click P_CIT "https://github.com/mdwiki-td/fix_refs/blob/main/src/WikiParse/src/ParserCitations.php"
+    click P_EXT "https://github.com/mdwiki-td/fix_refs/blob/main/src/WikiParse/src/ParserExternalLinks.php"
+    click P_INT "https://github.com/mdwiki-td/fix_refs/blob/main/src/WikiParse/src/ParserInternalLinks.php"
+    click P_TPL "https://github.com/mdwiki-td/fix_refs/blob/main/src/WikiParse/src/ParserTemplate.php"
+    click P_TPLS "https://github.com/mdwiki-td/fix_refs/blob/main/src/WikiParse/src/ParserTemplates.php"
 
     %% Click Events for Bot Module
     click BOT1 "https://github.com/mdwiki-td/fix_refs/blob/main/src/bots/es_months.php"

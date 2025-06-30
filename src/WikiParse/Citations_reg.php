@@ -38,7 +38,6 @@ function get_name($options)
     $name = trim($matches[1]);
     return $name;
 }
-
 function get_Reg_Citations($text)
 {
     preg_match_all("/<ref([^\/>]*?)>(.+?)<\/ref>/is", $text, $matches);
