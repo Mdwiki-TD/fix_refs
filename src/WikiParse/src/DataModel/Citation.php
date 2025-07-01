@@ -2,31 +2,71 @@
 
 namespace WikiConnect\ParseWiki\DataModel;
 
+/**
+ * Class Citation
+ *
+ * Represents a citation in a wikitext document.
+ *
+ * @package WikiConnect\ParseWiki\DataModel
+ */
 class Citation
 {
-    private string $template;
-    private string $options;
-    private string $cite_text;
-    public function __construct(string $template, string $options = "", string $cite_text = "")
+    /**
+     * @var string The content of the citation.
+     */
+    private string $content;
+
+    /**
+     * @var string The attributes of the citation.
+     */
+    private string $attributes;
+    private string $orginal_text;
+
+    /**
+     * Citation constructor.
+     *
+     * @param string $content The content of the citation.
+     * @param string $attributes The attributes of the citation.
+     */
+    public function __construct(string $content, string $attributes = "", string $orginal_text = "")
     {
-        $this->template = $template;
-        $this->options = $options;
-        $this->cite_text = $cite_text;
+        $this->content = $content;
+        $this->attributes = $attributes;
+        $this->orginal_text = $orginal_text;
     }
-    public function getCiteText(): string
+
+
+    /**
+     * Get the template name of the citation.
+     *
+     * @return string The template name of the citation.
+     */
+    public function getOrginalCiteText(): string
     {
-        return $this->cite_text;
+        return $this->orginal_text;
     }
-    public function getTemplate(): string
+    public function getContent(): string
     {
-        return $this->template;
+        return $this->content;
     }
-    public function getOptions(): string
+
+    /**
+     * Get the attributes of the citation.
+     *
+     * @return string The attributes of the citation.
+     */
+    public function getAttributes(): string
     {
-        return $this->options;
+        return $this->attributes;
     }
+
+    /**
+     * Convert the citation to a string.
+     *
+     * @return string The citation as a string.
+     */
     public function toString(): string
     {
-        return "<ref " . trim($this->options) . ">" . $this->template . "</ref>";
+        return "<ref " . trim($this->attributes) . ">" . $this->content . "</ref>";
     }
 }

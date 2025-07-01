@@ -59,9 +59,9 @@ function remove_Duplicate_refs(string $text): string
         // ---
         $cite_text = $citation->getCiteText();
         // ---
-        // $cite_contents = $citation->getTemplate();
+        // $cite_contents = $citation->getContent();
         // ---
-        $cite_attrs = $citation->getOptions();
+        $cite_attrs = $citation->getAttributes();
         $cite_attrs = $cite_attrs ? trim($cite_attrs) : "";
         // ---
         if (empty($cite_attrs)) {
@@ -139,7 +139,7 @@ function fix_refs_names(string $text): string
     // ---
     foreach ($citations as $key => $citation) {
         // ---
-        $cite_attrs = $citation->getOptions();
+        $cite_attrs = $citation->getAttributes();
         $cite_attrs = $cite_attrs ? trim($cite_attrs) : "";
         // ---
         $if_in = "<ref $cite_attrs>";
