@@ -2,27 +2,51 @@
 
 namespace WikiConnect\ParseWiki;
 
+/**
+ * Class ParserCategories
+ * @package WikiConnect\ParseWiki
+ */
 class ParserCategories
 {
-    private array $categories;
+    /**
+     * @var array<string, string> $categories
+     */
+    private array $categories = [];
+
+    /**
+     * @var string $namespace
+     */
     private string $namespace;
+
+    /**
+     * @var string $text
+     */
     private string $text;
+
+    /**
+     * ParserCategories constructor.
+     * @param string $text
+     * @param string $namespace
+     */
     public function __construct(string $text, string $namespace = "")
     {
         $this->text = $text;
-        $this->namespace = $namespace == "" ? "Category" : $namespace;
-        $this->categories = array();
+        $this->namespace = $namespace !== "" ? $namespace : "Category";
         $this->parse();
     }
+
+    /**
+     * Parse the text for categories.
+     */
     public function parse(): void
     {
-        $categories = array();
-        // if (preg_match_all("\[\[\s*" . $this->namespace . "\s*\:([^\]\]]+?)\]\]", $this->text, $matches)) {
-        if (preg_match_all("/\[\[\s*" . $this->namespace . "\s*\:([^\]\]]+?)\]\]/", $this->text, $matches)) {
+        $categories = [];
 
-            foreach ($matches[1] as $index => $match) {
-                $parts = explode("|", $match);
-                $category = trim(array_shift($parts));
+        $pattern = '/\[\[\s*' . preg_quote($this->namespace, '/') . '\s*:\s*([^\]\|]+)(?:\|[^\]]*)?\s*\]\]/u';
+
+        if (preg_match_all($pattern, $this->text, $matches)) {
+            foreach ($matches[1] as $category) {
+                $category = trim($category);
                 $categories[md5($category)] = $category;
             }
         }
@@ -31,6 +55,11 @@ class ParserCategories
             $this->categories = $categories;
         }
     }
+
+    /**
+     * Get all categories found in the text.
+     * @return array<string, string>
+     */
     public function getCategories(): array
     {
         return $this->categories;
