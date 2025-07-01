@@ -20,7 +20,7 @@ class Citation
      * @var string The attributes of the citation.
      */
     private string $attributes;
-    private string $orginal_text;
+    private string $original_text;
 
     /**
      * Citation constructor.
@@ -28,11 +28,11 @@ class Citation
      * @param string $content The content of the citation.
      * @param string $attributes The attributes of the citation.
      */
-    public function __construct(string $content, string $attributes = "", string $orginal_text = "")
+    public function __construct(string $content, string $attributes = "", string $original_text = "")
     {
         $this->content = $content;
         $this->attributes = $attributes;
-        $this->orginal_text = $orginal_text;
+        $this->original_text = $original_text;
     }
 
 
@@ -41,9 +41,9 @@ class Citation
      *
      * @return string The template name of the citation.
      */
-    public function getOrginalCiteText(): string
+    public function getOriginalCiteText(): string
     {
-        return $this->orginal_text;
+        return $this->original_text;
     }
     public function getContent(): string
     {

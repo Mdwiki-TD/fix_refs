@@ -26,7 +26,7 @@ function get_refs(string $text): array
     // ---
     foreach ($citations as $key => $citation) {
         // ---
-        $cite_text = $citation->getOrginalCiteText();
+        $cite_text = $citation->getOriginalCiteText();
         // ---
         $cite_contents = $citation->getContent();
         // ---
