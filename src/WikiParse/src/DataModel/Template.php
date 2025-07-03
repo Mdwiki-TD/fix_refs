@@ -120,9 +120,9 @@ class Template
      *
      * @return string The value of the parameter.
      */
-    public function getParameter(string $key): string
+    public function getParameter(string $key, string $default = ""): string
     {
-        return $this->parameters[$key] ?? "";
+        return $this->parameters[$key] ?? $default;
     }
 
     /**

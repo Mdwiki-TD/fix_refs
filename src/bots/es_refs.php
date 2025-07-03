@@ -108,7 +108,7 @@ function add_line_to_temp($line, $text)
         // ---
         // echo_test("\n$name\n");
         // ---
-        $refn_param = $temp->getParameter("refs");
+        $refn_param = $temp->getParameter("refs", "");
         // ---
         if ($refn_param && !empty($refn_param)) {
             $refn_param = check_short_refs($refn_param);
