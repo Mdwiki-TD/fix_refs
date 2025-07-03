@@ -105,7 +105,7 @@ function fix_es_months($text)
     // ---
     foreach ($citations as $key => $citation) {
         // ---
-        $cite_temp = $citation->getTemplate();
+        $cite_temp = $citation->getContent();
         // ---
         // echo_debug("\ncite_temp: $cite_temp\n");
         // ---

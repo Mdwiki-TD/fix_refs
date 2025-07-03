@@ -149,7 +149,7 @@ function pt_months($text)
     // ---
     foreach ($citations as $key => $citation) {
         // ---
-        $cite_temp = $citation->getTemplate();
+        $cite_temp = $citation->getContent();
         // ---
         // echo_debug($cite_temp);
         // ---

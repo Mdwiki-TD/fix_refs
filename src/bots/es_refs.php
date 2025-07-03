@@ -26,11 +26,11 @@ function get_refs(string $text): array
     // ---
     foreach ($citations as $key => $citation) {
         // ---
-        $cite_text = $citation->getCiteText();
+        $cite_text = $citation->getOriginalCiteText();
         // ---
-        $cite_contents = $citation->getTemplate();
+        $cite_contents = $citation->getContent();
         // ---
-        $cite_attrs = $citation->getOptions();
+        $cite_attrs = $citation->getAttributes();
         $cite_attrs = $cite_attrs ? trim($cite_attrs) : "";
         // ---
         if (empty($cite_attrs)) {
@@ -108,7 +108,7 @@ function add_line_to_temp($line, $text)
         // ---
         // echo_test("\n$name\n");
         // ---
-        $refn_param = $temp->getParameter("refs");
+        $refn_param = $temp->getParameter("refs", "");
         // ---
         if ($refn_param && !empty($refn_param)) {
             $refn_param = check_short_refs($refn_param);
