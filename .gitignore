@@ -6,3 +6,4 @@ wikibots/save.php
 /TestsX
 /vendor
 .phpunit.result.cache
+/WikiParsetests
