@@ -26,7 +26,7 @@ function get_refs(string $text): array
     // ---
     foreach ($citations as $key => $citation) {
         // ---
-        $cite_text = $citation->getOriginalCiteText();
+        $cite_text = $citation->getOriginalText();
         // ---
         $cite_contents = $citation->getContent();
         // ---
@@ -100,7 +100,7 @@ function add_line_to_temp($line, $text)
         // ---
         // echo_test("\n$name\n");
         // ---
-        $old_text_template = $temp->getTemplateText();
+        $old_text_template = $temp->getOriginalText();
         // ---
         if (!in_array(strtolower($name), ["reflist", "listaref"])) {
             continue;

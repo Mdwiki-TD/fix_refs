@@ -82,7 +82,7 @@ function remove_Duplicate_refs(string $text): string
     // ---
     foreach ($citations as $key => $citation) {
         // ---
-        $cite_text = $citation->getOriginalCiteText();
+        $cite_text = $citation->getOriginalText();
         // ---
         // $cite_contents = $citation->getContent();
         // ---

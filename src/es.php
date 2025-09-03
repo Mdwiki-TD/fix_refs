@@ -155,7 +155,7 @@ function work_one_temp($temp, $name)
     $temp_name2 = isset($refs_temps[$name]) ? $refs_temps[$name] : $name;
     // ---
     if (strtolower($temp_name2) !== strtolower($name)) {
-        $temp->setTempName($temp_name2);
+        $temp->setName($temp_name2);
     }
     // ---
     // $params = $temp->getParameters();
@@ -186,7 +186,7 @@ function fix_temps($text)
         // ---
         // echo_test("* name: $name\n");
         // ---
-        $old_text_template = $temp->getTemplateText();
+        $old_text_template = $temp->getOriginalText();
         // ---
         if (!array_key_exists($name, $refs_temps) && !in_array($name, $refs_temps)) {
             // echo_test("not found: $name\n");

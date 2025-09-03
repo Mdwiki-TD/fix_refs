@@ -67,7 +67,7 @@ function fix_cites_text($temp_text)
     // ---
     foreach ($temps as $temp) {
         // ---
-        $temp_old = $temp->getTemplateText();
+        $temp_old = $temp->getOriginalText();
         // ---
         // echo_debug("temp_old:($temp_old)\n");
         // ---
