@@ -96,15 +96,6 @@ class ParserTemplates
         }
     }
 
-    /**
-     * Get all templates found in the text.
-     *
-     * If a name is given, only the templates with that name are returned.
-     *
-     * @param string|null $name The name of the template to return.
-     *
-     * @return Template[] An array of Template objects.
-     */
     public function getTemplates(string $name = null): array
     {
         $outtemplates = [];
