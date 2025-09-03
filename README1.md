@@ -17,7 +17,7 @@ This project is a PHP-based tool designed to process and correct Wikipedia artic
 - **Submodules:**
   - **Parsing logic:** `src/WikiParse/src`
   - **Data models:** `src/WikiParse/src/DataModel`
-    - `Citation.php`
+    - `Tag.php`
     - `ExternalLink.php`
     - `InternalLink.php`
     - `Table.php`

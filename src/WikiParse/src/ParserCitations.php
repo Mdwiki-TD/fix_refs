@@ -2,7 +2,8 @@
 
 namespace WikiConnect\ParseWiki;
 
-use WikiConnect\ParseWiki\DataModel\Citation;
+use WikiConnect\ParseWiki\DataModel\Tag;
+use WikiConnect\ParseWiki\ParserTags;
 
 /**
  * Class ParserCitations
@@ -19,14 +20,12 @@ class ParserCitations
     private string $text;
 
     /**
-     * @var Citation[] Array of extracted citations.
+     * @var Tag[] Array of extracted citations.
      */
     private array $citations;
 
     /**
      * ParserCitations constructor.
-     *
-     * Initializes the parser with the given text and starts the parsing process.
      *
      * @param string $text The text to parse.
      */
@@ -37,43 +36,20 @@ class ParserCitations
     }
 
     /**
-     * Find and extract citations from the given string.
-     *
-     * Uses a regular expression to match citations wrapped in <ref> tags.
-     *
-     * @param string $string The string to search for citations.
-     * @return array An array of matches found in the string.
-     */
-    private function find_sub_citations(string $string): array
-    {
-        preg_match_all("/<ref([^\/>]*?)>(.+?)<\/ref>/is", $string, $matches);
-        return $matches;
-    }
-
-    /**
-     * Parse the text for citations and store them.
-     *
-     * Uses find_sub_citations to identify citations and initializes
-     * Citation objects for each one found.
+     * Parse the text for <ref> tags using ParserTags and store them.
      *
      * @return void
      */
     public function parse(): void
     {
-        $text_citations = $this->find_sub_citations($this->text);
-        $this->citations = [];
-        foreach ($text_citations[1] as $key => $text_citation) {
-            $_Citation = new Citation($text_citations[2][$key], $text_citation, $text_citations[0][$key]);
-            $this->citations[] = $_Citation;
-        }
+        $tagParser = new ParserTags($this->text, 'ref'); // use ParserTags to extract <ref> tags
+        $this->citations = $tagParser->getTags();
     }
 
     /**
      * Get all citations found in the text.
      *
-     * Returns the array of Citation objects extracted from the text.
-     *
-     * @return Citation[] Array of Citation objects.
+     * @return Tag[] Array of Tag objects.
      */
     public function getCitations(): array
     {

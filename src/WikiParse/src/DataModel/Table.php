@@ -126,4 +126,8 @@ class Table
         $tableMarkup .= "|}";
         return $tableMarkup;
     }
+    public function __toString(): string
+    {
+        return $this->toString();
+    }
 }

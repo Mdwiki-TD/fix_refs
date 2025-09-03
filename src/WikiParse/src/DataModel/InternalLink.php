@@ -67,4 +67,8 @@ class InternalLink
             return "[[" . $this->target . "|" . $this->text . "]]";
         }
     }
+    public function __toString(): string
+    {
+        return $this->toString();
+    }
 }

@@ -56,4 +56,8 @@ class ExternalLink
             return "[" . $this->link . " " . $this->text . "]";
         }
     }
+    public function __toString(): string
+    {
+        return $this->toString();
+    }
 }

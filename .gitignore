@@ -4,3 +4,5 @@
 py_to_php1.zip
 wikibots/save.php
 /TestsX
+/vendor
+.phpunit.result.cache
