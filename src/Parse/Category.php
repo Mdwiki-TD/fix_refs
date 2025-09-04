@@ -1,13 +1,11 @@
 <?php
 
-namespace WikiParse\Category;
-
-include_once __DIR__ . '/include_it.php';
+namespace WpRefs\Parse\Category;
 
 /*
 Usage:
 
-use function WikiParse\Category\get_categories_reg;
+use function WpRefs\Parse\Category\get_categories_reg;
 
 */
 

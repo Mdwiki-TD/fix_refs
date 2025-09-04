@@ -3,7 +3,7 @@
 include_once __DIR__ . '/../../src/include_files.php';
 
 use PHPUnit\Framework\TestCase;
-use function WikiParse\Category\get_categories_reg;
+use function WpRefs\Parse\Category\get_categories_reg;
 
 class CategoryTest extends TestCase
 {
