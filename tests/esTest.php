@@ -3,7 +3,7 @@
 include_once __DIR__ . '/../src/include_files.php';
 
 use PHPUnit\Framework\TestCase;
-use function WpRefs\Bots\es_months\fix_es_months;
+use function WpRefs\Bots\es_months\fix_es_months_in_refs;
 use function WpRefs\ES\fix_es;
 use function WpRefs\ES\fix_temps;
 
@@ -11,7 +11,7 @@ function fix_temps_wrap($text)
 {
     // ---
     $result = fix_temps($text);
-    $result = fix_es_months($result);
+    $result = fix_es_months_in_refs($result);
     $result = preg_replace("/\s*=\s*/", "=", $result);
     // ---
     return $result;

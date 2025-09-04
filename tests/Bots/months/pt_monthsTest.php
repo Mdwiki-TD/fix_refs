@@ -8,7 +8,7 @@ use function WpRefs\Bots\FixPtMonth\rm_ref_spaces;
 use function WpRefs\Bots\FixPtMonth\fix_pt_months_in_texts;
 use function WpRefs\Bots\FixPtMonth\fix_pt_months_in_refs;
 
-class fix_pt_monthsTest extends TestCase
+class pt_monthsTest extends TestCase
 {
     private function assertEqualCompare(string $expected, string $input, string $result)
     {
