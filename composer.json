@@ -1,7 +1,7 @@
 {
     "name": "mdwiki/fixrefs",
     "type": "library",
-    "description": "",
+    "description": "A library to parse and fix references in MediaWiki wikitext",
     "keywords": [
         "Mediawiki",
         "Parser",

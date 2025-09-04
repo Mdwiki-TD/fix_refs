@@ -66,6 +66,7 @@ function new_date($val, $lang = 'pt')
                 if ($lang === 'es') {
                     return trim($day ? "$day de $translatedMonth de $year" : "$translatedMonth de $year");
                 }
+                // no de before year in pt
                 return trim($day ? "$day de $translatedMonth $year" : "$translatedMonth $year");
             }
         }

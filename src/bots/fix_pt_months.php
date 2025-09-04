@@ -58,7 +58,8 @@ function fix_pt_months_in_texts($temp_text)
             // ---
             $new_value = make_date_new_val_pt($value);
             // ---
-            if ($new_value && $new_value != trim($value)) {
+            // if ($new_value && $new_value != trim($value)) {
+            if ($new_value !== null && trim((string)$new_value) !== trim((string)$value)) {
                 $temp->setParameter($key, $new_value);
             }
         }
