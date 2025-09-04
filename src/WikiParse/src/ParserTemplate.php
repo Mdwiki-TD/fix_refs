@@ -13,7 +13,7 @@ use WikiConnect\ParseWiki\DataModel\Template;
 class ParserTemplate
 {
     private string $templateText;
-    private string $name;
+    private string $name = "";
     private array $parameters;
     private string $pipe = "|";
     private string $pipeR = "-_-";
