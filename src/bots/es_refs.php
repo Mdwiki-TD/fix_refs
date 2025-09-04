@@ -8,8 +8,8 @@ use function WpRefs\Bots\es_refs\mv_es_refs;
 */
 
 use function WikiParse\Template\getTemplates;
-use function WikiParse\Reg_Citations\getShortCitations;
-use function WikiParse\Citations\getCitations;
+use function WpRefs\Parse\Reg_Citations\getShortCitations;
+use function WpRefs\Parse\Citations\getCitationsOld;
 
 function get_refs(string $text): array
 {
@@ -18,7 +18,7 @@ function get_refs(string $text): array
     // ---
     $refs = [];
     // ---
-    $citations = getCitations($text);
+    $citations = getCitationsOld($text);
     // ---
     $new_text = $text;
     // ---

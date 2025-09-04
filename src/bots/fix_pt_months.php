@@ -8,8 +8,7 @@ use function WpRefs\FixPtMonth\pt_months;
 
 */
 
-// use function WikiParse\Citations\get_full_refs;
-use function WikiParse\Citations\getCitations;
+use function WpRefs\Parse\Citations\getCitationsOld;
 use function WikiParse\Template\getTemplate;
 use function WikiParse\Template\getTemplates;
 use function WpRefs\TestBot\echo_test;
@@ -85,7 +84,7 @@ function pt_months($text)
     // ---
     // echo_test("pt_months:");
     // ---
-    $citations = getCitations($text);
+    $citations = getCitationsOld($text);
     // ---
     $new_text = $text;
     // ---

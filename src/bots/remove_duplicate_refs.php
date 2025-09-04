@@ -13,7 +13,7 @@ use function WpRefs\DelDuplicateRefs\fix_refs_names;
 
 use function WpRefs\Bots\AttrsUtils\get_attrs;
 use function WpRefs\Bots\RefsUtils\remove_start_end_quotes;
-use function WikiParse\Citations\getCitations;
+use function WpRefs\Parse\Citations\getCitationsOld;
 use function WpRefs\TestBot\echo_debug;
 
 function remove_Duplicate_refs(string $text): string
@@ -25,7 +25,7 @@ function remove_Duplicate_refs(string $text): string
     // ---
     $refs = [];
     // ---
-    $citations = getCitations($new_text);
+    $citations = getCitationsOld($new_text);
     // ---
     $numb = 0;
     // ---
@@ -33,7 +33,7 @@ function remove_Duplicate_refs(string $text): string
         // ---
         $cite_text = $citation->getOriginalText();
         // ---
-        echo_debug("\ncite_text: (($cite_text))\n");
+        echo_debug("\ncite_text: (($cite_text))");
         // ---
         // $cite_contents = $citation->getContent();
         // ---
@@ -75,7 +75,7 @@ function fix_refs_names(string $text): string
     // ---
     $new_text = $text;
     // ---
-    $citations = getCitations($text);
+    $citations = getCitationsOld($text);
     // ---
     $new_text = $text;
     // ---

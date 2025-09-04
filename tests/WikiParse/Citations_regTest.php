@@ -4,10 +4,10 @@ include_once __DIR__ . '/../../src/include_files.php';
 
 use PHPUnit\Framework\TestCase;
 
-use function WikiParse\Reg_Citations\get_name;
-use function WikiParse\Reg_Citations\get_Reg_Citations;
-use function WikiParse\Reg_Citations\get_full_refs;
-use function WikiParse\Reg_Citations\getShortCitations;
+use function WpRefs\Parse\Reg_Citations\get_name;
+use function WpRefs\Parse\Reg_Citations\get_Reg_Citations;
+use function WpRefs\Parse\Reg_Citations\get_full_refs;
+use function WpRefs\Parse\Reg_Citations\getShortCitations;
 
 class Citations_regTest extends TestCase
 {

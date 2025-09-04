@@ -5,6 +5,10 @@ include_once __DIR__ . '/WikiParse/include_it.php';
 
 include_once __DIR__ . '/mv_dots.php';
 
+foreach (glob(__DIR__ . "/Parse/*.php") as $filename) {
+    include_once $filename;
+}
+
 foreach (glob(__DIR__ . "/bots/*.php") as $filename) {
     include_once $filename;
 }

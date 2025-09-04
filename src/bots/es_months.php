@@ -9,8 +9,7 @@ use function WpRefs\Bots\es_months\make_date_new_val_es;
 use function WpRefs\Bots\es_months\fix_es_months;
 */
 
-// use function WikiParse\Citations\get_full_refs;
-use function WikiParse\Citations\getCitations;
+use function WpRefs\Parse\Citations\getCitationsOld;
 use function WikiParse\Template\getTemplate;
 use function WikiParse\Template\getTemplates;
 use function WpRefs\TestBot\echo_debug;
@@ -84,7 +83,7 @@ function fix_es_months($text)
     // ---
     $new_text = $text;
     // ---
-    $citations = getCitations($text);
+    $citations = getCitationsOld($text);
     // ---
     foreach ($citations as $key => $citation) {
         // ---
