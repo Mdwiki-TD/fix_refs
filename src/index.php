@@ -11,7 +11,7 @@ use function WpRefs\WprefText\fix_page;
 
 use function WpRefs\TestBot\echo_test;
 use function WpRefs\Infobox\Expend_Infobox;
-use function WpRefs\FixPtMonth\pt_fixes;
+use function WpRefs\Bots\FixPtMonth\pt_fixes;
 use function WpRefs\SW\sw_fixes;
 use function WpRefs\ES\fix_es;
 use function WpRefs\ES\es_section;

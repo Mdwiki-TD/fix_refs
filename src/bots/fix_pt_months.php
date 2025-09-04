@@ -1,45 +1,43 @@
 <?php
 
-namespace WpRefs\FixPtMonth;
+namespace WpRefs\Bots\FixPtMonth;
 /*
 usage:
 
-use function WpRefs\FixPtMonth\pt_months;
+use function WpRefs\Bots\FixPtMonth\fix_pt_months_in_refs;
 
 */
 
-use function WpRefs\Parse\Citations\getCitationsOld;
-use function WikiParse\Template\getTemplate;
-use function WikiParse\Template\getTemplates;
 use function WpRefs\TestBot\echo_test;
 use function WpRefs\TestBot\echo_debug;
+use function WpRefs\Parse\Citations\getCitationsOld;
+use function WikiParse\Template\getTemplates;
 use function WpRefs\Bots\MonthNewValue\make_date_new_val_pt;
 
-function fix_one_cite_text($temp_text)
+
+function start_end($cite_temp)
 {
-    // ---
-    $temp_text = trim($temp_text);
-    // ---
-    $temp = getTemplate($temp_text);
-    // ---
-    $params = $temp->getParameters();
-    // ---
-    foreach ($params as $key => $value) {
-        // ---
-        $new_value = make_date_new_val_pt($value);
-        // ---
-        if ($new_value && $new_value != $value) {
-            $temp->setParameter($key, $new_value);
-        }
-    }
-    // ---
-    $new_text = $temp->toString();
-    // ---
-    return $new_text;
+    return strpos($cite_temp, "{{") === 0 && strrpos($cite_temp, "}}") === strlen($cite_temp) - 2;
 }
 
+function rm_ref_spaces($newtext)
+{
+    // ---
+    // \s*(\.|,|。|।)\s*((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)
+    // ---
+    $dot = "(\.|,|。|।)";
+    // ---
+    $regline = "((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)";
+    // ---
+    $pattern = "/\s*" . $dot . "\s*" . $regline . "/m";
+    $replacement = "$1$2";
+    // ---
+    $newtext = preg_replace($pattern, $replacement, $newtext);
+    // ---
+    return $newtext;
+}
 
-function fix_cites_text($temp_text)
+function fix_pt_months_in_texts($temp_text)
 {
     // ---
     $new_text = $temp_text;
@@ -60,7 +58,7 @@ function fix_cites_text($temp_text)
             // ---
             $new_value = make_date_new_val_pt($value);
             // ---
-            if ($new_value && $new_value != $value) {
+            if ($new_value && $new_value != trim($value)) {
                 $temp->setParameter($key, $new_value);
             }
         }
@@ -73,16 +71,12 @@ function fix_cites_text($temp_text)
     return $new_text;
 }
 
-
-function start_end($cite_temp)
-{
-    return strpos($cite_temp, "{{") === 0 && strrpos($cite_temp, "}}") === strlen($cite_temp) - 2;
-}
-
-function pt_months($text)
+function fix_pt_months_in_refs($text)
 {
     // ---
-    // echo_test("pt_months:");
+    //
+    // ---
+    // echo_test("fix_pt_months_in_refs:");
     // ---
     $citations = getCitationsOld($text);
     // ---
@@ -99,8 +93,7 @@ function pt_months($text)
         // ---
         // echo_debug("\n$cite_temp\n");
         // ---
-        $new_temp = fix_cites_text($cite_temp);
-        // $new_temp = fix_one_cite_text($cite_temp);
+        $new_temp = fix_pt_months_in_texts($cite_temp);
         // ---
         // if ($new_temp != $cite_temp) echo_debug("new_temp != cite_temp\n");
         // ---
@@ -114,27 +107,10 @@ function pt_months($text)
     return $new_text;
 }
 
-function rm_ref_spaces($newtext)
-{
-    // ---
-    // \s*(\.|,|。|।)\s*((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)
-    // ---
-    $dot = "(\.|,|。|।)";
-    // ---
-    $regline = "((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)";
-    // ---
-    $pattern = "/\s*" . $dot . "\s*" . $regline . "/m";
-    $replacement = "$1$2";
-    // ---
-    $newtext = preg_replace($pattern, $replacement, $newtext);
-    // ---
-    return $newtext;
-}
-
 function pt_fixes($text)
 {
     // ---
-    $text = pt_months($text);
+    $text = fix_pt_months_in_refs($text);
     // ---
     $text = rm_ref_spaces($text);
     // ---

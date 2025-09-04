@@ -4,7 +4,7 @@ include_once __DIR__ . '/../../src/include_files.php';
 
 use PHPUnit\Framework\TestCase;
 use function WpRefs\Bots\es_months\fix_one_cite_temp;
-use function WpRefs\Bots\es_months\fix_cites_text;
+use function WpRefs\Bots\es_months\fix_pt_months_in_texts;
 use function WpRefs\Bots\es_months\fix_es_months;
 
 class es_monthsTest extends TestCase
@@ -40,7 +40,7 @@ function fix_one_cite_temp($temp_text)
     return $new_text;
 }
 
-function fix_cites_text($temp_text)
+function fix_pt_months_in_texts($temp_text)
 {
     // ---
     $new_text = $temp_text;
@@ -97,7 +97,7 @@ function fix_es_months($text)
         // if (start_end($cite_temp) || defined("DEBUG") || True) {
         // ---
         // $new_temp = fix_one_cite_temp($cite_temp);
-        $new_temp = fix_cites_text($cite_temp);
+        $new_temp = fix_pt_months_in_texts($cite_temp);
         // ---
         // if ($new_temp != $cite_temp) echo_debug("new_temp != cite_temp\n");
         // ---
