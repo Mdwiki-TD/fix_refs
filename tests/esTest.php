@@ -68,7 +68,7 @@ class esTest extends TestCase
         $this->assertEquals($text_output, $result);
     }
 
-    public function z_test_fix_es_1()
+    public function test_fix_es_1()
     {
         $text_input   = file_get_contents(__DIR__ . "/texts/fix_es_1_output.txt");
         $text_output  = file_get_contents(__DIR__ . "/texts/fix_es_2_output.txt");
