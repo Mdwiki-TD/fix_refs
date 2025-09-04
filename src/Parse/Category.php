@@ -9,13 +9,13 @@ use function WpRefs\Parse\Category\get_categories_reg;
 
 */
 
-function get_categories_reg($text)
+function get_categories_reg(string $text): array
 {
     $categories = array();
 
     // هذا التعبير النمطي يستخدم العودية (?R) للتعامل مع الأقواس المتداخلة بشكل صحيح.
     // (?R) تطابق النمط بأكمله مرة أخرى، مما يسمح بمطابقة هياكل متداخلة مثل [[...[...]...]].
-    $pattern = "/\[\[\s*Category\s*\:([^\]\]]+?)\]\]/is";
+    $pattern = "/\[\[\s*Category\s*:([^\]\]]+?)\]\]/is";
     // $pattern = "/\[\[\s*Category\s*:(.*?)\]\](?!\])/is";
 
     preg_match_all($pattern, $text, $matches);
