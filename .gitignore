@@ -1,8 +1,9 @@
 
-/tests
-
 py_to_php1.zip
 wikibots/save.php
-/vendor
 /TestsX
+/vendor
 .phpunit.result.cache
+/WikiParsetests
+/tests_x
+composer.lock

@@ -20,7 +20,7 @@ flowchart TD
             CITREG["Citations_reg.php"]:::parser
             TPL["Template.php"]:::parser
             INC["include_it.php"]:::parser
-            P_CAT["ParserCategorys.php"]:::parser
+            P_CAT["ParserCategories.php"]:::parser
             P_CIT["ParserCitations.php"]:::parser
             P_EXT["ParserExternalLinks.php"]:::parser
             P_INT["ParserInternalLinks.php"]:::parser
@@ -97,7 +97,7 @@ flowchart TD
     click CITREG "https://github.com/mdwiki-td/fix_refs/blob/main/src/WikiParse/Citations_reg.php"
     click TPL "https://github.com/mdwiki-td/fix_refs/blob/main/src/WikiParse/Template.php"
     click INC "https://github.com/mdwiki-td/fix_refs/blob/main/src/WikiParse/include_it.php"
-    click P_CAT "https://github.com/mdwiki-td/fix_refs/blob/main/src/WikiParse/src/ParserCategorys.php"
+    click P_CAT "https://github.com/mdwiki-td/fix_refs/blob/main/src/WikiParse/src/ParserCategories.php"
     click P_CIT "https://github.com/mdwiki-td/fix_refs/blob/main/src/WikiParse/src/ParserCitations.php"
     click P_EXT "https://github.com/mdwiki-td/fix_refs/blob/main/src/WikiParse/src/ParserExternalLinks.php"
     click P_INT "https://github.com/mdwiki-td/fix_refs/blob/main/src/WikiParse/src/ParserInternalLinks.php"
