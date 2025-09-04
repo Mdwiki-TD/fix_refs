@@ -14,6 +14,7 @@ use function WpRefs\DelDuplicateRefs\fix_refs_names;
 use function WpRefs\Bots\AttrsUtils\get_attrs;
 use function WpRefs\Bots\RefsUtils\remove_start_end_quotes;
 use function WikiParse\Citations\getCitations;
+use function WpRefs\TestBot\echo_debug;
 
 function remove_Duplicate_refs(string $text): string
 {
@@ -32,6 +33,8 @@ function remove_Duplicate_refs(string $text): string
         // ---
         $cite_text = $citation->getOriginalText();
         // ---
+        echo_debug("\ncite_text: (($cite_text))\n");
+        // ---
         // $cite_contents = $citation->getContent();
         // ---
         $cite_attrs = $citation->getAttributes();
@@ -44,8 +47,6 @@ function remove_Duplicate_refs(string $text): string
         }
         // ---
         $cite_newtext = "<ref $cite_attrs />";
-        // ---
-        // echo_test("\n$cite_newtext\n");
         // ---
         if (isset($refs[$cite_attrs])) {
             // ---

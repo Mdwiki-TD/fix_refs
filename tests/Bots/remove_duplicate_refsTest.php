@@ -68,6 +68,14 @@ class remove_duplicate_refsTest extends TestCase
     public function testRemoveDuplicateRefs()
     {
         $tests = [
+            [
+                "input" => 'test <ref name="PI2023">{{Cite web|title=DailyMed - SKYCLARYS- omaveloxolone capsule}}</ref> adv <ref name="PI2023" /> 205<ref name="PI2023">{{Cite web|title=DailyMed - SKYCLARYS- omaveloxolone capsule}} any test</ref>',
+                "expected" => 'test <ref name="PI2023">{{Cite web|title=DailyMed - SKYCLARYS- omaveloxolone capsule}}</ref> adv <ref name="PI2023" /> 205<ref name="PI2023" />'
+            ],
+            [
+                "input" => 'test <ref name="PI2023">{{Cite web|title=DailyMed - SKYCLARYS- omaveloxolone capsule}}</ref> adv 205<ref name="PI2023">{{Cite web|title=DailyMed - SKYCLARYS- omaveloxolone capsule}} any test</ref>',
+                "expected" => 'test <ref name="PI2023">{{Cite web|title=DailyMed - SKYCLARYS- omaveloxolone capsule}}</ref> adv 205<ref name="PI2023" />'
+            ],
             // Case: Single reference without name
             [
                 "input" => "<ref>Reference without name1</ref>",
@@ -95,15 +103,24 @@ class remove_duplicate_refsTest extends TestCase
             $this->assertEquals($test['expected'], $result);
         }
     }
+    public function testRemoveGroupRefs()
+    {
+        $input = '<ref name="test" group="notes">Ref</ref> <ref group="notes" name="test">Ref</ref>';
+        $expected = '<ref name="test" group="notes">Ref</ref> <ref group="notes" name="test" />';
+        $result = remove_Duplicate_refs($input);
+        $this->assertEquals($expected, $result);
+    }
+    public function testRemoveMedRefs()
+    {
+        $input = '<ref name="PI2023">{{Cite web|title=DailyMed - SKYCLARYS- omaveloxolone capsule|url=https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1a1100e-8318-1596-e053-2995a90a533e|website=dailymed.nlm.nih.gov|access-date=24 May 2023|archive-date=1 July 2023|archive-url=https://web.archive.org/web/20230701174203/https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1a1100e-8318-1596-e053-2995a90a533e|url-status=live}}</ref> ଅତିକମରେ ୧୬ ବର୍ଷ ବୟସରେ ଏହା ବ୍ୟବହୃତ ହୁଏ ।<ref name="PI2023" /> ଏହା ପାଟିରେ ଦିଆଯାଏ ।<ref name="PI2023">{{Cite web|title=DailyMed - SKYCLARYS- omaveloxolone capsule|url=https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1a1100e-8318-1596-e053-2995a90a533e|website=dailymed.nlm.nih.gov|access-date=24 May 2023|archive-date=1 July 2023|archive-url=https://web.archive.org/web/20230701174203/https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1a1100e-8318-1596-e053-2995a90a533e|url-status=live}}<cite class="citation web cs1" data-ve-ignore="true">[https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1a1100e-8318-1596-e053-2995a90a533e "DailyMed - SKYCLARYS- omaveloxolone capsule"]. \'\'dailymed.nlm.nih.gov\'\'. [https://web.archive.org/web/20230701174203/https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1a1100e-8318-1596-e053-2995a90a533e Archived] from the original on 1 July 2023<span class="reference-accessdate">. Retrieved <span class="nowrap">24 May</span> 2023</span>.</cite></ref>';
+        $expected = '<ref name="PI2023">{{Cite web|title=DailyMed - SKYCLARYS- omaveloxolone capsule|url=https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1a1100e-8318-1596-e053-2995a90a533e|website=dailymed.nlm.nih.gov|access-date=24 May 2023|archive-date=1 July 2023|archive-url=https://web.archive.org/web/20230701174203/https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1a1100e-8318-1596-e053-2995a90a533e|url-status=live}}</ref> ଅତିକମରେ ୧୬ ବର୍ଷ ବୟସରେ ଏହା ବ୍ୟବହୃତ ହୁଏ ।<ref name="PI2023" /> ଏହା ପାଟିରେ ଦିଆଯାଏ ।<ref name="PI2023" />';
+        $result = remove_Duplicate_refs($input);
+        $this->assertEquals($expected, $result);
+    }
     // اختبارات دالة remove_Duplicate_refs
-    public function _testRemoveIdenticalRefs()
+    public function testRemoveIdenticalRefs()
     {
         $tests = [
-            // Case: References with different attribute order
-            [
-                "input" => '<ref name="test" group="notes">Ref</ref> <ref group="notes" name="test">Ref</ref>',
-                "expected" => '<ref name="test" group="notes">Ref</ref> <ref name="test" group="notes" />'
-            ],
             // Case: Mixed references with and without names
             [
                 "input" => '<ref name="named">Named</ref> <ref>Unnamed</ref> <ref>Unnamed</ref>',
