@@ -60,7 +60,7 @@ class ParserTags
         );
 
         foreach ($standardMatches as $match) {
-            echo "\n$match[0]\n";
+            // echo "\n$match[0]\n";
             $matches[] = [
                 'original'    => $match[0],
                 'name'        => $match['tag'],
