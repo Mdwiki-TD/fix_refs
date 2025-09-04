@@ -74,8 +74,6 @@ function fix_pt_months_in_texts($temp_text)
 function fix_pt_months_in_refs($text)
 {
     // ---
-    //
-    // ---
     // echo_test("fix_pt_months_in_refs:");
     // ---
     $citations = getCitationsOld($text);

@@ -38,7 +38,7 @@ function fix_one_cite_temp($temp_text)
     return $new_text;
 }
 
-function fix_pt_months_in_texts($temp_text)
+function fix_es_months_in_texts($temp_text)
 {
     // ---
     $new_text = $temp_text;
@@ -95,7 +95,7 @@ function fix_es_months($text)
         // if (start_end($cite_temp) || defined("DEBUG") || True) {
         // ---
         // $new_temp = fix_one_cite_temp($cite_temp);
-        $new_temp = fix_pt_months_in_texts($cite_temp);
+        $new_temp = fix_es_months_in_texts($cite_temp);
         // ---
         // if ($new_temp != $cite_temp) echo_debug("new_temp != cite_temp\n");
         // ---
