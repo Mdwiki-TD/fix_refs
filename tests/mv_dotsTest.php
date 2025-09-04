@@ -12,8 +12,8 @@ class mv_dotsTest extends TestCase
     // Tests for move_dots_text function
     public function testMoveDotsTextSingleDot()
     {
-        $input = "This is a sentence.<ref>Reference 1</ref>";
-        $expected = "This is a sentence<ref>Reference 1</ref>.";
+        $input = "This is a sentence。<ref>Reference 1</ref>";
+        $expected = "This is a sentence<ref>Reference 1</ref>。";
         $this->assertEquals($expected, move_dots_text($input, 'en'));
     }
 
@@ -26,8 +26,8 @@ class mv_dotsTest extends TestCase
 
     public function testMoveDotsTextMultipleRefs()
     {
-        $input = "Text.<ref>Ref1</ref><ref>Ref2</ref>";
-        $expected = "Text<ref>Ref1</ref><ref>Ref2</ref>.";
+        $input = "Text।<ref>Ref1</ref><ref>Ref2</ref>";
+        $expected = "Text<ref>Ref1</ref><ref>Ref2</ref>।";
         $this->assertEquals($expected, move_dots_text($input, 'en'));
     }
 
