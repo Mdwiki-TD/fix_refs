@@ -4,12 +4,12 @@ namespace WikiConnect\ParseWiki\DataModel;
 
 class Citation
 {
-    private string $template;
+    private string $text;
     private string $options;
     private string $cite_text;
-    public function __construct(string $template, string $options = "", string $cite_text = "")
+    public function __construct(string $text, string $options = "", string $cite_text = "")
     {
-        $this->template = $template;
+        $this->text = $text;
         $this->options = $options;
         $this->cite_text = $cite_text;
     }
@@ -19,7 +19,11 @@ class Citation
     }
     public function getTemplate(): string
     {
-        return $this->template;
+        return $this->text;
+    }
+    public function getContent(): string
+    {
+        return $this->text;
     }
     public function getAttributes(): string
     {
@@ -27,6 +31,6 @@ class Citation
     }
     public function toString(): string
     {
-        return "<ref " . trim($this->options) . ">" . $this->template . "</ref>";
+        return "<ref " . trim($this->options) . ">" . $this->text . "</ref>";
     }
 }
