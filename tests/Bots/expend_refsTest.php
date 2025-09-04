@@ -14,8 +14,8 @@ class expend_refsTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->text_input   = file_get_contents(__DIR__ . "/texts/expend.txt");
-        $this->text_output  = file_get_contents(__DIR__ . "/texts/expend_fixed.txt");
+        $this->text_input   = file_get_contents(__DIR__ . "/texts/expend_input.txt");
+        $this->text_output  = file_get_contents(__DIR__ . "/texts/expend_output.txt");
         $this->refs_expends  = refs_expend_work($this->text_input);
     }
 
