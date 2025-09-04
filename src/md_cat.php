@@ -9,11 +9,11 @@ use function WpRefs\MdCat\add_Translated_from_MDWiki;
 
 use function WpRefs\TestBot\echo_test;
 
-$usr_agent = 'WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)';
+
 
 function get_url_curl(string $url): string
 {
-    global $usr_agent;
+    $usr_agent = 'WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)';
 
     $ch = curl_init();
 

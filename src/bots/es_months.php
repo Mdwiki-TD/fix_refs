@@ -5,33 +5,15 @@ namespace WpRefs\Bots\es_months;
 (January|February|March|April|May|June|July|August|September|October|November|December)
 usage:
 
-use function WpRefs\Bots\es_months\make_new_val;
+use function WpRefs\Bots\es_months\make_date_new_val_es;
 use function WpRefs\Bots\es_months\fix_es_months;
 */
 
-// use function WikiParse\Citations\get_full_refs;
-use function WikiParse\Citations\getCitations;
+use function WpRefs\Parse\Citations\getCitationsOld;
 use function WikiParse\Template\getTemplate;
 use function WikiParse\Template\getTemplates;
 use function WpRefs\TestBot\echo_debug;
-
-// Define the Spanish month translations
-$es_months_tab = [
-    "January" => "enero",
-    "February" => "febrero",
-    "March" => "marzo",
-    "April" => "abril",
-    "May" => "mayo",
-    "June" => "junio",
-    "July" => "julio",
-    "August" => "agosto",
-    "September" => "septiembre",
-    "October" => "octubre",
-    "November" => "noviembre",
-    "December" => "diciembre",
-];
-
-$es_months_lower = array_change_key_case($es_months_tab, CASE_LOWER);
+use function WpRefs\Bots\MonthNewValue\make_date_new_val_es;
 
 function fix_one_cite_temp($temp_text)
 {
@@ -44,7 +26,7 @@ function fix_one_cite_temp($temp_text)
     // ---
     foreach ($params as $key => $value) {
         // ---
-        $new_value = make_new_val($value);
+        $new_value = make_date_new_val_es($value);
         // ---
         if ($new_value && $new_value != $value) {
             $temp->setParameter($key, $new_value);
@@ -56,7 +38,7 @@ function fix_one_cite_temp($temp_text)
     return $new_text;
 }
 
-function fix_cites_text($temp_text)
+function fix_pt_months_in_texts($temp_text)
 {
     // ---
     $new_text = $temp_text;
@@ -67,7 +49,7 @@ function fix_cites_text($temp_text)
     // ---
     foreach ($temps as $temp) {
         // ---
-        $temp_old = $temp->getTemplateText();
+        $temp_old = $temp->getOriginalText();
         // ---
         // echo_debug("temp_old:($temp_old)\n");
         // ---
@@ -75,7 +57,7 @@ function fix_cites_text($temp_text)
         // ---
         foreach ($params as $key => $value) {
             // ---
-            $new_value = make_new_val($value);
+            $new_value = make_date_new_val_es($value);
             // ---
             if ($new_value && $new_value != $value) {
                 $temp->setParameter($key, $new_value);
@@ -101,11 +83,11 @@ function fix_es_months($text)
     // ---
     $new_text = $text;
     // ---
-    $citations = getCitations($text);
+    $citations = getCitationsOld($text);
     // ---
     foreach ($citations as $key => $citation) {
         // ---
-        $cite_temp = $citation->getTemplate();
+        $cite_temp = $citation->getContent();
         // ---
         // echo_debug("\ncite_temp: $cite_temp\n");
         // ---
@@ -113,7 +95,7 @@ function fix_es_months($text)
         // if (start_end($cite_temp) || defined("DEBUG") || True) {
         // ---
         // $new_temp = fix_one_cite_temp($cite_temp);
-        $new_temp = fix_cites_text($cite_temp);
+        $new_temp = fix_pt_months_in_texts($cite_temp);
         // ---
         // if ($new_temp != $cite_temp) echo_debug("new_temp != cite_temp\n");
         // ---
@@ -123,48 +105,3 @@ function fix_es_months($text)
     // ---
     return $new_text;
 }
-
-function make_new_val($val)
-{
-    global $es_months_lower;
-    // ---
-    $newVal = $val;
-    // ---
-    $patterns = [
-        // Match date like: January, 2020 or 10 January, 2020
-        '/^(?P<d>\d{1,2} |)(?P<m>January|February|March|April|May|June|July|August|September|October|November|December),* (?P<y>\d{4})$/',
-        // Match date like: January 10, 2020
-        '/^(?P<m>January|February|March|April|May|June|July|August|September|October|November|December) (?P<d>\d{1,2}),* (?P<y>\d{4})$/',
-    ];
-
-    foreach ($patterns as $pattern) {
-        preg_match($pattern, trim($val), $matches);
-        // ---
-        if ($matches) {
-            $day = trim($matches['d']);
-            $month = trim($matches['m']);
-            $year = trim($matches['y']);
-            // ---
-            // echo_test("day:$val\n");
-            // echo_test("day:$day, month:$month, year:$year\n");
-            // ---
-            $translatedMonth = $es_months_lower[strtolower($month)] ?? "";
-
-            if (!empty($translatedMonth)) {
-                if (!empty($day)) {
-                    $translatedMonth = "de $translatedMonth"; // Prepend "de" for "of" in Portuguese
-                }
-
-                $newVal = "$day $translatedMonth de $year";
-                return trim($newVal);
-            }
-        }
-    }
-
-    return trim($newVal);
-}
-
-// // Example usage
-// $dateString = "10 January, 2024";
-// $newDateString = make_new_val($dateString);
-// echo $newDateString; // Output: 10 de janeiro de 2024

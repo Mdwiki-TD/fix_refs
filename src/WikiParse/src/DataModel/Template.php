@@ -16,7 +16,7 @@ class Template
         $this->parameters = $parameters;
         $this->templateText = $templateText;
     }
-    public function getTemplateText(): string
+    public function getOriginalText(): string
     {
         return $this->templateText;
     }
@@ -43,7 +43,7 @@ class Template
     {
         return $this->parameters[$key] ?? "";
     }
-    public function setTempName(string $name): void
+    public function setName(string $name): void
     {
         $this->name = $name;
     }

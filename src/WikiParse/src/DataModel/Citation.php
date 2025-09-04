@@ -13,7 +13,7 @@ class Citation
         $this->options = $options;
         $this->cite_text = $cite_text;
     }
-    public function getCiteText(): string
+    public function getOriginalText(): string
     {
         return $this->cite_text;
     }
@@ -21,7 +21,7 @@ class Citation
     {
         return $this->template;
     }
-    public function getOptions(): string
+    public function getAttributes(): string
     {
         return $this->options;
     }
