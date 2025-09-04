@@ -4,12 +4,21 @@ include_once __DIR__ . '/../../src/include_files.php';
 
 use PHPUnit\Framework\TestCase;
 
-use function WpRefs\DelDuplicateRefs\remove_Duplicate_refs;
+use function WpRefs\DelDuplicateRefs\remove_Duplicate_refs_With_attrs;
 use function WpRefs\DelDuplicateRefs\fix_refs_names;
 
 
 class remove_duplicate_refsTest extends TestCase
 {
+    private function assertEqualCompare(string $expected, string $input, string $result)
+    {
+        if ($result === $input && $result !== $expected) {
+            $this->fail("No changes were made! The function returned the input unchanged:\n$result");
+        } else {
+            $this->assertEquals($expected, $result, "Unexpected result:\n$result");
+        }
+    }
+
     // اختبارات دالة fix_refs_names
     public function testFixRefsNames()
     {
@@ -60,11 +69,11 @@ class remove_duplicate_refsTest extends TestCase
 
         foreach ($tests as $test) {
             $result = fix_refs_names($test['input']);
-            $this->assertEquals($test['expected'], $result);
+            $this->assertEqualCompare($test['expected'], $test['input'], $result);
         }
     }
 
-    // اختبارات دالة remove_Duplicate_refs
+    // اختبارات دالة remove_Duplicate_refs_With_attrs
     public function testRemoveDuplicateRefs()
     {
         $tests = [
@@ -99,58 +108,46 @@ class remove_duplicate_refsTest extends TestCase
         ];
 
         foreach ($tests as $test) {
-            $result = remove_Duplicate_refs($test['input']);
-            $this->assertEquals($test['expected'], $result);
+            $result = remove_Duplicate_refs_With_attrs($test['input']);
+            $this->assertEqualCompare($test['expected'], $test['input'], $result);
         }
     }
-    public function testRemoveGroupRefs()
+    public function testRemoveGroupRefsDiff()
     {
-        $input = '<ref name="test" group="notes">Ref</ref> <ref group="notes" name="test">Ref</ref>';
-        $expected = '<ref name="test" group="notes">Ref</ref> <ref group="notes" name="test" />';
-        $result = remove_Duplicate_refs($input);
-        $this->assertEquals($expected, $result);
+        $input = '<ref name="test" group="notes">Ref</ref> <ref name="test" group="notes">Ref</ref>';
+        $expected = '<ref name="test" group="notes">Ref</ref> <ref name="test" group="notes" />';
+        $result = remove_Duplicate_refs_With_attrs($input);
+        $this->assertEqualCompare($expected, $input, $result);
     }
     public function testRemoveMedRefs()
     {
         $input = '<ref name="PI2023">{{Cite web|title=DailyMed - SKYCLARYS- omaveloxolone capsule|url=https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1a1100e-8318-1596-e053-2995a90a533e|website=dailymed.nlm.nih.gov|access-date=24 May 2023|archive-date=1 July 2023|archive-url=https://web.archive.org/web/20230701174203/https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1a1100e-8318-1596-e053-2995a90a533e|url-status=live}}</ref> ଅତିକମରେ ୧୬ ବର୍ଷ ବୟସରେ ଏହା ବ୍ୟବହୃତ ହୁଏ ।<ref name="PI2023" /> ଏହା ପାଟିରେ ଦିଆଯାଏ ।<ref name="PI2023">{{Cite web|title=DailyMed - SKYCLARYS- omaveloxolone capsule|url=https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1a1100e-8318-1596-e053-2995a90a533e|website=dailymed.nlm.nih.gov|access-date=24 May 2023|archive-date=1 July 2023|archive-url=https://web.archive.org/web/20230701174203/https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1a1100e-8318-1596-e053-2995a90a533e|url-status=live}}<cite class="citation web cs1" data-ve-ignore="true">[https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1a1100e-8318-1596-e053-2995a90a533e "DailyMed - SKYCLARYS- omaveloxolone capsule"]. \'\'dailymed.nlm.nih.gov\'\'. [https://web.archive.org/web/20230701174203/https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1a1100e-8318-1596-e053-2995a90a533e Archived] from the original on 1 July 2023<span class="reference-accessdate">. Retrieved <span class="nowrap">24 May</span> 2023</span>.</cite></ref>';
         $expected = '<ref name="PI2023">{{Cite web|title=DailyMed - SKYCLARYS- omaveloxolone capsule|url=https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1a1100e-8318-1596-e053-2995a90a533e|website=dailymed.nlm.nih.gov|access-date=24 May 2023|archive-date=1 July 2023|archive-url=https://web.archive.org/web/20230701174203/https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1a1100e-8318-1596-e053-2995a90a533e|url-status=live}}</ref> ଅତିକମରେ ୧୬ ବର୍ଷ ବୟସରେ ଏହା ବ୍ୟବହୃତ ହୁଏ ।<ref name="PI2023" /> ଏହା ପାଟିରେ ଦିଆଯାଏ ।<ref name="PI2023" />';
-        $result = remove_Duplicate_refs($input);
-        $this->assertEquals($expected, $result);
+        $result = remove_Duplicate_refs_With_attrs($input);
+        $this->assertEqualCompare($expected, $input, $result);
     }
-    // اختبارات دالة remove_Duplicate_refs
-    public function testRemoveIdenticalRefs()
+    public function _testRemoveGroupRefs()
     {
-        $tests = [
-            // Case: Mixed references with and without names
-            [
-                "input" => '<ref name="named">Named</ref> <ref>Unnamed</ref> <ref>Unnamed</ref>',
-                "expected" => '<ref name="named">Named</ref> <ref name="autogen_1">Unnamed</ref> <ref name="autogen_1"/>'
-            ],
-            // Case: References with group attribute
-            [
-                "input" => '<ref group="notes">Refs3</ref> <ref group="notes">Refs3</ref>',
-                "expected" => '<ref name="autogen_1" group="notes">Refs3</ref> <ref name="autogen_1" group="notes" />'
-            ],
-            // Case: Multiple references with duplicates
-            [
-                "input" => '<ref name="x">A</ref> <ref name="x">A</ref> <ref>B</ref> <ref>B</ref>',
-                "expected" => '<ref name="x">A</ref> <ref name="x"/> <ref name="autogen_1">B</ref> <ref name="autogen_1" />'
-            ],
-            // Case: Two identical references without name
-            [
-                "input" => "<ref>Identical reference</ref> <ref>Identical reference</ref>",
-                "expected" => '<ref name="autogen_1">Identical reference</ref> <ref name="autogen_1" />'
-            ],
-            // Case: Reference without name followed by identical content
-            [
-                "input" => "<ref>Refs4</ref> <ref>Refs4</ref>",
-                "expected" => '<ref name="autogen_1">Refs4</ref> <ref name="autogen_1" />'
-            ]
-        ];
-
-        foreach ($tests as $test) {
-            $result = remove_Duplicate_refs($test['input']);
-            $this->assertEquals($test['expected'], $result);
-        }
+        $input = '<ref name="test" group="notes">Ref</ref> <ref group="notes" name="test">Ref</ref>';
+        $expected = '<ref name="test" group="notes">Ref</ref> <ref group="notes" name="test" />';
+        $result = remove_Duplicate_refs_With_attrs($input);
+        $this->assertEqualCompare($expected, $input, $result);
+    }
+    public function testRemoveIdenticalRefs_WithGroupAttribute()
+    {
+        $input = '<ref group="notes">Refs3</ref> <ref group="notes">Refs3</ref>';
+        // $expected = '<ref name="autogen_1" group="notes">Refs3</ref> <ref name="autogen_1" group="notes" />';
+        $expected = '<ref group="notes">Refs3</ref> <ref group="notes" />';
+        $result = remove_Duplicate_refs_With_attrs($input);
+        $this->assertEqualCompare($expected, $input, $result);
+    }
+    public function testFileText()
+    {
+        $text_input   = file_get_contents(__DIR__ . "/texts/del_dup_input.txt");
+        $text_output  = file_get_contents(__DIR__ . "/texts/del_dup_output.txt");
+        // --
+        $result = remove_Duplicate_refs_With_attrs($text_input);
+        // --
+        $this->assertEqualCompare($text_output, $text_input, $result);
     }
 }

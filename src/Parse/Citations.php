@@ -24,10 +24,6 @@ class CitationOld
     {
         return $this->cite_text;
     }
-    public function getTemplate(): string
-    {
-        return $this->text;
-    }
     public function getContent(): string
     {
         return $this->text;
