@@ -2,107 +2,150 @@
 
 namespace WikiConnect\ParseWiki\DataModel;
 
+use WikiConnect\ParseWiki\DataModel\Parameters;
+
+
+/**
+ * Class Template
+ *
+ * Represents a template in a wikitext document.
+ *
+ * @package WikiConnect\ParseWiki\DataModel
+ */
 class Template
 {
-    private string $template;
+    /**
+     * The name.
+     *
+     * @var string The name.
+     */
     private string $name;
-    private string $name_strip;
-    private string $templateText;
-    private array $parameters;
-    public function __construct(string $name, array $parameters = [], string $templateText = "")
+    /**
+     * The name stripped of any underscores.
+     *
+     * @var string
+     */
+    private string $nameStrip;
+
+    /**
+     * The text.
+     *
+     * @var string The original, unprocessed text.
+     */
+    private string $originalText;
+
+    public Parameters $parameters;
+
+    /**
+     * Template constructor.
+     *
+     * @param string $name The name.
+     * @param array $parameters The parameters.
+     * @param string $originalText The text.
+     */
+    public function __construct(string $name, array $parameters = [], string $originalText = "")
     {
         $this->name = $name;
-        $this->name_strip = trim(str_replace('_', ' ', $name));
-        $this->parameters = $parameters;
-        $this->templateText = $templateText;
+        $this->nameStrip = trim(str_replace('_', ' ', $name));
+        $this->originalText = $originalText;
+        $this->parameters = new Parameters($parameters);
     }
-    public function getTemplateText(): string
+
+    /**
+     * Get the name stripped of any underscores.
+     *
+     * @return string The name stripped of any underscores.
+     */
+
+    public function getStripName(): string
     {
-        return $this->templateText;
+        return $this->nameStrip;
     }
+
+    /**
+     * Get the name.
+     *
+     * @return string The name.
+     */
+
     public function getName(): string
     {
         return $this->name;
     }
-    public function getStripName(): string
+
+    /**
+     * Get the original, unprocessed text.
+     * Example: {{cite web|...}}
+     * @return string The original text.
+     */
+
+    public function getOriginalText(): string
     {
-        return $this->name_strip;
+        return $this->originalText;
     }
+
+    /**
+     * Get the parameters.
+     *
+     * @return array The parameters.
+     */
 
     public function getParameters(): array
     {
-        return $this->parameters;
+        return $this->parameters->getParameters();
     }
     public function deleteParameter(string $key): void
     {
-        if (array_key_exists($key, $this->parameters)) {
-            unset($this->parameters[$key]);
-        }
+        $this->parameters->delete($key);
     }
     public function getParameter(string $key): string
     {
-        return $this->parameters[$key] ?? "";
+        return $this->parameters->get($key);
     }
-    public function setTempName(string $name): void
+    /**
+     * Set the name.
+     *
+     * @param string $name The new name.
+     *
+     * @return void
+     */
+
+    public function setName(string $name): void
     {
         $this->name = $name;
+        $this->nameStrip = trim(str_replace('_', ' ', $name));
     }
     public function setParameter(string $key, string $value): void
     {
-        $this->parameters[$key] = $value;
+        $this->parameters->set($key, $value);
     }
     public function changeParameterName(string $old, string $new): void
     {
-        $newParameters = [];
-        foreach ($this->parameters as $k => $v) {
-            if ($k === $old) {
-                $k = $new;
-            };
-            $newParameters[$k] = $v;
-        }
-        $this->parameters = $newParameters;
+        $this->parameters->changeParametersNames([$old => $new]);
     }
-
     public function changeParametersNames(array $params_new): void
     {
-        $newParameters = [];
-        foreach ($this->parameters as $k => $v) {
-            $k = isset($params_new[$k]) ? $params_new[$k] : $k;
-            $newParameters[$k] = $v;
-        }
-        $this->parameters = $newParameters;
+        $this->parameters->changeParametersNames($params_new);
     }
-
-    private function formatParameters(string $separator, int $ljust, bool $newLine): string
-    {
-        $result = "";
-        $index = 1;
-        foreach ($this->parameters as $key => $value) {
-            $formattedValue = $newLine ? trim($value) : $value;
-
-            if ($index == $key) {
-                $result .= "|" . $formattedValue;
-            } else {
-                $formattedKey = $ljust > 0 ? str_pad($key, $ljust, " ") : $key;
-                // $result .= $separator . "|" . $formattedKey . " = " . $formattedValue;
-                $result .= $separator . "|" . $formattedKey . "=" . $formattedValue;
-            }
-            $index++;
-        }
-
-        return $result;
-    }
-
+    /**
+     * Convert the content to a string.
+     *
+     * @return string The tag as a string.
+     */
     public function toString(bool $newLine = false, $ljust = 0): string
     {
         $separator = $newLine ? "\n" : "";
         $templateName = $newLine ? trim($this->name) : $this->name;
 
-        $result = "{{" . $templateName;
+        $result = "{{" . $templateName . $separator;
 
-        $result .= $this->formatParameters($separator, $ljust, $newLine);
+        $result .= $this->parameters->toString($ljust, $newLine);
 
         $result .= $separator . "}}";
         return $result;
+    }
+    public function __toString(): string
+    {
+        return $this->toString();
     }
 }

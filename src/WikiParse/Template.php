@@ -2,8 +2,6 @@
 
 namespace WikiParse\Template;
 
-include_once __DIR__ . '/include_it.php';
-
 /*
 Usage:
 

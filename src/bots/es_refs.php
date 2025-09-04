@@ -8,8 +8,8 @@ use function WpRefs\Bots\es_refs\mv_es_refs;
 */
 
 use function WikiParse\Template\getTemplates;
-use function WikiParse\Reg_Citations\getShortCitations;
-use function WikiParse\Citations\getCitations;
+use function WpRefs\Parse\Reg_Citations\getShortCitations;
+use function WpRefs\Parse\Citations\getCitationsOld;
 
 function get_refs(string $text): array
 {
@@ -18,7 +18,7 @@ function get_refs(string $text): array
     // ---
     $refs = [];
     // ---
-    $citations = getCitations($text);
+    $citations = getCitationsOld($text);
     // ---
     $new_text = $text;
     // ---
@@ -26,11 +26,11 @@ function get_refs(string $text): array
     // ---
     foreach ($citations as $key => $citation) {
         // ---
-        $cite_text = $citation->getCiteText();
+        $cite_text = $citation->getOriginalText();
         // ---
-        $cite_contents = $citation->getTemplate();
+        $cite_contents = $citation->getContent();
         // ---
-        $cite_attrs = $citation->getOptions();
+        $cite_attrs = $citation->getAttributes();
         $cite_attrs = $cite_attrs ? trim($cite_attrs) : "";
         // ---
         if (empty($cite_attrs)) {
@@ -100,7 +100,7 @@ function add_line_to_temp($line, $text)
         // ---
         // echo_test("\n$name\n");
         // ---
-        $old_text_template = $temp->getTemplateText();
+        $old_text_template = $temp->getOriginalText();
         // ---
         if (!in_array(strtolower($name), ["reflist", "listaref"])) {
             continue;

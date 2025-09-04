@@ -21,7 +21,7 @@ function extract_templates_and_params($text)
         // ---
         $name = $temp->getStripName();
         // ---
-        $text_template = $temp->getTemplateText();
+        $text_template = $temp->getOriginalText();
         // ---
         $params = $temp->getParameters();
         // ---

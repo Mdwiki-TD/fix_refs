@@ -11,12 +11,12 @@ use function WpRefs\WprefText\fix_page;
 
 use function WpRefs\TestBot\echo_test;
 use function WpRefs\Infobox\Expend_Infobox;
-use function WpRefs\FixPtMonth\pt_fixes;
+use function WpRefs\Bots\FixPtMonth\pt_fixes;
 use function WpRefs\SW\sw_fixes;
 use function WpRefs\ES\fix_es;
 use function WpRefs\ES\es_section;
 // use function WpRefs\DelDuplicateRefs\fix_refs_names;
-use function WpRefs\DelDuplicateRefs\remove_Duplicate_refs;
+use function WpRefs\DelDuplicateRefs\remove_Duplicate_refs_With_attrs;
 use function WpRefs\MoveDots\move_dots_text;
 use function WpRefs\MoveDots\add_lang_en;
 use function WpRefs\MdCat\add_Translated_from_MDWiki;
@@ -42,7 +42,7 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sou
     // ---
     $text = mini_fixes($text, $lang);
     // ---
-    $text = remove_Duplicate_refs($text);
+    $text = remove_Duplicate_refs_With_attrs($text);
     // ---
     if ($move_dots) {
         echo_test("move_dots\n");

@@ -9,8 +9,8 @@ use function WpRefs\ExpendRefs\refs_expend_work;
 
 */
 
-use function WikiParse\Reg_Citations\get_full_refs;
-use function WikiParse\Reg_Citations\getShortCitations;
+use function WpRefs\Parse\Reg_Citations\get_full_refs;
+use function WpRefs\Parse\Reg_Citations\getShortCitations;
 
 function refs_expend_work($first, $alltext = "")
 {
