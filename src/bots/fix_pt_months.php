@@ -5,7 +5,6 @@ namespace WpRefs\FixPtMonth;
 usage:
 
 use function WpRefs\FixPtMonth\pt_months;
-use function WpRefs\FixPtMonth\make_new_pt_val;
 
 */
 
@@ -15,64 +14,7 @@ use function WikiParse\Template\getTemplate;
 use function WikiParse\Template\getTemplates;
 use function WpRefs\TestBot\echo_test;
 use function WpRefs\TestBot\echo_debug;
-
-// Define the Spanish month translations
-$pt_months_tab = [
-    "January" => "janeiro",
-    "February" => "fevereiro",
-    "March" => "março",
-    "April" => "abril",
-    "May" => "maio",
-    "June" => "junho",
-    "July" => "julho",
-    "August" => "agosto",
-    "September" => "setembro",
-    "October" => "outubro",
-    "November" => "novembro",
-    "December" => "dezembro",
-];
-
-$pt_months_lower = array_change_key_case($pt_months_tab, CASE_LOWER);
-
-function make_new_pt_val($val)
-{
-    global $pt_months_lower;
-    // ---
-    $newVal = $val;
-    // ---
-    $patterns = [
-        // Match date like: January, 2020 or 10 January, 2020
-        '/^(?P<d>\d{1,2} |)(?P<m>January|February|March|April|May|June|July|August|September|October|November|December),* (?P<y>\d{4})$/',
-        // Match date like: January 10, 2020
-        '/^(?P<m>January|February|March|April|May|June|July|August|September|October|November|December) (?P<d>\d{1,2}),* (?P<y>\d{4})$/',
-    ];
-    // ---
-    foreach ($patterns as $pattern) {
-        preg_match($pattern, trim($val), $matches);
-        // ---
-        if ($matches) {
-            $day = trim($matches['d']);
-            $month = trim($matches['m']);
-            $year = trim($matches['y']);
-            // ---
-            // echo_test("day:$val\n");
-            // echo_test("day:$day, month:$month, year:$year\n");
-            // ---
-            $translatedMonth = $pt_months_lower[strtolower($month)] ?? "";
-
-            if (!empty($translatedMonth)) {
-                if (!empty($day)) {
-                    $translatedMonth = "de $translatedMonth";
-                }
-
-                $newVal = "$day $translatedMonth $year";
-                return trim($newVal);
-            }
-        }
-    }
-
-    return trim($newVal);
-}
+use function WpRefs\Bots\MonthNewValue\make_date_new_val_pt;
 
 function fix_one_cite_text($temp_text)
 {
@@ -85,7 +27,7 @@ function fix_one_cite_text($temp_text)
     // ---
     foreach ($params as $key => $value) {
         // ---
-        $new_value = make_new_pt_val($value);
+        $new_value = make_date_new_val_pt($value);
         // ---
         if ($new_value && $new_value != $value) {
             $temp->setParameter($key, $new_value);
@@ -117,7 +59,7 @@ function fix_cites_text($temp_text)
         // ---
         foreach ($params as $key => $value) {
             // ---
-            $new_value = make_new_pt_val($value);
+            $new_value = make_date_new_val_pt($value);
             // ---
             if ($new_value && $new_value != $value) {
                 $temp->setParameter($key, $new_value);

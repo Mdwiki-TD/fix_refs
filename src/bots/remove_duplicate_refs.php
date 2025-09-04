@@ -7,65 +7,13 @@ namespace WpRefs\DelDuplicateRefs;
 Usage:
 
 use function WpRefs\DelDuplicateRefs\remove_Duplicate_refs;
+use function WpRefs\DelDuplicateRefs\fix_refs_names;
 
 */
 
+use function WpRefs\Bots\AttrsUtils\get_attrs;
+use function WpRefs\Bots\RefsUtils\remove_start_end_quotes;
 use function WikiParse\Citations\getCitations;
-
-function endsWith($string, $endString)
-{
-    $len = strlen($endString);
-    return substr($string, -$len) === $endString;
-}
-
-function strstartswith($text, $start)
-{
-    return strpos($text, $start) === 0;
-}
-function parseAttributes($text): array
-{
-    $text = "<ref " . $text . ">";
-
-    $attrfind_tolerant = '/
-            ((?<=[\'"\s\/])[^\s\/>][^\s\/=>]*)             # Attribute name
-            (\s*=+\s*                                      # Equals sign(s)
-            (
-                \'[^\']*\'                                 # Value in single quotes
-                |"[^"]*"                                   # Value in double quotes
-                |(?![\'"])[^>\s]*                          # Unquoted value
-            ))?
-            (?:\s|\/(?!>))*                                # Trailing space or slash not followed by >
-        /x';
-    $attributes_array = [];
-
-    if (preg_match_all($attrfind_tolerant, $text, $matches, PREG_SET_ORDER)) {
-        foreach ($matches as $match) {
-            $attr_name = strtolower($match[1]);
-            $attr_value = isset($match[3]) ? $match[3] : "";
-            $attributes_array[$attr_name] = $attr_value;
-        }
-    }
-
-    return $attributes_array;
-}
-function get_attrs($text)
-{
-    $text = "<ref $text>";
-    $attrfind_tolerant = '/((?<=[\'"\s\/])[^\s\/>][^\s\/=>]*)(\s*=+\s*(\'[^\']*\'|"[^"]*"|(?![\'"])[^>\s]*))?(?:\s|\/(?!>))*/';
-    $attrs = [];
-
-    if (preg_match_all($attrfind_tolerant, $text, $matches, PREG_SET_ORDER)) {
-        foreach ($matches as $match) {
-            $attr_name = strtolower($match[1]);
-            $attr_value = isset($match[3]) ? $match[3] : "";
-            $attrs[$attr_name] = $attr_value;
-        }
-    }
-    // ---
-    var_export($attrs);
-    // ---
-    return $attrs;
-}
 
 function remove_Duplicate_refs(string $text): string
 {
@@ -121,38 +69,6 @@ function remove_Duplicate_refs(string $text): string
     return $new_text;
 }
 
-
-function del_start_end(string $text, string $find): string
-{
-    // ---
-    $text = trim($text);
-    // ---
-    // if (str_starts_with($text, $find) && str_ends_with($text, $find)) {
-    if (strstartswith($text, $find) && endsWith($text, $find)) {
-        $text = substr($text, strlen($find)); // إزالة $find من البداية
-        $text = substr($text, 0, -strlen($find)); // إزالة $find من النهاية
-    }
-    // ---
-    return trim($text);
-}
-
-
-function fix_attr_value(string $text): string
-{
-    // ---
-    $text = trim($text);
-    // ---
-    $text = del_start_end($text, '"');
-    // ---
-    $text = del_start_end($text, "'");
-    // ---
-    // echo_test("\n$text\n");
-    // ---
-    $text = (strpos($text, '"') === false) ? '"' . $text . '"' : "'" . $text . "'";
-    // ---
-    return trim($text);
-}
-
 function fix_refs_names(string $text): string
 {
     // ---
@@ -183,7 +99,7 @@ function fix_refs_names(string $text): string
         // ---
         foreach ($attrs as $key => $value) {
             // ---
-            $value2 = fix_attr_value($value);
+            $value2 = remove_start_end_quotes($value);
             // ---
             $new_cite_attrs .= " $key=$value2";
             // ---

@@ -14,8 +14,15 @@ use function WpRefs\Bots\es_refs\mv_es_refs;
 use function WikiParse\Template\getTemplates;
 use function WpRefs\TestBot\echo_test;
 // ---
+
+class ESData
+{
+    public static $args_to = [];
+    public static $refs_temps = [];
+}
+
 // Mapping templates
-$refs_temps = [
+ESData::$refs_temps = [
     "cite web" => "cita web",
     "cite arxiv" => "cita arxiv",
     "cite certification" => "cita certificación",
@@ -42,7 +49,7 @@ $refs_temps = [
 
 // ---
 // Mapping arguments
-$args_to = [
+ESData::$args_to = [
     "title" => "título",
     "website" => "sitioweb",
     "access-date" => "fechaacceso",
@@ -63,7 +70,7 @@ $args_to = [
 
 // ---
 // More mapping with grouped parameters
-$params = [
+$params_es_up = [
     "nombre1" => ["first1", "given1"],
     "enlaceautor1" => [
         "authorlink1",
@@ -137,10 +144,10 @@ $params = [
     "otros" => ["others"],
 ];
 
-// Populate $args_to with $params
-foreach ($params as $new => $list) {
+// Populate $args_to with $params_es_up
+foreach ($params_es_up as $new => $list) {
     foreach ($list as $old) {
-        $args_to[$old] = $new;
+        ESData::$args_to[$old] = $new;
     }
 }
 
@@ -148,19 +155,17 @@ foreach ($params as $new => $list) {
 function work_one_temp($temp, $name)
 {
     // ---
-    global $refs_temps, $args_to;
-    // ---
     // echo_test("\n$name\n");
     // ---
-    $temp_name2 = isset($refs_temps[$name]) ? $refs_temps[$name] : $name;
+    $temp_name2 = isset(ESData::$refs_temps[$name]) ? ESData::$refs_temps[$name] : $name;
     // ---
     if (strtolower($temp_name2) !== strtolower($name)) {
         $temp->setName($temp_name2);
     }
     // ---
-    // $params = $temp->getParameters();
+    // $params_es_up = $temp->getParameters();
     // ---
-    $temp->changeParametersNames($args_to);
+    $temp->changeParametersNames(ESData::$args_to);
     // ---
     $temp->deleteParameter("url-status");
     // ---
@@ -171,8 +176,6 @@ function work_one_temp($temp, $name)
 
 function fix_temps($text)
 {
-    // ---
-    global $refs_temps;
     // ---
     $temps_in = getTemplates($text);
     // ---
@@ -188,7 +191,7 @@ function fix_temps($text)
         // ---
         $old_text_template = $temp->getOriginalText();
         // ---
-        if (!array_key_exists($name, $refs_temps) && !in_array($name, $refs_temps)) {
+        if (!array_key_exists($name, ESData::$refs_temps) && !in_array($name, ESData::$refs_temps)) {
             // echo_test("not found: $name\n");
             continue;
         }
@@ -231,7 +234,7 @@ function es_section($sourcetitle, $text, $mdwiki_revid)
     return $text;
 }
 
-function fix_es($text, $title)
+function fix_es($text, $title = "")
 {
     // Check for "#REDIRECCIÓN"
     if (strpos($text, "#REDIRECCIÓN") !== false && $title != "test!") {

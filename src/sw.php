@@ -13,7 +13,7 @@ function sw_fixes($text)
 {
     // ---
     // find == Marejeleo == replace by == Marejeo ==
-    $text = preg_replace('/==\s*Marejeleo\s*==/i', '== Marejeo ==', $text);
+    $text = preg_replace('/(=+)\s*Marejeleo\s*(\1)/i', '\1 Marejeo \1', $text);
     // ---
     return $text;
 }

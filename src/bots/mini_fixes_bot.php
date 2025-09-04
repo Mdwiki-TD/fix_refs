@@ -5,21 +5,10 @@ namespace WpRefs\Bots\Mini;
 usage:
 
 use function WpRefs\Bots\Mini\mini_fixes;
+use function WpRefs\Bots\Mini\fix_sections_titles;
 use function WpRefs\Bots\Mini\mini_fixes_after_fixing;
 
 */
-
-function remove_space_before_ref_tags($text, $lang)
-{
-    // ---
-    $for_langs = ["sw", "bn", "ar"];
-    // ---
-    // if (in_array($lang, $for_langs)) {
-    $text = preg_replace("/\s*(\.|,|。|।)\s*<ref/i", "$1<ref", $text);
-    // }
-    // ---
-    return $text;
-}
 
 function fix_sections_titles($text, $lang)
 {
@@ -45,6 +34,18 @@ function fix_sections_titles($text, $lang)
     return $text;
 }
 
+function remove_space_before_ref_tags($text, $lang)
+{
+    // ---
+    $for_langs = ["sw", "bn", "ar"];
+    // ---
+    // if (in_array($lang, $for_langs)) {
+    $text = preg_replace("/\s*(\.|,|。|।)\s*<ref/i", "$1<ref", $text);
+    // }
+    // ---
+    return $text;
+}
+
 function refs_tags_spaces($text)
 {
     // Remove spaces between reference tags more precisely
@@ -64,19 +65,6 @@ function refs_tags_spaces($text)
     // ---
     return $text;
 }
-
-function mini_fixes($text, $lang)
-{
-    // ---
-    $text = refs_tags_spaces($text);
-    // ---
-    $text = fix_sections_titles($text, $lang);
-    // ---
-    $text = remove_space_before_ref_tags($text, $lang);
-    // ---
-    return $text;
-}
-
 
 function fix_preffix($text, $lang)
 {
@@ -100,3 +88,16 @@ function mini_fixes_after_fixing($text, $lang)
     // ---
     return $text;
 }
+
+function mini_fixes($text, $lang)
+{
+    // ---
+    $text = refs_tags_spaces($text);
+    // ---
+    $text = fix_sections_titles($text, $lang);
+    // ---
+    $text = remove_space_before_ref_tags($text, $lang);
+    // ---
+    return $text;
+}
+
