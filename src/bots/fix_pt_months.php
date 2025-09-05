@@ -75,31 +75,26 @@ function fix_pt_months_in_texts($temp_text)
 function fix_pt_months_in_refs($text)
 {
     // ---
-    // echo_test("fix_pt_months_in_refs:");
-    // ---
-    $citations = getCitationsOld($text);
+    echo_debug("\n fix_pt_months_in_refs:\n");
     // ---
     $new_text = $text;
+    // ---
+    $citations = getCitationsOld($text);
     // ---
     foreach ($citations as $key => $citation) {
         // ---
         $cite_temp = $citation->getContent();
         // ---
-        // echo_debug($cite_temp);
+        // echo_debug("\n cite_temp: $cite_temp\n");
         // ---
         // if $cite_temp startwith {{ and ends with }}
         // if (start_end($cite_temp) || defined("DEBUG") || True) {
-        // ---
-        // echo_debug("\n$cite_temp\n");
         // ---
         $new_temp = fix_pt_months_in_texts($cite_temp);
         // ---
         // if ($new_temp != $cite_temp) echo_debug("new_temp != cite_temp\n");
         // ---
         $new_text = str_replace($cite_temp, $new_temp, $new_text);
-        // } else {
-        //     // ---
-        //     echo_debug("temp not okay: $cite_temp\n");
         // }
     }
     // ---

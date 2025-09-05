@@ -6,3 +6,6 @@ wikibots/save.php
 /WikiParsetests
 /tests_x
 composer.lock
+tests/Bots/texts/es_refs_output_fixed.txt
+tests/infoboxes/texts_infobox2/infobox2_fixed.txt
+tests/infoboxes/texts_infobox2/infobox2_tempse_fixed.json

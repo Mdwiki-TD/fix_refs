@@ -2,40 +2,22 @@
 
 namespace WpRefs\Bots\es_months;
 /*
-(January|February|March|April|May|June|July|August|September|October|November|December)
 usage:
 
-use function WpRefs\Bots\es_months\make_date_new_val_es;
-use function WpRefs\Bots\es_months\fix_es_months;
+use function WpRefs\Bots\es_months\fix_es_months_in_texts;
+use function WpRefs\Bots\es_months\fix_es_months_in_refs;
 */
 
-use function WpRefs\Parse\Citations\getCitationsOld;
-use function WikiParse\Template\getTemplate;
-use function WikiParse\Template\getTemplates;
+use function WpRefs\TestBot\echo_test;
 use function WpRefs\TestBot\echo_debug;
+use function WpRefs\Parse\Citations\getCitationsOld;
+use function WikiParse\Template\getTemplates;
 use function WpRefs\Bots\MonthNewValue\make_date_new_val_es;
 
-function fix_one_cite_temp($temp_text)
+
+function start_end($cite_temp)
 {
-    // ---
-    $temp_text = trim($temp_text);
-    // ---
-    $temp = getTemplate($temp_text);
-    // ---
-    $params = $temp->getParameters();
-    // ---
-    foreach ($params as $key => $value) {
-        // ---
-        $new_value = make_date_new_val_es($value);
-        // ---
-        if ($new_value && $new_value != $value) {
-            $temp->setParameter($key, $new_value);
-        }
-    }
-    // ---
-    $new_text = $temp->toString();
-    // ---
-    return $new_text;
+    return strpos($cite_temp, "{{") === 0 && strrpos($cite_temp, "}}") === strlen($cite_temp) - 2;
 }
 
 function fix_es_months_in_texts($temp_text)
@@ -59,7 +41,8 @@ function fix_es_months_in_texts($temp_text)
             // ---
             $new_value = make_date_new_val_es($value);
             // ---
-            if ($new_value && $new_value != $value) {
+            // if ($new_value && $new_value != trim($value)) {
+            if ($new_value !== null && trim((string)$new_value) !== trim((string)$value)) {
                 $temp->setParameter($key, $new_value);
             }
         }
@@ -71,15 +54,11 @@ function fix_es_months_in_texts($temp_text)
     }
     return $new_text;
 }
-function start_end($cite_temp)
-{
-    return strpos($cite_temp, "{{") === 0 && strrpos($cite_temp, "}}") === strlen($cite_temp) - 2;
-}
 
-function fix_es_months($text)
+function fix_es_months_in_refs($text)
 {
     // ---
-    echo_debug("\nfix_es_months:\n");
+    echo_debug("\n fix_es_months_in_refs:\n");
     // ---
     $new_text = $text;
     // ---
@@ -89,12 +68,11 @@ function fix_es_months($text)
         // ---
         $cite_temp = $citation->getContent();
         // ---
-        // echo_debug("\ncite_temp: $cite_temp\n");
+        // echo_debug("\n cite_temp: $cite_temp\n");
         // ---
         // if $cite_temp startwith {{ and ends with }}
         // if (start_end($cite_temp) || defined("DEBUG") || True) {
         // ---
-        // $new_temp = fix_one_cite_temp($cite_temp);
         $new_temp = fix_es_months_in_texts($cite_temp);
         // ---
         // if ($new_temp != $cite_temp) echo_debug("new_temp != cite_temp\n");
