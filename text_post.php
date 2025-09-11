@@ -55,15 +55,15 @@ $sourcetitle  = $data['sourcetitle'];
 
 if (!empty($lang) && !empty($title) && !empty($text)) {
     // ---
-    if (verify_csrf_token()) {
-        $new_text = DoChangesToText1($sourcetitle, $title, $text, $lang, $mdwiki_revid);
+    // if (verify_csrf_token()) {
+	$new_text = DoChangesToText1($sourcetitle, $title, $text, $lang, $mdwiki_revid);
 
-        if (trim($new_text) === trim($text)) {
-            $final_text = 'no changes';
-        } else {
-            $final_text = $new_text;
-        }
-    }
+	if (trim($new_text) === trim($text)) {
+		$final_text = 'no changes';
+	} else {
+		$final_text = $new_text;
+	}
+    // }
 } else {
     $final_text = 'no text';
 }
