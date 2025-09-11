@@ -73,11 +73,9 @@ function load_settings_new()
     return $new;
 }
 
-$setting = load_settings_new();
-
 function fix_page_here($text, $title, $langcode, $sourcetitle, $mdwiki_revid)
 {
-    global $setting;
+    static $setting = load_settings_new();
     // ---
     $lang_default = isset($setting[$langcode]) ? $setting[$langcode] : [];
     // ---
@@ -86,7 +84,7 @@ function fix_page_here($text, $title, $langcode, $sourcetitle, $mdwiki_revid)
     // var_export($lang_default);
     // ---
     $move_dots = isset($lang_default['move_dots']) && $lang_default['move_dots'] == 1;
-    $expand = isset($lang_default['expend']) && $lang_default['expend'] == 1;
+    $expand = (isset($lang_default['expend']) && $lang_default['expend'] == 1) || true;
     $add_en_lang = isset($lang_default['add_en_lang']) && $lang_default['add_en_lang'] == 1;
     // ---
     $text = fix_page($text, $title, $move_dots, $expand, $add_en_lang, $langcode, $sourcetitle, $mdwiki_revid);
