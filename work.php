@@ -75,7 +75,7 @@ function load_settings_new()
 
 function fix_page_here($text, $title, $langcode, $sourcetitle, $mdwiki_revid)
 {
-    static $setting = load_settings_new();
+    $setting = load_settings_new();
     // ---
     $lang_default = isset($setting[$langcode]) ? $setting[$langcode] : [];
     // ---
