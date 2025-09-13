@@ -73,18 +73,3 @@ function move_dots_after_refs($newtext, $lang)
     // ---
     return $newtext;
 }
-
-function remove_spaces_between_last_word_and_beginning_of_ref($newtext, $lang)
-{
-    // ---
-    $dot = "\.,。।";
-    // ---
-    if ($lang === "hy") {
-        $dot = "\.,。।։";
-    }
-    // ---
-    $pattern_end = "/(\S)\s+(?=(<ref[\s\S]+?(?:<\/ref|\/)>[" . $dot . "]+)\s*$(?!\S))/m";
-    $newtext = preg_replace($pattern_end, "$1", $newtext);
-    // ---
-    return $newtext;
-}
