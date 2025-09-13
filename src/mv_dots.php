@@ -21,8 +21,8 @@ function move_dots_text($newtext, $lang)
     // ---
     // echo_test("move_dots_text\n");
     // ---
-    // $dot = "(\.|,|。|।|։)";
-    $dot = "(\.|,|。|।)";
+    $dot = "(\.|,|。|।|։)";
+    // $dot = "(\.|,|。|।)";
     // ---
     $regline = "((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)";
     // ---
