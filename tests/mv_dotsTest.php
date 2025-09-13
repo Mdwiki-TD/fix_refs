@@ -3,9 +3,7 @@
 include_once __DIR__ . '/../../src/include_files.php';
 
 use PHPUnit\Framework\TestCase;
-use function WpRefs\MoveDots\move_dots_text;
-use function WpRefs\MoveDots\add_lang_en;
-use function WpRefs\MoveDots\add_lang_en_to_refs;
+use function WpRefs\MovesDots\move_dots_text;
 
 class mv_dotsTest extends TestCase
 {
@@ -44,54 +42,10 @@ class mv_dotsTest extends TestCase
         $expected = "Text<ref>Reference</ref>,";
         $this->assertEquals($expected, move_dots_text($input, 'en'));
     }
-
-    // Tests for add_lang_en function
-    public function testAddLangEnSimpleRef()
+    public function testMoveDotsTextHy()
     {
-        $input = "<ref>{{Citar web|Some text}}</ref> {{temp|test=1}}";
-        $expected = "<ref>{{Citar web|Some text|language=en}}</ref> {{temp|test=1}}";
-        $this->assertEquals($expected, add_lang_en($input));
-    }
-
-    public function testAddLangEnExistingLanguage()
-    {
-        $input = "<ref>{{Citar web|Text|language=fr}}</ref>";
-        $expected = "<ref>{{Citar web|Text|language=fr}}</ref>";
-        $this->assertEquals($expected, add_lang_en($input));
-    }
-
-    public function testAddLangEnEmptyRef()
-    {
-        $input = "<ref></ref>";
-        $expected = "<ref></ref>";
-        $this->assertEquals($expected, add_lang_en($input));
-    }
-
-    public function testAddLangEnWithExistingParams()
-    {
-        $input = " {{temp|test=1}} <ref>{{Citar web|Text|author=John}}</ref>";
-        $expected = " {{temp|test=1}} <ref>{{Citar web|Text|author=John|language=en}}</ref>";
-        $this->assertEquals($expected, add_lang_en($input));
-    }
-
-    public function testAddLangMalformedRef()
-    {
-        $input = "<ref>{{Citar web|Text|language = }}</ref> {{temp|test=1}}";
-        $expected = "<ref>{{Citar web|Text|language=en}}</ref> {{temp|test=1}}";
-        $this->assertEquals($expected, add_lang_en_to_refs($input));
-    }
-
-    public function testAddLangEn()
-    {
-        $input = "<ref>{{Citar web|Text|language=ar}}</ref>";
-        $expected = "<ref>{{Citar web|Text|language=ar}}</ref>";
-        $this->assertEquals($expected, add_lang_en($input));
-    }
-
-    public function testAddLangEnNoChangeNeeded()
-    {
-        $input = " {{temp|test=1}} <ref>{{Citar web|Text|language=en}}</ref>";
-        $expected = " {{temp|test=1}} <ref>{{Citar web|Text|language=en}}</ref>";
-        $this->assertEquals($expected, add_lang_en($input));
+        $input = 'Հետծննդյան հոգեբանական խանգարումը հանդիպում է 1000 ծննդաբերությունից 1-2-ի մոտ։ <ref name="Os2018" /><ref name="Li2018" /> Տարբեր [[Մշակույթ|մշակույթներում]] և [[Դասակարգային կառուցվածք|սոցիալական դասերում]] գները նման են թվում։ <ref name="Luc2021" /> Ավելի հաճախ այն հանդիպում է հայտնի կամ նոր սկսվող երկբևեռ խանգարման համատեքստում, որը հայտնի է որպես հետծննդյան երկբևեռ խանգարում : <ref name="Luc2021" /> Այս վիճակը նկարագրվել է դեռևս մ.թ.ա. 400 թվականից [[Հիպոկրատ|Հիպոկրատի]] կողմից ։ <ref name="Os2018" />';
+        $expected = 'Հետծննդյան հոգեբանական խանգարումը հանդիպում է 1000 ծննդաբերությունից 1-2-ի մոտ<ref name="Os2018" /><ref name="Li2018" />։ Տարբեր [[Մշակույթ|մշակույթներում]] և [[Դասակարգային կառուցվածք|սոցիալական դասերում]] գները նման են թվում<ref name="Luc2021" />։ Ավելի հաճախ այն հանդիպում է հայտնի կամ նոր սկսվող երկբևեռ խանգարման համատեքստում, որը հայտնի է որպես հետծննդյան երկբևեռ խանգարում : <ref name="Luc2021" /> Այս վիճակը նկարագրվել է դեռևս մ.թ.ա. 400 թվականից [[Հիպոկրատ|Հիպոկրատի]] կողմից<ref name="Os2018" />։';
+        $this->assertEquals($expected, move_dots_text($input, 'hy'));
     }
 }

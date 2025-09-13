@@ -3,6 +3,7 @@ include_once __DIR__ . '/test_bot.php';
 
 include_once __DIR__ . '/WikiParse/include_it.php';
 
+include_once __DIR__ . '/en_lang_param.php';
 include_once __DIR__ . '/mv_dots.php';
 
 foreach (glob(__DIR__ . "/infoboxes/*.php") as $filename) {
