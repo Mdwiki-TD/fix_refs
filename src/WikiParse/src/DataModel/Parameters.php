@@ -135,6 +135,11 @@ class Parameters
         $this->changeParametersNames([$old => $new]);
     }
 
+    public function str_pad_right($str, $length, $pad = " ", $encoding = "UTF-8")
+    {
+        $diff = $length - mb_strlen($str, $encoding);
+        return $diff > 0 ? $str . str_repeat($pad, $diff) : $str;
+    }
     public function toString(int $ljust = 0, bool $newLine = false): string
     {
         $separator = $newLine ? "\n" : "";
@@ -146,7 +151,8 @@ class Parameters
             if ($index == $key) {
                 $result .= "|" . $formattedValue;
             } else {
-                $formattedKey = $ljust > 0 ? str_pad($key, $ljust, " ") : $key;
+                // $formattedKey = $ljust > 0 ? str_pad($key, $ljust, " ") : $key;
+                $formattedKey = $ljust > 0 ? str_pad_right($key, $ljust) : $key;
                 $result .= $separator . "|" . $formattedKey . "=" . $formattedValue;
             }
             $index++;
