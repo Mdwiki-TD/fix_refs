@@ -32,7 +32,7 @@ function move_dots_before_refs(string $text, string $lang): string
     return $result;
 }
 
-function move_dots_after_refs($newtext, $lang)
+function move_dots_after_refs_ready($newtext, $lang)
 {
     // ---
     // echo_test("move_dots_after_refs\n");
@@ -46,6 +46,27 @@ function move_dots_after_refs($newtext, $lang)
     $regline = "((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)";
     // ---
     $pattern = "/" . $dot . "\s*" . $regline . "/m";
+    $replacement = "$2$1";
+    // ---
+    $newtext = preg_replace($pattern, $replacement, $newtext);
+    // ---
+    return $newtext;
+}
+
+function move_dots_after_refs($newtext, $lang)
+{
+    // ---
+    // echo_test("move_dots_after_refs\n");
+    // ---
+    $dot = "\.,。।";
+    // ---
+    if ($lang === "hy") {
+        $dot = "\.,。।։";
+    }
+    // ---
+    $regline = "((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)";
+    // ---
+    $pattern = "/([" . $dot . "]+)\s*" . $regline . "/m";
     $replacement = "$2$1";
     // ---
     $newtext = preg_replace($pattern, $replacement, $newtext);
