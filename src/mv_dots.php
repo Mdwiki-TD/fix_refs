@@ -5,14 +5,16 @@ namespace WpRefs\MovesDots;
 /*
 usage:
 
-use function WpRefs\MovesDots\move_dots_text;
+use function WpRefs\MovesDots\move_dots_after_refs;
 
 */
 
-function move_dots_text($newtext, $lang)
+function move_dots_before_refs($newtext, $lang) {}
+
+function move_dots_after_refs($newtext, $lang)
 {
     // ---
-    // echo_test("move_dots_text\n");
+    // echo_test("move_dots_after_refs\n");
     // ---
     $dot = "(\.|,|。|।)";
     // ---
