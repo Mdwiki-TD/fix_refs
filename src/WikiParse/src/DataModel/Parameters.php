@@ -152,7 +152,7 @@ class Parameters
                 $result .= "|" . $formattedValue;
             } else {
                 // $formattedKey = $ljust > 0 ? str_pad($key, $ljust, " ") : $key;
-                $formattedKey = $ljust > 0 ? str_pad_right($key, $ljust) : $key;
+                $formattedKey = $ljust > 0 ? $this->str_pad_right($key, $ljust) : $key;
                 $result .= $separator . "|" . $formattedKey . "=" . $formattedValue;
             }
             $index++;
