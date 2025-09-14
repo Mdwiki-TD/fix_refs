@@ -22,6 +22,7 @@ use function WpRefs\EnLangParam\add_lang_en;
 use function WpRefs\MdCat\add_Translated_from_MDWiki;
 use function WpRefs\Bots\Mini\mini_fixes;
 use function WpRefs\Bots\Mini\mini_fixes_after_fixing;
+use function WpRefs\RemoveSpace\remove_spaces_between_last_word_and_beginning_of_ref;
 
 
 function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sourcetitle, $mdwiki_revid)
@@ -66,6 +67,10 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sou
     if ($lang == 'sw') {
         $text = sw_fixes($text);
     };
+    // ---
+    if ($lang === "hy") {
+        $text = remove_spaces_between_last_word_and_beginning_of_ref($text, "hy");
+    }
     // ---
     $text = add_Translated_from_MDWiki($text, $lang);
     // ---

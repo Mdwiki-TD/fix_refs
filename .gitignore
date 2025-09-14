@@ -11,4 +11,4 @@ tests/infoboxes/texts_infobox2/infobox2_fixed.txt
 tests/infoboxes/texts_infobox2/infobox2_tempse_fixed.json
 src/helps_bots/input.txt
 src/helps_bots/output.txt
-/tests/remove_space_texts
+/tests/texts

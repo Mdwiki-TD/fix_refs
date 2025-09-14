@@ -23,48 +23,48 @@ class remove_spaceTest extends TestCase
     }
     public function testRemoveSpaceEnd1stFile()
     {
-        $input   = file_get_contents(__DIR__ . "/remove_space_texts/1/input.txt");
-        $expected   = file_get_contents(__DIR__ . "/remove_space_texts/1/expected.txt");
+        $input   = file_get_contents(__DIR__ . "/texts/remove_space_texts/1/input.txt");
+        $expected   = file_get_contents(__DIR__ . "/texts/remove_space_texts/1/expected.txt");
         // --
         $result = remove_spaces_between_last_word_and_beginning_of_ref($input, 'hy');
         // --
-        $output_file   = __DIR__ . "/remove_space_texts/1/output.txt";
+        $output_file   = __DIR__ . "/texts/remove_space_texts/1/output.txt";
         file_put_contents($output_file, $result);
         // --
         $this->assertEqualCompare($expected, $input, $result);
     }
     public function testRemoveSpaceEnd2ndFile()
     {
-        $input   = file_get_contents(__DIR__ . "/remove_space_texts/2/input.txt");
-        $expected   = file_get_contents(__DIR__ . "/remove_space_texts/2/expected.txt");
+        $input   = file_get_contents(__DIR__ . "/texts/remove_space_texts/2/input.txt");
+        $expected   = file_get_contents(__DIR__ . "/texts/remove_space_texts/2/expected.txt");
         // --
         $result = remove_spaces_between_last_word_and_beginning_of_ref($input, 'hy');
         // --
-        $output_file   = __DIR__ . "/remove_space_texts/2/output.txt";
+        $output_file   = __DIR__ . "/texts/remove_space_texts/2/output.txt";
         file_put_contents($output_file, $result);
         // --
         $this->assertEqualCompare($expected, $input, $result);
     }
     public function testRemoveSpaceEnd3rdFile()
     {
-        $input   = file_get_contents(__DIR__ . "/remove_space_texts/3/input.txt");
-        $expected   = file_get_contents(__DIR__ . "/remove_space_texts/3/expected.txt");
+        $input   = file_get_contents(__DIR__ . "/texts/remove_space_texts/3/input.txt");
+        $expected   = file_get_contents(__DIR__ . "/texts/remove_space_texts/3/expected.txt");
         // --
         $result = remove_spaces_between_last_word_and_beginning_of_ref($input, 'hy');
         // --
-        $output_file   = __DIR__ . "/remove_space_texts/3/output.txt";
+        $output_file   = __DIR__ . "/texts/remove_space_texts/3/output.txt";
         file_put_contents($output_file, $result);
         // --
         $this->assertEqualCompare($expected, $input, $result);
     }
     public function testRemoveSpaceEnd4thFile()
     {
-        $input   = file_get_contents(__DIR__ . "/remove_space_texts/4/input.txt");
-        $expected   = file_get_contents(__DIR__ . "/remove_space_texts/4/expected.txt");
+        $input   = file_get_contents(__DIR__ . "/texts/remove_space_texts/4/input.txt");
+        $expected   = file_get_contents(__DIR__ . "/texts/remove_space_texts/4/expected.txt");
         // --
         $result = remove_spaces_between_last_word_and_beginning_of_ref($input, 'hy');
         // --
-        $output_file   = __DIR__ . "/remove_space_texts/4/output.txt";
+        $output_file   = __DIR__ . "/texts/remove_space_texts/4/output.txt";
         file_put_contents($output_file, $result);
         // --
         $this->assertEqualCompare($expected, $input, $result);

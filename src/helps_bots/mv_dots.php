@@ -66,7 +66,7 @@ function move_dots_after_refs($newtext, $lang)
     // ---
     $regline = "((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)";
     // ---
-    $pattern = "/([" . $dot . "]+)\s*" . $regline . "/m";
+    $pattern = "/([" . $dot . "]+)\s*" . $regline . "/mu";
     $replacement = "$2$1";
     // ---
     $newtext = preg_replace($pattern, $replacement, $newtext);

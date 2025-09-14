@@ -240,4 +240,20 @@ class mv_dots_afterTest extends TestCase
         $expected = 'Հետծննդյան հոգեբանական խանգարումը հանդիպում է 1000 ծննդաբերությունից 1-2-ի մոտ<ref name="Os2018" /><ref name="Li2018" />։ Տարբեր [[Մշակույթ|մշակույթներում]] և [[Դասակարգային կառուցվածք|սոցիալական դասերում]] գները նման են թվում<ref name="Luc2021" />։ Ավելի հաճախ այն հանդիպում է հայտնի կամ նոր սկսվող երկբևեռ խանգարման համատեքստում, որը հայտնի է որպես հետծննդյան երկբևեռ խանգարում : <ref name="Luc2021" /> Այս վիճակը նկարագրվել է դեռևս մ.թ.ա. 400 թվականից [[Հիպոկրատ|Հիպոկրատի]] կողմից <ref name="Os2018" />։\n\n== test ==';
         $this->assertEqualCompare($expected, $input, move_dots_after_refs($input, 'hy'));
     }
+    public function testPart1()
+    {
+        $input = '[[Category:Translated from MDWiki]] ռետինոիդներ. <ref name="NORD2006" /><ref name="Gli2017" />';
+        // ---
+        $expected = '[[Category:Translated from MDWiki]] ռետինոիդներ<ref name="NORD2006" /><ref name="Gli2017" />.';
+        // ---
+        $this->assertEqualCompare($expected, $input, move_dots_after_refs($input, 'hy'));
+    }
+    public function testPart2()
+    {
+        $input = '[[Category:Translated from MDWiki]] ռետինոիդներ, <ref name="NORD2006" /><ref name="Gli2017" />';
+        // ---
+        $expected = '[[Category:Translated from MDWiki]] ռետինոիդներ<ref name="NORD2006" /><ref name="Gli2017" />,';
+        // ---
+        $this->assertEqualCompare($expected, $input, move_dots_after_refs($input, 'hy'));
+    }
 }
