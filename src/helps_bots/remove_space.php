@@ -14,6 +14,24 @@ use function WpRefs\RemoveSpace\remove_spaces_between_last_word_and_beginning_of
 
 */
 // ---
+// define("DEBUG", true);
+
+use function WpRefs\TestBot\echo_debug;
+
+if (!function_exists('str_ends_with')) {
+    function str_ends_with($string, $endString)
+    {
+        $len = strlen($endString);
+        return substr($string, -$len) === $endString;
+    }
+}
+if (!function_exists('str_starts_with')) {
+    function str_starts_with($text, $start)
+    {
+        return strpos($text, $start) === 0;
+    }
+}
+
 function match_it($text, $charters)
 {
     $pattern = '/(<\/ref>|\/>)\s*([' . preg_quote($charters, '/') . ']\s*)$/u';
@@ -25,9 +43,13 @@ function match_it($text, $charters)
 
 function get_parts($newtext, $charters)
 {
-    $matches = explode("\n\r\n\r", $newtext);
+    $matches = explode("\n\n", $newtext);
     // ---
-    echo "count(matches)=" . count($matches) . "\n";
+    if (count($matches) == 1) {
+        $matches = explode("\r\n\r\n", $newtext);
+    }
+    // ---
+    echo_debug("count(matches)=" . count($matches) . "\n");
     // ---
     $new_parts = [];
     // ---
@@ -38,7 +60,7 @@ function get_parts($newtext, $charters)
         }
     }
     // ---
-    echo "count(new_parts)=" . count($new_parts) . "\n";
+    echo_debug("count(new_parts)=" . count($new_parts) . "\n");
     // ---
     return $new_parts;
 }
@@ -59,21 +81,21 @@ function remove_spaces_between_last_word_and_beginning_of_ref($newtext, $lang)
     foreach ($parts as $pair) {
         list($part, $charter) = $pair;
         // ---
-        echo "charter=$charter\n";
+        echo_debug("charter=$charter\n");
         // ---
         $regline = '/((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)/us';
         // ---
         preg_match_all($regline, $part, $last_ref_matches);
         $last_ref = $last_ref_matches[1];
         // ---
-        echo "count(last_ref)=" . count($last_ref) . "\n";
+        echo_debug("count(last_ref)=" . count($last_ref) . "\n");
         // ---
         if (!empty($last_ref)) {
             $ref_text = end($last_ref);
             $end_part = $ref_text . $charter;
             if (str_ends_with($part, $end_part)) {
                 // ---
-                echo "endswith\n";
+                echo_debug("endswith\n");
                 // ---
                 $new_part = trim(str_replace($end_part, '', $part)) . trim($ref_text) . $charter;
                 $newtext = str_replace($part, $new_part, $newtext);
@@ -84,7 +106,6 @@ function remove_spaces_between_last_word_and_beginning_of_ref($newtext, $lang)
     return $newtext;
 }
 
-
 function assertEqualCompare(string $expected, string $input, string $result)
 {
     if ($result === $expected) {
@@ -94,21 +115,4 @@ function assertEqualCompare(string $expected, string $input, string $result)
     } else {
         echo "result !== expected";
     }
-}
-
-function test()
-{
-
-    $expected = file_get_contents(__DIR__ . "/remove_space_texts/expected.txt");
-    $input = file_get_contents(__DIR__ . "/remove_space_texts/input.txt");
-    $output_file = __DIR__ . "/remove_space_texts/output.txt";
-
-    $result = remove_spaces_between_last_word_and_beginning_of_ref($input, 'hy');
-
-    assertEqualCompare($expected, $input, $result);
-
-    // save $result to $output
-    file_put_contents($output_file, $result);
-
-    echo "\n saved to: $output_file";
 }
