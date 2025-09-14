@@ -1,6 +1,6 @@
 <?php
 
-include_once __DIR__ . '/../../src/include_files.php';
+
 
 use PHPUnit\Framework\TestCase;
 use function WpRefs\Parse\Category\get_categories_reg;

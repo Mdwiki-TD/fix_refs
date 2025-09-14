@@ -1,6 +1,6 @@
 <?php
 
-include_once __DIR__ . '/../../src/include_files.php';
+
 
 use PHPUnit\Framework\TestCase;
 use function WpRefs\Bots\Mini\remove_space_before_ref_tags;

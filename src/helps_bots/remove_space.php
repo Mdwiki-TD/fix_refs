@@ -2,27 +2,84 @@
 
 namespace WpRefs\RemoveSpace;
 
+// print errors
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 /*
 usage:
 
 use function WpRefs\RemoveSpace\remove_spaces_between_last_word_and_beginning_of_ref;
 
 */
+// ---
+function match_it($text, $charters)
+{
+    $pattern = '/(<\/ref>|\/>)\s*([' . preg_quote($charters, '/') . ']\s*)$/u';
+    if (preg_match($pattern, $text, $m)) {
+        return $m[2];
+    }
+    return null;
+}
+
+function get_parts($newtext, $charters)
+{
+    $matches = explode("\n\r\n\r", $newtext);
+    // ---
+    echo "count(matches)=" . count($matches) . "\n";
+    // ---
+    $new_parts = [];
+    // ---
+    foreach ($matches as $p) {
+        $chart = match_it($p, $charters);
+        if ($chart) {
+            $new_parts[] = [$p, $chart];
+        }
+    }
+    // ---
+    echo "count(new_parts)=" . count($new_parts) . "\n";
+    // ---
+    return $new_parts;
+}
+
 
 function remove_spaces_between_last_word_and_beginning_of_ref($newtext, $lang)
 {
-    // --- تحديد علامات الترقيم
+
+    // --- 1) تحديد علامات الترقيم
     $dot = "\.,。।";
+
     if ($lang === "hy") {
-        $dot = "\.,।։";
+        $dot = "\.,。।։";
     }
 
-    // --- نبحث عن أي فقرة تنتهي بـ </ref> أو /> + علامات الترقيم
-    // ونزيل أي مسافة قبل مجموعة المراجع
-    $regline = "((?:\\s*<ref[\\s\\S]+?(?:<\\/ref|\\/)>)+)";
-    $pattern = '/(\S)\s+(?=' . $regline . '[' . $dot . ']+\s*(?:\n\n|\z))/u';
-
-    $newtext = preg_replace($pattern, '$1', $newtext);
+    $parts = get_parts($newtext, $dot);
+    // ---
+    foreach ($parts as $pair) {
+        list($part, $charter) = $pair;
+        // ---
+        echo "charter=$charter\n";
+        // ---
+        $regline = '/((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)/us';
+        // ---
+        preg_match_all($regline, $part, $last_ref_matches);
+        $last_ref = $last_ref_matches[1];
+        // ---
+        echo "count(last_ref)=" . count($last_ref) . "\n";
+        // ---
+        if (!empty($last_ref)) {
+            $ref_text = end($last_ref);
+            $end_part = $ref_text . $charter;
+            if (str_ends_with($part, $end_part)) {
+                // ---
+                echo "endswith\n";
+                // ---
+                $new_part = trim(str_replace($end_part, '', $part)) . trim($ref_text) . $charter;
+                $newtext = str_replace($part, $new_part, $newtext);
+            }
+        }
+    }
 
     return $newtext;
 }
@@ -35,66 +92,23 @@ function assertEqualCompare(string $expected, string $input, string $result)
     } elseif ($result === $input) {
         echo "result === input";
     } else {
-        echo "result !== expected\n";
-        echo $result;
+        echo "result !== expected";
     }
 }
 
-$input = <<<'TXT'
-'''Հարլեկին տիպի իխտիոզը''' [[Գենետիկ հիվանդություններ|գենետիկ խանգարում]] է, որը ծննդյան պահին հանգեցնում է մաշկի հաստացման գրեթե ամբողջ մարմնով space here <ref name="GHR2008" /> <ref name="GHR2008">{{Cite web
-|title=Harlequin ichthyosis
-|url=https://ghr.nlm.nih.gov/condition/harlequin-ichthyosis
-|website=Genetics Home Reference
-|access-date=July 18, 2017
-|language=en
-|date=November 2008
-|url-status=live
-|archive-url=https://web.archive.org/web/20170728015729/https://ghr.nlm.nih.gov/condition/harlequin-ichthyosis
-|archive-date=July 28, 2017
-}}</ref> test  <ref name="GHR2008" /> <ref name="GHR2008">{{Cite web
-|title=Harlequin ichthyosis
-|url=https://ghr.nlm.nih.gov/condition/harlequin-ichthyosis
-|website=Genetics Home Reference
-|access-date=July 18, 2017
-|language=en
-|date=November 2008
-|url-status=live
-|archive-url=https://web.archive.org/web/20170728015729/https://ghr.nlm.nih.gov/condition/harlequin-ichthyosis
-|archive-date=July 28, 2017
-}}</ref>։
-TXT;
+function test()
+{
 
-$expected = <<<'TXT'
-'''Հարլեկին տիպի իխտիոզը''' [[Գենետիկ հիվանդություններ|գենետիկ խանգարում]] է, որը ծննդյան պահին հանգեցնում է մաշկի հաստացման գրեթե ամբողջ մարմնով space here <ref name="GHR2008" /> <ref name="GHR2008">{{Cite web
-|title=Harlequin ichthyosis
-|url=https://ghr.nlm.nih.gov/condition/harlequin-ichthyosis
-|website=Genetics Home Reference
-|access-date=July 18, 2017
-|language=en
-|date=November 2008
-|url-status=live
-|archive-url=https://web.archive.org/web/20170728015729/https://ghr.nlm.nih.gov/condition/harlequin-ichthyosis
-|archive-date=July 28, 2017
-}}</ref> test<ref name="GHR2008" /> <ref name="GHR2008">{{Cite web
-|title=Harlequin ichthyosis
-|url=https://ghr.nlm.nih.gov/condition/harlequin-ichthyosis
-|website=Genetics Home Reference
-|access-date=July 18, 2017
-|language=en
-|date=November 2008
-|url-status=live
-|archive-url=https://web.archive.org/web/20170728015729/https://ghr.nlm.nih.gov/condition/harlequin-ichthyosis
-|archive-date=July 28, 2017
-}}</ref>։
-TXT;
+    $expected = file_get_contents(__DIR__ . "/remove_space_texts/expected.txt");
+    $input = file_get_contents(__DIR__ . "/remove_space_texts/input.txt");
+    $output_file = __DIR__ . "/remove_space_texts/output.txt";
 
-$result = remove_spaces_between_last_word_and_beginning_of_ref($input, 'hy');
+    $result = remove_spaces_between_last_word_and_beginning_of_ref($input, 'hy');
 
-assertEqualCompare($expected, $input, $result);
+    assertEqualCompare($expected, $input, $result);
 
-$output = __DIR__ . "/output.txt";
+    // save $result to $output
+    file_put_contents($output_file, $result);
 
-// save $result to $output
-file_put_contents($output, $result);
-
-echo "\n saved to: $output";
+    echo "\n saved to: $output_file";
+}

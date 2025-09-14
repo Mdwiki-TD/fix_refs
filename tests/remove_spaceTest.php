@@ -1,6 +1,6 @@
 <?php
 
-include_once __DIR__ . '/../../src/include_files.php';
+
 
 use PHPUnit\Framework\TestCase;
 use function WpRefs\RemoveSpace\remove_spaces_between_last_word_and_beginning_of_ref;

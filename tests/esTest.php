@@ -1,7 +1,5 @@
 <?php
 
-include_once __DIR__ . '/../src/include_files.php';
-
 use PHPUnit\Framework\TestCase;
 use function WpRefs\Bots\es_months\fix_es_months_in_refs;
 use function WpRefs\ES\fix_es;
