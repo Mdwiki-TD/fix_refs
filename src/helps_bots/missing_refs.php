@@ -61,10 +61,10 @@ function get_full_text_url($sourcetitle, $mdwiki_revid)
 function get_full_text($sourcetitle, $mdwiki_revid)
 {
     // ---
-    $path = "/data/project/medwiki";
+    $path = "/data/project/medwiki/public_html";
     // ---
     if (substr(__DIR__, 0, 2) == 'I:') {
-        $path = "I:/medwiki/new/medwiki.toolforge.org_repo";
+        $path = "I:/medwiki/new/medwiki.toolforge.org_repo/public_html";
     };
     // ---
     if (empty($mdwiki_revid) || $mdwiki_revid == 0) {
