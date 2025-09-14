@@ -1,18 +1,11 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+use App\Tests\MyFunctionTest;
 use function WpRefs\WprefText\fix_page;
 
-class FixpageTest extends TestCase
+class FixpageTest extends MyFunctionTest
 {
-    private function assertEqualCompare(string $expected, string $input, string $result)
-    {
-        if ($result === $input && $result !== $expected) {
-            $this->fail("No changes were made! The function returned the input unchanged:\n$result");
-        } else {
-            $this->assertEquals($expected, $result, "Unexpected result:\n$result");
-        }
-    }
+
     private function fix_page_wrap(string $text, string $lang)
     {
         return fix_page($text, "", true, true, false, $lang, "", 0);

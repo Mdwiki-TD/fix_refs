@@ -2,10 +2,10 @@
 
 
 
-use PHPUnit\Framework\TestCase;
+use App\Tests\MyFunctionTest;
 use function WpRefs\Parse\Category\get_categories_reg;
 
-class CategoryTest extends TestCase
+class CategoryTest extends MyFunctionTest
 {
     public function test_get_categories_with_simple_categories()
     {

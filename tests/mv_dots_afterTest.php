@@ -2,19 +2,11 @@
 
 
 
-use PHPUnit\Framework\TestCase;
+use App\Tests\MyFunctionTest;
 use function WpRefs\MovesDots\move_dots_after_refs;
 
-class mv_dots_afterTest extends TestCase
+class mv_dots_afterTest extends MyFunctionTest
 {
-    private function assertEqualCompare(string $expected, string $input, string $result)
-    {
-        if ($result === $input && $result !== $expected) {
-            $this->fail("No changes were made! The function returned the input unchanged:\n$result");
-        } else {
-            $this->assertEquals($expected, $result, "Unexpected result:\n$result");
-        }
-    }
 
     // Tests for move_dots_after_refs function
     public function testMoveDotsAfterSingleDot()

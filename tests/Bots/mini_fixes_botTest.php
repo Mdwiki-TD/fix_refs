@@ -2,13 +2,13 @@
 
 
 
-use PHPUnit\Framework\TestCase;
+use App\Tests\MyFunctionTest;
 use function WpRefs\Bots\Mini\remove_space_before_ref_tags;
 use function WpRefs\Bots\Mini\fix_sections_titles;
 use function WpRefs\Bots\Mini\refs_tags_spaces;
 use function WpRefs\Bots\Mini\fix_preffix;
 
-class mini_fixes_botTest extends TestCase
+class mini_fixes_botTest extends MyFunctionTest
 {
     public function testSectionsTitles()
     {

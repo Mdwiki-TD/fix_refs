@@ -2,11 +2,11 @@
 
 
 
-use PHPUnit\Framework\TestCase;
+use App\Tests\MyFunctionTest;
 use function WpRefs\EnLangParam\add_lang_en;
 use function WpRefs\EnLangParam\add_lang_en_to_refs;
 
-class en_lang_paramTest extends TestCase
+class en_lang_paramTest extends MyFunctionTest
 {
     // Tests for add_lang_en function
     public function testAddLangEnSimpleRef()

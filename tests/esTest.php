@@ -1,6 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+use App\Tests\MyFunctionTest;
 use function WpRefs\Bots\es_months\fix_es_months_in_refs;
 use function WpRefs\ES\fix_es;
 use function WpRefs\ES\fix_temps;
@@ -15,7 +15,7 @@ function fix_temps_wrap($text)
     return $result;
 }
 
-class esTest extends TestCase
+class esTest extends MyFunctionTest
 {
     public function test_fix_temps_and_months_1()
     {

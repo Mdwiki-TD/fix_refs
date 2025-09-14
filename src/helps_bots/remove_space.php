@@ -97,7 +97,11 @@ function remove_spaces_between_last_word_and_beginning_of_ref($newtext, $lang)
                 // ---
                 echo_debug("endswith\n");
                 // ---
-                $new_part = trim(str_replace($end_part, '', $part)) . trim($ref_text) . $charter;
+                $first_part_clean_end = substr($part, 0, -strlen($end_part));
+                $first_part_clean_end = rtrim($first_part_clean_end);
+                // ---
+                $new_part = $first_part_clean_end . trim($ref_text) . $charter;
+                // ---
                 $newtext = str_replace($part, $new_part, $newtext);
             }
         }

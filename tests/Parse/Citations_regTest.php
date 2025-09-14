@@ -2,14 +2,14 @@
 
 
 
-use PHPUnit\Framework\TestCase;
+use App\Tests\MyFunctionTest;
 
 use function WpRefs\Parse\Reg_Citations\get_name;
 use function WpRefs\Parse\Reg_Citations\get_Reg_Citations;
 use function WpRefs\Parse\Reg_Citations\get_full_refs;
 use function WpRefs\Parse\Reg_Citations\getShortCitations;
 
-class Citations_regTest extends TestCase
+class Citations_regTest extends MyFunctionTest
 {
 
     // اختبارات إضافية للدوال المساعدة

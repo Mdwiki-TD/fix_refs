@@ -2,12 +2,12 @@
 
 
 
-use PHPUnit\Framework\TestCase;
+use App\Tests\MyFunctionTest;
 use function WpRefs\Infobox2\do_comments;
 use function WpRefs\Infobox2\make_tempse;
 use function WpRefs\Infobox2\expend_new;
 
-class infobox2Test extends TestCase
+class infobox2Test extends MyFunctionTest
 {
     public function test_expend_new_FileText()
     {

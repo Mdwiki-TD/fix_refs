@@ -2,7 +2,7 @@
 
 
 
-use PHPUnit\Framework\TestCase;
+use App\Tests\MyFunctionTest;
 
 use function WpRefs\Infobox\Expend_Infobox;
 
@@ -97,7 +97,7 @@ Texts::$TEXT_OUTPUT = <<<'TXT'
 }}
 TXT;
 
-class infoboxTest extends TestCase
+class infoboxTest extends MyFunctionTest
 {
     public function test_expend_new_FileText()
     {

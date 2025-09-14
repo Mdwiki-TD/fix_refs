@@ -2,11 +2,11 @@
 
 
 
-use PHPUnit\Framework\TestCase;
+use App\Tests\MyFunctionTest;
 use function WpRefs\Bots\AttrsUtils\parseAttributes;
 use function WpRefs\Bots\AttrsUtils\get_attrs;
 
-class attrs_utilsTest extends TestCase
+class attrs_utilsTest extends MyFunctionTest
 {
 
     private $data = [];

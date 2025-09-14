@@ -2,11 +2,11 @@
 
 
 
-use PHPUnit\Framework\TestCase;
+use App\Tests\MyFunctionTest;
 
 use function WpRefs\MdCat\add_Translated_from_MDWiki;
 
-class md_catTest extends TestCase
+class md_catTest extends MyFunctionTest
 {
     // Test case: Appends category when conditions are met
     public function testAppendsCategoryWhenConditionsMet()

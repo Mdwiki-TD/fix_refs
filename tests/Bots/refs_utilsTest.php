@@ -2,7 +2,7 @@
 
 
 
-use PHPUnit\Framework\TestCase;
+use App\Tests\MyFunctionTest;
 
 use function WpRefs\Bots\RefsUtils\rm_str_from_start_and_end;
 use function WpRefs\Bots\RefsUtils\remove_start_end_quotes;
@@ -20,17 +20,9 @@ if (!function_exists('str_starts_with')) {
         return strpos($text, $start) === 0;
     }
 }
-class refs_utilsTest extends TestCase
+class refs_utilsTest extends MyFunctionTest
 {
 
-    private function assertEqualCompare(string $expected, string $input, string $result)
-    {
-        if ($result === $input && $result !== $expected) {
-            $this->fail("No changes were made! The function returned the input unchanged:\n$result");
-        } else {
-            $this->assertEquals($expected, $result, "Unexpected result:\n$result");
-        }
-    }
     /**
      * @test
      * @description يضيف علامات اقتباس مزدوجة لنص عادي.

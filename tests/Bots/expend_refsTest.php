@@ -2,10 +2,10 @@
 
 
 
-use PHPUnit\Framework\TestCase;
+use App\Tests\MyFunctionTest;
 use function WpRefs\ExpendRefs\refs_expend_work;
 
-class expend_refsTest extends TestCase
+class expend_refsTest extends MyFunctionTest
 {
 
     private $text_input = "";

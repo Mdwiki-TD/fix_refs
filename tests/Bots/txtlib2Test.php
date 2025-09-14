@@ -2,10 +2,10 @@
 
 
 
-use PHPUnit\Framework\TestCase;
+use App\Tests\MyFunctionTest;
 use function WpRefs\Bots\TxtLib2\extract_templates_and_params;
 
-class txtlib2Test extends TestCase
+class txtlib2Test extends MyFunctionTest
 {
 
     private $text_input = "";

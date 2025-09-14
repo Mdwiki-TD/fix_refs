@@ -2,10 +2,10 @@
 
 
 
-use PHPUnit\Framework\TestCase;
+use App\Tests\MyFunctionTest;
 use function WpRefs\Bots\MonthNewValue\make_date_new_val_es;
 
-class es_months_new_valueTest extends TestCase
+class es_months_new_valueTest extends MyFunctionTest
 {
     public function test_date_with_full_date()
     {

@@ -1,9 +1,9 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+use App\Tests\MyFunctionTest;
 use function WpRefs\Bots\es_refs\mv_es_refs;
 
-class es_refsTest extends TestCase
+class es_refsTest extends MyFunctionTest
 {
     public function testFileText()
     {
