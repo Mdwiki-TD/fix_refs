@@ -35,7 +35,7 @@ function refs_expend($short_refs, $text, $alltext)
 function get_full_text($sourcetitle, $mdwiki_revid)
 {
     // ---
-    $path = "/data/project/medwiki";
+    $path = "/data/project/mdwikicx";
     // ---
     if (substr(__DIR__, 0, 2) == 'I:') {
         $path = "I:/medwiki/new/medwiki.toolforge.org_repo";
