@@ -2,7 +2,7 @@
 
 
 
-use App\Tests\MyFunctionTest;
+use FixRefs\Tests\MyFunctionTest;
 
 use function WpRefs\Infobox\Expend_Infobox;
 

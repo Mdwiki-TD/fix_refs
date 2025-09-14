@@ -1,6 +1,6 @@
 <?php
 
-use App\Tests\MyFunctionTest;
+use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\SW\sw_fixes;
 
 

@@ -2,7 +2,7 @@
 
 
 
-use App\Tests\MyFunctionTest;
+use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\Bots\Mini\remove_space_before_ref_tags;
 use function WpRefs\Bots\Mini\fix_sections_titles;
 use function WpRefs\Bots\Mini\refs_tags_spaces;

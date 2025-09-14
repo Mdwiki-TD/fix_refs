@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests;
+namespace FixRefs\Tests;
 
-// use App\Tests\MyFunctionTest;
+// use FixRefs\Tests\MyFunctionTest;
 // تحميل autoloader الخاص بـ Composer
 require __DIR__ . '/../vendor/autoload.php';
 

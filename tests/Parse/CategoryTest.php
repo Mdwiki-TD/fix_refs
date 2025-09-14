@@ -2,7 +2,7 @@
 
 
 
-use App\Tests\MyFunctionTest;
+use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\Parse\Category\get_categories_reg;
 
 class CategoryTest extends MyFunctionTest

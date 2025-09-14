@@ -1,6 +1,6 @@
 <?php
 
-use App\Tests\MyFunctionTest;
+use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\FixPage\DoChangesToText1;
 
 class indexTest extends MyFunctionTest

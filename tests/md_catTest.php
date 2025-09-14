@@ -2,7 +2,7 @@
 
 
 
-use App\Tests\MyFunctionTest;
+use FixRefs\Tests\MyFunctionTest;
 
 use function WpRefs\MdCat\add_Translated_from_MDWiki;
 

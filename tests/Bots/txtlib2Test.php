@@ -2,7 +2,7 @@
 
 
 
-use App\Tests\MyFunctionTest;
+use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\Bots\TxtLib2\extract_templates_and_params;
 
 class txtlib2Test extends MyFunctionTest

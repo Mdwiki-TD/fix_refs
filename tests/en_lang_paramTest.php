@@ -2,7 +2,7 @@
 
 
 
-use App\Tests\MyFunctionTest;
+use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\EnLangParam\add_lang_en;
 use function WpRefs\EnLangParam\add_lang_en_to_refs;
 

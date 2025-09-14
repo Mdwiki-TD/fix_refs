@@ -1,7 +1,7 @@
 <?php
 
 
-use App\Tests\MyFunctionTest;
+use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\RemoveSpace\remove_spaces_between_last_word_and_beginning_of_ref;
 
 class remove_spaceTest extends MyFunctionTest

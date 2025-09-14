@@ -1,6 +1,6 @@
 <?php
 
-use App\Tests\MyFunctionTest;
+use FixRefs\Tests\MyFunctionTest;
 
 use function WpRefs\Bots\MonthNewValue\make_date_new_val_es;
 use function WpRefs\Bots\es_months\fix_es_months_in_texts;

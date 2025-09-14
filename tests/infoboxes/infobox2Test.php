@@ -2,7 +2,7 @@
 
 
 
-use App\Tests\MyFunctionTest;
+use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\Infobox2\do_comments;
 use function WpRefs\Infobox2\make_tempse;
 use function WpRefs\Infobox2\expend_new;

@@ -2,7 +2,7 @@
 
 
 
-use App\Tests\MyFunctionTest;
+use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\MovesDots\move_dots_after_refs;
 
 class mv_dots_afterTest extends MyFunctionTest
