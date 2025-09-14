@@ -40,7 +40,7 @@ function get_full_text($sourcetitle, $mdwiki_revid)
         $path = "I:/medwiki/new/medwiki.toolforge.org_repo";
     };
     // ---
-    if (empty($mdwiki_revid)) {
+    if (empty($mdwiki_revid) || $mdwiki_revid == 0) {
         $json_file = "$path/public_html/revisions_new/json_data.json";
         // ---
         $data = json_decode(file_get_contents($json_file), true) ?? [];
