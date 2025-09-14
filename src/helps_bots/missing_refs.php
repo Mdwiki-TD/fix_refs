@@ -31,13 +31,25 @@ function refs_expend($short_refs, $text, $alltext)
     return $text;
 }
 
-function get_full_text($mdwiki_revid)
+function get_full_text($sourcetitle, $mdwiki_revid)
 {
     // ---
     $path = "/data/project/medwiki";
     // ---
     if (substr(__DIR__, 0, 2) == 'I:') {
         $path = "I:/medwiki/new/medwiki.toolforge.org_repo";
+    };
+    // ---
+    if (empty($mdwiki_revid)) {
+        $json_file = "$path/public_html/revisions_new/json_data.json";
+        // ---
+        $data = json_decode(file_get_contents($json_file), true) ?? [];
+        // ---
+        $mdwiki_revid = $data[$sourcetitle] ?? "";
+    };
+    // ---
+    if (empty($mdwiki_revid)) {
+        return "";
     };
     // ---
     $file = "$path/public_html/revisions_new/$mdwiki_revid/wikitext.txt";
@@ -75,7 +87,7 @@ function fix_missing_refs($text, $sourcetitle, $mdwiki_revid)
     // ---
     if (empty($empty_short)) return $text;
     // ---
-    $full_text = get_full_text($mdwiki_revid);
+    $full_text = get_full_text($sourcetitle, $mdwiki_revid);
     // ---
     if (empty($full_text)) return $text;
     // ---
