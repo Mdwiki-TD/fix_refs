@@ -47,6 +47,7 @@ function get_full_text($sourcetitle, $mdwiki_revid)
         // ---
         $data = json_decode(get_url_curl($json_file), true) ?? [];
         // ---
+        echo_test("url" . $json_file);
         echo_test("count of data: " . count($data));
         // ---
         $mdwiki_revid = $data[$sourcetitle] ?? "";
@@ -67,6 +68,8 @@ function get_full_text($sourcetitle, $mdwiki_revid)
         echo_test("file not found: $file");
         return "";
     };
+    // ---
+    echo_test("url" . $file);
     // ---
     $text = get_url_curl($file) ?? "";
     // ---
