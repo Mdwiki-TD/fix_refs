@@ -9,9 +9,11 @@ use function WpRefs\MissingRefs\fix_missing_refs;
 
 */
 
+use function WpRefs\TestBot\echo_test;
 use function WpRefs\TestBot\echo_debug;
 use function WpRefs\Parse\Reg_Citations\getShortCitations;
 use function WpRefs\Parse\Reg_Citations\get_full_refs;
+use function WpRefs\MdCat\get_url_curl;
 
 function refs_expend($short_refs, $text, $alltext)
 {
@@ -34,16 +36,16 @@ function refs_expend($short_refs, $text, $alltext)
 function get_full_text($sourcetitle, $mdwiki_revid)
 {
     // ---
-    $path = "/data/project/medwiki";
+    $path = "https://mdwikicx.toolforge.org/";
     // ---
     if (substr(__DIR__, 0, 2) == 'I:') {
-        $path = "I:/medwiki/new/medwiki.toolforge.org_repo";
+        $path = "http://localhost:9001";
     };
     // ---
     if (empty($mdwiki_revid) || $mdwiki_revid == 0) {
-        $json_file = "$path/public_html/revisions_new/json_data.json";
+        $json_file = "$path/revisions_new/json_data.json";
         // ---
-        $data = json_decode(file_get_contents($json_file), true) ?? [];
+        $data = json_decode(get_url_curl($json_file), true) ?? [];
         // ---
         $mdwiki_revid = $data[$sourcetitle] ?? "";
     };
@@ -52,14 +54,18 @@ function get_full_text($sourcetitle, $mdwiki_revid)
         return "";
     };
     // ---
-    $file = "$path/public_html/revisions_new/$mdwiki_revid/wikitext.txt";
+    $file = "$path/revisions_new/$mdwiki_revid/wikitext.txt";
+    // ---
+    echo_test($file);
     // ---
     if (!file_exists($file)) {
         echo_debug("file not found: $file");
         return "";
     };
     // ---
-    return file_get_contents($file);
+    $text = get_url_curl($file) ?? "";
+    // ---
+    return $text;
 }
 
 function find_empty_short($text)
