@@ -1,8 +1,8 @@
 <?php
 
-include_once __DIR__ . '/../../src/include_files.php';
 
-use PHPUnit\Framework\TestCase;
+
+use FixRefs\Tests\MyFunctionTest;
 
 use function WpRefs\Infobox\Expend_Infobox;
 
@@ -97,7 +97,7 @@ Texts::$TEXT_OUTPUT = <<<'TXT'
 }}
 TXT;
 
-class infoboxTest extends TestCase
+class infoboxTest extends MyFunctionTest
 {
     public function test_expend_new_FileText()
     {

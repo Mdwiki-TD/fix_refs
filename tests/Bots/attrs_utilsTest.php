@@ -1,12 +1,12 @@
 <?php
 
-include_once __DIR__ . '/../../src/include_files.php';
 
-use PHPUnit\Framework\TestCase;
+
+use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\Bots\AttrsUtils\parseAttributes;
 use function WpRefs\Bots\AttrsUtils\get_attrs;
 
-class attrs_utilsTest extends TestCase
+class attrs_utilsTest extends MyFunctionTest
 {
 
     private $data = [];

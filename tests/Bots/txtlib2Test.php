@@ -1,11 +1,11 @@
 <?php
 
-include_once __DIR__ . '/../../src/include_files.php';
 
-use PHPUnit\Framework\TestCase;
+
+use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\Bots\TxtLib2\extract_templates_and_params;
 
-class txtlib2Test extends TestCase
+class txtlib2Test extends MyFunctionTest
 {
 
     private $text_input = "";

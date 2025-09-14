@@ -1,24 +1,13 @@
 <?php
 
-include_once __DIR__ . '/../../src/include_files.php';
-
-use PHPUnit\Framework\TestCase;
+use FixRefs\Tests\MyFunctionTest;
 
 use function WpRefs\DelDuplicateRefs\remove_Duplicate_refs_With_attrs;
 use function WpRefs\DelDuplicateRefs\fix_refs_names;
 
 
-class remove_duplicate_refsTest extends TestCase
+class remove_duplicate_refsTest extends MyFunctionTest
 {
-    private function assertEqualCompare(string $expected, string $input, string $result)
-    {
-        if ($result === $input && $result !== $expected) {
-            $this->fail("No changes were made! The function returned the input unchanged:\n$result");
-        } else {
-            $this->assertEquals($expected, $result, "Unexpected result:\n$result");
-        }
-    }
-
     // اختبارات دالة fix_refs_names
     public function testFixRefsNames()
     {

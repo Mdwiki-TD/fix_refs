@@ -1,12 +1,12 @@
 <?php
 
-include_once __DIR__ . '/../../src/include_files.php';
 
-use PHPUnit\Framework\TestCase;
+
+use FixRefs\Tests\MyFunctionTest;
 
 use function WpRefs\MdCat\add_Translated_from_MDWiki;
 
-class md_catTest extends TestCase
+class md_catTest extends MyFunctionTest
 {
     // Test case: Appends category when conditions are met
     public function testAppendsCategoryWhenConditionsMet()

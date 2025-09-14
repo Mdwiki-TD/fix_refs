@@ -1,11 +1,9 @@
 <?php
 
-include_once __DIR__ . '/../../../src/include_files.php';
-
-use PHPUnit\Framework\TestCase;
+use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\Bots\es_refs\mv_es_refs;
 
-class es_refsTest extends TestCase
+class es_refsTest extends MyFunctionTest
 {
     public function testFileText()
     {

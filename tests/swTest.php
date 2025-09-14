@@ -1,12 +1,10 @@
 <?php
 
-include_once __DIR__ . '/../src/include_files.php';
-
-use PHPUnit\Framework\TestCase;
+use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\SW\sw_fixes;
 
 
-class swTest extends TestCase
+class swTest extends MyFunctionTest
 {
     public function test_fix_temps_and_months_1()
     {

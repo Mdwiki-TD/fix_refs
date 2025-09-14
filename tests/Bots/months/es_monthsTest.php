@@ -1,26 +1,16 @@
 <?php
 
-include_once __DIR__ . '/../../../src/include_files.php';
-
-use PHPUnit\Framework\TestCase;
+use FixRefs\Tests\MyFunctionTest;
 
 use function WpRefs\Bots\MonthNewValue\make_date_new_val_es;
 use function WpRefs\Bots\es_months\fix_es_months_in_texts;
 use function WpRefs\Bots\es_months\fix_es_months_in_refs;
 
-class es_monthsTest extends TestCase
+class es_monthsTest extends MyFunctionTest
 {
     public function test_make_date_new_val_es_with_full_date()
     {
         $this->assertEquals("25 de julio de 1975", make_date_new_val_es("July 25, 1975"));
-    }
-    private function assertEqualCompare(string $expected, string $input, string $result)
-    {
-        if ($result === $input && $result !== $expected) {
-            $this->fail("No changes were made! The function returned the input unchanged:\n$result");
-        } else {
-            $this->assertEquals($expected, $result, "Unexpected result:\n$result");
-        }
     }
     public function testTempInWikiTexts()
     {

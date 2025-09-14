@@ -1,50 +1,13 @@
 <?php
 
-include_once __DIR__ . '/../../src/include_files.php';
 
-use PHPUnit\Framework\TestCase;
-use function WpRefs\MoveDots\move_dots_text;
-use function WpRefs\MoveDots\add_lang_en;
-use function WpRefs\MoveDots\add_lang_en_to_refs;
 
-class mv_dotsTest extends TestCase
+use FixRefs\Tests\MyFunctionTest;
+use function WpRefs\EnLangParam\add_lang_en;
+use function WpRefs\EnLangParam\add_lang_en_to_refs;
+
+class en_lang_paramTest extends MyFunctionTest
 {
-    // Tests for move_dots_text function
-    public function testMoveDotsTextSingleDot()
-    {
-        $input = "This is a sentence。<ref>Reference 1</ref>";
-        $expected = "This is a sentence<ref>Reference 1</ref>。";
-        $this->assertEquals($expected, move_dots_text($input, 'en'));
-    }
-
-    public function testMoveDotsTextMultipleDots()
-    {
-        $input = "First sentence. Second sentence.<ref>Reference 1</ref>";
-        $expected = "First sentence. Second sentence<ref>Reference 1</ref>.";
-        $this->assertEquals($expected, move_dots_text($input, 'en'));
-    }
-
-    public function testMoveDotsTextMultipleRefs()
-    {
-        $input = "Text।<ref>Ref1</ref><ref>Ref2</ref>";
-        $expected = "Text<ref>Ref1</ref><ref>Ref2</ref>।";
-        $this->assertEquals($expected, move_dots_text($input, 'en'));
-    }
-
-    public function testMoveDotsTextNoDot()
-    {
-        $input = "Text<ref>Reference</ref>";
-        $expected = "Text<ref>Reference</ref>";
-        $this->assertEquals($expected, move_dots_text($input, 'en'));
-    }
-
-    public function testMoveDotsTextDifferentPunctuation()
-    {
-        $input = "Text, <ref>Reference</ref>";
-        $expected = "Text<ref>Reference</ref>,";
-        $this->assertEquals($expected, move_dots_text($input, 'en'));
-    }
-
     // Tests for add_lang_en function
     public function testAddLangEnSimpleRef()
     {

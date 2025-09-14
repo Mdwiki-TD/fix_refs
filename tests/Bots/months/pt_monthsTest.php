@@ -1,23 +1,13 @@
 <?php
 
-include_once __DIR__ . '/../../src/include_files.php';
-
-use PHPUnit\Framework\TestCase;
+use FixRefs\Tests\MyFunctionTest;
 
 use function WpRefs\Bots\FixPtMonth\rm_ref_spaces;
 use function WpRefs\Bots\FixPtMonth\fix_pt_months_in_texts;
 use function WpRefs\Bots\FixPtMonth\fix_pt_months_in_refs;
 
-class pt_monthsTest extends TestCase
+class pt_monthsTest extends MyFunctionTest
 {
-    private function assertEqualCompare(string $expected, string $input, string $result)
-    {
-        if ($result === $input && $result !== $expected) {
-            $this->fail("No changes were made! The function returned the input unchanged:\n$result");
-        } else {
-            $this->assertEquals($expected, $result, "Unexpected result:\n$result");
-        }
-    }
     public function testTempInWikiTexts()
     {
         $input = 'test: <ref name="AHFS2016">{{Citar web|titulo=Charcoal, Activated|url=https://www.drugs.com/monograph/charcoal-activated.html|publicado=The American Society of Health-System Pharmacists|acessodata=8 December 2016|urlmorta=live|arquivourl=https://web.archive.org/web/20161221011707/https://www.drugs.com/monograph/charcoal-activated.html|arquivodata=21 December 2016}}</ref>

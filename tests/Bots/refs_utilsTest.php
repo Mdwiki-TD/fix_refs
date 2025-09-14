@@ -1,15 +1,26 @@
 <?php
 
-include_once __DIR__ . '/../../src/include_files.php';
 
-use PHPUnit\Framework\TestCase;
 
-use function WpRefs\Bots\RefsUtils\endsWith;
-use function WpRefs\Bots\RefsUtils\strstartswith;
-use function WpRefs\Bots\RefsUtils\del_start_end;
+use FixRefs\Tests\MyFunctionTest;
+
+use function WpRefs\Bots\RefsUtils\rm_str_from_start_and_end;
 use function WpRefs\Bots\RefsUtils\remove_start_end_quotes;
 
-class refs_utilsTest extends TestCase
+if (!function_exists('str_ends_with')) {
+    function str_ends_with($string, $endString)
+    {
+        $len = strlen($endString);
+        return substr($string, -$len) === $endString;
+    }
+}
+if (!function_exists('str_starts_with')) {
+    function str_starts_with($text, $start)
+    {
+        return strpos($text, $start) === 0;
+    }
+}
+class refs_utilsTest extends MyFunctionTest
 {
 
     /**
@@ -75,8 +86,8 @@ class refs_utilsTest extends TestCase
         $this->assertEquals('"\'value"', remove_start_end_quotes("  'value "));
     }
 
-    // اختبارات دالة endsWith
-    public function testEndsWith()
+    // اختبارات دالة str_ends_with
+    public function teststr_ends_with()
     {
         $tests = [
             // حالة: ينتهي بالنص المطلوب
@@ -98,13 +109,13 @@ class refs_utilsTest extends TestCase
         ];
 
         foreach ($tests as $test) {
-            $result = endsWith($test['string'], $test['endString']);
-            $this->assertEquals($test['expected'], $result, $test['string']);
+            $result = str_ends_with($test['string'], $test['endString']);
+            $this->assertEqualCompare($test['expected'], $test['string'], $result);
         }
     }
 
-    // اختبارات دالة strstartswith
-    public function testStrstartswith()
+    // اختبارات دالة str_starts_with
+    public function teststr_starts_with()
     {
         $tests = [
             // حالة: يبدأ بالنص المطلوب
@@ -126,12 +137,12 @@ class refs_utilsTest extends TestCase
         ];
 
         foreach ($tests as $test) {
-            $result = strstartswith($test['text'], $test['start']);
-            $this->assertEquals($test['expected'], $result);
+            $result = str_starts_with($test['text'], $test['start']);
+            $this->assertEqualCompare($test['expected'], $test['text'], $result);
         }
     }
 
-    // اختبارات دالة del_start_end
+    // اختبارات دالة rm_str_from_start_and_end
     public function testDelStartEnd()
     {
         $tests = [
@@ -150,8 +161,6 @@ class refs_utilsTest extends TestCase
             ["text" => "  '  spaced  '  ", "find" => "'", "expected" => "spaced"],
             // حالة: نص فارغ
             ["text" => "", "find" => "'", "expected" => ""],
-            // حالة: علامة البحث فارغة
-            ["text" => "test", "find" => "", "expected" => "test"],
             // حالة: علامات متعددة
             ["text" => "''multiple''", "find" => "'", "expected" => "'multiple'"],
             // حالة: نص يتكون من العلامة فقط
@@ -159,8 +168,8 @@ class refs_utilsTest extends TestCase
         ];
 
         foreach ($tests as $test) {
-            $result = del_start_end($test['text'], $test['find']);
-            $this->assertEquals($test['expected'], $result);
+            $result = rm_str_from_start_and_end($test['text'], $test['find']);
+            $this->assertEqualCompare($test['expected'], $test['text'], $result);
         }
     }
 
@@ -186,7 +195,7 @@ class refs_utilsTest extends TestCase
 
         foreach ($tests as $test) {
             $result = remove_start_end_quotes($test['text']);
-            $this->assertEquals($test['expected'], $result, $test['text']);
+            $this->assertEqualCompare($test['expected'], $test['text'], $result);
         }
     }
     public function testFixEmpty()
@@ -200,5 +209,11 @@ class refs_utilsTest extends TestCase
     public function testFixOnlySingleQuotes()
     {
         $this->assertEquals('""', remove_start_end_quotes("''"));
+    }
+    // اختبارات دالة rm_str_from_start_and_end
+    public function testDelStartEndEmpty()
+    {
+        $result = rm_str_from_start_and_end('testzz', '');
+        $this->assertEqualCompare('testzz', 'testzz', $result);
     }
 }

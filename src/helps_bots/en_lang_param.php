@@ -1,40 +1,19 @@
 <?php
 
-namespace WpRefs\MoveDots;
+namespace WpRefs\EnLangParam;
 
 /*
 usage:
 
-use function WpRefs\MoveDots\move_dots_text;
-use function WpRefs\MoveDots\add_lang_en;
-use function WpRefs\MoveDots\add_lang_en_to_refs;
+use function WpRefs\EnLangParam\add_lang_en;
+use function WpRefs\EnLangParam\add_lang_en_to_refs;
 
 */
 
-use function WpRefs\TestBot\echo_test;
+// use function WpRefs\TestBot\echo_test;
 use function WpRefs\TestBot\echo_debug;
 use function WpRefs\Parse\Citations\getCitationsOld;
 use function WikiParse\Template\getTemplates;
-
-function move_dots_text($newtext, $lang)
-{
-    // ---
-    // echo_test("move_dots_text\n");
-    // ---
-    $dot = "(\.|,|。|।|։)";
-    // $dot = "(\.|,|。|।)";
-    // ---
-    $regline = "((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)";
-    // ---
-    $pattern = "/" . $dot . "\s*" . $regline . "/m";
-    $replacement = "$2$1";
-    // ---
-    // echo_test("\n$pattern\n");
-    // ---
-    $newtext = preg_replace($pattern, $replacement, $newtext);
-    // ---
-    return $newtext;
-}
 
 function add_lang_en($text)
 {

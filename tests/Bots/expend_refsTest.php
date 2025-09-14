@@ -1,11 +1,11 @@
 <?php
 
-include_once __DIR__ . '/../../src/include_files.php';
 
-use PHPUnit\Framework\TestCase;
+
+use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\ExpendRefs\refs_expend_work;
 
-class expend_refsTest extends TestCase
+class expend_refsTest extends MyFunctionTest
 {
 
     private $text_input = "";

@@ -1,13 +1,13 @@
 <?php
 
-include_once __DIR__ . '/../../src/include_files.php';
 
-use PHPUnit\Framework\TestCase;
+
+use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\Infobox2\do_comments;
 use function WpRefs\Infobox2\make_tempse;
 use function WpRefs\Infobox2\expend_new;
 
-class infobox2Test extends TestCase
+class infobox2Test extends MyFunctionTest
 {
     public function test_expend_new_FileText()
     {
