@@ -35,14 +35,14 @@ function refs_expend($short_refs, $text, $alltext)
 function get_full_text($sourcetitle, $mdwiki_revid)
 {
     // ---
-    $path = "/data/project/mdwikicx";
+    $path = "https://mdwikicx.toolforge.org/";
     // ---
     if (substr(__DIR__, 0, 2) == 'I:') {
-        $path = "I:/medwiki/new/medwiki.toolforge.org_repo";
+        $path = "http://localhost:9001";
     };
     // ---
     if (empty($mdwiki_revid) || $mdwiki_revid == 0) {
-        $json_file = "$path/public_html/revisions_new/json_data.json";
+        $json_file = "$path/revisions_new/json_data.json";
         // ---
         $data = json_decode(file_get_contents($json_file), true) ?? [];
         // ---
@@ -53,7 +53,7 @@ function get_full_text($sourcetitle, $mdwiki_revid)
         return "";
     };
     // ---
-    $file = "$path/public_html/revisions_new/$mdwiki_revid/wikitext.txt";
+    $file = "$path/revisions_new/$mdwiki_revid/wikitext.txt";
     // ---
     echo_test($file);
     // ---
