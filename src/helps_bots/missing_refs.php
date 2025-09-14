@@ -61,6 +61,8 @@ function get_full_text_url($sourcetitle, $mdwiki_revid)
 function get_full_text($sourcetitle, $mdwiki_revid)
 {
     // ---
+    $sourcetitle = str_replace(" ", "_", $sourcetitle);
+    // ---
     $path = "/data/project/medwiki/public_html";
     // ---
     if (substr(__DIR__, 0, 2) == 'I:') {
@@ -75,12 +77,12 @@ function get_full_text($sourcetitle, $mdwiki_revid)
         echo_test("url" . $json_file);
         echo_test("count of data: " . count($data));
         // ---
-        $mdwiki_revid = $data[str_replace($sourcetitle, " ", "_")] ?? "";
+        $mdwiki_revid = $data[$sourcetitle] ?? "";
     };
     // ---
     if (empty($mdwiki_revid)) {
         // ---
-        echo_test("empty mdwiki_revid");
+        echo_test("empty mdwiki_revid, sourcetitle:($sourcetitle)");
         // ---
         return "";
     };
