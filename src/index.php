@@ -23,6 +23,7 @@ use function WpRefs\MdCat\add_Translated_from_MDWiki;
 use function WpRefs\Bots\Mini\mini_fixes;
 use function WpRefs\Bots\Mini\mini_fixes_after_fixing;
 use function WpRefs\RemoveSpace\remove_spaces_between_last_word_and_beginning_of_ref;
+use function WpRefs\MissingRefs\fix_missing_refs;
 
 
 function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sourcetitle, $mdwiki_revid)
@@ -42,6 +43,8 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sou
     // $text = fix_refs_names($text);
     // ---
     $text = mini_fixes($text, $lang);
+    // ---
+    $text = fix_missing_refs($text, $sourcetitle, $mdwiki_revid);
     // ---
     $text = remove_Duplicate_refs_With_attrs($text);
     // ---
