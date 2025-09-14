@@ -62,7 +62,9 @@ function get_full_text($sourcetitle, $mdwiki_revid)
         return "";
     };
     // ---
-    return file_get_contents($file);
+    $text = file_get_contents($file) ?? "";
+    // ---
+    return $text;
 }
 
 function find_empty_short($text)
