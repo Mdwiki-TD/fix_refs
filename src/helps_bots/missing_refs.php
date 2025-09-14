@@ -9,12 +9,9 @@ use function WpRefs\MissingRefs\fix_missing_refs;
 
 */
 
-define("DEBUG", TRUE);
-
 use function WpRefs\TestBot\echo_debug;
 use function WpRefs\Parse\Reg_Citations\getShortCitations;
 use function WpRefs\Parse\Reg_Citations\get_full_refs;
-use function WpRefs\Parse\Citations\getCitationsOld;
 
 function refs_expend($short_refs, $text, $alltext)
 {
