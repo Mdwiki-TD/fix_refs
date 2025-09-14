@@ -61,7 +61,7 @@ function move_dots_after_refs($newtext, $lang)
     $dot = "\.,。।";
     // ---
     if ($lang === "hy") {
-        $dot = "\.,。।։";
+        $dot = "\.,。।։:";
     }
     // ---
     $regline = "((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)";
