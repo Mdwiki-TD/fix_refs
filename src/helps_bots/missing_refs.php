@@ -9,6 +9,7 @@ use function WpRefs\MissingRefs\fix_missing_refs;
 
 */
 
+use function WpRefs\TestBot\echo_test;
 use function WpRefs\TestBot\echo_debug;
 use function WpRefs\Parse\Reg_Citations\getShortCitations;
 use function WpRefs\Parse\Reg_Citations\get_full_refs;
@@ -53,6 +54,8 @@ function get_full_text($sourcetitle, $mdwiki_revid)
     };
     // ---
     $file = "$path/public_html/revisions_new/$mdwiki_revid/wikitext.txt";
+    // ---
+    echo_test($file);
     // ---
     if (!file_exists($file)) {
         echo_debug("file not found: $file");
