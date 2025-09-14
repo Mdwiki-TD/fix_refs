@@ -47,10 +47,15 @@ function get_full_text($sourcetitle, $mdwiki_revid)
         // ---
         $data = json_decode(get_url_curl($json_file), true) ?? [];
         // ---
+        echo_test("count of data: " . count($data));
+        // ---
         $mdwiki_revid = $data[$sourcetitle] ?? "";
     };
     // ---
     if (empty($mdwiki_revid)) {
+        // ---
+        echo_test("empty mdwiki_revid");
+        // ---
         return "";
     };
     // ---
@@ -59,7 +64,7 @@ function get_full_text($sourcetitle, $mdwiki_revid)
     echo_test($file);
     // ---
     if (!file_exists($file)) {
-        echo_debug("file not found: $file");
+        echo_test("file not found: $file");
         return "";
     };
     // ---
