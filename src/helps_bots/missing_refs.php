@@ -15,6 +15,94 @@ use function WpRefs\Parse\Reg_Citations\getShortCitations;
 use function WpRefs\Parse\Reg_Citations\get_full_refs;
 use function WpRefs\MdCat\get_url_curl;
 
+function get_full_text_url($sourcetitle, $mdwiki_revid)
+{
+    // ---
+    $path = "https://mdwikicx.toolforge.org/";
+    // ---
+    if (substr(__DIR__, 0, 2) == 'I:') {
+        $path = "http://localhost:9001";
+    };
+    // ---
+    if (empty($mdwiki_revid) || $mdwiki_revid == 0) {
+        $json_file = "$path/revisions_new/json_data.json";
+        // ---
+        $data = json_decode(get_url_curl($json_file), true) ?? [];
+        // ---
+        echo_test("url" . $json_file);
+        echo_test("count of data: " . count($data));
+        // ---
+        $mdwiki_revid = $data[str_replace($sourcetitle, " ", "_")] ?? "";
+    };
+    // ---
+    if (empty($mdwiki_revid)) {
+        // ---
+        echo_test("empty mdwiki_revid");
+        // ---
+        return "";
+    };
+    // ---
+    $file = "$path/revisions_new/$mdwiki_revid/wikitext.txt";
+    // ---
+    echo_test($file);
+    // ---
+    if (!file_exists($file)) {
+        echo_test("file not found: $file");
+        return "";
+    };
+    // ---
+    echo_test("url" . $file);
+    // ---
+    $text = get_url_curl($file) ?? "";
+    // ---
+    return $text;
+}
+
+function get_full_text($sourcetitle, $mdwiki_revid)
+{
+    // ---
+    $sourcetitle = str_replace(" ", "_", $sourcetitle);
+    // ---
+    $path = "/data/project/medwiki/public_html";
+    // ---
+    if (substr(__DIR__, 0, 2) == 'I:') {
+        $path = "I:/medwiki/new/medwiki.toolforge.org_repo/public_html";
+    };
+    // ---
+    if (empty($mdwiki_revid) || $mdwiki_revid == 0) {
+        $json_file = "$path/revisions_new/json_data.json";
+        // ---
+        $data = json_decode(file_get_contents($json_file) ?: "[]", true) ?? [];
+        // ---
+        echo_test("url" . $json_file);
+        echo_test("count of data: " . count($data));
+        // ---
+        $mdwiki_revid = $data[$sourcetitle] ?? "";
+    };
+    // ---
+    if (empty($mdwiki_revid)) {
+        // ---
+        echo_test("empty mdwiki_revid, sourcetitle:($sourcetitle)");
+        // ---
+        return "";
+    };
+    // ---
+    $file = "$path/revisions_new/$mdwiki_revid/wikitext.txt";
+    // ---
+    echo_test($file);
+    // ---
+    if (!file_exists($file)) {
+        echo_test("file not found: $file");
+        return "";
+    };
+    // ---
+    echo_test("url" . $file);
+    // ---
+    $text = file_get_contents($file) ?: "";
+    // ---
+    return $text;
+}
+
 function refs_expend($short_refs, $text, $alltext)
 {
     $refs = get_full_refs($alltext);
@@ -30,41 +118,6 @@ function refs_expend($short_refs, $text, $alltext)
             $text = str_replace($refe, $rr, $text);
         }
     }
-    return $text;
-}
-
-function get_full_text($sourcetitle, $mdwiki_revid)
-{
-    // ---
-    $path = "https://mdwikicx.toolforge.org/";
-    // ---
-    if (substr(__DIR__, 0, 2) == 'I:') {
-        $path = "http://localhost:9001";
-    };
-    // ---
-    if (empty($mdwiki_revid) || $mdwiki_revid == 0) {
-        $json_file = "$path/revisions_new/json_data.json";
-        // ---
-        $data = json_decode(get_url_curl($json_file), true) ?? [];
-        // ---
-        $mdwiki_revid = $data[$sourcetitle] ?? "";
-    };
-    // ---
-    if (empty($mdwiki_revid)) {
-        return "";
-    };
-    // ---
-    $file = "$path/revisions_new/$mdwiki_revid/wikitext.txt";
-    // ---
-    echo_test($file);
-    // ---
-    if (!file_exists($file)) {
-        echo_debug("file not found: $file");
-        return "";
-    };
-    // ---
-    $text = get_url_curl($file) ?? "";
-    // ---
     return $text;
 }
 
