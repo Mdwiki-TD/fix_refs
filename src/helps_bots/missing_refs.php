@@ -98,7 +98,7 @@ function get_full_text($sourcetitle, $mdwiki_revid)
     // ---
     echo_test("url" . $file);
     // ---
-    $text = file_get_contents($file) ?? "";
+    $text = file_get_contents($file) ?: "";
     // ---
     return $text;
 }
