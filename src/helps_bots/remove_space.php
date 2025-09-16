@@ -6,6 +6,7 @@ namespace WpRefs\RemoveSpace;
 usage:
 
 use function WpRefs\RemoveSpace\remove_spaces_between_last_word_and_beginning_of_ref;
+use function WpRefs\RemoveSpace\remove_spaces_between_ref_and_punctuation;
 
 */
 // ---
@@ -68,7 +69,7 @@ function remove_spaces_between_last_word_and_beginning_of_ref($newtext, $lang)
     $dot = "\.,。।";
 
     if ($lang === "hy") {
-        $dot = "\.,。।։";
+        $dot = "\.,。।։:";
     }
 
     $parts = get_parts($newtext, $dot);
@@ -105,13 +106,20 @@ function remove_spaces_between_last_word_and_beginning_of_ref($newtext, $lang)
     return $newtext;
 }
 
-function assertEqualCompare(string $expected, string $input, string $result)
+
+
+function remove_spaces_between_ref_and_punctuation($text)
 {
-    if ($result === $expected) {
-        echo "result === expected";
-    } elseif ($result === $input) {
-        echo "result === input";
-    } else {
-        echo "result !== expected";
-    }
+
+    $dots = "\.,。।։:";
+    // ---
+    // </ref> : to </ref>:
+    // ---
+    // أضف العلامة نفسها بعد <ref ... /> مع بقاء النقطة/الرمز كما هو
+    $text = preg_replace("/(<ref[^>]*\/>)\s*([$dots])/", '$1$2', $text);
+
+    // وحّد النهاية: </ref> متبوعة بأي نقطة/رمز تبقى كما هي
+    $text = preg_replace("/<\/ref>\s*([$dots])/", '</ref>$1', $text);
+    // ---
+    return $text;
 }
