@@ -78,4 +78,25 @@ class esTest extends MyFunctionTest
         // --
         $this->assertEquals($text_output, $result);
     }
+
+    public function test_fix_temps_and_months_with_month()
+    {
+        $old = "{{cite journal|title=Study|journal=Nature|date=January 2005|pages=20–25}}";
+        $new = "{{cita publicación|título=Study|journal=Nature|fecha=enero de 2005|páginas=20–25}}";
+        $this->assertEquals($new, fix_temps_wrap($old));
+    }
+
+    public function test_fix_temps_and_months_different_template()
+    {
+        $old = "{{cite book|title=Medical Book|year=2010|pages=100–105}}";
+        $new = "{{cita libro|título=Medical Book|año=2010|páginas=100–105}}";
+        $this->assertEquals($new, fix_temps_wrap($old));
+    }
+
+    public function test_fix_temps_and_months_no_change()
+    {
+        $old = "Texto sin plantillas ni meses en inglés.";
+        $new = "Texto sin plantillas ni meses en inglés.";
+        $this->assertEquals($new, fix_temps_wrap($old));
+    }
 }

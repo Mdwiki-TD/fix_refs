@@ -14,7 +14,7 @@ use function WpRefs\Infobox\Expend_Infobox;
 use function WpRefs\Bots\FixPtMonth\pt_fixes;
 use function WpRefs\SW\sw_fixes;
 use function WpRefs\ES\fix_es;
-use function WpRefs\ES\es_section;
+use function WpRefs\EsBots\es_section;
 // use function WpRefs\DelDuplicateRefs\fix_refs_names;
 use function WpRefs\DelDuplicateRefs\remove_Duplicate_refs_With_attrs;
 use function WpRefs\MovesDots\move_dots_after_refs;
