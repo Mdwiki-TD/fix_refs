@@ -1,7 +1,7 @@
 <?php
 
 use FixRefs\Tests\MyFunctionTest;
-use function WpRefs\Bots\es_refs\mv_es_refs;
+use function WpRefs\EsBots\es_refs\mv_es_refs;
 
 class es_refsTest extends MyFunctionTest
 {

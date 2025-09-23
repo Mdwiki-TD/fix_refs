@@ -1,11 +1,11 @@
 <?php
 
-namespace WpRefs\EsBots;
+namespace WpRefs\EsBots\Section;
 /*
 
 usage:
 
-use function WpRefs\EsBots\es_section;
+use function WpRefs\EsBots\Section\es_section;
 
 */
 

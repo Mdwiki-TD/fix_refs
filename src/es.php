@@ -9,8 +9,8 @@ use function WpRefs\ES\fix_es;
 
 */
 
-use function WpRefs\Bots\es_months\fix_es_months_in_refs;
-use function WpRefs\Bots\es_refs\mv_es_refs;
+use function WpRefs\EsBots\es_months\fix_es_months_in_refs;
+use function WpRefs\EsBots\es_refs\mv_es_refs;
 use function WikiParse\Template\getTemplates;
 use function WpRefs\TestBot\echo_test;
 // ---

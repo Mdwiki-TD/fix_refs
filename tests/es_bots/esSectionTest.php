@@ -1,7 +1,7 @@
 <?php
 
 use FixRefs\Tests\MyFunctionTest;
-use function WpRefs\EsBots\es_section;
+use function WpRefs\EsBots\Section\es_section;
 
 class esSectionTest extends MyFunctionTest
 {

@@ -1,7 +1,7 @@
 <?php
 
 use FixRefs\Tests\MyFunctionTest;
-use function WpRefs\Bots\es_months\fix_es_months_in_refs;
+use function WpRefs\EsBots\es_months\fix_es_months_in_refs;
 use function WpRefs\ES\fix_es;
 use function WpRefs\ES\fix_temps;
 
@@ -81,8 +81,8 @@ class esTest extends MyFunctionTest
 
     public function test_fix_temps_and_months_with_month()
     {
-        $old = "{{cite journal|title=Study|journal=Nature|date=January 2005|pages=20–25}}";
-        $new = "{{cita publicación|título=Study|journal=Nature|fecha=enero de 2005|páginas=20–25}}";
+        $old = "<ref>{{cite journal|title=Study|journal=Nature|date=January 2005|pages=20–25}}</ref>";
+        $new = "<ref>{{cita publicación|título=Study|journal=Nature|fecha=enero de 2005|páginas=20–25}}</ref>";
         $this->assertEquals($new, fix_temps_wrap($old));
     }
 
