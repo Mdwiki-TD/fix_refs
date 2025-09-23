@@ -137,7 +137,7 @@ class esSectionTest extends MyFunctionTest
     public function test_empty_text_input()
     {
         $text = "";
-        $expected = "== Enlaces externos ==\n{{Traducido ref MDWiki|en|Source Title|oldid=123|trad=|fecha={{subst:CURRENTDAY}} de {{subst:CURRENTMONTHNAME}} de {{subst:CURRENTYEAR}}}}\n\n";
+        $expected = "\n== Enlaces externos ==\n{{Traducido ref MDWiki|en|Source Title|oldid=123|trad=|fecha={{subst:CURRENTDAY}} de {{subst:CURRENTMONTHNAME}} de {{subst:CURRENTYEAR}}}}\n";
         $result = es_section('Source Title', $text, '123');
         $this->assertEquals($expected, $result);
     }
@@ -155,7 +155,7 @@ class esSectionTest extends MyFunctionTest
     public function testCaseVariationsInSectionHeader()
     {
         $text = "== ENLACES EXTERNOS ==";
-        $expected = "== ENLACES EXTERNOS ==\n{{Traducido ref MDWiki|en|Source Title|oldid=123|trad=|fecha={{subst:CURRENTDAY}} de {{subst:CURRENTMONTHNAME}} de {{subst:CURRENTYEAR}}}}\n\n";
+        $expected = "== ENLACES EXTERNOS ==\n{{Traducido ref MDWiki|en|Source Title|oldid=123|trad=|fecha={{subst:CURRENTDAY}} de {{subst:CURRENTMONTHNAME}} de {{subst:CURRENTYEAR}}}}\n";
         $result = es_section('Source Title', $text, '123');
         $this->assertEquals($expected, $result);
     }
@@ -164,8 +164,8 @@ class esSectionTest extends MyFunctionTest
     public function testWhitespaceAroundSectionHeader()
     {
         $text = "  ==   Enlaces externos   ==  ";
-        $expected = "  ==   Enlaces externos   ==  \n{{Traducido ref MDWiki|en|Source Title|oldid=123|trad=|fecha={{subst:CURRENTDAY}} de {{subst:CURRENTMONTHNAME}} de {{subst:CURRENTYEAR}}}}\n\n";
-        $result = es_section('Source Title', $text, '123');
+        $expected = "  ==   Enlaces externos   ==\n{{Traducido ref MDWiki|en|test!|oldid=520|trad=|fecha={{subst:CURRENTDAY}} de {{subst:CURRENTMONTHNAME}} de {{subst:CURRENTYEAR}}}}\n  ";
+        $result = es_section('test!', $text, '520');
         $this->assertEquals($expected, $result);
     }
 }

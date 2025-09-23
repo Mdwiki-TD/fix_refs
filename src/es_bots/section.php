@@ -27,10 +27,10 @@ function es_section($sourcetitle, $text, $mdwiki_revid)
     // find /==\s*Enlaces\s*externos\s*==/ in text if exists add temp after it
     // if not exists add temp at the end of text
     // ---
-    preg_match('/==\s*Enlaces\s*externos\s*==/', $text, $matches);
+    preg_match('/==\s*Enlaces\s*externos\s*==/i', $text, $matches);
     // ---
     if (!empty($matches)) {
-        $text = preg_replace('/(==\s*Enlaces\s*externos\s*==)/', "$1\n$temp\n", $text, 1);
+        $text = preg_replace('/(==\s*Enlaces\s*externos\s*==)/i', "$1\n$temp\n", $text, 1);
     } else {
         $text .= "\n== Enlaces externos ==\n$temp\n";
     }
@@ -39,6 +39,6 @@ function es_section($sourcetitle, $text, $mdwiki_revid)
 }
 
 
-$old = "";
+$old = "  ==   Enlaces externos   ==  ";
 
-echo json_encode([1 => es_section("Source Title", $old, 123)]);
+echo json_encode([1 => es_section("test!", $old, 520)]);
