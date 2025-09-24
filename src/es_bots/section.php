@@ -16,7 +16,7 @@ function es_section($sourcetitle, $text, $mdwiki_revid)
     $text = preg_replace('/\{\{\s*Traducido\s*ref\s*\|\s*mdwiki\s*\|/iu', "{{Traducido ref MDWiki|en|", $text);
     // ---
     // if text has /\{\{\s*Traducido ref\s*\|/ then return text
-    preg_match('/\{\{\s*Traducido\s*ref( mdwiki|)\s*\|/iu', $text, $ma);
+    preg_match('/\{\{\s*Traducido\s*ref\s*MDWiki\s*\|/iu', $text, $ma);
     if (!empty($ma)) {
         // pub_test_print("return text;");
         return $text;

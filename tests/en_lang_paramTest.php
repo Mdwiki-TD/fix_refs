@@ -7,7 +7,7 @@ use function WpRefs\EnLangParam\add_lang_en_to_refs;
 
 class en_lang_paramTest extends MyFunctionTest
 {
-    // Tests for add_lang_en_new function
+    // Tests for add_lang_en_to_refs function
     public function testAddLangEnSimpleRef()
     {
         $input = "<ref>{{Citar web|Some text}}</ref> {{temp|test=1}}";
