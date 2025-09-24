@@ -46,7 +46,7 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sou
     // ---
     $text = mini_fixes($text, $lang);
     // ---
-    $text = fix_missing_refs($text, $sourcetitle, $mdwiki_revid);
+    // $text = fix_missing_refs($text, $sourcetitle, $mdwiki_revid);
     // ---
     $text = remove_Duplicate_refs_With_attrs($text);
     // ---
