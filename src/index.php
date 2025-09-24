@@ -19,7 +19,7 @@ use function WpRefs\EsBots\Section\es_section;
 // use function WpRefs\DelDuplicateRefs\fix_refs_names;
 use function WpRefs\DelDuplicateRefs\remove_Duplicate_refs_With_attrs;
 use function WpRefs\MovesDots\move_dots_after_refs;
-use function WpRefs\EnLangParam\add_lang_en;
+use function WpRefs\EnLangParam\add_lang_en_to_refs;
 use function WpRefs\MdCat\add_Translated_from_MDWiki;
 use function WpRefs\Bots\Mini\mini_fixes;
 use function WpRefs\Bots\Mini\mini_fixes_after_fixing;
@@ -57,7 +57,7 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sou
     // ---
     if ($add_en_lang) {
         echo_test("add_en_lang\n");
-        $text = add_lang_en($text);
+        $text = add_lang_en_to_refs($text);
     }
     // ---
     if ($lang === "pt") {
