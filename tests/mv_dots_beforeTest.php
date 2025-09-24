@@ -31,7 +31,7 @@ class mv_dots_beforeTest extends MyFunctionTest
     public function testMoveDotsBeforeMultipleRefs()
     {
         $input = "Text<ref>Ref1</ref><ref>Ref2</ref>..";
-        $expected = "Text. <ref>Ref1</ref><ref>Ref2</ref>.";
+        $expected = "Text. <ref>Ref1</ref><ref>Ref2</ref>";
         $this->assertEqualCompare($expected, $input, move_dots_before_refs($input, 'ar'));
     }
 

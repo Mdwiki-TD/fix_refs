@@ -50,8 +50,8 @@ function new_date($val, $lang = 'pt')
 
     $month_part = "(?P<m>January|February|March|April|May|June|July|August|September|October|November|December)";
     $patterns = [
-        "/^(?:(?P<d>\d{1,2})\s+)?$month_part,?\s+(?P<y>\d{4})$/i",
-        "/^$month_part\s+(?P<d>\d{1,2}),?\s+(?P<y>\d{4})$/i",
+        "/^(?:(?P<d>\d{1,2})\s+)?$month_part,?\s+(?P<y>\d{4})$/iu",
+        "/^$month_part\s+(?P<d>\d{1,2}),?\s+(?P<y>\d{4})$/iu",
     ];
 
     foreach ($patterns as $pattern) {

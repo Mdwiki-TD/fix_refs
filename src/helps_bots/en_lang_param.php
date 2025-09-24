@@ -30,11 +30,11 @@ function add_lang_en($text)
                 continue;
             }
             // ---
-            if (preg_replace("/\|\s*language\s*\=\s*\w+/", "", $ref) != $ref) {
+            if (preg_replace("/\|\s*language\s*\=\s*\w+/u", "", $ref) != $ref) {
                 continue;
             }
             // ---
-            $ref2 = preg_replace("/(\|\s*language\s*\=\s*)(\|\}\})/", "$1en$2", $ref);
+            $ref2 = preg_replace("/(\|\s*language\s*\=\s*)(\|\}\})/u", "$1en$2", $ref);
             // ---
             if ($ref2 == $ref) {
                 $ref2 = str_replace("}}</ref>", "|language=en}}</ref>", $ref);

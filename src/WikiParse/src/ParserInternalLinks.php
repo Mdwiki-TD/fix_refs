@@ -36,7 +36,7 @@ class ParserInternalLinks
      */
     private function find_sub_links(string $string): array
     {
-        preg_match_all("/\[{2}((?>[^\[\]]+)|(?R))*\]{2}/x", $string, $matches);
+        preg_match_all("/\[{2}((?>[^\[\]]+)|(?R))*\]{2}/xu", $string, $matches);
         return $matches;
     }
 
@@ -47,7 +47,7 @@ class ParserInternalLinks
     {
         $text_links = $this->find_sub_links($this->text);
         foreach ($text_links[0] as $text_link) {
-            if (preg_match("/^\[\[(.*?)(\]\])$/s", $text_link, $matches)) {
+            if (preg_match("/^\[\[(.*?)(\]\])$/su", $text_link, $matches)) {
                 $parts = explode("|", $matches[1], 2);
                 $_InternalLink = (count($parts) == 1) ? new InternalLink($parts[0]) : new InternalLink($parts[0], $parts[1]);
                 $this->targets[] = $_InternalLink;

@@ -75,7 +75,7 @@ function fix_title_bold($text, $title)
         $title2 = $title;
     }
     // ---
-    $text = preg_replace("/\}\s*('''$title2''')/", "}\n\n$1", $text);
+    $text = preg_replace("/\}\s*('''$title2''')/u", "}\n\n$1", $text);
     // ---
     return $text;
 }

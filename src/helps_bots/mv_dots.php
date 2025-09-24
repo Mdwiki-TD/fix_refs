@@ -16,8 +16,8 @@ function move_dots_before_refs(string $text, string $lang): string
 
     // Pattern to match references followed by punctuation
     // This pattern handles one or more ref tags followed by punctuation
-    $pattern = '/((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)([\.,،]+)/s';
-    $pattern = '/((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)([' . $punctuation . ']+)/s';
+    $pattern = '/((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)([\.,،])/su';
+    $pattern = '/((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)([' . $punctuation . ']+)/su';
 
     // Replace by moving punctuation before the reference(s)
     $result = preg_replace_callback($pattern, function ($matches) {
@@ -40,7 +40,7 @@ function move_dots_after_refs($newtext, $lang)
     $dot = "\.,。।";
     // ---
     if ($lang === "hy") {
-        $dot = "\.,。।։:";
+        $dot = "\.,。։।:";
     }
     // ---
     $regline = "((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)";

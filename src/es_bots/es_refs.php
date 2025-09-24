@@ -64,7 +64,7 @@ function check_short_refs($line)
     }
     // ---
     // remove \n+
-    $line = preg_replace("/\n+/", "\n", $line);
+    $line = preg_replace("/\n+/u", "\n", $line);
     // ---
     return $line;
 };

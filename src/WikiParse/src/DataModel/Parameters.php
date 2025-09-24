@@ -114,6 +114,9 @@ class Parameters
             } elseif (!in_array($k, $map)) {
                 // ignore keys that will be replaced later
                 $newParameters[$k] = $v;
+            } else {
+                // ignore keys that don't exist in the map
+                $newParameters[$k] = $v;
             }
             // the key that exists as value in the map will be skipped if it's not in the original keys
         }

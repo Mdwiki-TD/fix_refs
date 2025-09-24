@@ -39,7 +39,7 @@ class ParserExternalLinks
      */
     private function find_sub_links(string $string): array
     {
-        preg_match_all("/\[(https?:\/\/\S+)(.*?)\]/s", $string, $matches);
+        preg_match_all("/\[(https?:\/\/\S+)(.*?)\]/su", $string, $matches);
         return $matches;
     }
 

@@ -23,7 +23,7 @@ function parseAttributes($text): array
                 |(?![\'"])[^>\s]*                          # Unquoted value
             ))?
             (?:\s|\/(?!>))*                                # Trailing space or slash not followed by >
-        /x';
+        /xu';
     $attributes_array = [];
 
     if (preg_match_all($attrfind_tolerant, $text, $matches, PREG_SET_ORDER)) {
@@ -40,7 +40,7 @@ function parseAttributes($text): array
 function get_attrs($text)
 {
     $text = "<ref $text>";
-    $attrfind_tolerant = '/((?<=[\'"\s\/])[^\s\/>][^\s\/=>]*)(\s*=+\s*(\'[^\']*\'|"[^"]*"|(?![\'"])[^>\s]*))?(?:\s|\/(?!>))*/';
+    $attrfind_tolerant = '/((?<=[\'"\s\/])[^\s\/>][^\s\/=>]*)(\s*=+\s*(\'[^\']*\'|"[^"]*"|(?![\'"])[^>\s]*))?(?:\s|\/(?!>))*/u';
     $attrs = [];
 
     if (preg_match_all($attrfind_tolerant, $text, $matches, PREG_SET_ORDER)) {
