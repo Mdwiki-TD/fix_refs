@@ -106,20 +106,35 @@ function remove_spaces_between_last_word_and_beginning_of_ref($newtext, $lang)
     return $newtext;
 }
 
-
-
-function remove_spaces_between_ref_and_punctuation($text)
+function remove_spaces_between_ref_and_punctuationz($text, $lang = null)
 {
 
     $dots = "\.,。।։:";
     // ---
     // </ref> : to </ref>:
     // ---
-    // أضف العلامة نفسها بعد <ref ... /> مع بقاء النقطة/الرمز كما هو
+    // Keep punctuation right after <ref ... /> with no space
     $text = preg_replace("/(<ref[^>]*\/>)\s*([$dots])/", '$1$2', $text);
 
-    // وحّد النهاية: </ref> متبوعة بأي نقطة/رمز تبقى كما هي
+    // Normalize endings: </ref> followed by any punctuation remains attached
     $text = preg_replace("/<\/ref>\s*([$dots])/", '</ref>$1', $text);
+    // ---
+    return $text;
+}
+
+function remove_spaces_between_ref_and_punctuation($text, $lang = null)
+{
+    // Use a superset of punctuation across supported languages
+    $dots = ".,。։।:";
+    $cls = preg_quote($dots, '/');
+    // ---
+    // </ref> : to </ref>:
+    // ---
+    // Keep punctuation right after <ref ... /> with no space
+    $text = preg_replace('/(<ref[^>]*\/>)\s*([' . $cls . '])\/?/u', '$1$2', $text);
+
+    // Normalize endings: </ref> followed by any punctuation remains attached
+    $text = preg_replace('/<\/ref>\s*([' . $cls . '])/u', '</ref>$1', $text);
     // ---
     return $text;
 }

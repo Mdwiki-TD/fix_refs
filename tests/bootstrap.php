@@ -17,10 +17,10 @@ class MyFunctionTest extends TestCase
 {
     protected function assertEqualCompare(string $expected, string $input, string $result)
     {
-        // --
+        // ---
         $result = preg_replace("/\r\n/", "\n", $result);
         $expected = preg_replace("/\r\n/", "\n", $expected);
-        // --
+        // ---
         if ($result === $input && $result !== $expected) {
             $this->fail("No changes were made! The function returned the input unchanged:\n$result");
         } else {

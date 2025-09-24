@@ -37,8 +37,3 @@ function es_section($sourcetitle, $text, $mdwiki_revid)
     // ---
     return $text;
 }
-
-
-$old = "  ==   Enlaces externos   ==  ";
-
-echo json_encode([1 => es_section("test!", $old, 520)]);

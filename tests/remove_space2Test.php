@@ -4,7 +4,66 @@
 use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\RemoveSpace\remove_spaces_between_ref_and_punctuation;
 
-class remove_space2Test extends MyFunctionTest
+class remove_space2ExtraTest extends MyFunctionTest
+{
+    public function testRefNoPunctuationAfter()
+    {
+        $input = 'Sentence <ref name="X1" /> continues here';
+        $expected = 'Sentence <ref name="X1" /> continues here';
+        $this->assertEqualCompare($expected, $input, remove_spaces_between_ref_and_punctuation($input));
+    }
+
+    public function testMultipleSpacesBeforePunctuation()
+    {
+        $input = 'Sentence <ref name="X2" />     .';
+        $expected = 'Sentence <ref name="X2" />.';
+        $this->assertEqualCompare($expected, $input, remove_spaces_between_ref_and_punctuation($input));
+    }
+
+    public function testClosingRefDoublePunctuation()
+    {
+        $input = 'Sentence</ref> .:';
+        $expected = 'Sentence</ref>.:'; // space removed only before the first dot
+        $this->assertEqualCompare($expected, $input, remove_spaces_between_ref_and_punctuation($input));
+    }
+
+    public function testRefWithAttributes()
+    {
+        $input = 'Sentence <ref name="X3" group="note" /> .';
+        $expected = 'Sentence <ref name="X3" group="note" />.';
+        $this->assertEqualCompare($expected, $input, remove_spaces_between_ref_and_punctuation($input));
+    }
+
+    public function testEmptyRefTag()
+    {
+        $input = 'Sentence<ref></ref> .';
+        $expected = 'Sentence<ref></ref>.';
+        $this->assertEqualCompare($expected, $input, remove_spaces_between_ref_and_punctuation($input));
+    }
+
+    public function testAlreadyCorrectShouldStaySame()
+    {
+        $input = 'Sentence <ref name="X4" />.';
+        $expected = 'Sentence <ref name="X4" />.';
+        $this->assertEqualCompare($expected, $input, remove_spaces_between_ref_and_punctuation($input));
+    }
+
+    public function testMixOfColonTypes()
+    {
+        $input = 'Sentence <ref name="X5" /> : Another<ref name="X6" /> ：';
+        $expected = 'Sentence <ref name="X5" />: Another<ref name="X6" /> ：';
+        $this->assertEqualCompare($expected, $input, remove_spaces_between_ref_and_punctuation($input));
+    }
+
+    public function testMalformedNestedRefs()
+    {
+        $input = 'Sentence <ref><ref /> 。';
+        $expected = 'Sentence <ref><ref />。';
+        $this->assertEqualCompare($expected, $input, remove_spaces_between_ref_and_punctuation($input));
+    }
+}
+
+class remove_space2Test extends remove_space2ExtraTest
 {
 
     public function testRemoveSpaceEnd1()

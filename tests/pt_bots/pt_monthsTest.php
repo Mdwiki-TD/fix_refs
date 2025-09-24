@@ -2,9 +2,9 @@
 
 use FixRefs\Tests\MyFunctionTest;
 
-use function WpRefs\Bots\FixPtMonth\rm_ref_spaces;
-use function WpRefs\Bots\FixPtMonth\fix_pt_months_in_texts;
-use function WpRefs\Bots\FixPtMonth\fix_pt_months_in_refs;
+use function WpRefs\PT\FixPtMonth\rm_ref_spaces;
+use function WpRefs\PT\FixPtMonth\fix_pt_months_in_texts;
+use function WpRefs\PT\FixPtMonth\fix_pt_months_in_refs;
 
 class pt_monthsTest extends MyFunctionTest
 {

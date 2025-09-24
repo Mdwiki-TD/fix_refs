@@ -1,10 +1,10 @@
 <?php
 
-namespace WpRefs\Bots\FixPtMonth;
+namespace WpRefs\PT\FixPtMonth;
 /*
 usage:
 
-use function WpRefs\Bots\FixPtMonth\fix_pt_months_in_refs;
+use function WpRefs\PT\FixPtMonth\fix_pt_months_in_refs;
 
 */
 

@@ -11,7 +11,8 @@ use function WpRefs\WprefText\fix_page;
 
 use function WpRefs\TestBot\echo_test;
 use function WpRefs\Infobox\Expend_Infobox;
-use function WpRefs\Bots\FixPtMonth\pt_fixes;
+use function WpRefs\PT\FixPtMonth\pt_fixes;
+use function WpRefs\BG\bg_fixes;
 use function WpRefs\SW\sw_fixes;
 use function WpRefs\ES\fix_es;
 use function WpRefs\EsBots\Section\es_section;
@@ -63,6 +64,10 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sou
         $text = pt_fixes($text);
     }
     // ---
+    if ($lang === "bg") {
+        $text = bg_fixes($text, $sourcetitle, $mdwiki_revid);
+    }
+    // ---
     if ($lang === "es") {
         $text = fix_es($text, $title);
         $text = es_section($sourcetitle, $text, $mdwiki_revid);
@@ -77,7 +82,9 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sou
         $text = remove_spaces_between_ref_and_punctuation($text);
     }
     // ---
-    $text = add_Translated_from_MDWiki($text, $lang);
+    if ($lang !== "bg") {
+        $text = add_Translated_from_MDWiki($text, $lang);
+    }
     // ---
     $text = mini_fixes_after_fixing($text, $lang);
     // ---
