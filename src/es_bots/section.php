@@ -13,7 +13,7 @@ function es_section($sourcetitle, $text, $mdwiki_revid)
 {
     // ---
     // replace ({{Traducido ref|mdwiki|) with ({{Traducido ref MDWiki|en|)
-    $text = preg_replace('/\{\{\s*Traducido\s*ref\s*\|/iu', "{{Traducido ref MDWiki|en|", $text);
+    $text = preg_replace('/\{\{\s*Traducido\s*ref\s*\|\s*mdwiki\s*\|/iu', "{{Traducido ref MDWiki|en|", $text);
     // ---
     // if text has /\{\{\s*Traducido ref\s*\|/ then return text
     preg_match('/\{\{\s*Traducido\s*ref( mdwiki|)\s*\|/iu', $text, $ma);
@@ -33,7 +33,7 @@ function es_section($sourcetitle, $text, $mdwiki_revid)
     preg_match('/==\s*Enlaces\s*externos\s*==/iu', $text, $matches);
     // ---
     if (!empty($matches)) {
-        $text = preg_replace('/(==\s*Enlaces\s*externos\s*==)/i', "$1\n$temp\n", $text, 1);
+        $text = preg_replace('/(==\s*Enlaces\s*externos\s*==)/iu', "$1\n$temp\n", $text, 1);
     } else {
         $text .= "\n== Enlaces externos ==\n$temp\n";
     }
