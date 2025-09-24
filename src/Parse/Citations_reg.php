@@ -27,7 +27,7 @@ function get_name($options)
         return "";
     }
     // $pa = "/name\s*=\s*\"(.*?)\"/i";
-    $pa = "/name\s*\=\s*[\"\']*([^>\"\']*)[\"\']*\s*/i";
+    $pa = "/name\s*\=\s*[\"\']*([^>\"\']*)[\"\']*\s*/iu";
     preg_match($pa, $options, $matches);
     // ---
     if (!isset($matches[1])) {
@@ -38,7 +38,7 @@ function get_name($options)
 }
 function get_Reg_Citations($text)
 {
-    preg_match_all("/<ref([^\/>]*?)>(.+?)<\/ref>/is", $text, $matches);
+    preg_match_all("/<ref([^\/>]*?)>(.+?)<\/ref>/isu", $text, $matches);
     // ---
     $citations = [];
     // ---
@@ -75,7 +75,7 @@ function get_full_refs($text)
 
 function getShortCitations($text)
 {
-    preg_match_all("/<ref ([^\/>]*?)\/\s*>/is", $text, $matches);
+    preg_match_all("/<ref ([^\/>]*?)\/\s*>/isu", $text, $matches);
     // ---
     $citations = [];
     // ---

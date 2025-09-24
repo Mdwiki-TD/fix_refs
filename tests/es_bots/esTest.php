@@ -73,6 +73,9 @@ class esTest extends MyFunctionTest
         // --
         $result = fix_es($text_input);
         // --
+        $fixed_file = __DIR__ . "/texts/fix_es_1_output_fixed.txt";
+        file_put_contents($fixed_file, $result);
+        // --
         $result = preg_replace("/\r\n/", "\n", $result);
         $text_output = preg_replace("/\r\n/", "\n", $text_output);
         // --
@@ -97,6 +100,24 @@ class esTest extends MyFunctionTest
     {
         $old = "Texto sin plantillas ni meses en inglés.";
         $new = "Texto sin plantillas ni meses en inglés.";
+        $this->assertEquals($new, fix_temps_wrap($old));
+    }
+    public function test_fix_temps_inside_ref()
+    {
+        $old = "<ref name=OI2018>{{cita web|título=Shoulder Trauma (Fractures and Dislocations)|url=https://orthoinfo.aaos.org/en/diseases--conditions/shoulder-trauma-fractures-and-dislocations/|sitioweb=OrthoInfo - AAOS|fechaacceso=7 de noviembre de 2018|fechaarchivo=19 de diciembre de 2019|urlarchivo=https://web.archive.org/web/20191219132225/https://orthoinfo.aaos.org/en/diseases--conditions/shoulder-trauma-fractures-and-dislocations/}}</ref>";
+        $new = "<ref name=OI2018>{{cita web|título=Shoulder Trauma (Fractures and Dislocations)|url=https://orthoinfo.aaos.org/en/diseases--conditions/shoulder-trauma-fractures-and-dislocations/|sitioweb=OrthoInfo - AAOS|fechaacceso=7 de noviembre de 2018|fechaarchivo=19 de diciembre de 2019|urlarchivo=https://web.archive.org/web/20191219132225/https://orthoinfo.aaos.org/en/diseases--conditions/shoulder-trauma-fractures-and-dislocations/}}</ref>";
+        $this->assertEquals($new, fix_temps_wrap($old));
+    }
+    public function test_fix_temps_with_Webarchive_temp()
+    {
+        $old = "<ref name=OI2018>{{cita web|título=Shoulder Trauma (Fractures and Dislocations)|url=https://orthoinfo.aaos.org/en/diseases--conditions/shoulder-trauma-fractures-and-dislocations/|sitioweb=OrthoInfo - AAOS|fechaacceso=7 de noviembre de 2018|fechaarchivo=19 de diciembre de 2019|urlarchivo=https://web.archive.org/web/20191219132225/https://orthoinfo.aaos.org/en/diseases--conditions/shoulder-trauma-fractures-and-dislocations/}} {{Webarchive|url=https://web.archive.org/web/20191219132225/https://orthoinfo.aaos.org/en/diseases--conditions/shoulder-trauma-fractures-and-dislocations/|date=19 de diciembre de 2019}}</ref>";
+        $new = "<ref name=OI2018>{{cita web|título=Shoulder Trauma (Fractures and Dislocations)|url=https://orthoinfo.aaos.org/en/diseases--conditions/shoulder-trauma-fractures-and-dislocations/|sitioweb=OrthoInfo - AAOS|fechaacceso=7 de noviembre de 2018|fechaarchivo=19 de diciembre de 2019|urlarchivo=https://web.archive.org/web/20191219132225/https://orthoinfo.aaos.org/en/diseases--conditions/shoulder-trauma-fractures-and-dislocations/}} {{Webarchive|url=https://web.archive.org/web/20191219132225/https://orthoinfo.aaos.org/en/diseases--conditions/shoulder-trauma-fractures-and-dislocations/|date=19 de diciembre de 2019}}</ref>";
+        $this->assertEquals($new, fix_temps_wrap($old));
+    }
+    public function test_fix_temps_alone()
+    {
+        $old = "{{cita web|título=Shoulder Trauma (Fractures and Dislocations)|url=https://orthoinfo.aaos.org/en/diseases--conditions/shoulder-trauma-fractures-and-dislocations/|sitioweb=OrthoInfo - AAOS|fechaacceso=7 de noviembre de 2018|fechaarchivo=19 de diciembre de 2019|urlarchivo=https://web.archive.org/web/20191219132225/https://orthoinfo.aaos.org/en/diseases--conditions/shoulder-trauma-fractures-and-dislocations/}}";
+        $new = "{{cita web|título=Shoulder Trauma (Fractures and Dislocations)|url=https://orthoinfo.aaos.org/en/diseases--conditions/shoulder-trauma-fractures-and-dislocations/|sitioweb=OrthoInfo - AAOS|fechaacceso=7 de noviembre de 2018|fechaarchivo=19 de diciembre de 2019|urlarchivo=https://web.archive.org/web/20191219132225/https://orthoinfo.aaos.org/en/diseases--conditions/shoulder-trauma-fractures-and-dislocations/}}";
         $this->assertEquals($new, fix_temps_wrap($old));
     }
 }

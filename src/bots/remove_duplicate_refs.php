@@ -105,7 +105,7 @@ function remove_Duplicate_refs_With_attrs(string $text): string
     // ---
     foreach ($refs_to_check as $key => $value) {
         if (strpos($new_text, $value) === false) {
-            $pattern = '/' . preg_quote($key, '/') . '/';
+            $pattern = '/' . preg_quote($key, '/') . '/u';
             $new_text = preg_replace($pattern, $value, $new_text, 1);
         }
     }
