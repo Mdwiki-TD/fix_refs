@@ -26,12 +26,16 @@ use function WpRefs\Bots\Mini\mini_fixes_after_fixing;
 use function WpRefs\RemoveSpace\remove_spaces_between_last_word_and_beginning_of_ref;
 use function WpRefs\RemoveSpace\remove_spaces_between_ref_and_punctuation;
 use function WpRefs\MissingRefs\fix_missing_refs;
-
+use function WpRefs\Bots\Redirect\page_is_redirect;
 
 function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sourcetitle, $mdwiki_revid)
 {
     // ---
     $text_org = $text;
+    // ---
+    if (page_is_redirect($title, $text)) {
+        return $text;
+    }
     // ---
     // print_s("fix page: $title, move_dots:$move_dots, expend_infobox:$infobox");
     // ---
