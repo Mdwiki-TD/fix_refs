@@ -1,7 +1,7 @@
 <?php
 
 use FixRefs\Tests\MyFunctionTest;
-use function WpRefs\Bots\es_months\fix_es_months_in_refs;
+use function WpRefs\EsBots\es_months\fix_es_months_in_refs;
 use function WpRefs\ES\fix_es;
 use function WpRefs\ES\fix_temps;
 
@@ -77,5 +77,26 @@ class esTest extends MyFunctionTest
         $text_output = preg_replace("/\r\n/", "\n", $text_output);
         // --
         $this->assertEquals($text_output, $result);
+    }
+
+    public function test_fix_temps_and_months_with_month()
+    {
+        $old = "<ref>{{cite journal|title=Study|journal=Nature|date=January 2005|pages=20–25}}</ref>";
+        $new = "<ref>{{cita publicación|título=Study|journal=Nature|fecha=enero de 2005|páginas=20–25}}</ref>";
+        $this->assertEquals($new, fix_temps_wrap($old));
+    }
+
+    public function test_fix_temps_and_months_different_template()
+    {
+        $old = "{{cite book|title=Medical Book|year=2010|pages=100–105}}";
+        $new = "{{cita libro|título=Medical Book|año=2010|páginas=100–105}}";
+        $this->assertEquals($new, fix_temps_wrap($old));
+    }
+
+    public function test_fix_temps_and_months_no_change()
+    {
+        $old = "Texto sin plantillas ni meses en inglés.";
+        $new = "Texto sin plantillas ni meses en inglés.";
+        $this->assertEquals($new, fix_temps_wrap($old));
     }
 }

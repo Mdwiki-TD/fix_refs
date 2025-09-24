@@ -6,6 +6,7 @@ namespace WpRefs\RemoveSpace;
 usage:
 
 use function WpRefs\RemoveSpace\remove_spaces_between_last_word_and_beginning_of_ref;
+use function WpRefs\RemoveSpace\remove_spaces_between_ref_and_punctuation;
 
 */
 // ---
@@ -68,7 +69,7 @@ function remove_spaces_between_last_word_and_beginning_of_ref($newtext, $lang)
     $dot = "\.,。।";
 
     if ($lang === "hy") {
-        $dot = "\.,。।։";
+        $dot = "\.,。।։:";
     }
 
     $parts = get_parts($newtext, $dot);
@@ -105,13 +106,19 @@ function remove_spaces_between_last_word_and_beginning_of_ref($newtext, $lang)
     return $newtext;
 }
 
-function assertEqualCompare(string $expected, string $input, string $result)
+function remove_spaces_between_ref_and_punctuation($text, $lang = null)
 {
-    if ($result === $expected) {
-        echo "result === expected";
-    } elseif ($result === $input) {
-        echo "result === input";
-    } else {
-        echo "result !== expected";
-    }
+    // Use a superset of punctuation across supported languages
+    $dots = ".,。։।:";
+    $cls = preg_quote($dots, '/');
+    // ---
+    // </ref> : to </ref>:
+    // ---
+    // Keep punctuation right after <ref ... /> with no space
+    $text = preg_replace('/(<ref[^>]*\/>)\s*([' . $cls . '])\/?/u', '$1$2', $text);
+
+    // Normalize endings: </ref> followed by any punctuation remains attached
+    $text = preg_replace('/<\/ref>\s*([' . $cls . '])/u', '</ref>$1', $text);
+    // ---
+    return $text;
 }

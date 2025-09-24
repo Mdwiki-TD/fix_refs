@@ -1,11 +1,11 @@
 <?php
 
-namespace WpRefs\Bots\es_months;
+namespace WpRefs\EsBots\es_months;
 /*
 usage:
 
-use function WpRefs\Bots\es_months\fix_es_months_in_texts;
-use function WpRefs\Bots\es_months\fix_es_months_in_refs;
+use function WpRefs\EsBots\es_months\fix_es_months_in_texts;
+use function WpRefs\EsBots\es_months\fix_es_months_in_refs;
 */
 
 use function WpRefs\TestBot\echo_test;

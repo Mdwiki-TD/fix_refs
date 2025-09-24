@@ -11,10 +11,11 @@ use function WpRefs\WprefText\fix_page;
 
 use function WpRefs\TestBot\echo_test;
 use function WpRefs\Infobox\Expend_Infobox;
-use function WpRefs\Bots\FixPtMonth\pt_fixes;
+use function WpRefs\PT\FixPtMonth\pt_fixes;
+use function WpRefs\BG\bg_fixes;
 use function WpRefs\SW\sw_fixes;
 use function WpRefs\ES\fix_es;
-use function WpRefs\ES\es_section;
+use function WpRefs\EsBots\Section\es_section;
 // use function WpRefs\DelDuplicateRefs\fix_refs_names;
 use function WpRefs\DelDuplicateRefs\remove_Duplicate_refs_With_attrs;
 use function WpRefs\MovesDots\move_dots_after_refs;
@@ -23,6 +24,7 @@ use function WpRefs\MdCat\add_Translated_from_MDWiki;
 use function WpRefs\Bots\Mini\mini_fixes;
 use function WpRefs\Bots\Mini\mini_fixes_after_fixing;
 use function WpRefs\RemoveSpace\remove_spaces_between_last_word_and_beginning_of_ref;
+use function WpRefs\RemoveSpace\remove_spaces_between_ref_and_punctuation;
 use function WpRefs\MissingRefs\fix_missing_refs;
 
 
@@ -62,6 +64,10 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sou
         $text = pt_fixes($text);
     }
     // ---
+    if ($lang === "bg") {
+        $text = bg_fixes($text, $sourcetitle, $mdwiki_revid);
+    }
+    // ---
     if ($lang === "es") {
         $text = fix_es($text, $title);
         $text = es_section($sourcetitle, $text, $mdwiki_revid);
@@ -73,9 +79,12 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sou
     // ---
     if ($lang === "hy") {
         $text = remove_spaces_between_last_word_and_beginning_of_ref($text, "hy");
+        $text = remove_spaces_between_ref_and_punctuation($text);
     }
     // ---
-    $text = add_Translated_from_MDWiki($text, $lang);
+    if ($lang !== "bg") {
+        $text = add_Translated_from_MDWiki($text, $lang);
+    }
     // ---
     $text = mini_fixes_after_fixing($text, $lang);
     // ---
