@@ -1,6 +1,6 @@
 <?php
 
-use function WpRefs\Bots\Sections\fix_sections_titles;
+use function WpRefs\Bots\Mini\fix_sections_titles;
 
 $texts = [
     "ru" => <<<'TXT'

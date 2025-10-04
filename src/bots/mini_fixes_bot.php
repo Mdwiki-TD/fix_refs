@@ -19,15 +19,28 @@ function fix_sections_titles($text, $lang)
     // $text = preg_replace('/==\s*Marejeleo\s*==/i', '== Marejeo ==', $text);
     // ---
     $to_replace = [
-        "sw" => ["Marejeleo" => "Marejeo"],
+        "hy" => [
+            "Reference" => "Izvori",
+            "References" => "Izvori",
+        ],
+        "sw" => [
+            "Reference" => "Marejeo",
+            "References" => "Marejeo",
+            "Marejeleo" => "Marejeo"
+        ],
         // Примечания" (references) instead of "Ссылки" (links) for the heading of the reference section
-        "ru" => ["Ссылки" => "Примечания"]
+        "ru" => [
+            "Reference" => "Примечания",
+            "References" => "Примечания",
+            "Ссылки" => "Примечания"
+        ]
     ];
     // ---
     if (array_key_exists($lang, $to_replace)) {
         foreach ($to_replace[$lang] as $key => $value) {
             // $text = preg_replace("/==\s*$key\s*==/i", "== $value ==", $text);
-            $text = preg_replace("/==\s*" . preg_quote($key, '/') . "\s*==/iu", "== $value ==", $text);
+            // $text = preg_replace("/==\s*" . preg_quote($key, '/') . "\s*==/iu", "\1 $value \1", $text);
+            $text = preg_replace("/(=+)\s*" . preg_quote($key, '/') . "\s*(\1)/iu", "\1 Marejeo \1", $text);
         }
     }
     // ---
@@ -100,4 +113,3 @@ function mini_fixes($text, $lang)
     // ---
     return $text;
 }
-
