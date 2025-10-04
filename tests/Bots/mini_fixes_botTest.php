@@ -10,28 +10,6 @@ use function WpRefs\Bots\Mini\fix_preffix;
 
 class mini_fixes_botTest extends MyFunctionTest
 {
-    public function testSectionsTitleshr()
-    {
-        $texts = [
-            [
-                "old" => "== Reference  ==",
-                "new" => "== Izvori =="
-            ],
-            [
-                "old" => "== Reference  ==\n\n====References====\n\n== References 3 ==",
-                "new" => "== Izvori ==\n\n==== Izvori ====\n\n== Izvori 3 =="
-            ]
-        ];
-
-        foreach ($texts as $tab) {
-            $text = $tab['old'];
-            $new  = $tab['new'];
-            // ---
-            $new_text = fix_sections_titles($text, "hr");
-            // ---
-            $this->assertEqualCompare($new, $text, $new_text);
-        }
-    }
 
     public function testSectionsTitlesRu()
     {
@@ -56,6 +34,28 @@ class mini_fixes_botTest extends MyFunctionTest
         }
     }
 
+    public function testSectionsTitleshr()
+    {
+        $texts = [
+            [
+                "old" => "== Reference  ==",
+                "new" => "== Izvori =="
+            ],
+            [
+                "old" => "== Reference  ==\n\n====References====\n\n== References 3 ==",
+                "new" => "== Izvori ==\n\n==== Izvori ====\n\n== References 3 =="
+            ]
+        ];
+
+        foreach ($texts as $tab) {
+            $text = $tab['old'];
+            $new  = $tab['new'];
+            // ---
+            $new_text = fix_sections_titles($text, "hr");
+            // ---
+            $this->assertEqualCompare($new, $text, $new_text);
+        }
+    }
     public function testSectionsTitlesSw()
     {
         $text = "== Marejeleo 1 ==\n\n====Marejeleo====\n\n=== Marejeleo ===";
