@@ -53,7 +53,7 @@ function get_full_text_url($sourcetitle, $mdwiki_revid)
     // ---
     echo_test("url" . $file);
     // ---
-    $text = get_url_curl($file) ?? "";
+    $text = get_url_curl($file);
     // ---
     return $text;
 }

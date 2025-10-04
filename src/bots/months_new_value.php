@@ -56,7 +56,7 @@ function new_date($val, $lang = 'pt')
 
     foreach ($patterns as $pattern) {
         if (preg_match($pattern, trim($val), $matches)) {
-            $day   = $matches['d'] ?? "";
+            $day   = $matches['d'];
             $month = strtolower($matches['m']);
             $year  = $matches['y'];
             $translatedMonth = $months_lower[$month] ?? "";
