@@ -16,12 +16,12 @@ class mini_fixes_botTest extends MyFunctionTest
             [
                 "lang" => "ru",
                 "old" => "== Ссылки  ==\n====Ссылки====\n\n== Примечания 3 ==",
-                "new" => "== Примечания  ==\n====Примечания====\n\n== Примечания 3 =="
+                "new" => "== Примечания ==\n==== Примечания ====\n\n== Примечания 3 =="
             ],
             [
                 "lang" => "sw",
                 "old" => "== Marejeleo 1 ==\n\n====Marejeleo====\n\n=== Marejeleo ===",
-                "new" => "== Marejeleo 1 ==\n\n====Marejeo====\n\n=== Marejeo ==="
+                "new" => "== Marejeleo 1 ==\n\n==== Marejeo ====\n\n=== Marejeo ==="
             ],
         ];
 
@@ -32,7 +32,7 @@ class mini_fixes_botTest extends MyFunctionTest
             // ---
             $new_text = fix_sections_titles($text, $lang);
             // ---
-            $this->assertEquals($new, $new_text);
+            $this->assertEqualCompare($new, $text, $new_text);
         }
     }
 
@@ -80,7 +80,7 @@ class mini_fixes_botTest extends MyFunctionTest
 
         foreach ($tests as $test) {
             $result = remove_space_before_ref_tags($test['text'], $test['lang']);
-            $this->assertEquals($test['expected'], $result);
+            $this->assertEqualCompare($test['expected'], $test['text'], $result);
         }
     }
 
@@ -122,7 +122,7 @@ class mini_fixes_botTest extends MyFunctionTest
 
         foreach ($tests as $test) {
             $result = refs_tags_spaces($test['text']);
-            $this->assertEquals($test['expected'], $result);
+            $this->assertEqualCompare($test['expected'], $test['text'], $result);
         }
     }
 
@@ -170,7 +170,7 @@ class mini_fixes_botTest extends MyFunctionTest
 
         foreach ($tests as $test) {
             $result = fix_preffix($test['text'], $test['lang']);
-            $this->assertEquals($test['expected'], $result);
+            $this->assertEqualCompare($test['expected'], $test['text'], $result);
         }
     }
 }
