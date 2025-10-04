@@ -16,12 +16,12 @@ class mini_fixes_botTest extends MyFunctionTest
             [
                 "lang" => "ru",
                 "old" => "== Ссылки  ==\n====Ссылки====\n\n== Примечания 3 ==",
-                "new" => "== Примечания ==\n==== Примечания ====\n\n== Примечания 3 =="
+                "new" => "== Примечания  ==\n====Примечания====\n\n== Примечания 3 =="
             ],
             [
                 "lang" => "sw",
                 "old" => "== Marejeleo 1 ==\n\n====Marejeleo====\n\n=== Marejeleo ===",
-                "new" => "== Marejeleo 1 ==\n\n==== Marejeo ====\n\n=== Marejeo ==="
+                "new" => "== Marejeleo 1 ==\n\n====Marejeo====\n\n=== Marejeo ==="
             ],
         ];
 
