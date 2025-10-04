@@ -14,8 +14,7 @@ class esSectionTest extends MyFunctionTest
         $text = "Some content\n{{Traducido ref|title|oldid=12345}}\nMore content";
         $expected = "Some content\n{{Traducido ref|title|oldid=12345}}\nMore content";
         $result = es_section("Source Title", $text, "12345");
-        // $this->assertEqualCompare($expected, $text, $result);
-        $this->assertEquals($expected, $result);
+        $this->assertEqualCompare($expected, $text, $result);
     }
 
     /**
