@@ -25,20 +25,22 @@ function es_section($sourcetitle, $text, $mdwiki_revid)
     }
 
     $date = "{{subst:CURRENTDAY}} de {{subst:CURRENTMONTHNAME}} de {{subst:CURRENTYEAR}}";
-    // ---
+
     // $temp = "{{Traducido ref|mdwiki|$sourcetitle|oldid=$mdwiki_revid|trad=|fecha=$date}}";
     $temp = "{{Traducido ref MDWiki|en|$sourcetitle|oldid=$mdwiki_revid|trad=|fecha=$date}}";
-    // ---
-    // find /==\s*Enlaces\s*externos\s*==/ in text if exists add temp after it
-    // if not exists add temp at the end of text
-    // ---
-    preg_match('/==\s*Enlaces\s*externos\s*==/iu', $text, $matches);
-    // ---
-    if (!empty($matches)) {
-        $text = preg_replace('/(==\s*Enlaces\s*externos\s*==)/iu', "$1\n$temp\n", $text, 1);
+
+
+    // Insert after "== Enlaces externos ==" if it exists, otherwise append
+    if (preg_match('/==\s*Enlaces\s*externos\s*==/iu', $text)) {
+        $text = preg_replace(
+            '/(==\s*Enlaces\s*externos\s*==)/iu',
+            "$1\n$temp\n",
+            $text,
+            1
+        );
     } else {
         $text .= "\n== Enlaces externos ==\n$temp\n";
     }
-    // ---
+
     return $text;
 }
