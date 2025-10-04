@@ -19,7 +19,7 @@ function fix_sections_titles($text, $lang)
     // $text = preg_replace('/==\s*Marejeleo\s*==/i', '== Marejeo ==', $text);
     // ---
     $to_replace = [
-        "hy" => [
+        "hr" => [
             "Reference" => "Izvori",
             "References" => "Izvori",
         ],
@@ -40,7 +40,7 @@ function fix_sections_titles($text, $lang)
         foreach ($to_replace[$lang] as $key => $value) {
             // $text = preg_replace("/==\s*$key\s*==/i", "== $value ==", $text);
             // $text = preg_replace("/==\s*" . preg_quote($key, '/') . "\s*==/iu", "\1 $value \1", $text);
-            $text = preg_replace("/(=+)\s*" . preg_quote($key, '/') . "\s*(\1)/iu", "\1 Marejeo \1", $text);
+            $text = preg_replace("/(=+)\s*" . preg_quote($key, '/') . "\s*(\1)/iu", "\1 $value \1", $text);
         }
     }
     // ---
