@@ -170,4 +170,30 @@ class esSectionTest extends MyFunctionTest
         $result = es_section('test!', $text, '520');
         $this->assertEqualCompare($expected, $text, $result);
     }
+
+    // Test when template already exists in lowercase/uppercase variations
+    public function test_template_case_insensitive_match()
+    {
+        $text = "Something {{traducido REF mdwiki|Title|oldid=100}} end";
+        $result = es_section("Source Title", $text, "100");
+        $this->assertEquals($text, $result);
+    }
+
+    // Test when "Enlaces externos" exists but has no newline after
+    public function test_section_without_newline_after()
+    {
+        $text = "Intro\n== Enlaces externos ==";
+        $expected = "Intro\n== Enlaces externos ==\n{{Traducido ref MDWiki|en|Test|oldid=200|trad=|fecha={{subst:CURRENTDAY}} de {{subst:CURRENTMONTHNAME}} de {{subst:CURRENTYEAR}}}}\n";
+        $result = es_section("Test", $text, "200");
+        $this->assertEqualCompare($expected, $text, $result);
+    }
+
+    // Test when template already exists multiple times
+    public function test_multiple_templates_already_present()
+    {
+        $text = "{{Traducido ref|one}}\n{{Traducido ref|two}}";
+        $expected = "{{Traducido ref|one}}\n{{Traducido ref|two}}";
+        $result = es_section("Source Title", $text, "300");
+        $this->assertEqualCompare($expected, $text, $result);
+    }
 }

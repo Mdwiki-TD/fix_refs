@@ -8,6 +8,22 @@ use function WpRefs\MdCat\add_Translated_from_MDWiki;
 
 class md_catTest extends MyFunctionTest
 {
+    public function testEquals()
+    {
+        $text = "[[Kategorija:Translated from MDWiki]]";
+
+        $result = add_Translated_from_MDWiki($text, "hr");
+
+        $this->assertEquals($text, $result);
+    }
+
+    public function testSkipLangsIt()
+    {
+        $text = "This is a sample text";
+        $result = add_Translated_from_MDWiki($text, "it");
+        $this->assertEquals($text, $result);
+    }
+
     // Test case: Appends category when conditions are met
     public function testAppendsCategoryWhenConditionsMet()
     {

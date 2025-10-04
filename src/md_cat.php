@@ -37,16 +37,20 @@ function get_url_curl(string $url): string
 
     return $output;
 }
+
 function get_cats()
 {
     $url = "https://www.wikidata.org/w/rest.php/wikibase/v1/entities/items/Q107014860/sitelinks";
     // ---
-    // $json = file_get_contents($url);
-    $json = get_url_curl($url);
+    static $json = [];
     // ---
-    // echo $json;
+    if (!empty($json)) {
+        return $json;
+    }
     // ---
-    $json = json_decode($json, true);
+    $data = get_url_curl($url);
+    // ---
+    $json = json_decode($data, true) ?: [];
     // ---
     return $json;
 }
@@ -55,7 +59,13 @@ function Get_MdWiki_Category($lang)
 {
     // ---
     // https://it.wikipedia.org/w/index.php?title=Categoria:Translated_from_MDWiki&action=edit&redlink=1
-    if ($lang == "it") return "";
+    $skip_langs = [
+        "it"
+    ];
+    // ---
+    if (in_array($lang, $skip_langs)) {
+        return "";
+    }
     // ---
     $cats = get_cats();
     // ---
@@ -67,9 +77,13 @@ function Get_MdWiki_Category($lang)
 function add_Translated_from_MDWiki($text, $lang)
 {
     // ---
+    if (strpos($text, ":Translated from MDWiki]]") !== false) {
+        return $text;
+    };
+    // ---
     $cat = Get_MdWiki_Category($lang);
     // ---
-    if (!empty($cat) && strpos($text, $cat) === false && strpos($text, "[[Category:Translated from MDWiki]]") === false) {
+    if (!empty($cat) && strpos($text, $cat) === false) {
         $text .= "\n[[$cat]]\n";
     }
     // ---
