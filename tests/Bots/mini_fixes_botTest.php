@@ -13,14 +13,22 @@ class mini_fixes_botTest extends MyFunctionTest
     public function testSectionsTitles()
     {
         $texts = [
-            ["lang" => "ru", "old" => "== Ссылки  ==\n====Ссылки====\n\n== Примечания 3 ==", "new" => "== Примечания ==\n==== Примечания ====\n\n== Примечания 3 =="],
-            ["lang" => "sw", "old" => "== Marejeleo 1 ==\n\n====Marejeleo====\n\n=== Marejeleo ===", "new" => "== Marejeleo 1 ==\n\n==== Marejeo ====\n\n=== Marejeo ==="],
+            [
+                "lang" => "ru",
+                "old" => "== Ссылки  ==\n====Ссылки====\n\n== Примечания 3 ==",
+                "new" => "== Примечания ==\n==== Примечания ====\n\n== Примечания 3 =="
+            ],
+            [
+                "lang" => "sw",
+                "old" => "== Marejeleo 1 ==\n\n====Marejeleo====\n\n=== Marejeleo ===",
+                "new" => "== Marejeleo 1 ==\n\n==== Marejeo ====\n\n=== Marejeo ==="
+            ],
         ];
 
         foreach ($texts as $tab) {
             $lang = $tab['lang'];
             $text = $tab['old'];
-            $new = $tab['new'];
+            $new  = $tab['new'];
             // ---
             $new_text = fix_sections_titles($text, $lang);
             // ---
