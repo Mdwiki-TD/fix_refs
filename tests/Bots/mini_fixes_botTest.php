@@ -10,30 +10,60 @@ use function WpRefs\Bots\Mini\fix_preffix;
 
 class mini_fixes_botTest extends MyFunctionTest
 {
-    public function testSectionsTitles()
+    public function testSectionsTitleshr()
     {
         $texts = [
             [
-                "lang" => "ru",
+                "old" => "== Reference  ==",
+                "new" => "== Izvori =="
+            ],
+            [
+                "old" => "== Reference  ==\n\n====References====\n\n== References 3 ==",
+                "new" => "== Izvori ==\n\n==== Izvori ====\n\n== Izvori 3 =="
+            ]
+        ];
+
+        foreach ($texts as $tab) {
+            $text = $tab['old'];
+            $new  = $tab['new'];
+            // ---
+            $new_text = fix_sections_titles($text, "hr");
+            // ---
+            $this->assertEqualCompare($new, $text, $new_text);
+        }
+    }
+
+    public function testSectionsTitlesRu()
+    {
+        $texts = [
+            [
                 "old" => "== Ссылки  ==\n====Ссылки====\n\n== Примечания 3 ==",
                 "new" => "== Примечания ==\n==== Примечания ====\n\n== Примечания 3 =="
             ],
             [
-                "lang" => "sw",
-                "old" => "== Marejeleo 1 ==\n\n====Marejeleo====\n\n=== Marejeleo ===",
-                "new" => "== Marejeleo 1 ==\n\n==== Marejeo ====\n\n=== Marejeo ==="
-            ],
+                "old" => "== Ссылки  ==\n====Ссылки====\n\n== Примечания 3 ==",
+                "new" => "== Примечания ==\n==== Примечания ====\n\n== Примечания 3 =="
+            ]
         ];
 
         foreach ($texts as $tab) {
-            $lang = $tab['lang'];
             $text = $tab['old'];
             $new  = $tab['new'];
             // ---
-            $new_text = fix_sections_titles($text, $lang);
+            $new_text = fix_sections_titles($text, "ru");
             // ---
             $this->assertEqualCompare($new, $text, $new_text);
         }
+    }
+
+    public function testSectionsTitlesSw()
+    {
+        $text = "== Marejeleo 1 ==\n\n====Marejeleo====\n\n=== Marejeleo ===";
+        $new  = "== Marejeleo 1 ==\n\n==== Marejeo ====\n\n=== Marejeo ===";
+        // ---
+        $new_text = fix_sections_titles($text, "sw");
+        // ---
+        $this->assertEqualCompare($new, $text, $new_text);
     }
 
     // اختبارات دالة remove_space_before_ref_tags

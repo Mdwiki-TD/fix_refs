@@ -39,8 +39,9 @@ function fix_sections_titles($text, $lang)
     if (array_key_exists($lang, $to_replace)) {
         foreach ($to_replace[$lang] as $key => $value) {
             // $text = preg_replace("/==\s*$key\s*==/i", "== $value ==", $text);
-            // $text = preg_replace("/==\s*" . preg_quote($key, '/') . "\s*==/iu", "\1 $value \1", $text);
-            $text = preg_replace("/(=+)\s*" . preg_quote($key, '/') . "\s*(\1)/iu", "\1 $value \1", $text);
+            // $text = preg_replace("/==\s*" . preg_quote($key, '/') . "\s*==/iu", "$1 $value $1", $text);
+            $text = preg_replace("/(=+)\s*" . $key . "\s*$1/iu", "$1 $value $1", $text);
+            // $text = preg_replace("/(=+)\s*" . preg_quote($key, '/') . "\s*$1/iu", "$1 $value $1", $text);
         }
     }
     // ---
