@@ -18,12 +18,10 @@ use function WpRefs\MdCat\get_url_curl;
 function get_full_text_url($sourcetitle, $mdwiki_revid)
 {
     // ---
-    $path = "https://mdwikicx.toolforge.org/";
-    // ---
-    if (substr(__DIR__, 0, 2) === 'I:') {
-        $path = "http://localhost:9001";
-    };
-    // ---
+    $path = (($_SERVER["SERVER_NAME"] ?? "localhost") == "localhost")
+        ? "http://localhost:9001"
+        : "https://mdwikicx.toolforge.org/";
+    //---
     if (empty($mdwiki_revid) || $mdwiki_revid == 0) {
         $json_file = "$path/revisions_new/json_data.json";
         // ---
@@ -63,12 +61,10 @@ function get_full_text($sourcetitle, $mdwiki_revid)
     // ---
     $sourcetitle = str_replace(" ", "_", $sourcetitle);
     // ---
-    $path = "/data/project/mdwikicx/public_html";
-    // ---
-    if (substr(__DIR__, 0, 2) === 'I:') {
-        $path = "I:/medwiki/new/medwiki.toolforge.org_repo/public_html";
-    };
-    // ---
+    $path = (($_SERVER["SERVER_NAME"] ?? "localhost") == "localhost")
+        ? "I:/medwiki/new/medwiki.toolforge.org_repo/public_html"
+        : "/data/project/mdwikicx/public_html";
+    //---
     if (empty($mdwiki_revid) || $mdwiki_revid == 0) {
         $json_file = "$path/revisions_new/json_data.json";
         // ---
