@@ -106,11 +106,6 @@ function remove_spaces_between_last_word_and_beginning_of_ref($newtext, $lang)
     return $newtext;
 }
 
-/**
- * Normalize spaces around ref tags and adjacent punctuation.
- * @SuppressWarnings(PHPMD.UnusedFormalParameter)
- */
-
 function remove_spaces_between_ref_and_punctuation($text, $lang = null)
 {
     // Use a superset of punctuation across supported languages

@@ -10,22 +10,60 @@ use function WpRefs\Bots\Mini\fix_preffix;
 
 class mini_fixes_botTest extends MyFunctionTest
 {
-    public function testSectionsTitles()
+
+    public function testSectionsTitlesRu()
     {
         $texts = [
-            ["lang" => "ru", "old" => "== Ссылки  ==\n====Ссылки====\n\n== Примечания 3 ==", "new" => "== Примечания ==\n==== Примечания ====\n\n== Примечания 3 =="],
-            ["lang" => "sw", "old" => "== Marejeleo 1 ==\n\n====Marejeleo====\n\n=== Marejeleo ===", "new" => "== Marejeleo 1 ==\n\n==== Marejeo ====\n\n=== Marejeo ==="],
+            [
+                "old" => "== Ссылки  ==\n====Ссылки====\n\n== Примечания 3 ==",
+                "new" => "== Примечания ==\n==== Примечания ====\n\n== Примечания 3 =="
+            ],
+            [
+                "old" => "== Ссылки  ==\n====Ссылки====\n\n== Примечания 3 ==",
+                "new" => "== Примечания ==\n==== Примечания ====\n\n== Примечания 3 =="
+            ]
         ];
 
         foreach ($texts as $tab) {
-            $lang = $tab['lang'];
             $text = $tab['old'];
-            $new = $tab['new'];
+            $new  = $tab['new'];
             // ---
-            $new_text = fix_sections_titles($text, $lang);
+            $new_text = fix_sections_titles($text, "ru");
             // ---
-            $this->assertEquals($new, $new_text);
+            $this->assertEqualCompare($new, $text, $new_text);
         }
+    }
+
+    public function testSectionsTitleshr()
+    {
+        $texts = [
+            [
+                "old" => "== Reference  ==",
+                "new" => "== Izvori =="
+            ],
+            [
+                "old" => "== Reference  ==\n\n====References====\n\n== References 3 ==",
+                "new" => "== Izvori ==\n\n==== Izvori ====\n\n== References 3 =="
+            ]
+        ];
+
+        foreach ($texts as $tab) {
+            $text = $tab['old'];
+            $new  = $tab['new'];
+            // ---
+            $new_text = fix_sections_titles($text, "hr");
+            // ---
+            $this->assertEqualCompare($new, $text, $new_text);
+        }
+    }
+    public function testSectionsTitlesSw()
+    {
+        $text = "== Marejeleo 1 ==\n\n====Marejeleo====\n\n=== Marejeleo ===";
+        $new  = "== Marejeleo 1 ==\n\n==== Marejeo ====\n\n=== Marejeo ===";
+        // ---
+        $new_text = fix_sections_titles($text, "sw");
+        // ---
+        $this->assertEqualCompare($new, $text, $new_text);
     }
 
     // اختبارات دالة remove_space_before_ref_tags
@@ -72,7 +110,7 @@ class mini_fixes_botTest extends MyFunctionTest
 
         foreach ($tests as $test) {
             $result = remove_space_before_ref_tags($test['text'], $test['lang']);
-            $this->assertEquals($test['expected'], $result);
+            $this->assertEqualCompare($test['expected'], $test['text'], $result);
         }
     }
 
@@ -114,7 +152,7 @@ class mini_fixes_botTest extends MyFunctionTest
 
         foreach ($tests as $test) {
             $result = refs_tags_spaces($test['text']);
-            $this->assertEquals($test['expected'], $result);
+            $this->assertEqualCompare($test['expected'], $test['text'], $result);
         }
     }
 
@@ -162,7 +200,7 @@ class mini_fixes_botTest extends MyFunctionTest
 
         foreach ($tests as $test) {
             $result = fix_preffix($test['text'], $test['lang']);
-            $this->assertEquals($test['expected'], $result);
+            $this->assertEqualCompare($test['expected'], $test['text'], $result);
         }
     }
 }

@@ -15,10 +15,10 @@ use function WpRefs\Parse\Reg_Citations\getShortCitations;
 // include_once __DIR__ . '/../WikiParse/Citations_reg.php';
 
 /**
- * Get all the citations from the provided text and parse them into an array.
+ * Get the name attribute from citation options.
  *
- * @param string $text The text containing citations to extract
- * @return array Array of citation information including content, tag, and options
+ * @param string $options The citation options string to extract name from
+ * @return string The extracted name or empty string if not found
  */
 
 function get_name($options)

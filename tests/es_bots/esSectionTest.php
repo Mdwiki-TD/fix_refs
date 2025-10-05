@@ -5,9 +5,8 @@ use function WpRefs\EsBots\Section\es_section;
 
 class esSectionTest extends MyFunctionTest
 {
-
     /**
-     * Test case: النص يحتوي على {{Traducido ref| -> يجب أن تُرجع النص كما هو
+     * Test when text already contains the old template {{Traducido ref|...}}
      */
     public function test_text_already_has_traducido_ref()
     {
@@ -18,7 +17,7 @@ class esSectionTest extends MyFunctionTest
     }
 
     /**
-     * Test case: النص يحتوي على {{Traducido ref MDWIKI| -> يجب أن تُرجع النص كما هو
+     * Test when text already contains the new template {{Traducido ref MDWIKI|...}}
      */
     public function test_text_already_has_traducido_ref_mdwiki()
     {
@@ -28,7 +27,7 @@ class esSectionTest extends MyFunctionTest
     }
 
     /**
-     * Test case: النص لا يحتوي على قالب الترجمة، وله قسم "Enlaces externos" -> يُضاف القالب بعد القسم
+     * Test when no template exists and "Enlaces externos" section is present
      */
     public function test_add_traducido_ref_after_enlaces_externos()
     {
@@ -39,7 +38,7 @@ class esSectionTest extends MyFunctionTest
     }
 
     /**
-     * Test case: النص لا يحتوي على قسم "Enlaces externos" -> يُضاف القسم مع القالب في نهاية النص
+     * Test when no "Enlaces externos" section exists
      */
     public function test_add_enlaces_externos_section_with_traducido_ref()
     {
@@ -50,7 +49,7 @@ class esSectionTest extends MyFunctionTest
     }
 
     /**
-     * Test case: النص يحتوي على "Enlaces externos" مع مسافات -> يجب أن يُطابق التعبير
+     * Test when "Enlaces externos" contains extra spaces
      */
     public function test_enlaces_externos_with_extra_spaces()
     {
@@ -61,7 +60,7 @@ class esSectionTest extends MyFunctionTest
     }
 
     /**
-     * Test case: النص فارغ -> يجب أن يُضاف القسم مع القالب في النهاية
+     * Test with empty text
      */
     public function test_empty_text()
     {
@@ -72,7 +71,7 @@ class esSectionTest extends MyFunctionTest
     }
 
     /**
-     * Test case: النص يحتوي على "Traducido ref" مع مسافات -> يجب أن يُطابق التعبير
+     * Test when template contains extra spaces inside
      */
     public function test_traducido_ref_with_spaces()
     {
@@ -169,6 +168,32 @@ class esSectionTest extends MyFunctionTest
         $text = "  ==   Enlaces externos   ==  ";
         $expected = "  ==   Enlaces externos   ==\n{{Traducido ref MDWiki|en|test!|oldid=520|trad=|fecha={{subst:CURRENTDAY}} de {{subst:CURRENTMONTHNAME}} de {{subst:CURRENTYEAR}}}}\n  ";
         $result = es_section('test!', $text, '520');
+        $this->assertEqualCompare($expected, $text, $result);
+    }
+
+    // Test when template already exists in lowercase/uppercase variations
+    public function test_template_case_insensitive_match()
+    {
+        $text = "Something {{traducido REF mdwiki|Title|oldid=100}} end";
+        $result = es_section("Source Title", $text, "100");
+        $this->assertEquals($text, $result);
+    }
+
+    // Test when "Enlaces externos" exists but has no newline after
+    public function test_section_without_newline_after()
+    {
+        $text = "Intro\n== Enlaces externos ==";
+        $expected = "Intro\n== Enlaces externos ==\n{{Traducido ref MDWiki|en|Test|oldid=200|trad=|fecha={{subst:CURRENTDAY}} de {{subst:CURRENTMONTHNAME}} de {{subst:CURRENTYEAR}}}}\n";
+        $result = es_section("Test", $text, "200");
+        $this->assertEqualCompare($expected, $text, $result);
+    }
+
+    // Test when template already exists multiple times
+    public function test_multiple_templates_already_present()
+    {
+        $text = "{{Traducido ref|one}}\n{{Traducido ref|two}}";
+        $expected = "{{Traducido ref|one}}\n{{Traducido ref|two}}";
+        $result = es_section("Source Title", $text, "300");
         $this->assertEqualCompare($expected, $text, $result);
     }
 }

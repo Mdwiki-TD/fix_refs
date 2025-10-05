@@ -110,7 +110,7 @@ function add_line_to_temp($line, $text)
         // ---
         $refn_param = $temp->getParameter("refs");
         // ---
-        if ($refn_param && !empty($refn_param)) {
+        if ($refn_param) {
             $refn_param = check_short_refs($refn_param);
             // ---
             $line = trim($refn_param) . "\n" . trim($line);

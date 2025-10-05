@@ -30,7 +30,7 @@ if (!function_exists('str_starts_with')) {
 function rm_str_from_start_and_end(string $text, string $find): string
 {
     // ---
-    if (!$find || $find === "") {
+    if (!$find) {
         return $text;
     }
     // ---

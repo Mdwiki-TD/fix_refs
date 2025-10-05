@@ -12,25 +12,45 @@ use function WpRefs\Bots\Mini\mini_fixes_after_fixing;
 
 function fix_sections_titles($text, $lang)
 {
-    // ---
-    $text = $text;
-    // ---
-    // find == Marejeleo == replace by == Marejeo ==
-    // $text = preg_replace('/==\s*Marejeleo\s*==/i', '== Marejeo ==', $text);
-    // ---
     $to_replace = [
-        "sw" => ["Marejeleo" => "Marejeo"],
-        // Примечания" (references) instead of "Ссылки" (links) for the heading of the reference section
-        "ru" => ["Ссылки" => "Примечания"]
+        "hr" => [
+            "Reference" => "Izvori",
+            "References" => "Izvori",
+        ],
+        "sw" => [
+            "Reference" => "Marejeo",
+            "References" => "Marejeo",
+            "Marejeleo" => "Marejeo"
+        ],
+        "ru" => [
+            "Reference" => "Примечания",
+            "References" => "Примечания",
+            "Ссылки" => "Примечания"
+        ]
     ];
-    // ---
-    if (array_key_exists($lang, $to_replace)) {
-        foreach ($to_replace[$lang] as $key => $value) {
-            // $text = preg_replace("/==\s*$key\s*==/i", "== $value ==", $text);
-            $text = preg_replace("/==\s*" . preg_quote($key, '/') . "\s*==/iu", "== $value ==", $text);
-        }
+
+    if (! array_key_exists($lang, $to_replace)) {
+        return $text;
     }
-    // ---
+
+    foreach ($to_replace[$lang] as $key => $value) {
+        // Quote the key to avoid regex special characters
+        $k = preg_quote($key, '/');
+
+        // Regex pattern explanation:
+        // (1) (={1,})   -> capture one or more '=' at the beginning
+        // (2) \s*       -> optional spaces
+        // (3) $k        -> the key to be replaced
+        // (4) [^=]*     -> any extra text (e.g. numbers) except '='
+        // (5) \s* \1    -> optional spaces and same '=' count at the end
+        $pattern = '/(=+)\s*' . $k . '\s*\1/iu';
+
+        // Replacement keeps the same '=' count but replaces the key
+        $replacement = '$1 ' . $value . ' $1';
+
+        $text = preg_replace($pattern, $replacement, $text);
+    }
+
     return $text;
 }
 
@@ -73,7 +93,7 @@ function fix_preffix($text, $lang)
     // replace [[:{en}: by [[
     $text = preg_replace('/\[\[:en:/u', "[[", $text);
     // replace [[:{lang}: by [[
-    $text = preg_replace('/\[\[:' . preg_quote($lang, '/') . ':/u', "[[", $text);
+    $text = preg_replace('/\[\[:' . preg_quote($lang, '/') . ':/ui', "[[", $text);
     // ---
     return $text;
 }
@@ -100,4 +120,3 @@ function mini_fixes($text, $lang)
     // ---
     return $text;
 }
-
