@@ -53,6 +53,11 @@ function get_full_text_url($sourcetitle, $mdwiki_revid)
     // ---
     $text = get_url_curl($file);
     // ---
+    if ($text === false) {
+        echo_test("Failed to fetch URL: $file");
+        return "";
+    }
+    // ---
     return $text;
 }
 
