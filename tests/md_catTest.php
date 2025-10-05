@@ -1,7 +1,5 @@
 <?php
 
-
-
 use FixRefs\Tests\MyFunctionTest;
 
 use function WpRefs\MdCat\add_Translated_from_MDWiki;
@@ -83,5 +81,27 @@ class md_catTest extends MyFunctionTest
 
         $expected = "This is a sample text\n\n\n[[Категория:Статьи, переведённые с MDWiki]]\n";
         $this->assertEquals($expected, $result);
+    }
+
+    public function testLangs()
+    {
+        $langs = [
+            "ur" => "زمرہ:ایم ڈی وکی سے ترجمہ شدہ",
+        ];
+        foreach ($langs as $lang => $cat) {
+            $text_no_cat = "This is a sample text\n\n";
+            $expected = "{$text_no_cat}\n[[{$cat}]]\n";
+            $result = add_Translated_from_MDWiki($text_no_cat, $lang);
+            $this->assertEqualCompare($expected, $text_no_cat, $result);
+            // ---
+            $text_with_cat = "This is a sample text\n\n[[{$cat}]]\n";
+            $result = add_Translated_from_MDWiki($text_with_cat, $lang);
+            $this->assertEquals($text_with_cat, $result);
+            // ---
+            $text_with_cat2 = "This is a sample text\n\n[[category:Translated_from_MDWiki]]\n";
+            $result = add_Translated_from_MDWiki($text_with_cat2, $lang);
+            $this->assertEquals($text_with_cat2, $result);
+            // ---
+        }
     }
 }
