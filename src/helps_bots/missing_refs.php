@@ -20,7 +20,7 @@ function get_full_text_url($sourcetitle, $mdwiki_revid)
     // ---
     $path = "https://mdwikicx.toolforge.org/";
     // ---
-    if (substr(__DIR__, 0, 2) == 'I:') {
+    if (substr(__DIR__, 0, 2) === 'I:') {
         $path = "http://localhost:9001";
     };
     // ---
@@ -63,9 +63,9 @@ function get_full_text($sourcetitle, $mdwiki_revid)
     // ---
     $sourcetitle = str_replace(" ", "_", $sourcetitle);
     // ---
-    $path = "/data/project/medwiki/public_html";
+    $path = "/data/project/mdwikicx/public_html";
     // ---
-    if (substr(__DIR__, 0, 2) == 'I:') {
+    if (substr(__DIR__, 0, 2) === 'I:') {
         $path = "I:/medwiki/new/medwiki.toolforge.org_repo/public_html";
     };
     // ---
