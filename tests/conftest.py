@@ -19,12 +19,20 @@ import pytest
 
 
 _ROOT = Path(__file__).resolve().parent.parent
-if str(_ROOT) not in sys.path:
-    sys.path.insert(0, str(_ROOT))
+_PARENT = _ROOT.parent
+for candidate in (_ROOT, _PARENT):
+    if str(candidate) not in sys.path:
+        sys.path.insert(0, str(candidate))
 
 # Ensure legacy module paths remain available after the PHP to Python port.
 _test_bot = importlib.import_module("src.test_bot")
 sys.modules.setdefault("src.TestBot", _test_bot)
+sys.modules.setdefault("fix_refs.src.TestBot", _test_bot)
+sys.modules.setdefault("fix_refs.TestBot", _test_bot)
+
+_md_cat = importlib.import_module("src.md_cat")
+sys.modules.setdefault("src.MdCat", _md_cat)
+sys.modules.setdefault("fix_refs.src.MdCat", _md_cat)
 
 
 T = TypeVar("T")
