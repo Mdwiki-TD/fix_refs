@@ -1,98 +1,63 @@
-#
+"""Whitespace cleanup around reference tags."""
+
+from __future__ import annotations
+
 import re
-from pathlib import Path
-from tqdm import tqdm
+from typing import List, Tuple
+
+from ..TestBot import echo_debug
 
 
-def match_it(text, charters):
-    m = re.search(f'(</ref>|\/>)\s*([{charters}]\s*)$', text, flags=re.UNICODE)
-    if m:
-        return m.group(2)
-    return None
+def match_it(text: str, charters: str) -> str | None:
+    pattern = re.compile(rf"(<\/ref>|\/>)\s*([{re.escape(charters)}]\s*)$", re.UNICODE)
+    match = pattern.search(text)
+    return match.group(2) if match else None
 
 
-def get_parts(newtext, charters):
-    pattern = r'(.+?)(\n\n|\Z)'
-    parts = re.findall(pattern, newtext, re.DOTALL)
-    # ---
-    # get only parts endswith one of charters
-    # parts = [(p[0], match_it(p[0])) for p in parts if re.search(f'(</ref>|\/>)\s*[{charters}]\s*$', p[0], flags=re.UNICODE)]
-    new_parts = []
-    # ---
-    print(f"{len(parts)=}")
-    # ---
-    for p in parts:
-        chart = match_it(p[0], charters)
-        if chart:
-            new_parts.append((p[0], chart))
-    # ---
-    print(f"{len(new_parts)=}")
-    # ---
+def get_parts(newtext: str, charters: str) -> List[Tuple[str, str]]:
+    parts = newtext.split("\n\n")
+    if len(parts) == 1:
+        parts = newtext.split("\r\n\r\n")
+    echo_debug(f"count(matches)={len(parts)}\n")
+    new_parts: List[Tuple[str, str]] = []
+    for part in parts:
+        charter = match_it(part, charters)
+        if charter:
+            new_parts.append((part, charter))
+    echo_debug(f"count(new_parts)={len(new_parts)}\n")
     return new_parts
 
 
 def remove_spaces_between_last_word_and_beginning_of_ref(newtext: str, lang: str) -> str:
-
-    # --- 1) تحديد علامات الترقيم
-    dot = r"\.,。।"
-
+    dot = "\.,。।"
     if lang == "hy":
-        dot = r"\.,。।։"
-
+        dot = "\.,。।։:"
     parts = get_parts(newtext, dot)
-    # ---
     for part, charter in parts:
-        # ---
-        # print([part])
-        print(f"{charter=}")
-        # ---
-        regline = r"((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)"
-        # ---
-        # find last ref group
-        last_ref = re.findall(regline, part, re.DOTALL)
-        # ---
-        print(f"{len(last_ref)=}")
-        # ---
-        if last_ref:
-            # ---
-            ref_text = last_ref[-1]
-            # ---
+        echo_debug(f"charter={charter}\n")
+        regline = re.compile(r"((?:\s*<ref[\s\S]+?(?:</ref|/)>)+)", re.UNICODE)
+        matches = regline.findall(part)
+        echo_debug(f"count(last_ref)={len(matches)}\n")
+        if matches:
+            ref_text = matches[-1]
             end_part = f"{ref_text}{charter}"
-            # ---
-            if part.endswith(end_part):
-                # ---
-                print("endswith ")
-                # ---s
-                new_part = part.split(end_part)[0].strip() + f"{ref_text.strip()}{charter}"
-                # ---
+            if part.rstrip().endswith(end_part):
+                echo_debug("endswith\n")
+                prefix = part[: -len(end_part)].rstrip()
+                new_part = f"{prefix}{ref_text.strip()}{charter}"
                 newtext = newtext.replace(part, new_part)
-
     return newtext
 
 
-def assert_equal_compare(expected: str, input_text: str, result: str):
-    if result == expected:
-        print("result === expected")
-    elif result == input_text:
-        print("result === input")
-    else:
-        print("result !== expected")
+def remove_spaces_between_ref_and_punctuation(text: str, lang: str | None = None) -> str:
+    dots = ".,。։۔:"
+    cls = re.escape(dots)
+    text = re.sub(rf"(<ref[^>]*\/>)\s*([{cls}])", r"\1\2", text, flags=re.UNICODE)
+    text = re.sub(rf"</ref>\s*([{cls}])", r"</ref>\1", text, flags=re.UNICODE)
+    return text
 
 
-# --- الملفات
-base_path = Path(__file__).parent.parent.parent / "tests/texts/remove_space_texts"
-
-for i in tqdm([1, 2, 3, 4]):
-    base_path_sub = base_path / str(i)
-    expected=(base_path_sub / "expected.txt").read_text(encoding="utf-8")
-    input_text=(base_path_sub / "input.txt").read_text(encoding="utf-8")
-    output_file=base_path_sub / "output.txt"
-
-    # --- تطبيق الدالة
-    result=remove_spaces_between_last_word_and_beginning_of_ref(input_text, "hy")
-
-    assert_equal_compare(expected, input_text, result)
-
-    # --- حفظ النتيجة
-    output_file.write_text(result, encoding="utf-8")
-    print(f"\n saved to: {output_file}")
+__all__ = [
+    "remove_spaces_between_last_word_and_beginning_of_ref",
+    "remove_spaces_between_ref_and_punctuation",
+]
