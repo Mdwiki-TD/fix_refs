@@ -1,5 +1,12 @@
-"""Python skeleton for src/bots/redirect_help.php"""
+"""Redirect helpers translated from PHP."""
 
-def page_is_redirect(title, text):
-    """Placeholder for translated function."""
-    pass
+from __future__ import annotations
+
+import re
+
+
+def page_is_redirect(title: str, text: str) -> bool:
+    return bool(re.match(r"^#(пренасочване|redirect)", text, flags=re.IGNORECASE))
+
+
+__all__ = ["page_is_redirect"]
