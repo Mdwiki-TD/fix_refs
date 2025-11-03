@@ -17,47 +17,37 @@ use function WpRefs\MdCat\get_url_curl;
 
 function get_full_text_url($sourcetitle, $mdwiki_revid)
 {
-    // ---
-    $path = (($_SERVER["SERVER_NAME"] ?? "localhost") == "localhost")
+    $server = $_SERVER["SERVER_NAME"] ?? "localhost";
+    $path = ($server == "localhost")
         ? "http://localhost:9001"
         : "https://mdwikicx.toolforge.org/";
-    //---
+
     if (empty($mdwiki_revid) || $mdwiki_revid == 0) {
         $json_file = "$path/revisions_new/json_data.json";
-        // ---
         $data = json_decode(get_url_curl($json_file), true) ?? [];
-        // ---
         echo_test("url" . $json_file);
         echo_test("count of data: " . count($data));
-        // ---
         $mdwiki_revid = $data[str_replace($sourcetitle, " ", "_")] ?? "";
-    };
-    // ---
+    }
+
     if (empty($mdwiki_revid)) {
-        // ---
         echo_test("empty mdwiki_revid");
-        // ---
         return "";
-    };
-    // ---
+    }
+
     $file = "$path/revisions_new/$mdwiki_revid/wikitext.txt";
-    // ---
     echo_test($file);
-    // ---
     if (!file_exists($file)) {
         echo_test("file not found: $file");
         return "";
-    };
-    // ---
+    }
     echo_test("url" . $file);
-    // ---
     $text = get_url_curl($file);
-    // ---
     if (!$text) {
         echo_test("Failed to fetch URL: $file");
         return "";
     }
-    // ---
+
     return $text;
 }
 
