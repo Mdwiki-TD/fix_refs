@@ -41,6 +41,7 @@ function get_url_curl(string $url): string
 function load_from_local_file()
 {
     $localFile = dirname(__DIR__) . '/resources/mdwiki_categories.json';
+    $decoded = [];
     if (is_file($localFile)) {
         $decoded = json_decode(file_get_contents($localFile) ?: '[]', true);
     }
