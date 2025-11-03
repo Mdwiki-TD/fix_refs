@@ -23,6 +23,8 @@ jobs:
         run: composer install --no-progress --prefer-dist --optimize-autoloader
 
       - name: Run PHPStan
-        run: 
-          vendor/bin/phpstan analyse
-          vendor/bin/phpunit tests --testdox --colors=always -c phpunit.xml
+        run: vendor/bin/phpstan analyse
+
+      - name: Run PHPUnit
+        run: vendor/bin/phpunit tests --testdox --colors=always -c phpunit.xml
+  
