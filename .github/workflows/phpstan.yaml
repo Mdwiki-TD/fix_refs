@@ -1,9 +1,9 @@
-name: PHPStan
+name: PHPStan & phpunit
 
 on:
-  pull_request:   # يشتغل فقط عند إنشاء أو تحديث PR
+  pull_request:  
     branches:
-      - main      # غيّرها لاسم الفرع الرئيسي عندك (master أو main)
+      - main     
 
 jobs:
   phpstan:
@@ -16,7 +16,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'   # غيّر للنسخة التي تستخدمها
+          php-version: '8.3'
           tools: composer
 
       - name: Install dependencies
@@ -24,3 +24,7 @@ jobs:
 
       - name: Run PHPStan
         run: vendor/bin/phpstan analyse
+
+      - name: Run PHPUnit
+        run: vendor/bin/phpunit tests --testdox --colors=always -c phpunit.xml
+  
