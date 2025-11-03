@@ -64,6 +64,7 @@ function find_mdwiki_revid($sourcetitle, $path)
     // ---
     return $mdwiki_revid;
 }
+
 function get_full_text($sourcetitle, $mdwiki_revid)
 {
     // ---
@@ -84,9 +85,13 @@ function get_full_text($sourcetitle, $mdwiki_revid)
         echo_test("empty mdwiki_revid, sourcetitle:($sourcetitle)");
         // ---
         return "";
-    };
+    }
     // ---
     $file = "$path/revisions_new/$mdwiki_revid/wikitext.txt";
+    // ---
+    if (!file_exists($file)) {
+        $file = dirname(__DIR__, 2) . "/resources/revisions/$mdwiki_revid/wikitext.txt";
+    }
     // ---
     echo_test($file);
     // ---
@@ -96,7 +101,11 @@ function get_full_text($sourcetitle, $mdwiki_revid)
     };
     // ---
     echo_test("url" . $file);
+    // ---
     $text = file_get_contents($file) ?: "";
+    // ---
+    echo_test("empty mdwiki_revid, sourcetitle:($sourcetitle)");
+    // ---
     return $text;
 }
 
