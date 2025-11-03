@@ -65,7 +65,7 @@ function load_settings_new()
         $url = "https://mdwiki.toolforge.org/api.php?get=language_settings";
         $data = get_curl($url);
     } else {
-        $data = @file_get_contents($url);
+        $data = file_get_contents($url);
     }
     // ---
     if (!$data) {

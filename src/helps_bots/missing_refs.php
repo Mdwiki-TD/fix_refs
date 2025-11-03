@@ -27,7 +27,7 @@ function get_full_text_url($sourcetitle, $mdwiki_revid)
         $data = json_decode(get_url_curl($json_file), true) ?? [];
         echo_test("url" . $json_file);
         echo_test("count of data: " . count($data));
-        $mdwiki_revid = $data[str_replace($sourcetitle, " ", "_")] ?? "";
+        $mdwiki_revid = $data[str_replace(" ", "_", $sourcetitle)] ?? "";
     }
 
     if (empty($mdwiki_revid)) {
