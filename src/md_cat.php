@@ -38,20 +38,33 @@ function get_url_curl(string $url): string
     return $output;
 }
 
+function load_from_local_file()
+{
+    $localFile = dirname(__DIR__) . '/resources/mdwiki_categories.json';
+    $decoded = [];
+    if (is_file($localFile)) {
+        $decoded = json_decode(file_get_contents($localFile) ?: '[]', true);
+    }
+    return $decoded;
+}
 function get_cats()
 {
     $url = "https://www.wikidata.org/w/rest.php/wikibase/v1/entities/items/Q107014860/sitelinks";
-    // ---
-    static $json = [];
-    // ---
-    if (!empty($json)) {
+    static $json = null;
+
+    if (is_array($json)) {
         return $json;
     }
-    // ---
+
     $data = get_url_curl($url);
-    // ---
-    $json = json_decode($data, true) ?: [];
-    // ---
+    $decoded = json_decode($data, true);
+
+    if (!is_array($decoded) || empty($decoded)) {
+        $decoded = load_from_local_file();
+    }
+
+    $json = is_array($decoded) ? $decoded : [];
+
     return $json;
 }
 
