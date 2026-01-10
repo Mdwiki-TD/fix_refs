@@ -33,8 +33,20 @@ class remove_spaceTest extends MyFunctionTest
     }
     public function testRemoveSpaceEnd3rdFile()
     {
-        $input   = file_get_contents(__DIR__ . "/texts/remove_space_texts/3/input.txt");
-        $expected   = file_get_contents(__DIR__ . "/texts/remove_space_texts/3/expected.txt");
+        $input   = <<<WIKI
+Article text <ref>{{Citar web|Text|author=John|language=en}}</ref> [[Հիպոկրատ|Հիպոկրատի]] test0 <ref name="Os2018" /><ref>{{ref
+|<!!>
+}}</ref>։ test1 <ref name="Os2018" /><ref>{{ref
+|<!!>
+}}</ref>։
+WIKI;
+        $expected   = <<<WIKI
+Article text <ref>{{Citar web|Text|author=John|language=en}}</ref> [[Հիպոկրատ|Հիպոկրատի]] test0 <ref name="Os2018" /><ref>{{ref
+|<!!>
+}}</ref>։ test1<ref name="Os2018" /><ref>{{ref
+|<!!>
+}}</ref>։
+WIKI;
         // --
         $result = remove_spaces_between_last_word_and_beginning_of_ref($input, 'hy');
         // --
