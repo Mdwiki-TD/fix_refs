@@ -58,34 +58,26 @@ function json_load_file($filename)
 
 function load_settings_new()
 {
-    // ---
     $url = "http://localhost:9001/api.php?get=language_settings";
-    // ---
     if (($_SERVER['SERVER_NAME'] ?? '') === 'mdwiki.toolforge.org') {
         $url = "https://mdwiki.toolforge.org/api.php?get=language_settings";
         $data = get_curl($url);
     } else {
         $data = file_get_contents($url);
     }
-    // ---
     if (!$data) {
         $localFile = __DIR__ . '/resources/language_settings.json';
         $data = is_file($localFile) ? file_get_contents($localFile) : '';
     }
-    // ---
     $json = json_decode($data ?: '[]', true);
     if (!is_array($json)) {
         $json = ['results' => []];
     }
-    // ---
     $data = $json['results'] ?? [];
-    // ---
     $new = [];
-    // ---
     foreach ($data as $key => $value) {
         $new[$value['lang_code']] = $value;
     }
-    // ---
     return $new;
 }
 

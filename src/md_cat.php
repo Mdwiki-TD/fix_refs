@@ -41,12 +41,18 @@ function get_url_curl(string $url): string
 function load_from_local_file()
 {
     $localFile = dirname(__DIR__) . '/resources/mdwiki_categories.json';
-    $decoded = [];
-    if (is_file($localFile)) {
-        $decoded = json_decode(file_get_contents($localFile) ?: '[]', true);
+    if (!is_file($localFile)) {
+        return [];
     }
-    return $decoded;
+
+    $content = file_get_contents($localFile);
+    if ($content === false || $content === '') {
+        return [];
+    }
+
+    return json_decode($content, true) ?: [];
 }
+
 function get_cats()
 {
     $url = "https://www.wikidata.org/w/rest.php/wikibase/v1/entities/items/Q107014860/sitelinks";
