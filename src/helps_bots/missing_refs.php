@@ -49,7 +49,11 @@ function get_full_text_url($sourcetitle, $mdwiki_revid)
 function find_mdwiki_revid($sourcetitle, $path)
 {
     $json_file = "$path/revisions_new/json_data.json";
-    $data = json_decode(file_get_contents($json_file) ?: "[]", true) ?? [];
+    if (!is_file($json_file)) {
+        return "";
+    }
+    $content = file_get_contents($json_file);
+    $data = json_decode($content, true) ?? [];
     echo_test("url" . $json_file);
     echo_test("count of data: " . count($data));
     $mdwiki_revid = $data[$sourcetitle] ?? "";
