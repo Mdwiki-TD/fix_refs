@@ -20,7 +20,7 @@ function get_full_text_url($sourcetitle, $mdwiki_revid)
     $server = $_SERVER["SERVER_NAME"] ?? "localhost";
     $server_path = ($server == "localhost")
         ? "http://localhost:9001"
-        : "https://mdwikicx.toolforge.org/";
+        : "https://mdwikicx.toolforge.org";
 
     if (empty($mdwiki_revid) || $mdwiki_revid == 0) {
         $json_file = "$server_path/revisions_new/json_data.json";
