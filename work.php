@@ -61,19 +61,19 @@ function load_settings_new()
     $url = "http://localhost:9001/api.php?get=language_settings";
     if (($_SERVER['SERVER_NAME'] ?? '') === 'mdwiki.toolforge.org') {
         $url = "https://mdwiki.toolforge.org/api.php?get=language_settings";
-        $data = get_curl($url);
+        $remote_data = get_curl($url);
     } else {
-        $data = file_get_contents($url);
+        $remote_data = @file_get_contents($url);
     }
-    if (!$data) {
+
+    $decoded = json_decode($remote_data, true);
+
+    if (!is_array($decoded) || empty($decoded['results'])) {
         $localFile = __DIR__ . '/resources/language_settings.json';
-        $data = is_file($localFile) ? file_get_contents($localFile) : '';
+        $decoded = json_load_file($localFile);
     }
-    $json = json_decode($data ?: '[]', true);
-    if (!is_array($json)) {
-        $json = ['results' => []];
-    }
-    $data = $json['results'] ?? [];
+
+    $data = $decoded['results'] ?? [];
     $new = [];
     foreach ($data as $key => $value) {
         $new[$value['lang_code']] = $value;
