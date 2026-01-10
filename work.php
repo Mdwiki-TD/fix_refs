@@ -2,7 +2,7 @@
 
 namespace WpRefs\FixPage;
 
-if (isset($_GET['test']) || $_SERVER['SERVER_NAME'] == 'localhost') {
+if (isset($_GET['test']) || (($_SERVER['SERVER_NAME'] ?? '') === 'localhost')) {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
@@ -44,32 +44,40 @@ function get_curl(string $url): string
 
 function json_load_file($filename)
 {
+    if (!is_file($filename)) {
+        return [];
+    }
+
     $content = file_get_contents($filename);
-    return json_decode($content, true);
+    if ($content === false || $content === '') {
+        return [];
+    }
+
+    return json_decode($content, true) ?: [];
 }
 
 function load_settings_new()
 {
-    // ---
     $url = "http://localhost:9001/api.php?get=language_settings";
-    // ---
-    if (($_SERVER['SERVER_NAME'] ?? '') == 'mdwiki.toolforge.org') {
+    if (($_SERVER['SERVER_NAME'] ?? '') === 'mdwiki.toolforge.org') {
         $url = "https://mdwiki.toolforge.org/api.php?get=language_settings";
-        $json = get_curl($url);
+        $remote_data = get_curl($url);
     } else {
-        $json = file_get_contents($url);
+        $remote_data = @file_get_contents($url);
     }
-    // ---
-    $json = json_decode($json, true);
-    // ---
-    $data = $json['results'] ?? [];
-    // ---
+
+    $decoded = json_decode($remote_data, true);
+
+    if (!is_array($decoded) || empty($decoded['results'])) {
+        $localFile = __DIR__ . '/resources/language_settings.json';
+        $decoded = json_load_file($localFile);
+    }
+
+    $data = $decoded['results'] ?? [];
     $new = [];
-    // ---
     foreach ($data as $key => $value) {
         $new[$value['lang_code']] = $value;
     }
-    // ---
     return $new;
 }
 

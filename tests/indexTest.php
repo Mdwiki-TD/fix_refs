@@ -11,6 +11,8 @@ class indexTest extends MyFunctionTest
         return DoChangesToText1("", "", $text, $lang, 00);
     }
 
+    // skip it
+
     public function testPart1()
     {
         $input     = file_get_contents(__DIR__ . "/texts/indexTest/1/input.txt");
