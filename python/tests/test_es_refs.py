@@ -21,4 +21,4 @@ class TestEsRefs(MyFunctionTest):
         """Test with empty text"""
         text = ""
         result = mv_es_refs(text)
-        self.assertEqual("", result)
+        assert result == ""

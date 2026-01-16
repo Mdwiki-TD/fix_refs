@@ -22,4 +22,4 @@ class TestEs(MyFunctionTest):
         text = "{{cite web|title=Test}}"
         result = fix_es(text)
         # Should translate cite web to cita web
-        self.assertIn("cita", result.lower())
+        assert "cita" in result.lower()
