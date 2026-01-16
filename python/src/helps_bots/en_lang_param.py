@@ -8,6 +8,7 @@ Usage:
 import re
 from src.test_bot import echo_debug
 from src.Parse.Citations import getCitationsOld
+from src.WikiParse.Template import getTemplates
 
 
 def add_lang_en(text):
@@ -45,6 +46,38 @@ def add_lang_en(text):
             text = text.replace(pap + ref, pap + ref2)
     
     return text
+
+
+def add_lang_en_new(temp_text):
+    """
+    Add language=en to templates in text
+    
+    Args:
+        temp_text: Text to process
+        
+    Returns:
+        Modified text
+    """
+    new_text = temp_text
+    temp_text = temp_text.strip()
+    
+    temps = getTemplates(temp_text)
+    
+    for temp in temps:
+        temp_old = temp.getOriginalText()
+        
+        echo_debug(f"temp_old:({temp_old})\n")
+        
+        params = temp.parameters
+        
+        language = params.get("language", "")
+        
+        if language == "":
+            params.set("language", "en")
+            temp_new = temp.toString()
+            new_text = new_text.replace(temp_old, temp_new)
+    
+    return new_text
 
 
 def add_lang_en_to_refs(text):
