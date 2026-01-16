@@ -1,20 +1,21 @@
 """
 ParserExternalLinks module
 
-PLACEHOLDER - This module will be implemented to match the functionality of:
-src/WikiParse/src/ParserExternalLinks.php
+Implemented from: src/WikiParse/src/ParserExternalLinks.php
 
 Usage:
     from src.WikiParse.src.ParserExternalLinks import ParserExternalLinks
 """
+
+import re
+from src.WikiParse.src.DataModel.ExternalLink import ExternalLink
 
 
 class ParserExternalLinks:
     """
     Parser for extracting external links from wikitext
     
-    This is a placeholder implementation. The full implementation will match:
-    src/WikiParse/src/ParserExternalLinks.php
+    Matches: src/WikiParse/src/ParserExternalLinks.php
     """
     
     def __init__(self, text: str):
@@ -24,20 +25,32 @@ class ParserExternalLinks:
         Args:
             text: Text to parse
         """
-        # TODO: Implement full ParserExternalLinks class matching PHP version
         self.text = text
         self.links = []
+        self.parse()
     
     def parse(self):
         """Parse external links from text"""
-        # TODO: Implement parsing logic matching PHP version
-        pass
+        # Pattern for external links [http://url text]
+        pattern = r'\[([^\s\]]+)(?:\s+([^\]]+))?\]'
+        matches = re.findall(pattern, self.text)
+        full_matches = re.findall(r'\[[^\s\]]+(?:\s+[^\]]+)?\]', self.text)
+        
+        for i, match in enumerate(matches):
+            url = match[0] if match else ""
+            text = match[1] if len(match) > 1 else ""
+            original = full_matches[i] if i < len(full_matches) else ""
+            
+            # Only process if it looks like a URL
+            if url.startswith(('http://', 'https://', 'ftp://', '//')):
+                link = ExternalLink(url, text, original)
+                self.links.append(link)
     
     def getLinks(self) -> list:
         """
         Get parsed external links
         
         Returns:
-            List of external links
+            List of ExternalLink objects
         """
         return self.links

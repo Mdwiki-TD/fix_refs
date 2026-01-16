@@ -1,8 +1,7 @@
 """
 Table data model
 
-PLACEHOLDER - This module will be implemented to match the functionality of:
-src/WikiParse/src/DataModel/Table.php
+Implemented from: src/WikiParse/src/DataModel/Table.php
 
 Usage:
     from src.WikiParse.src.DataModel.Table import Table
@@ -11,22 +10,38 @@ Usage:
 
 class Table:
     """
-    Represents a table in wikitext
+    Represents a wiki table
     
-    This is a placeholder implementation. The full implementation will match:
-    src/WikiParse/src/DataModel/Table.php
+    Matches: src/WikiParse/src/DataModel/Table.php
     """
     
-    def __init__(self, content: str = ""):
+    def __init__(self, content: str = "", originalText: str = ""):
         """
         Initialize Table
         
         Args:
             content: Table content
+            originalText: Original wikitext
         """
-        # TODO: Implement full Table class matching PHP version
         self.content = content
+        self.originalText = originalText
     
     def getContent(self) -> str:
         """Get table content"""
         return self.content
+    
+    def getOriginalText(self) -> str:
+        """Get original text"""
+        return self.originalText
+    
+    def setContent(self, content: str):
+        """Set table content"""
+        self.content = content
+    
+    def toString(self) -> str:
+        """Convert to string"""
+        return self.content
+    
+    def __str__(self) -> str:
+        """String representation"""
+        return self.toString()

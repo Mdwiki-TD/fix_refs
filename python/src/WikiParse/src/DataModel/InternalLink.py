@@ -1,8 +1,7 @@
 """
 InternalLink data model
 
-PLACEHOLDER - This module will be implemented to match the functionality of:
-src/WikiParse/src/DataModel/InternalLink.php
+Implemented from: src/WikiParse/src/DataModel/InternalLink.php
 
 Usage:
     from src.WikiParse.src.DataModel.InternalLink import InternalLink
@@ -11,23 +10,23 @@ Usage:
 
 class InternalLink:
     """
-    Represents an internal link in wikitext
+    Represents an internal wiki link (e.g., [[Page|Display text]])
     
-    This is a placeholder implementation. The full implementation will match:
-    src/WikiParse/src/DataModel/InternalLink.php
+    Matches: src/WikiParse/src/DataModel/InternalLink.php
     """
     
-    def __init__(self, target: str = "", text: str = ""):
+    def __init__(self, target: str = "", text: str = "", originalText: str = ""):
         """
         Initialize InternalLink
         
         Args:
-            target: Link target
-            text: Link text
+            target: Link target page
+            text: Link display text  
+            originalText: Original wikitext
         """
-        # TODO: Implement full InternalLink class matching PHP version
         self.target = target
         self.text = text
+        self.originalText = originalText
     
     def getTarget(self) -> str:
         """Get link target"""
@@ -36,3 +35,25 @@ class InternalLink:
     def getText(self) -> str:
         """Get link text"""
         return self.text
+    
+    def getOriginalText(self) -> str:
+        """Get original text"""
+        return self.originalText
+    
+    def setTarget(self, target: str):
+        """Set link target"""
+        self.target = target
+    
+    def setText(self, text: str):
+        """Set link text"""
+        self.text = text
+    
+    def toString(self) -> str:
+        """Convert to string"""
+        if self.text and self.text != self.target:
+            return f"[[{self.target}|{self.text}]]"
+        return f"[[{self.target}]]"
+    
+    def __str__(self) -> str:
+        """String representation"""
+        return self.toString()

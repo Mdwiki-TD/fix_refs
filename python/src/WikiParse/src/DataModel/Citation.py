@@ -1,8 +1,7 @@
 """
 Citation data model
 
-PLACEHOLDER - This module will be implemented to match the functionality of:
-src/WikiParse/src/DataModel/Citation.php
+Implemented from: src/WikiParse/src/DataModel/Citation.php
 
 Usage:
     from src.WikiParse.src.DataModel.Citation import Citation
@@ -13,8 +12,7 @@ class Citation:
     """
     Represents a citation in wikitext
     
-    This is a placeholder implementation. The full implementation will match:
-    src/WikiParse/src/DataModel/Citation.php
+    Matches: src/WikiParse/src/DataModel/Citation.php
     """
     
     def __init__(self, text: str = "", options: str = "", cite_text: str = ""):
@@ -26,7 +24,6 @@ class Citation:
             options: Citation attributes
             cite_text: Original citation text
         """
-        # TODO: Implement full Citation class matching PHP version
         self.text = text
         self.options = options
         self.cite_text = cite_text
@@ -36,7 +33,7 @@ class Citation:
         return self.cite_text
     
     def getTemplate(self) -> str:
-        """Get template"""
+        """Get template (content)"""
         return self.text
     
     def getContent(self) -> str:
@@ -49,4 +46,11 @@ class Citation:
     
     def toString(self) -> str:
         """Convert to string"""
-        return f"<ref {self.options.strip()}>{self.text}</ref>"
+        opts = self.options.strip()
+        if opts:
+            return f"<ref {opts}>{self.text}</ref>"
+        return f"<ref>{self.text}</ref>"
+    
+    def __str__(self) -> str:
+        """String representation"""
+        return self.toString()

@@ -1,20 +1,20 @@
 """
 ParserCategories module
 
-PLACEHOLDER - This module will be implemented to match the functionality of:
-src/WikiParse/src/ParserCategories.php
+Implemented from: src/WikiParse/src/ParserCategories.php
 
 Usage:
     from src.WikiParse.src.ParserCategories import ParserCategories
 """
+
+import re
 
 
 class ParserCategories:
     """
     Parser for extracting categories from wikitext
     
-    This is a placeholder implementation. The full implementation will match:
-    src/WikiParse/src/ParserCategories.php
+    Matches: src/WikiParse/src/ParserCategories.php
     """
     
     def __init__(self, text: str):
@@ -24,20 +24,27 @@ class ParserCategories:
         Args:
             text: Text to parse
         """
-        # TODO: Implement full ParserCategories class matching PHP version
         self.text = text
         self.categories = []
+        self.parse()
     
     def parse(self):
         """Parse categories from text"""
-        # TODO: Implement parsing logic matching PHP version
-        pass
+        # Pattern to match category links
+        pattern = r'\[\[\s*Category\s*:([^\]]+)\]\]'
+        matches = re.findall(pattern, self.text, re.IGNORECASE)
+        
+        for match in matches:
+            # Split on | to get category name and sort key
+            parts = match.split('|')
+            category_name = parts[0].strip()
+            self.categories.append(category_name)
     
     def getCategories(self) -> list:
         """
         Get parsed categories
         
         Returns:
-            List of categories
+            List of category names
         """
         return self.categories

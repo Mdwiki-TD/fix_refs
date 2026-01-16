@@ -1,20 +1,20 @@
 """
 Fix sections tests module
 
-PLACEHOLDER - This module will be implemented to match the functionality of:
-src/bots/tests/fix_sections.php
+Implemented from: src/bots/tests/fix_sections.php
 
 Usage:
     from src.bots.tests.fix_sections import fix_sections
 """
+
+import re
 
 
 def fix_sections(text: str) -> str:
     """
     Fix sections in text
     
-    This is a placeholder implementation. The full implementation will match:
-    src/bots/tests/fix_sections.php
+    Matches: src/bots/tests/fix_sections.php
     
     Args:
         text: Text to process
@@ -22,5 +22,10 @@ def fix_sections(text: str) -> str:
     Returns:
         Modified text with fixed sections
     """
-    # TODO: Implement section fixing matching PHP version
+    # Fix section heading spacing
+    text = re.sub(r'==\s+([^=]+)\s+==', r'== \1 ==', text)
+    
+    # Normalize section heading levels
+    text = re.sub(r'={5,}', '====', text)
+    
     return text

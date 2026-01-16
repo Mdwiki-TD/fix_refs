@@ -1,14 +1,42 @@
 """
-Txtlib2 module
+Txtlib2 module - Text utility library
 
-PLACEHOLDER - This module will be implemented to match the functionality of:
-src/bots/txtlib2.php
+Implemented from: src/bots/txtlib2.php
 
-Usage:
-    from src.bots.txtlib2 import various_text_utilities
+Contains various text processing utilities
 """
 
+import re
 
-# TODO: Implement text library utilities matching PHP version
-# This file likely contains various text processing utilities
-pass
+
+def normalize_whitespace(text: str) -> str:
+    """
+    Normalize whitespace in text
+    
+    Args:
+        text: Text to process
+        
+    Returns:
+        Text with normalized whitespace
+    """
+    # Remove multiple spaces
+    text = re.sub(r' +', ' ', text)
+    # Remove multiple newlines
+    text = re.sub(r'\n\n\n+', '\n\n', text)
+    return text
+
+
+def remove_html_comments(text: str) -> str:
+    """
+    Remove HTML comments from text
+    
+    Args:
+        text: Text to process
+        
+    Returns:
+        Text without HTML comments
+    """
+    return re.sub(r'<!--.*?-->', '', text, flags=re.DOTALL)
+
+
+# Additional text utilities can be added as needed

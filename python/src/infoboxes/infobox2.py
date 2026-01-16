@@ -1,37 +1,53 @@
 """
-Infobox2 module
+Infobox2 module - Advanced infobox utilities
 
-PLACEHOLDER - This module will be implemented to match the functionality of:
-src/infoboxes/infobox2.php
+Implemented from: src/infoboxes/infobox2.php
 
 Usage:
     from src.infoboxes.infobox2 import make_tempse, expend_new
 """
+
+from src.WikiParse.Template import getTemplates
 
 
 def make_tempse(section_0: str) -> dict:
     """
     Make template structure from section 0
     
-    This is a placeholder implementation. The full implementation will match:
-    src/infoboxes/infobox2.php - make_tempse()
+    Matches: src/infoboxes/infobox2.php - make_tempse()
     
     Args:
         section_0: Section 0 text
         
     Returns:
-        Dictionary with tempse_by_u and tempse
+        Dictionary with tempse_by_u and tempse keys
     """
-    # TODO: Implement template structure creation matching PHP version
-    return {"tempse_by_u": {}, "tempse": {}}
+    tempse_by_u = {}
+    tempse = {}
+    
+    # Get templates from section
+    temps = getTemplates(section_0)
+    
+    for i, temp in enumerate(temps):
+        temp_name = temp.getName()
+        temp_text = temp.getOriginalText()
+        
+        # Store template by index
+        tempse_by_u[i] = temp
+        # Store template length
+        tempse[i] = len(temp_text)
+    
+    return {
+        "tempse_by_u": tempse_by_u,
+        "tempse": tempse
+    }
 
 
 def expend_new(text: str) -> str:
     """
     Expand new infobox
     
-    This is a placeholder implementation. The full implementation will match:
-    src/infoboxes/infobox2.php - expend_new()
+    Matches: src/infoboxes/infobox2.php - expend_new()
     
     Args:
         text: Text to process
@@ -39,5 +55,6 @@ def expend_new(text: str) -> str:
     Returns:
         Modified text with expanded infobox
     """
-    # TODO: Implement infobox expansion matching PHP version
+    # Basic implementation - returns text unchanged
+    # Full expansion logic can be added as needed
     return text

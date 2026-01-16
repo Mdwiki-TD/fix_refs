@@ -1,20 +1,21 @@
 """
 ParserCitations module
 
-PLACEHOLDER - This module will be implemented to match the functionality of:
-src/WikiParse/src/ParserCitations.php
+Implemented from: src/WikiParse/src/ParserCitations.php
 
 Usage:
     from src.WikiParse.src.ParserCitations import ParserCitations
 """
+
+import re
+from src.WikiParse.src.DataModel.Citation import Citation
 
 
 class ParserCitations:
     """
     Parser for extracting citations from wikitext
     
-    This is a placeholder implementation. The full implementation will match:
-    src/WikiParse/src/ParserCitations.php
+    Matches: src/WikiParse/src/ParserCitations.php
     """
     
     def __init__(self, text: str):
@@ -24,20 +25,27 @@ class ParserCitations:
         Args:
             text: Text to parse
         """
-        # TODO: Implement full ParserCitations class matching PHP version
         self.text = text
         self.citations = []
+        self.parse()
     
     def parse(self):
         """Parse citations from text"""
-        # TODO: Implement parsing logic matching PHP version
-        pass
+        # Pattern for full ref tags
+        pattern = r'<ref([^/>]*?)>(.+?)</ref>'
+        matches = re.findall(pattern, self.text, re.IGNORECASE | re.DOTALL)
+        full_matches = re.findall(r'<ref[^/>]*?>.+?</ref>', self.text, re.IGNORECASE | re.DOTALL)
+        
+        for i, (options, content) in enumerate(matches):
+            cite_text = full_matches[i] if i < len(full_matches) else ""
+            citation = Citation(content, options, cite_text)
+            self.citations.append(citation)
     
     def getCitations(self) -> list:
         """
         Get parsed citations
         
         Returns:
-            List of citations
+            List of Citation objects
         """
         return self.citations
