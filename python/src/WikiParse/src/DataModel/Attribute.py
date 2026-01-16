@@ -1,38 +1,112 @@
 """
 Attribute data model
 
-PLACEHOLDER - This module will be implemented to match the functionality of:
-src/WikiParse/src/DataModel/Attribute.php
+Implemented from: src/WikiParse/src/DataModel/Attribute.php
 
 Usage:
     from src.WikiParse.src.DataModel.Attribute import Attribute
 """
 
+import re
+
 
 class Attribute:
     """
-    Represents an attribute in wikitext
+    Represents attributes in wikitext tags
     
-    This is a placeholder implementation. The full implementation will match:
-    src/WikiParse/src/DataModel/Attribute.php
+    Matches: src/WikiParse/src/DataModel/Attribute.php
     """
     
-    def __init__(self, name: str = "", value: str = ""):
+    def __init__(self, content: str = ""):
         """
         Initialize Attribute
         
         Args:
-            name: Attribute name
-            value: Attribute value
+            content: Attribute content string
         """
-        # TODO: Implement full Attribute class matching PHP version
-        self.name = name
-        self.value = value
+        self.content = content
+        self.attributes_array = {}
+        self.parseAttributes()
     
-    def getName(self) -> str:
-        """Get attribute name"""
-        return self.name
+    def setContent(self, content: str):
+        """Set content and reparse attributes"""
+        self.content = content
+        self.parseAttributes()
     
-    def getValue(self) -> str:
+    def parseAttributes(self):
+        """Parse attributes from content string"""
+        text = f"<ref {self.content}>"
+        
+        # Regex pattern for parsing attributes
+        pattern = r'''
+            ((?<=[\'"\s\/])[^\s\/>][^\s\/=>]*)         # Attribute name
+            (\s*=+\s*                                  # Equals sign(s)
+            (
+                \'[^\']*\'                             # Value in single quotes
+                |"[^"]*"                               # Value in double quotes
+                |(?![\'"])[^>\s]*                      # Unquoted value
+            ))?
+            (?:\s|\/(?!>))*                            # Trailing space or slash not followed by >
+        '''
+        
+        self.attributes_array = {}
+        
+        matches = re.findall(pattern, text, re.VERBOSE)
+        for match in matches:
+            attr_name = match[0].lower()
+            attr_value = match[2] if len(match) > 2 else ""
+            self.attributes_array[attr_name] = attr_value
+    
+    def getAttributesArray(self) -> dict:
+        """Get parsed attributes as dictionary"""
+        return self.attributes_array
+    
+    def has(self, key: str) -> bool:
+        """Check if attribute exists"""
+        return key in self.attributes_array
+    
+    def get(self, key: str, default: str = "") -> str:
         """Get attribute value"""
-        return self.value
+        return self.attributes_array.get(key, default)
+    
+    def set(self, key: str, value: str):
+        """Set attribute value"""
+        self.attributes_array[key] = value
+    
+    def delete(self, key: str):
+        """Delete attribute"""
+        if key in self.attributes_array:
+            del self.attributes_array[key]
+    
+    def toString(self, addQuotes: bool = False) -> str:
+        """
+        Convert attributes to string
+        
+        Args:
+            addQuotes: Whether to add quotes to values
+            
+        Returns:
+            Attributes as string
+        """
+        result = []
+        
+        for key, value in self.attributes_array.items():
+            if not value:
+                result.append(key)
+                continue
+            
+            if addQuotes:
+                # Remove existing quotes
+                if len(value) > 1:
+                    q = value[0] if value else ''
+                    if (q == '"' or q == "'") and value.endswith(q):
+                        value = value[1:-1]
+                value = f'"{value}"'
+            
+            result.append(f'{key}={value}')
+        
+        return ' '.join(result)
+    
+    def __str__(self) -> str:
+        """String representation"""
+        return self.toString()

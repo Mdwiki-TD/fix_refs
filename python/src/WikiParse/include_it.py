@@ -1,11 +1,23 @@
 """
 WikiParse include module
 
-PLACEHOLDER - This module will be implemented to match the functionality of:
-src/WikiParse/include_it.php
+Implemented from: src/WikiParse/include_it.php
 
-This file likely includes/requires other WikiParse modules.
+This file loads all WikiParse modules for convenience.
 """
 
-# TODO: Implement any include/import logic matching PHP version
-pass
+# Import all WikiParse modules
+from src.WikiParse.Template import getTemplate, getTemplates
+from src.WikiParse.src.ParserTemplate import ParserTemplate
+from src.WikiParse.src.ParserTemplates import ParserTemplates
+from src.WikiParse.src.DataModel.Template import Template
+from src.WikiParse.src.DataModel.Parameters import Parameters
+
+__all__ = [
+    'getTemplate',
+    'getTemplates',
+    'ParserTemplate',
+    'ParserTemplates',
+    'Template',
+    'Parameters'
+]

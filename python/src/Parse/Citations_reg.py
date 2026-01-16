@@ -1,8 +1,7 @@
 """
 Citations regex parser module
 
-PLACEHOLDER - This module will be implemented to match the functionality of:
-src/Parse/Citations_reg.php
+Implemented from: src/Parse/Citations_reg.php
 
 Usage:
     from src.Parse.Citations_reg import get_name, get_Reg_Citations, get_full_refs, getShortCitations
@@ -15,8 +14,7 @@ def get_name(options: str) -> str:
     """
     Get the name attribute from citation options
     
-    This is a placeholder implementation. The full implementation will match:
-    src/Parse/Citations_reg.php - get_name()
+    Matches: src/Parse/Citations_reg.php - get_name()
     
     Args:
         options: The citation options string to extract name from
@@ -24,57 +22,102 @@ def get_name(options: str) -> str:
     Returns:
         The extracted name or empty string if not found
     """
-    # TODO: Implement name extraction matching PHP version
-    # Pattern: /name\s*\=\s*[\"\']*([^>\"\']*)[\"\']*\s*/iu
-    return ""
+    if not options or not options.strip():
+        return ""
+    
+    # Pattern to extract name attribute
+    pattern = r'name\s*=\s*["\']?([^>"\'\s]*)["\']?\s*'
+    match = re.search(pattern, options, re.IGNORECASE)
+    
+    if not match:
+        return ""
+    
+    name = match.group(1).strip()
+    return name
 
 
 def get_Reg_Citations(text: str) -> list:
     """
     Get citations using regex
     
-    This is a placeholder implementation. The full implementation will match:
-    src/Parse/Citations_reg.php - get_Reg_Citations()
+    Matches: src/Parse/Citations_reg.php - get_Reg_Citations()
     
     Args:
         text: Text to parse
         
     Returns:
-        List of citation matches
+        List of citation dictionaries with keys: content, tag, name, options
     """
-    # TODO: Implement regex citation parsing matching PHP version
-    return []
+    pattern = r'<ref([^/>]*?)>(.+?)</ref>'
+    matches = re.findall(pattern, text, re.IGNORECASE | re.DOTALL)
+    full_matches = re.findall(r'<ref[^/>]*?>.+?</ref>', text, re.IGNORECASE | re.DOTALL)
+    
+    citations = []
+    
+    for i, (citation_options, content) in enumerate(matches):
+        ref_tag = full_matches[i] if i < len(full_matches) else ""
+        options = citation_options
+        citation = {
+            "content": content,
+            "tag": ref_tag,
+            "name": get_name(options),
+            "options": options
+        }
+        citations.append(citation)
+    
+    return citations
 
 
 def get_full_refs(text: str) -> dict:
     """
     Get full references from text
     
-    This is a placeholder implementation. The full implementation will match:
-    src/Parse/Citations_reg.php - get_full_refs()
+    Matches: src/Parse/Citations_reg.php - get_full_refs()
     
     Args:
         text: Text to parse
         
     Returns:
-        Dictionary of full references
+        Dictionary mapping reference names to their full tags
     """
-    # TODO: Implement full refs extraction matching PHP version
-    return {}
+    full = {}
+    citations = get_Reg_Citations(text)
+    
+    for cite in citations:
+        name = cite["name"]
+        ref = cite["tag"]
+        full[name] = ref
+    
+    return full
 
 
 def getShortCitations(text: str) -> list:
     """
-    Get short citations from text
+    Get short citations (self-closing ref tags) from text
     
-    This is a placeholder implementation. The full implementation will match:
-    src/Parse/Citations_reg.php - getShortCitations()
+    Matches: src/Parse/Citations_reg.php - getShortCitations()
     
     Args:
         text: Text to parse
         
     Returns:
-        List of short citations
+        List of short citation dictionaries
     """
-    # TODO: Implement short citations extraction matching PHP version
-    return []
+    pattern = r'<ref ([^/>]*?)/\s*>'
+    matches = re.findall(pattern, text, re.IGNORECASE | re.DOTALL)
+    full_matches = re.findall(r'<ref [^/>]*?/\s*>', text, re.IGNORECASE | re.DOTALL)
+    
+    citations = []
+    
+    for i, citation_options in enumerate(matches):
+        ref_tag = full_matches[i] if i < len(full_matches) else ""
+        options = citation_options
+        citation = {
+            "content": "",
+            "tag": ref_tag,
+            "name": get_name(options),
+            "options": options
+        }
+        citations.append(citation)
+    
+    return citations

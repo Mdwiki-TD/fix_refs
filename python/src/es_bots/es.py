@@ -8,6 +8,8 @@ Usage:
 import re
 from src.test_bot import echo_test
 from src.WikiParse.Template import getTemplates
+from src.es_bots.es_months import fix_es_months_in_refs
+from src.es_bots.es_refs import mv_es_refs
 
 
 class ESData:
@@ -116,6 +118,8 @@ def fix_es(text, title=""):
     
     # Apply transformations
     newtext = text
+    newtext = fix_es_months_in_refs(newtext)
     newtext = fix_temps(newtext)
+    newtext = mv_es_refs(newtext)
     
     return newtext
