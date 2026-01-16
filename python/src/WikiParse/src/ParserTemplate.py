@@ -12,11 +12,11 @@ class ParserTemplate:
     """
     Parses a template text into its components: name and parameters.
     """
-    
+
     def __init__(self, templateText):
         """
         Initialize ParserTemplate
-        
+
         Args:
             templateText: The template text to parse
         """
@@ -26,14 +26,14 @@ class ParserTemplate:
         self.pipe = "|"
         self.pipeR = "-_-"
         self.parse()
-    
+
     def clear_pipes(self, DTemplate):
         """
         Clear pipes in nested templates and links
-        
+
         Args:
             DTemplate: Template string to process
-            
+
         Returns:
             Processed template string
         """
@@ -42,34 +42,34 @@ class ParserTemplate:
         if not matches:
             # Fallback to simpler pattern
             matches = re.findall(r'\{\{(.*?)\}\}', DTemplate, re.DOTALL)
-        
+
         for match in matches:
             DTemplate = DTemplate.replace(match, match.replace(self.pipe, self.pipeR))
-        
+
         # Find links
         matches2 = re.findall(r'\[\[(.*?)\]\]', DTemplate)
         for match in matches2:
             DTemplate = DTemplate.replace(match, match.replace(self.pipe, self.pipeR))
-        
+
         return DTemplate
-    
+
     def parse(self):
         """Parse the template text to extract the template name and parameters"""
         match = re.match(r'^\{\{(.*?)(\}\})$', self.templateText, re.DOTALL)
-        
+
         if match:
             DTemplate = self.clear_pipes(match.group(1))
-            
+
             params = DTemplate.split("|")
             pipeR = self.pipeR
             pipe = self.pipe
-            
+
             params = [p.replace(pipeR, pipe) for p in params]
-            
+
             data = {}
-            
+
             self.name = params[0]
-            
+
             for i in range(1, len(params)):
                 param = params[i]
                 if "=" in param:
@@ -79,13 +79,13 @@ class ParserTemplate:
                     data[key] = value
                 else:
                     data[i] = param
-            
+
             self.parameters = data
-    
+
     def getTemplate(self):
         """
         Creates a Template object from the parsed template name and parameters
-        
+
         Returns:
             Template object representing the parsed template data
         """

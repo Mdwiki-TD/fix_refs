@@ -13,8 +13,8 @@ class TestEsSection(MyFunctionTest):
 
     def test_es_section_basic(self):
         """Test basic Spanish section"""
-        text = "Article text"
-        lang = "es"
         sourcetitle = "Test"
-        result = es_section(text, lang, sourcetitle)
+        text = "Article text"
+        mdwiki_revid = "12345"
+        result = es_section(sourcetitle, text, mdwiki_revid)
         assert isinstance(result, str)
