@@ -27,3 +27,13 @@ class MyFunctionTest:
             )
         else:
             assert expected == result, f"Unexpected result:\n{result}"
+
+    def assertEqual(self, expected, result):
+        """
+        Assert that expected equals result
+
+        Args:
+            expected: Expected value
+            result: Actual value
+        """
+        assert expected == result, f"Expected {expected}, but got {result}"
