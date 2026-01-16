@@ -10,13 +10,13 @@ from src.es_bots.es_refs import mv_es_refs
 
 class TestEsRefs(MyFunctionTest):
     """Test Spanish reference processing"""
-    
+
     def test_mv_es_refs_basic(self):
         """Test basic Spanish ref movement"""
         text = "Text <ref>Reference</ref>"
         result = mv_es_refs(text)
-        self.assertIsInstance(result, str)
-    
+        assert isinstance(result, str)
+
     def test_mv_es_refs_empty(self):
         """Test with empty text"""
         text = ""

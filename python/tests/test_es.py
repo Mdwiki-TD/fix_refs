@@ -10,13 +10,13 @@ from src.es_bots.es import fix_es
 
 class TestEs(MyFunctionTest):
     """Test Spanish language fixes"""
-    
+
     def test_es_fixes_basic(self):
         """Test basic Spanish fixes"""
         text = "Article text"
         result = fix_es(text)
-        self.assertIsInstance(result, str)
-    
+        assert isinstance(result, str)
+
     def test_es_fixes_with_templates(self):
         """Test Spanish template translation"""
         text = "{{cite web|title=Test}}"
