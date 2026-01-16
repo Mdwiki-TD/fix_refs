@@ -1,0 +1,1 @@
+"""Infoboxes package"""
