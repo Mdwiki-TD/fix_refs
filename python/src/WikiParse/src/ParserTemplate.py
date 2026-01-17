@@ -38,10 +38,7 @@ class ParserTemplate:
             Processed template string
         """
         # Find nested templates
-        matches = re.findall(r'\{\{((?:[^{}]++|(?R))*)\}\}', DTemplate, re.DOTALL)
-        if not matches:
-            # Fallback to simpler pattern
-            matches = re.findall(r'\{\{(.*?)\}\}', DTemplate, re.DOTALL)
+        matches = re.findall(r'\{\{(.*?)\}\}', DTemplate, re.DOTALL)
 
         for match in matches:
             DTemplate = DTemplate.replace(match, match.replace(self.pipe, self.pipeR))
