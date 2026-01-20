@@ -27,12 +27,13 @@ def find_mdwiki_revid(sourcetitle: str, path: str) -> str:
 
     try:
         with open(json_file, 'r', encoding='utf-8') as f:
-            data: Dict[str, Any] = json.load(f)
+            data: Dict[str, Any] = json.load(f)  # type: ignore
 
         echo_test(f"url{json_file}")
         echo_test(f"count of data: {len(data)}")
 
-        return data.get(sourcetitle, "")
+        result = data.get(sourcetitle, "")
+        return str(result) if isinstance(result, str) else ""
     except (json.JSONDecodeError, IOError):
         return ""
 

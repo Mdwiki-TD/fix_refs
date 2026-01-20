@@ -4,11 +4,11 @@ MDWiki category integration
 
 import json
 from pathlib import Path
-from typing import Dict
+from typing import Dict, Any
 from ..utils.http import get_url
 
 
-def load_from_local_file() -> Dict:
+def load_from_local_file() -> Dict[str, Any]:
     """Load MDWiki categories from local JSON file
 
     Returns:
@@ -21,12 +21,13 @@ def load_from_local_file() -> Dict:
 
     try:
         with open(local_file, 'r', encoding='utf-8') as f:
-            return json.load(f)
+            result: Dict[str, Any] = json.load(f)  # type: ignore
+            return result
     except (json.JSONDecodeError, IOError):
         return {}
 
 
-def get_cats() -> Dict:
+def get_cats() -> Dict[str, Any]:
     """Fetch MDWiki categories from Wikidata API with fallback to local file
 
     Returns:
@@ -39,7 +40,7 @@ def get_cats() -> Dict:
         return load_from_local_file()
 
     try:
-        decoded = json.loads(data)
+        decoded: Any = json.loads(data)  # type: ignore
         return decoded if isinstance(decoded, dict) else load_from_local_file()
     except json.JSONDecodeError:
         return load_from_local_file()
@@ -60,7 +61,8 @@ def get_mdwiki_category(lang: str) -> str:
         return ""
 
     cats = get_cats()
-    return cats.get(f"{lang}wiki", {}).get("title", "Category:Translated from MDWiki")
+    result = cats.get(f"{lang}wiki", {}).get("title", "Category:Translated from MDWiki")
+    return str(result) if isinstance(result, str) else "Category:Translated from MDWiki"
 
 
 def add_translated_from_mdwiki(text: str, lang: str) -> str:

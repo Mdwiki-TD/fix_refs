@@ -24,7 +24,7 @@ def get_url(url: str, timeout: int = 5) -> str:
     try:
         response = requests.get(url, headers=headers, timeout=timeout)
         response.raise_for_status()
-        return response.text
+        return str(response.text)  # type: ignore
     except requests.RequestException as e:
         echo_debug(f"Request Error: {e}\n{url}")
         return ""
