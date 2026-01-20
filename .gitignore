@@ -14,3 +14,4 @@ src/helps_bots/output.txt
 /tests/texts/**/output.txt
 z.php
 /.claude
+*.pyc
