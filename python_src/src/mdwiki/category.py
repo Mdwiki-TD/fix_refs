@@ -54,7 +54,7 @@ def get_mdwiki_category(lang: str) -> str:
     Returns:
         Category name or empty string
     """
-    skip_langs = ["it"]
+    skip_langs = ["it", "en"]
 
     if lang in skip_langs:
         return ""
@@ -74,6 +74,11 @@ def add_translated_from_mdwiki(text: str, lang: str) -> str:
         Text with MDWiki category added if not present
     """
     import re
+
+    skip_langs = ["it", "en"]
+
+    if lang in skip_langs:
+        return text
 
     if re.search(r":\s*Translated[ _]from[ _]MDWiki\s*\]\]", text, re.IGNORECASE):
         return text

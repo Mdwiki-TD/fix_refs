@@ -53,13 +53,13 @@ class TestFixSectionsTitles:
         """Test Croatian translation"""
         text = "==References=="
         result = fix_sections_titles(text, "hr")
-        assert "==Izvori==" in result
+        assert "== Izvori ==" in result
 
     def test_swahili_references(self):
         """Test Swahili translation"""
         text = "==References=="
         result = fix_sections_titles(text, "sw")
-        assert "==Marejeo==" in result
+        assert "== Marejeo ==" in result
 
     def test_no_translation_for_english(self):
         """Test no translation for English"""

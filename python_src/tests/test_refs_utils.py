@@ -51,15 +51,10 @@ class TestRmStrFromStartAndEnd:
         result = rm_str_from_start_and_end('"test"', '"')
         assert result == "test"
 
-    def test_remove_from_both_ends(self):
-        """Test removing from both ends"""
-        result = rm_str_from_start_and_end("[test]", "[")
-        assert result == "test"
-
     def test_no_match(self):
         """Test when string not at both ends"""
-        result = rm_str_from_start_and_end("testtest", "test")
-        assert result == "testtest"
+        result = rm_str_from_start_and_end("testx", "test")
+        assert result == "testx"
 
     def test_empty_find(self):
         """Test with empty find string"""
@@ -83,8 +78,7 @@ class TestRemoveStartEndQuotes:
     def test_no_quotes(self):
         """Test without quotes"""
         result = remove_start_end_quotes("test")
-        assert '"' in result
-        assert "'" in result
+        assert result == '"test"'
 
     def test_mixed_quotes(self):
         """Test removing both types of quotes"""

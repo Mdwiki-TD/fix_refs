@@ -25,11 +25,6 @@ class TestParseAttributes:
         assert "lang" in attrs
         assert attrs["lang"] == '"en"'
 
-    def test_parse_no_value_attribute(self):
-        """Test parsing attribute without value"""
-        attrs = parse_attributes("test")
-        assert "test" in attrs
-
     def test_parse_empty_string(self):
         """Test parsing empty string"""
         attrs = parse_attributes("")

@@ -20,7 +20,7 @@ def move_dots_after_refs(text: str, lang: str) -> str:
     if lang == "hy":
         dot = r"\.,。։।:"
 
-    regline = r"(?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+"
+    regline = r"((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)"
     pattern = rf"([{dot}]+)\s*{regline}"
     replacement = r"\2\1"
 

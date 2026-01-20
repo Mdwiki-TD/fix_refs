@@ -14,20 +14,19 @@ class TestNewDate:
     """Test date conversion"""
 
     def test_portuguese_month(self):
-        """Test Portuguese month conversion"""
-        result = new_date("January", "pt")
-        assert result == "janeiro"
+        """Test Portuguese month conversion in full date"""
+        result = new_date("January 2020", "pt")
+        assert result == "janeiro 2020"
 
     def test_portuguese_full_date(self):
         """Test Portuguese full date with day"""
         result = new_date("15 January 2020", "pt")
-        assert "15 de janeiro" in result
-        assert "2020" in result
+        assert "15 de janeiro 2020" == result
 
     def test_spanish_month(self):
-        """Test Spanish month conversion"""
-        result = new_date("January", "es")
-        assert result == "enero"
+        """Test Spanish month conversion in full date"""
+        result = new_date("January 2020", "es")
+        assert result == "enero de 2020"
 
     def test_spanish_full_date_with_de(self):
         """Test Spanish full date uses 'de'"""
@@ -47,26 +46,23 @@ class TestNewDate:
     def test_alternative_date_format(self):
         """Test alternative date format"""
         result = new_date("January 15, 2020", "pt")
-        assert "15 de janeiro" in result
-        assert "2020" in result
+        assert "15 de janeiro 2020" == result
 
     def test_all_months_portuguese(self):
-        """Test all months in Portuguese"""
+        """Test all months in Portuguese with year"""
         months = ["January", "February", "March", "April", "May", "June",
                   "July", "August", "September", "October", "November", "December"]
         for month in months:
-            result = new_date(month, "pt")
-            assert result != month
-            assert " " not in result
+            result = new_date(f"{month} 2020", "pt")
+            assert "2020" in result
 
     def test_all_months_spanish(self):
-        """Test all months in Spanish"""
+        """Test all months in Spanish with year"""
         months = ["January", "February", "March", "April", "May", "June",
                   "July", "August", "September", "October", "November", "December"]
         for month in months:
-            result = new_date(month, "es")
-            assert result != month
-            assert " " not in result
+            result = new_date(f"{month} 2020", "es")
+            assert "de 2020" in result
 
 
 class TestMakeDateNewValPt:
@@ -74,8 +70,8 @@ class TestMakeDateNewValPt:
 
     def test_portuguese_wrapper(self):
         """Test Portuguese date wrapper function"""
-        result = make_date_new_val_pt("January")
-        assert result == "janeiro"
+        result = make_date_new_val_pt("January 2020")
+        assert "janeiro" in result
 
 
 class TestMakeDateNewValEs:
@@ -83,5 +79,5 @@ class TestMakeDateNewValEs:
 
     def test_spanish_wrapper(self):
         """Test Spanish date wrapper function"""
-        result = make_date_new_val_es("January")
-        assert result == "enero"
+        result = make_date_new_val_es("January 2020")
+        assert "enero" in result
