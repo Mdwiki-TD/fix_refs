@@ -27,6 +27,10 @@ foreach (glob(__DIR__ . "/pt_bots/*.php") as $filename) {
     include_once $filename;
 }
 
+foreach (glob(__DIR__ . "/pl_bots/*.php") as $filename) {
+    include_once $filename;
+}
+
 foreach (glob(__DIR__ . "/bg_bots/*.php") as $filename) {
     include_once $filename;
 }

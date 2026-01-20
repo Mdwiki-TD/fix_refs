@@ -12,6 +12,7 @@ use function WpRefs\WprefText\fix_page;
 use function WpRefs\TestBot\echo_test;
 use function WpRefs\Infobox\Expend_Infobox;
 use function WpRefs\PT\FixPtMonth\pt_fixes;
+use function WpRefs\PL\FixPlInfobox\pl_fixes;
 use function WpRefs\BG\bg_fixes;
 use function WpRefs\SW\sw_fixes;
 use function WpRefs\ES\fix_es;
@@ -66,6 +67,10 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sou
     // ---
     if ($lang === "pt") {
         $text = pt_fixes($text);
+    }
+    // ---
+    if ($lang === "pl") {
+        $text = pl_fixes($text);
     }
     // ---
     if ($lang === "bg") {
