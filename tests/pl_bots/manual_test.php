@@ -51,8 +51,8 @@ $input3 = <<<'TXT'
 }}
 TXT;
 $result3 = add_missing_params_to_choroba_infobox($input3);
-$icd10_count = preg_match_all('/\|ICD10\s*=/', $result3, $matches);
-$meshid_count = preg_match_all('/\|MeshID\s*=/', $result3, $matches);
+$icd10_count = preg_match_all('/\|ICD10\s*=/', $result3, $icd10_matches);
+$meshid_count = preg_match_all('/\|MeshID\s*=/', $result3, $meshid_matches);
 echo "Input:\n$input3\n";
 echo "ICD10 parameter count: $icd10_count (should be 1)\n";
 echo "MeshID parameter count: $meshid_count (should be 1)\n\n";

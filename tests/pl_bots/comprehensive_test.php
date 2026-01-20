@@ -127,8 +127,21 @@ foreach ($test_cases as $index => $test) {
         $passed++;
     } else {
         $failed++;
-        echo "  Input: " . substr($test['input'], 0, 100) . "...\n";
-        echo "  Result: " . substr($result, 0, 200) . "...\n";
+        // Show input (preserve template structure)
+        $input_lines = explode("\n", $test['input']);
+        $input_preview = implode("\n  ", array_slice($input_lines, 0, 5));
+        if (count($input_lines) > 5) {
+            $input_preview .= "\n  ... (" . (count($input_lines) - 5) . " more lines)";
+        }
+        echo "  Input:\n  $input_preview\n";
+        
+        // Show result (preserve template structure)
+        $result_lines = explode("\n", $result);
+        $result_preview = implode("\n  ", array_slice($result_lines, 0, 10));
+        if (count($result_lines) > 10) {
+            $result_preview .= "\n  ... (" . (count($result_lines) - 10) . " more lines)";
+        }
+        echo "  Result:\n  $result_preview\n";
     }
     echo "\n";
 }
