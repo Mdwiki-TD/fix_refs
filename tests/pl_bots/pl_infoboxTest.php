@@ -121,7 +121,8 @@ TXT;
         $result = add_missing_params_to_choroba_infobox($input);
         
         // Both templates should get the parameters
-        $icd10Count = substr_count($result, '|ICD10');
+        // Use regex to match exact parameter (not substring that matches both ICD10 and ICD10 nazwa)
+        $icd10Count = preg_match_all('/\|ICD10\s*=/', $result, $matches);
         $this->assertEquals(2, $icd10Count, "Both Choroba infobox templates should have ICD10 parameter");
     }
 }
