@@ -38,6 +38,10 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sou
         return $text;
     }
     // ---
+    if ($lang === "pl") {
+        $text = pl_fixes($text);
+    }
+    // ---
     // print_s("fix page: $title, move_dots:$move_dots, expend_infobox:$infobox");
     // ---
     if ($infobox || $lang === "es") {
@@ -67,10 +71,6 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sou
     // ---
     if ($lang === "pt") {
         $text = pt_fixes($text);
-    }
-    // ---
-    if ($lang === "pl") {
-        $text = pl_fixes($text);
     }
     // ---
     if ($lang === "bg") {
