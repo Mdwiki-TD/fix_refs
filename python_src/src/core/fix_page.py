@@ -10,6 +10,7 @@ from ..bots.move_dots import move_dots_after_refs
 from ..bots.fix_missing_refs import fix_missing_refs
 from ..bots.redirect import is_redirect
 from ..mdwiki.category import add_translated_from_mdwiki
+from ..infobox.expend_infobox import Expend_Infobox
 from ..lang_bots.pl_bot import pl_fixes
 from ..lang_bots.pt_bot import pt_fixes
 from ..lang_bots.bg_bot import bg_fixes
@@ -54,7 +55,7 @@ def fix_page(
 
     if infobox or lang == "es":
         echo_test("Expend_Infobox\n")
-        text = expend_infobox(text, title, "")
+        text = Expend_Infobox(text, title, "")
 
     text = mini_fixes(text, lang)
     text = fix_missing_refs(text, source_title, mdwiki_revid)
@@ -88,8 +89,8 @@ def fix_page(
     return text if text else text_org
 
 
-def expend_infobox(text: str, title: str, options: str) -> str:
-    """Expand infobox templates
+def expend_infobox(text: str, title: str, options: str = "") -> str:
+    """Expand infobox templates using infobox/expend_infobox module
 
     Args:
         text: Page content
@@ -99,7 +100,8 @@ def expend_infobox(text: str, title: str, options: str) -> str:
     Returns:
         Text with expanded infobox
     """
-    return text
+
+    return Expend_Infobox(text, title, options)
 
 
 def fix_refs(text: str, lang: str = "en") -> str:

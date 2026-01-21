@@ -162,7 +162,7 @@ Some text here.
 
     def test_full_article_with_choroba_infobox(self):
         """Test full article with Choroba infobox"""
-        input_text = '''{{Choroba infobox
+        input_text = """{{Choroba infobox
 |nazwa polska = Cukrzyca
 |obraz = Insulin glucose metabolism ZP.svg
 }}
@@ -174,7 +174,7 @@ Some text here.
 
 == Przypisy ==
 <references />
-'''
+"""
         result = add_missing_params_to_choroba_infobox(input_text)
 
         # Check expected parameters are present
