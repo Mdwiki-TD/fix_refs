@@ -21,7 +21,8 @@ def fix_title_bold(text: str, title: str) -> str:
     except Exception:
         title2 = title
 
-    pattern = r'\}\s*\'\'\'\'' + re.escape(title2) + r'\'\'\'\''  # Escaped triple quote
+    # Pattern: } followed by title in triple quotes
+    pattern = r'\}\s*' + "'" + "'" + "'" + re.escape(title2) + r"'" + "'" + "'" + "'"  # Triple quotes
     text = re.sub(pattern, r'}\n\n1', text)
 
     return text
@@ -42,7 +43,7 @@ def make_section_0(title: str, newtext: str) -> str:
     if "==" in newtext:
         section_0 = newtext.split("==")[0]
     else:
-        tagg = f"''{title}'''1"
+        tagg = "''" + title + "'''1"
         if tagg in newtext:
             section_0 = newtext.split(tagg)[0]
         else:
@@ -70,7 +71,7 @@ def do_comments(text: str) -> str:
     return text
 
 
-def expend_new(main_temp: Any) -> str:
+def expend_new(main_temp: str) -> str:
     """Expand template using simple string manipulation
 
     Args:
@@ -81,14 +82,15 @@ def expend_new(main_temp: Any) -> str:
     """
     main_temp = str(main_temp).strip()
 
-    pattern = r'\{((?:[^{}]++|(?R))*)\}\}'
+    # PHP uses (?R) for recursion - simplify to match any braces
+    pattern = r'\{([^{}]*)\}\}'
     match = re.search(pattern, main_temp)
 
     if match:
         temp_content = match.group(1)
         simple_temp = temp_content
 
-        temp = f"{{simple_temp}}"
+        temp = "{{" + simple_temp + "}}"
         new_temp = do_comments(temp)
         new_temp = new_temp.strip()
 
@@ -97,45 +99,63 @@ def expend_new(main_temp: Any) -> str:
     return main_temp
 
 
-def make_tempse(section_0: str):
+def make_tempse(section_0: str) -> Dict[str, str]:
     """Create tempse dictionary from section_0 content
 
     Args:
         section_0: Section content
 
     Returns:
-        Dictionary with tempse and tempse data
+        Dictionary of templates sorted by length (longest first)
     """
     # Simple regex-based template extraction
-    tempse = []
-    tempse_u = {}
+    tempse: Dict[str, str] = {}
 
-    pattern = r'\{([^}:]+?)(\|.*?)?\}\}'
+    # Pattern to match full template
+    pattern = r'\{([^{}:]+?)(\|.*?)?\}\}'
     matches = re.finditer(pattern, section_0, re.IGNORECASE)
-    tempse_by_u = 0
+
     for match in matches:
         template_text = match.group(0)
-        content = match.group(1) if len(match.groups()) > 1 else ""
+        # Store template for sorting by length
+        tempse[template_text] = template_text
 
-        template_name = template_text.split('|')[0].strip() if '|' in template_text else template_text.strip()
-        template = template_text
-
-        tempse_by_u = len(template)
-        tempse_u[template_name] = template
-
-        tempse.append({
-            'name': template_name,
-            'item': template,
-            'params': template
-        })
-
-    return {
-        'tempse_by_u': tempse_by_u,
-        'tempse': tempse
-    }
+    return tempse
 
 
-def expend_infobox(text: str, title: str, section_0: str = "") -> str:
+def find_max_value_key(dictionary: Dict[str, int]) -> str:
+    """Sort dictionary by value in descending order and return first key
+
+    Args:
+        dictionary: Dictionary to sort
+
+    Returns:
+        First key (corresponding to max value)
+    """
+    sorted_items = sorted(dictionary.items(), key=lambda x: x[1], reverse=True)
+    return sorted_items[0][0] if sorted_items else ""
+
+
+def make_main_temp(tempse: Dict[str, str]) -> Dict[str, str]:
+    """Return the longest template (main infobox)
+
+    Args:
+        tempse: Dictionary of templates
+
+    Returns:
+        Dictionary with main template
+    """
+    if len(tempse) == 1:
+        return {'name': list(tempse.keys())[0], 'item': list(tempse.values())[0]}
+
+    # Get template with max length
+    main_template_name = find_max_value_key({k: len(v) for k, v in tempse.items()})
+    main_template = tempse.get(main_template_name, "")
+
+    return {'name': main_template_name, 'item': main_template}
+
+
+def Expend_Infobox(text: str, title: str, section_0: str = "") -> str:
     """Expand infobox by extracting parameters from section_0 template
 
     Args:
@@ -153,28 +173,19 @@ def expend_infobox(text: str, title: str, section_0: str = "") -> str:
 
     tab = make_tempse(section_0)
 
-    if not tab['tempse']:
+    if not tab:
         return newtext
 
-    main_temp = None
+    main_temp = make_main_temp(tab)
 
-    for temp in tab['tempse']:
-        temp_text = temp['item']
-        template_name = temp['name'].lower()
-        template = temp['params']
+    if not main_temp['name']:
+        return newtext
 
-        # Check if this looks like an infobox template
-        if 'infobox' in template_name:
-            main_temp = temp
-            break
+    main_temp_text = main_temp['item']
+    new_temp = expend_new(main_temp_text)
 
-    if main_temp:
-        new_temp = expend_new(main_temp['item'])
-
-        if new_temp != main_temp['item']:
-            newtext = newtext.replace(main_temp['item'], new_temp)
-
-            # Fix title formatting
-            newtext = fix_title_bold(newtext, title)
+    if new_temp != main_temp_text:
+        newtext = newtext.replace(main_temp_text, new_temp)
+        newtext = fix_title_bold(newtext, title)
 
     return newtext
