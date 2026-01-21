@@ -16,7 +16,7 @@ class TestIndex:
 
     def test_part_1(self):
         """Test with file input for Armenian text"""
-        tests_dir = Path(__file__).parent.parent / "tests" / "texts" / "indexTest" / "1"
+        tests_dir = Path(__file__).parent / "texts" / "indexTest" / "1"
 
         with open(tests_dir / "input.txt", 'r', encoding='utf-8') as f:
             input_text = f.read()
@@ -36,7 +36,7 @@ class TestIndex:
 
     def test_part_2(self):
         """Test with file input for Armenian text - part 2"""
-        tests_dir = Path(__file__).parent.parent / "tests" / "texts" / "indexTest" / "2"
+        tests_dir = Path(__file__).parent / "texts" / "indexTest" / "2"
 
         with open(tests_dir / "input.txt", 'r', encoding='utf-8') as f:
             input_text = f.read()

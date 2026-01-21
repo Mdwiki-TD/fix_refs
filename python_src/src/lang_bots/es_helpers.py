@@ -93,13 +93,22 @@ def get_refs(text: str) -> dict:
     """
     new_text = text
     refs = {}
+    # Match refs with content, excluding self-closing refs
     citations = re.finditer(r'<ref([^>]*?)>(.*?)<\/ref>', text, re.IGNORECASE | re.DOTALL)
 
     numb = 0
 
     for match in citations:
+        full_match = match.group(0)
         cite_attrs = match.group(1)
         cite_contents = match.group(2)
+
+        # Skip self-closing refs like <ref name=foo/> (they end with /> in the opening tag)
+        # Check if full_match starts with <ref.../> before any content
+        opening_tag = full_match[:full_match.find('>') + 1] if '>' in full_match else full_match[:20]
+        if opening_tag.rstrip().endswith('/>'):
+            continue
+
         cite_attrs = cite_attrs.strip() if cite_attrs else ""
 
         # Check if ref already has a name attribute
@@ -115,7 +124,7 @@ def get_refs(text: str) -> dict:
 
         # Replace with self-closing ref
         cite_newtext = f"<ref {cite_attrs} />"
-        new_text = new_text.replace(match.group(0), cite_newtext)
+        new_text = new_text.replace(full_match, cite_newtext)
 
     return {"refs": refs, "new_text": new_text}
 
