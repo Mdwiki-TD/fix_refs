@@ -79,7 +79,7 @@ class TestAttrsUtils:
             # حالة: سمة بدون علامات تنصيص
             {"text": "name=test", "expected": {"name": "test"}},
             # حالة: نص فارغ
-            {"text": "", "expected": []},
+            {"text": "", "expected": {}},
             # حالة: سمة تحتوي على مسافات في القيمة
             {"text": 'name="test value"', "expected": {"name": '"test value"'}}
         ]

@@ -18,7 +18,7 @@ def parse_attributes(text: str) -> Dict[str, str]:
     text = f"<ref {text}>"
 
     pattern = r'''
-        ((?<=[\'"\s\/])[^\s\/>][^\s\/=]*)             # Attribute name
+        ((?<=[\'"\s\/])[^\s\/>][^\s\/=>]*)            # Attribute name
         (\s*=+\s*                                      # Equals sign(s)
         (
             \'[^\']*\'                                 # Value in single quotes
@@ -51,7 +51,7 @@ def get_attrs(text: str) -> Dict[str, str]:
     """
     text = f"<ref {text}>"
 
-    pattern = r"((?<=[\'\"\s\/])[^\s\/>][^\s\/=]*)(\s*=+\s*(\'[^\']*\'|\"[^\"]*\"|(?![\'\"])[^>\s]*))?(?:\s|\/(?!>))*"
+    pattern = r"((?<=[\'\"\s\/])[^\s\/>][^\s\/=>]*)(\s*=+\s*(\'[^\']*\'|\"[^\"]*\"|(?![\'\"])[^>\s]*))?(?:\s|\/(?!>))*"
 
     attrs: Dict[str, str] = {}
 
