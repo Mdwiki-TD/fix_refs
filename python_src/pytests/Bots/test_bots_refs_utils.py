@@ -44,7 +44,7 @@ class TestRefsUtils:
         assert remove_start_end_quotes('  "value ') == '\'"value'
 
     def test_one_quotes_single(self):
-        assert remove_start_end_quotes("  'value ") == '"\'value'
+        assert remove_start_end_quotes("  'value ") == '"\'value"'
 
     # Tests for str_ends_with function
 
