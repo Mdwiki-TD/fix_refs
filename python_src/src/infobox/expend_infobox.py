@@ -21,9 +21,10 @@ def fix_title_bold(text: str, title: str) -> str:
     except Exception:
         title2 = title
 
-    # Pattern: } followed by title in triple quotes
-    pattern = r'\}\s*' + "'''" + re.escape(title2) + "'''" + "''"  # Triple quotes
-    text = re.sub(pattern, r'}\n\n\1', text)
+    # Pattern: } followed by title in triple quotes - use named capture group
+    triple_quote = "'" + "'" + "'"
+    pattern = r'\}\s*' + triple_quote + r'(?:' + re.escape(title2) + r')' + triple_quote
+    text = re.sub(pattern, r'}\n\n<fullmatch>', text)
 
     return text
 
