@@ -69,10 +69,13 @@ def refs_tags_spaces(text: str) -> str:
     Returns:
         Text with spaces removed between ref tags
     """
+    # Remove spaces between </ref> and <ref>
     text = re.sub(r"</ref>\s*<ref", "</ref><ref", text, flags=re.IGNORECASE)
+    # Remove spaces between /> and <ref>
     text = re.sub(r"/>\s*<ref", "/><ref", text, flags=re.IGNORECASE)
-    text = text.replace("</ref> <ref", "</ref><ref>")
-    text = text.replace("> <ref", "><ref>")
+    # Remove space between > and <ref> where > is NOT part of <ref>
+    # Use negative lookbehind to ensure > is not preceded by <
+    text = re.sub(r"(?<!<)>\s*<ref", "><ref", text, flags=re.IGNORECASE)
 
     return text
 

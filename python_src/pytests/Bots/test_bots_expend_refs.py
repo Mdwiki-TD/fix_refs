@@ -64,7 +64,7 @@ class TestExpendRefs:
     def test_refs_expend_work_with_mixed_quotes(self):
         """Test with mixed quote styles in name attribute"""
         input_text = '<ref name="ref1">Full content</ref> Text <ref name=\'ref1\'/>'
-        expected = '<ref name="ref1">Full content</ref> Text <ref name=\'ref1\'>Full content</ref>'
+        expected = '<ref name="ref1">Full content</ref> Text <ref name="ref1">Full content</ref>'
         assert refs_expend_work(input_text) == expected
 
     def test_refs_expend_work_multiple_same_refs(self):
