@@ -43,13 +43,28 @@ class Template:
             WikiText template string
         """
         params = []
+        # First, collect all positional params (numeric keys in order)
+        positional = []
+        named = []
         for key, value in self.parameters.items():
+            if key.isdigit():
+                positional.append((int(key), value))
+            else:
+                named.append((key, value))
+
+        # Sort positional by their numeric index and output values only
+        positional.sort()
+        for _, value in positional:
+            params.append(value)
+
+        # Then output named params as key=value in insertion order
+        for key, value in named:
             if key:
                 params.append(f"{key}={value}")
             else:
                 params.append(value)
 
-        return f"{{{self.name}|{'|'.join(params)}}}}}"
+        return f"{{{{{self.name}|{'|'.join(params)}}}}}"
 
     def get_original_text(self) -> str:
         """Get the original template text
