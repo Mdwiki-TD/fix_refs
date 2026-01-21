@@ -84,6 +84,10 @@ base_path = Path(__file__).parent.parent.parent / "tests/texts/remove_space_text
 
 for i in tqdm([1, 2, 3, 4]):
     base_path_sub = base_path / str(i)
+    input_file = base_path_sub / "input.txt"
+    if not input_file.exists():
+        print(f"file not found: {input_file}")
+        continue
     expected=(base_path_sub / "expected.txt").read_text(encoding="utf-8")
     input_text=(base_path_sub / "input.txt").read_text(encoding="utf-8")
     output_file=base_path_sub / "output.txt"
