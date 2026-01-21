@@ -17,17 +17,23 @@ def get_categories(text: str) -> Dict[str, str]:
     """
     categories: Dict[str, str] = {}
 
-    pattern = r"\[\[\s*Category\s*:([^\]\]]+?)\]\]"
-    matches = re.findall(pattern, text, re.IGNORECASE)
+    # Pattern to match category tags
+    # Handle nested brackets by using a more robust approach
+    pattern = r'\[\[[Cc]ategory\s*:[^\]]+?\]\]'
 
-    for category_content in matches:
-        full_match = f"[[Category:{category_content}]]"
+    for match in re.finditer(pattern, text):
+        full_match = match.group(0)
 
-        parts = category_content.split("|")
-        category_name = parts[0].strip() if parts else category_content.strip()
+        # Extract content after "Category:" or "category:"
+        content_match = re.match(r'\[\[[Cc]ategory\s*:\s*(.+?)\]\]', full_match, re.IGNORECASE)
+        if content_match:
+            category_content = content_match.group(1)
 
-        if category_name:
-            categories[category_name] = full_match
+            parts = category_content.split("|")
+            category_name = parts[0].strip() if parts else category_content.strip()
+
+            if category_name:
+                categories[category_name] = full_match
 
     return categories
 

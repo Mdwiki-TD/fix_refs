@@ -22,7 +22,7 @@ class TestCategory:
     def test_get_categories_with_no_categories(self):
         """Test text with no categories"""
         text = "This is some text without any categories"
-        expected = []
+        expected = {}
         result = get_categories(text)
         assert result == expected
 
@@ -82,7 +82,7 @@ End of text"""
     def test_get_categories_with_empty_input(self):
         """Test with empty input"""
         text = ""
-        expected = []
+        expected = {}
         result = get_categories(text)
         assert result == expected
 
