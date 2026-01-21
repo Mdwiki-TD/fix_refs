@@ -1,0 +1,7 @@
+Article text <ref>{{Citar web|Text|author=John|language=en}}</ref> [[Հիպոկրատ|Հիպոկրատի]] կողմից <ref name="Os2018" /><ref>{{ref
+|<!!>
+}}</ref>։ կողմից<ref name="Os2018" /><ref>{{ref
+|zz
+}}</ref>։
+
+== test ==
