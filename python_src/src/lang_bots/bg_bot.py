@@ -24,7 +24,7 @@ def bg_section(text: str, sourcetitle: str, mdwiki_revid: int) -> str:
         return text
 
     # Create translation template
-    temp = f"{{Превод от|mdwiki|{sourcetitle}|{mdwiki_revid}}}\n"
+    temp = f"{{{{Превод от|mdwiki|{sourcetitle}|{mdwiki_revid}}}}}\n"
 
     # Insert before first [[Категория: or [[Category: if found, otherwise append
     category_pattern = r'\[\[(Категория|Category):'
@@ -34,7 +34,10 @@ def bg_section(text: str, sourcetitle: str, mdwiki_revid: int) -> str:
         pos = match.start()
         text = text[:pos] + temp + text[pos:]
     else:
-        text += "\n" + temp
+        if text:
+            text += "\n\n" + temp
+        else:
+            text = "\n" + temp
 
     return text
 

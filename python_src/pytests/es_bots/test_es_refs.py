@@ -12,7 +12,7 @@ class TestEsRefs:
 
     def test_file_text(self):
         """Test with file input for Spanish references"""
-        tests_dir = Path(__file__).parent.parent / "tests" / "es_bots" / "texts"
+        tests_dir = Path(__file__).parent / "texts"
 
         with open(tests_dir / "es_refs_input.txt", 'r', encoding='utf-8') as f:
             text_input = f.read()

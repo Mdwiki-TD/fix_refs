@@ -22,9 +22,9 @@ def get_categories(text: str) -> Dict[str, str]:
         full_match = match.group(0)
 
         # Extract the word between [[ and :
-        prefix_match = re.match(r'\[\[([^\s:]+)\s*:', full_match)
+        prefix_match = re.match(r'\[\[([^\:]+?)\s*:', full_match)
         if prefix_match:
-            prefix_word = prefix_match.group(1).lower()
+            prefix_word = prefix_match.group(1).strip().lower()
             # Check if it's "category" (case-insensitive)
             if prefix_word == 'category':
                 # Extract content after the colon
