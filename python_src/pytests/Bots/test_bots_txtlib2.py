@@ -14,7 +14,7 @@ class TestTxtLib2:
     @pytest.fixture(autouse=True)
     def setup_method(self):
         """Setup test data from files"""
-        tests_dir = Path(__file__).parent.parent.parent / "tests" / "Bots" / "texts"
+        tests_dir = Path(__file__).parent / "texts"
 
         with open(tests_dir / "txtlib2.txt", 'r', encoding='utf-8') as f:
             self.text_input = f.read()
