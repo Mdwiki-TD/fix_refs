@@ -10,7 +10,7 @@ expend_new = ei_module.expend_new
 make_tempse = ei_module.make_tempse
 fix_title_bold = ei_module.fix_title_bold
 make_section_0 = ei_module.make_section_0
-expend_infobox = ei_module.expend_infobox
+expend_infobox = ei_module.Expend_Infobox
 
 
 class TestInfobox:
