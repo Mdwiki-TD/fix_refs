@@ -128,6 +128,36 @@ def find_empty_short(text: str) -> Dict[str, Citation]:
     return empty_refs
 
 
+def refs_expend_work(first: str, alltext: str = "") -> str:
+    """Expand short citations with full reference content
+
+    Similar to refs_expand but takes text directly instead of list of citations.
+    This matches the PHP API for compatibility.
+
+    Args:
+        first: Text to process (may contain short citations)
+        alltext: Source text containing full references (if empty, uses first)
+
+    Returns:
+        Text with short citations expanded to full references
+    """
+    if not alltext:
+        alltext = first
+
+    refs = get_full_refs(alltext)
+    short_refs = get_short_citations(first)
+
+    for cite in short_refs:
+        name = cite.get_name()
+        refe = cite.get_original_text()
+
+        rr = refs.get(name, "")
+        if rr:
+            first = first.replace(refe, rr)
+
+    return first
+
+
 def fix_missing_refs(text: str, sourcetitle: str, mdwiki_revid: int = 0) -> str:
     """Fix missing references by expanding from MDWiki source
 
