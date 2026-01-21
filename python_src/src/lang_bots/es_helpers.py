@@ -178,14 +178,16 @@ def add_line_to_temp(line: str, text: str) -> str:
         temp_text = match.group(0)
         # Extract refs parameter if exists
         refs_match = re.search(r'refs\s*=\s*(.*?)\s*(?:\||\}\})', temp_text, re.IGNORECASE)
-        
+
         if refs_match:
             # Update refs parameter
             refn_param = refs_match.group(1)
             refn_param = check_short_refs(refn_param)
             line = refn_param.strip() + "\n" + line.strip()
-            
-            new_text = temp_text.replace(refs_match.group(0), f"refs={line.strip()}\n")
+
+            # Replace in the full text, not just temp_text
+            new_temp_text = temp_text.replace(refs_match.group(0), f"refs={line.strip()}\n")
+            new_text = text.replace(temp_text, new_temp_text)
             temp_already_in = True
 
     # If no template found, add section
