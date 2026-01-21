@@ -102,11 +102,17 @@ def get_refs(text: str) -> dict:
         cite_contents = match.group(2)
         cite_attrs = cite_attrs.strip() if cite_attrs else ""
 
-        # Generate autogen name if no attributes
-        if not cite_attrs:
-            numb += 1
-            name = f"autogen_{numb}"
-            cite_attrs = f"name='{name}'"
+        # Check if ref already has a name attribute
+        has_name = bool(re.search(r'name\s*=', cite_attrs, re.IGNORECASE))
+
+        if has_name:
+            # Keep named refs inline, don't process them
+            continue
+
+        # Generate autogen name for refs without a name
+        numb += 1
+        name = f"autogen_{numb}"
+        cite_attrs = f"name='{name}'"
 
         refs[cite_attrs] = cite_contents
 
