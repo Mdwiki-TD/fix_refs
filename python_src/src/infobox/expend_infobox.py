@@ -22,8 +22,8 @@ def fix_title_bold(text: str, title: str) -> str:
         title2 = title
 
     # Pattern: } followed by title in triple quotes
-    pattern = r'\}\s*' + "'" + "'" + "'" + re.escape(title2) + r"'" + "'" + "'" + "'"  # Triple quotes
-    text = re.sub(pattern, r'}\n\n1', text)
+    pattern = r'\}\s*' + "'''" + re.escape(title2) + "'''" + "''"  # Triple quotes
+    text = re.sub(pattern, r'}\n\n\1', text)
 
     return text
 
