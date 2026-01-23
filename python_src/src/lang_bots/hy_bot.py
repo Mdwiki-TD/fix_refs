@@ -121,8 +121,10 @@ def remove_spaces_between_last_word_and_beginning_of_ref(newtext: str, lang: str
         before_punct = newtext[:last_punct_pos]
         after_punct = newtext[last_punct_pos:]
 
-        # Check if before_punct ends with content ref (</ref>)
-        if before_punct.rstrip().endswith('</ref>'):
+        stripped_before = before_punct.rstrip()
+
+        # Pattern 3a: ends with content ref (</ref>)
+        if stripped_before.endswith('</ref>'):
             # Look for pattern: word + space + consecutive refs at end
             # Use pattern that doesn't cross ref boundaries
             single_ref = r'<ref[^>]*(?:/\s*>|>(?:(?!<ref)[^<]|<(?!ref))*</ref>)'
@@ -141,6 +143,22 @@ def remove_spaces_between_last_word_and_beginning_of_ref(newtext: str, lang: str
 
                 if not has_text_between:
                     # Replace: remove space before refs
+                    new_before = before_punct[:match.start()] + match.group(1) + match.group(3)
+                    newtext = new_before + after_punct
+
+        # Pattern 3b: ends with single self-closing ref (/>) - only if it's a SINGLE ref
+        elif stripped_before.endswith('/>'):
+            # Check for single ref (not multiple consecutive refs)
+            # Pattern: word + space + single self-closing ref at end
+            single_ref_pattern = r'(\S)(\s+)(<ref[^>]*/\s*>)$'
+            match = re.search(single_ref_pattern, before_punct)
+
+            if match:
+                # Only process if this is a single ref (no other ref immediately before)
+                before_match = before_punct[:match.start()]
+                # Check that the text before doesn't end with a ref
+                if not before_match.rstrip().endswith(('</ref>', '/>')):
+                    # Replace: remove space before single ref
                     new_before = before_punct[:match.start()] + match.group(1) + match.group(3)
                     newtext = new_before + after_punct
 
