@@ -69,7 +69,10 @@ def get_parts(newtext: str, charters: str) -> list:
 
 
 def remove_spaces_between_last_word_and_beginning_of_ref(newtext: str, lang: str) -> str:
-    """Remove spaces between last word and beginning of ref
+    """Remove spaces around refs at the end of paragraphs/text
+
+    This function processes each paragraph (split by double newlines) and removes
+    spaces around refs that end the paragraph followed by punctuation.
 
     Args:
         newtext: Text to process
@@ -78,37 +81,39 @@ def remove_spaces_between_last_word_and_beginning_of_ref(newtext: str, lang: str
     Returns:
         Fixed text
     """
-    # Define punctuation marks
-    dot = r"\.,。।"
-
+    # Define punctuation marks based on language
     if lang == "hy":
-        dot = r"\.,。։:"
+        dots = r".,。։:"
+    else:
+        dots = r".,।"
 
-    parts = get_parts(newtext, dot)
+    # Split by double newlines to get paragraphs
+    # If no double newlines, treat entire text as one paragraph
+    paragraphs = newtext.split("\n\n")
+    if len(paragraphs) == 1:
+        paragraphs = newtext.split("\r\n\r\n")
 
-    for pair in parts:
-        if len(pair) < 2:
-            continue
+    result_paragraphs = []
+    for para in paragraphs:
+        # Check if paragraph ends with refs followed by punctuation
+        # Pattern: word + optional space + one or more refs + optional space + punctuation at end
+        end_pattern = r'(\S)(\s+)((?:<ref[^>]*(?:/\s*>|>[^<]*</ref>))+)(\s*)([' + re.escape(dots) + r'])\s*$'
+        match = re.search(end_pattern, para)
 
-        part, char_ter = pair[0], pair[1]
+        if match:
+            before_space = match.group(1)  # last non-space char before refs
+            space_before = match.group(2)  # space(s) before refs
+            refs = match.group(3)          # refs
+            space_after = match.group(4)   # space(s) after refs (before punctuation)
+            punct = match.group(5)         # punctuation
 
-        # Find all ref tags in the part
-        regline = r'((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)'
-        last_ref_matches = list(re.finditer(regline, part, re.DOTALL))
+            # Remove spaces: before refs and between refs and punctuation
+            new_end = before_space + refs + punct
+            para = para[:match.start()] + new_end
 
-        if last_ref_matches:
-            # Get the last reference tag
-            ref_text = last_ref_matches[-1].group(0)
-            end_part = ref_text + char_ter
+        result_paragraphs.append(para)
 
-            if str_ends_with(part, end_part):
-                # Remove the ending and clean up
-                first_part_clean_end = part[0:-len(end_part)]
-                first_part_clean_end = first_part_clean_end.rstrip()
-
-                # Reconstruct with ref text and punctuation attached
-                new_part = first_part_clean_end + ref_text.strip() + char_ter
-                newtext = newtext.replace(part, new_part)
+    return "\n\n".join(result_paragraphs)
 
     return newtext
 
