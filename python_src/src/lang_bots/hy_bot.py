@@ -126,7 +126,18 @@ def remove_spaces_between_last_word_and_beginning_of_ref(newtext: str, lang: str
         # Pattern 3a: ends with content ref (</ref>)
         if stripped_before.endswith('</ref>'):
             # Look for pattern: word + space + consecutive refs at end
-            # Use pattern that doesn't cross ref boundaries
+            # single_ref pattern explanation:
+            #   <ref[^>]*          - Match <ref followed by any attributes (but not >)
+            #   (?:                - Non-capturing group for alternatives:
+            #     /\s*>            - Self-closing ref: /> with optional whitespace
+            #     |                - OR
+            #     >                - Opening > for content ref
+            #     (?:              - Content matching (non-greedy, doesn't cross refs):
+            #       (?!<ref)[^<]   - Any non-< char that's not start of <ref
+            #       |<(?!ref)      - Or < not followed by 'ref'
+            #     )*               - Zero or more content chars
+            #     </ref>           - Closing tag
+            #   )
             single_ref = r'<ref[^>]*(?:/\s*>|>(?:(?!<ref)[^<]|<(?!ref))*</ref>)'
             end_pattern = r'(\S)(\s+)((?:' + single_ref + r')+)$'
             match = re.search(end_pattern, before_punct)
@@ -134,12 +145,11 @@ def remove_spaces_between_last_word_and_beginning_of_ref(newtext: str, lang: str
             if match:
                 # Check if this match is for consecutive refs (no text between refs)
                 refs_text = match.group(3)
-                # Only proceed if there's no alphabetic text between refs
-                refs_without_tags = re.sub(r'<ref[^>]*>', '', refs_text)
-                refs_without_tags = re.sub(r'</ref>', '', refs_without_tags)
-                refs_without_templates = re.sub(r'\{\{[^}]*\}\}', '', refs_without_tags)
-                # Check for any letter characters
-                has_text_between = bool(re.search(r'[a-zA-Z]', refs_without_templates))
+                # Strip ref tags and templates to check for intervening text
+                # Combine into single regex for efficiency
+                refs_stripped = re.sub(r'<ref[^>]*>|</ref>|\{\{[^}]*\}\}', '', refs_text)
+                # Check for any letter characters (indicates text between refs)
+                has_text_between = bool(re.search(r'[a-zA-Z]', refs_stripped))
 
                 if not has_text_between:
                     # Replace: remove space before refs

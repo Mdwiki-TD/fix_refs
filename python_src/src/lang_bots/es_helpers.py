@@ -104,9 +104,17 @@ def get_refs(text: str) -> dict:
     """
     new_text = text
     refs = {}
-    # Match refs with content, excluding self-closing refs
-    # Use negative lookbehind to exclude refs ending with />
-    # Pattern: <ref + attributes (not ending with /) + > + content + </ref>
+    # Match refs with content, excluding self-closing refs like <ref name=foo/>
+    # Pattern explanation:
+    #   <ref                 - Opening tag
+    #   (                    - Capture group 1 for attributes:
+    #     [^/>]*             - Chars that are not / or > (simple case: no / before >)
+    #     |                  - OR
+    #     [^>]*/[^/>][^>]*   - Contains / but not followed by > (handles name=foo/bar cases)
+    #   )
+    #   >                    - End of opening tag (NOT />)
+    #   (.*?)                - Capture group 2: content (non-greedy)
+    #   </ref>               - Closing tag
     citations = re.finditer(r'<ref([^/>]*|[^>]*/[^/>][^>]*)>(.*?)<\/ref>', text, re.IGNORECASE | re.DOTALL)
 
     numb = 0
@@ -205,11 +213,13 @@ def add_line_to_temp(line: str, text: str) -> str:
 
         # Clean up existing refs content
         refs_content = check_short_refs(refs_content)
-        
+
         # Combine existing refs with new refs
         combined_refs = refs_content.strip() + "\n" + line.strip() if refs_content.strip() else line.strip()
-        
-        # Replace the template - keep }} on same line as last ref
+
+        # Replace the template
+        # Format: {{Reflist|refs=\n<refs content>}}
+        # The }} stays on same line as the last ref to match expected output format
         new_template = f"{template_start}\n{combined_refs}{template_end}"
         new_text = text[:match.start()] + new_template + text[match.end():]
         temp_already_in = True
