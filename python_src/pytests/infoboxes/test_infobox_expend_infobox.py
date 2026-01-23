@@ -126,15 +126,17 @@ End"""
 Some text {{other template}}"""
         result = make_tempse(text)
 
-        assert 'tempse' in result
-        assert isinstance(result['tempse'], list)
-        assert len(result['tempse']) > 0
+        # make_tempse returns a dict mapping template text to template text
+        assert isinstance(result, dict)
+        assert len(result) > 0
 
     def test_fix_title_bold(self):
         """Test fix_title_bold function"""
-        text = "}}''TestTitle'''''1Some text"
+        # The function expects: }'''``''title''``''' pattern (} + 5 quotes + title + 5 quotes)
+        text = "}'''''TestTitle'''''Some text"
         result = fix_title_bold(text, "TestTitle")
-        assert "''TestTitle''" not in result
+        # The function should replace the }'''``''TestTitle''``''' pattern
+        assert "'''''TestTitle'''''" not in result
 
     def test_make_section_0(self):
         """Test make_section_0 function"""

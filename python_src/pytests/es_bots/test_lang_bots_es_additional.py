@@ -87,8 +87,10 @@ class TestEsTest:
 
     def test_fix_temps_alone(self):
         """Test template without ref tags"""
+        # The input is already a Spanish template, so it should remain unchanged
+        # (except for whitespace normalization)
         old = "{{cita web|título=Shoulder Trauma (Fractures and Dislocations)|url=https://orthoinfo.aaos.org/en/diseases--conditions/shoulder-trauma-fractures-and-dislocations/|sitioweb=OrthoInfo - AAOS|fechaacceso=7 de noviembre de 2018|fechaarchivo=19 de diciembre de 2019|urlarchivo=https://web.archive.org/web/20191219132225/https://orthoinfo.aaos.org/en/diseases--conditions/shoulder-trauma-fractures-and-dislocations/}}"
-        new = "{{cita web|título=Shoulder Trauma (Fractures and Displacements)|url=https://orthoinfo.aaos.org/en/diseases--conditions/shoulder-trauma-fractures-and-displacements/|sitioweb=OrthoInfo - AAOS|fechaacceso=7 de noviembre de 2018|fechaarchivo=19 de diciembre de 2019|urlarchivo=https://web.archive.org/web/20191219132225/https://orthoinfo.aaos.org/en/diseases--conditions/shoulder-trauma-fractures-and-displacements/}}"
+        new = "{{cita web|título=Shoulder Trauma (Fractures and Dislocations)|url=https://orthoinfo.aaos.org/en/diseases--conditions/shoulder-trauma-fractures-and-dislocations/|sitioweb=OrthoInfo - AAOS|fechaacceso=7 de noviembre de 2018|fechaarchivo=19 de diciembre de 2019|urlarchivo=https://web.archive.org/web/20191219132225/https://orthoinfo.aaos.org/en/diseases--conditions/shoulder-trauma-fractures-and-dislocations/}}"
         assert fix_temps_wrap(old) == new
 
 

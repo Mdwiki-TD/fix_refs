@@ -17,15 +17,6 @@ def es_section(source_title: str, text: str, mdwiki_revid: str) -> str:
     Returns:
         Text with Traducido ref template added
     """
-    # Replace old template with new one
-    # {{Traducido ref|mdwiki|...}} -> {{Traducido ref MDWiki|en|...}}
-    text = re.sub(
-        r'\{\{\s*Traducido\s*ref\s*\|\s*mdwiki\s*\|',
-        "{{Traducido ref MDWiki|en|",
-        text,
-        flags=re.IGNORECASE
-    )
-
     # If template already exists (any variant), return as-is
     if re.search(r'\{\{\s*Traducido\s*ref(?:\s*MDWiki)?\s*\|', text, re.IGNORECASE):
         return text
@@ -34,7 +25,8 @@ def es_section(source_title: str, text: str, mdwiki_revid: str) -> str:
     date = datetime.now().strftime("%d de %B de %Y")
 
     # Create translation template
-    temp = f"{{Traducido ref MDWiki|en|{source_title}|oldid={mdwiki_revid}|trad=|fecha={date}}}"
+    # Use {{{{ and }}}} for literal {{ and }} in f-strings
+    temp = f"{{{{Traducido ref MDWiki|en|{source_title}|oldid={mdwiki_revid}|trad=|fecha={date}}}}}"
 
     # Insert after "== Enlaces externos ==" if it exists, otherwise append
     if re.search(r'==\s*Enlaces\s*externos\s*==', text, re.IGNORECASE):

@@ -16,37 +16,48 @@ def fix_es_months_in_texts(temp_text: str) -> str:
     """Translate English months to Spanish within template parameters
 
     Args:
-        temp_text: Template text
+        temp_text: Template text (can contain multiple templates)
 
     Returns:
         Template text with translated months
     """
     new_text = temp_text
-    temp_text = temp_text.strip()
 
-    # Extract template content
-    temp_match = re.match(r'\{\{([^}]*)\}\}', temp_text)
-    if not temp_match:
-        return new_text
+    # Find all templates using a simple brace counter approach
+    def process_single_template(template_str: str) -> str:
+        """Process a single template string"""
+        if not (template_str.startswith('{{') and template_str.endswith('}}')):
+            return template_str
 
-    temp_content = temp_match.group(1)
+        # Remove outer braces
+        inner = template_str[2:-2]
 
-    # Process each parameter
-    new_params = []
-    for param in temp_content.split('|'):
-        if '=' in param:
-            key, value = param.split('=', 1)
-            new_value = make_date_new_val_es(value)
-            if new_value and new_value.strip() != value.strip():
-                new_params.append(f"{key}={new_value}")
+        # Process each parameter
+        new_params = []
+        for param in inner.split('|'):
+            if '=' in param:
+                key, value = param.split('=', 1)
+                new_value = make_date_new_val_es(value)
+                if new_value and new_value.strip() != value.strip():
+                    new_params.append(f"{key.strip()}={new_value.strip()}")
+                else:
+                    # Normalize spaces
+                    new_params.append(f"{key.strip()}={value.strip()}")
             else:
-                new_params.append(param)
-        else:
-            new_params.append(param)
+                new_params.append(param.strip())
 
-    if new_params != temp_content.split('|'):
-        new_template = "{{" + "|".join(new_params) + "}}"
-        new_text = temp_text.replace(temp_text, new_template)
+        return "{{" + "|".join(new_params) + "}}"
+
+    # Find all {{...}} patterns (simple, non-nested)
+    # This regex matches templates that don't contain nested templates
+    template_pattern = r'\{\{[^{}]*\}\}'
+    matches = list(re.finditer(template_pattern, temp_text))
+
+    # Process templates from end to start (to preserve positions)
+    for match in reversed(matches):
+        original = match.group(0)
+        processed = process_single_template(original)
+        new_text = new_text[:match.start()] + processed + new_text[match.end():]
 
     return new_text
 
@@ -93,8 +104,18 @@ def get_refs(text: str) -> dict:
     """
     new_text = text
     refs = {}
-    # Match refs with content, excluding self-closing refs
-    citations = re.finditer(r'<ref([^>]*?)>(.*?)<\/ref>', text, re.IGNORECASE | re.DOTALL)
+    # Match refs with content, excluding self-closing refs like <ref name=foo/>
+    # Pattern explanation:
+    #   <ref                 - Opening tag
+    #   (                    - Capture group 1 for attributes:
+    #     [^/>]*             - Chars that are not / or > (simple case: no / before >)
+    #     |                  - OR
+    #     [^>]*/[^/>][^>]*   - Contains / but not followed by > (handles name=foo/bar cases)
+    #   )
+    #   >                    - End of opening tag (NOT />)
+    #   (.*?)                - Capture group 2: content (non-greedy)
+    #   </ref>               - Closing tag
+    citations = re.finditer(r'<ref([^/>]*|[^>]*/[^/>][^>]*)>(.*?)<\/ref>', text, re.IGNORECASE | re.DOTALL)
 
     numb = 0
 
@@ -177,27 +198,31 @@ def add_line_to_temp(line: str, text: str) -> str:
         Text with references added to template
     """
     # Find templates like {{reflist|...}} or {{listaref|...}}
-    pattern = r'\{\{\s*(reflist|listaref)[^}]*\}\}'
-    match = re.search(pattern, text, re.IGNORECASE)
+    # Handle multi-line templates with nested braces by matching until the closing }}
+    # that is on its own line or at end of content
+    pattern = r'(\{\{\s*(reflist|listaref)\s*\|[^}]*refs\s*=)(.*?)(\}\})'
+    match = re.search(pattern, text, re.IGNORECASE | re.DOTALL)
 
     new_text = text
     temp_already_in = False
 
     if match:
-        temp_text = match.group(0)
-        # Extract refs parameter if exists
-        refs_match = re.search(r'refs\s*=\s*(.*?)\s*(?:\||\}\})', temp_text, re.IGNORECASE)
+        template_start = match.group(1)  # {{Reflist|refs=
+        refs_content = match.group(3)     # existing refs content
+        template_end = match.group(4)     # }}
 
-        if refs_match:
-            # Update refs parameter
-            refn_param = refs_match.group(1)
-            refn_param = check_short_refs(refn_param)
-            line = refn_param.strip() + "\n" + line.strip()
+        # Clean up existing refs content
+        refs_content = check_short_refs(refs_content)
 
-            # Replace in the full text, not just temp_text
-            new_temp_text = temp_text.replace(refs_match.group(0), f"refs={line.strip()}\n")
-            new_text = text.replace(temp_text, new_temp_text)
-            temp_already_in = True
+        # Combine existing refs with new refs
+        combined_refs = refs_content.strip() + "\n" + line.strip() if refs_content.strip() else line.strip()
+
+        # Replace the template
+        # Format: {{Reflist|refs=\n<refs content>}}
+        # The }} stays on same line as the last ref to match expected output format
+        new_template = f"{template_start}\n{combined_refs}{template_end}"
+        new_text = text[:match.start()] + new_template + text[match.end():]
+        temp_already_in = True
 
     # If no template found, add section
     if not temp_already_in:
