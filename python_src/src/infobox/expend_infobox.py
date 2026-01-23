@@ -3,7 +3,19 @@ Infobox expansion functions
 """
 
 import re
-from typing import Dict, List, Any
+from typing import Dict
+
+COMMENT_PATTERN = re.compile(
+    r"\s*\n*\s*(<!-- (Monoclonal antibody data|External links|Names*|Clinical data|Legal data|Legal status|Pharmacokinetic data|Chemical and physical data|Definition and medical uses|Chemical data|\w+ \w+ data|\w+ \w+ \w+ data|\w+ data|\w+ status|Identifiers) -->)\s*\n*",
+    re.IGNORECASE,
+)
+
+
+def do_comments(text: str) -> str:
+    def repl(match: re.Match[str]) -> str:
+        return f"\n\n{match.group(1).strip()}\n"
+
+    return COMMENT_PATTERN.sub(repl, text)
 
 
 def fix_title_bold(text: str, title: str) -> str:
@@ -44,35 +56,13 @@ def make_section_0(title: str, newtext: str) -> str:
     if "==" in newtext:
         section_0 = newtext.split("==")[0]
     else:
-        tagg = "''" + title + "'''1"
+        tagg = "''" + title + "'''"
         if tagg in newtext:
             section_0 = newtext.split(tagg)[0]
         else:
             section_0 = newtext
 
     return section_0
-
-
-def do_comments(text: str) -> str:
-    """Remove specific comment patterns from text
-
-    Args:
-        text: Text to process
-
-    Returns:
-        Text with comments removed
-    """
-    pattern = r'\s*\n\s*(<!-- (Monoclonal antibody data|External links|Names\*Clinical data|Legal data|Legal status|Pharmacokinetic data|Chemical and physical data|Definition and medical uses|Chemical data|\\w+ \\w+ data|\\w+ status|Identifiers) -->)\s*\n*'
-    matches = re.findall(pattern, text)
-
-    for match in matches:
-        # re.findall returns tuples when there are multiple groups
-        # Get the first group which is the full comment
-        comment = match[0] if isinstance(match, tuple) else match
-        comment = comment.strip()
-        text = text.replace(comment, f"\n\n{comment}\n")
-
-    return text
 
 
 def expend_new(main_temp: str) -> str:

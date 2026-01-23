@@ -50,7 +50,7 @@ function make_section_0($title, $newtext)
     if (strpos($newtext, "==") !== false) {
         $section_0 = explode("==", $newtext)[0];
     } else {
-        $tagg = "'''" . $title . "'''1";
+        $tagg = "'''" . $title . "'''";
         if (strpos($newtext, $tagg) !== false) {
             $section_0 = explode($tagg, $newtext)[0];
         } else {
