@@ -13,7 +13,7 @@ class TestEsRefs:
 
     def test_file_text_1(self):
         """Test with file input for Spanish references"""
-        tests_dir = Path(__file__).parent / "texts/1"
+        tests_dir = Path(__file__).parent / "mv_es_refs_texts/1"
 
         with open(tests_dir / "input.txt", 'r', encoding='utf-8') as f:
             text_input = f.read()
@@ -33,7 +33,7 @@ class TestEsRefs:
 
     def test_file_text_2(self):
         """Test with file input for Spanish references"""
-        tests_dir = Path(__file__).parent / "texts/2"
+        tests_dir = Path(__file__).parent / "mv_es_refs_texts/2"
 
         with open(tests_dir / "input.txt", 'r', encoding='utf-8') as f:
             text_input = f.read()
@@ -53,7 +53,7 @@ class TestEsRefs:
 
     def test_file_text_3(self):
         """Test with file input for Spanish references"""
-        tests_dir = Path(__file__).parent / "texts/3"
+        tests_dir = Path(__file__).parent / "mv_es_refs_texts/3"
 
         with open(tests_dir / "input.txt", 'r', encoding='utf-8') as f:
             text_input = f.read()
