@@ -2,7 +2,7 @@
 Template parser for WikiText
 """
 
-import re
+import wikitextparser as wtp
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 
@@ -102,26 +102,23 @@ def get_templates(text: str) -> List[Template]:
 
     templates: List[Template] = []
 
-    pattern = r'\{\{([^{}:]+?)(\|[^{}]*)?\}\}'
-    matches = re.finditer(pattern, text, re.DOTALL)
+    wikicode = wtp.parse(text)
 
-    for match in matches:
-        name = match.group(1).strip()
-        params_str = match.group(2) or ""
+    for wt_template in wikicode.templates:
+        name = wt_template.name.strip()
 
         parameters: Dict[str, str] = {}
 
-        if params_str:
-            parts = params_str[1:].split('|')
-            for i, part in enumerate(parts):
-                part = part.strip()
-                if '=' in part:
-                    key, value = part.split('=', 1)
-                    parameters[key.strip()] = value.strip()
-                else:
-                    parameters[str(i)] = part
+        for i, arg in enumerate(wt_template.arguments):
+            arg_name = arg.name.strip() if arg.name else None
+            arg_value = arg.value
 
-        original_text = match.group(0)
+            if arg_name:
+                parameters[arg_name] = arg_value.strip()
+            else:
+                parameters[str(i)] = arg_value.strip()
+
+        original_text = str(wt_template)
         template = Template(name=name, parameters=parameters, original_text=original_text)
         templates.append(template)
 

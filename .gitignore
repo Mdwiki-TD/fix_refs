@@ -16,3 +16,4 @@ z.php
 /.claude
 *.pyc
 /python_src/.claude
+/python_src/src/fix_refs.egg-info
