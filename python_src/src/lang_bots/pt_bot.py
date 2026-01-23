@@ -17,37 +17,48 @@ def fix_pt_months_in_texts(temp_text: str) -> str:
     """Translate English months to Portuguese within template parameters
 
     Args:
-        temp_text: Template text
+        temp_text: Template text (can contain multiple templates)
 
     Returns:
         Template text with translated months
     """
     new_text = temp_text
-    temp_text = temp_text.strip()
 
-    # Extract template content
-    temp_match = re.match(r'\{\{([^}]*)\}\}', temp_text)
-    if not temp_match:
-        return new_text
+    # Find all templates using a simple brace counter approach
+    def process_single_template(template_str: str) -> str:
+        """Process a single template string"""
+        if not (template_str.startswith('{{') and template_str.endswith('}}')):
+            return template_str
 
-    temp_content = temp_match.group(1)
+        # Remove outer braces
+        inner = template_str[2:-2]
 
-    # Process each parameter
-    new_params = []
-    for param in temp_content.split('|'):
-        if '=' in param:
-            key, value = param.split('=', 1)
-            new_value = make_date_new_val_pt(value)
-            if new_value and new_value.strip() != value.strip():
-                new_params.append(f"{key}={new_value}")
+        # Process each parameter
+        new_params = []
+        for param in inner.split('|'):
+            if '=' in param:
+                key, value = param.split('=', 1)
+                new_value = make_date_new_val_pt(value)
+                if new_value and new_value.strip() != value.strip():
+                    new_params.append(f"{key.strip()}={new_value.strip()}")
+                else:
+                    # Normalize spaces
+                    new_params.append(f"{key.strip()}={value.strip()}")
             else:
-                new_params.append(param)
-        else:
-            new_params.append(param)
+                new_params.append(param.strip())
 
-    if new_params != temp_content.split('|'):
-        new_template = "{{" + "|".join(new_params) + "}}"
-        new_text = temp_text.replace(temp_text, new_template)
+        return "{{" + "|".join(new_params) + "}}"
+
+    # Find all {{...}} patterns (simple, non-nested)
+    # This regex matches templates that don't contain nested templates
+    template_pattern = r'\{\{[^{}]*\}\}'
+    matches = list(re.finditer(template_pattern, temp_text))
+
+    # Process templates from end to start (to preserve positions)
+    for match in reversed(matches):
+        original = match.group(0)
+        processed = process_single_template(original)
+        new_text = new_text[:match.start()] + processed + new_text[match.end():]
 
     return new_text
 
