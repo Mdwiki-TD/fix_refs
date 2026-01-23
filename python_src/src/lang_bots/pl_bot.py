@@ -42,7 +42,7 @@ def add_missing_params_to_choroba_infobox(text: str) -> str:
 
     for match in matches:
         full_template = match.group(0)
-        template_content = match.group(1) if len(match.groups()) > 1 else ""
+        template_content = match.group(1) if match.group(1) else ""
 
         # Extract existing parameters
         existing_params = set()
@@ -57,11 +57,12 @@ def add_missing_params_to_choroba_infobox(text: str) -> str:
         for param_name in params_to_add:
             if param_name.lower() not in existing_params:
                 # Add parameter before closing braces
+                # Use }}}} for literal }} in f-strings
                 if '|' in new_template:
-                    # Insert before }}
-                    new_template = new_template.replace('}}', f'| {param_name}= }}')
+                    # Insert before }} with format |param=
+                    new_template = new_template.replace('}}', f'|{param_name}=}}}}')
                 else:
-                    new_template = new_template.replace('}}', f'| {param_name}= }}')
+                    new_template = new_template.replace('}}', f'|{param_name}=}}}}')
 
                 # Update existing params set
                 existing_params.add(param_name.lower())

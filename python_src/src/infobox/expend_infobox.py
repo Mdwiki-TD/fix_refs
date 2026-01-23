@@ -66,8 +66,11 @@ def do_comments(text: str) -> str:
     matches = re.findall(pattern, text)
 
     for match in matches:
-        match = match.strip()
-        text = text.replace(match, f"\n\n{match}\n")
+        # re.findall returns tuples when there are multiple groups
+        # Get the first group which is the full comment
+        comment = match[0] if isinstance(match, tuple) else match
+        comment = comment.strip()
+        text = text.replace(comment, f"\n\n{comment}\n")
 
     return text
 
