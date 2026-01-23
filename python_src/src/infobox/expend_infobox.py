@@ -3,7 +3,8 @@ Infobox expansion functions
 """
 
 import re
-from typing import Dict
+import wikitextparser as wtp
+from ..bots.txtlib2 import extract_templates_and_params
 
 COMMENT_PATTERN = re.compile(
     r"\s*\n*\s*(<!-- (Monoclonal antibody data|External links|Names*|Clinical data|Legal data|Legal status|Pharmacokinetic data|Chemical and physical data|Definition and medical uses|Chemical data|\w+ \w+ data|\w+ \w+ \w+ data|\w+ data|\w+ status|Identifiers) -->)\s*\n*",
@@ -18,169 +19,119 @@ def do_comments(text: str) -> str:
     return COMMENT_PATTERN.sub(repl, text)
 
 
-def fix_title_bold(text: str, title: str) -> str:
-    """Fix title formatting - wrap title in bold quotes
+def expend_new(main_temp):
+    parsed = wtp.parse(main_temp)
+    new_temp = main_temp
+    for template in parsed.templates:
+        # ---
+        if not template:
+            continue
+        # ---
+        str_ = template.string
+        if str_.strip() != main_temp.strip():
+            continue
+        # ---
+        template_name = str(template.normal_name()).strip()
+        template.name = f"{template_name}\n"
+        # ---
+        for arg in template.arguments:
+            param = arg.name.rstrip()
+            value = arg.value.rstrip()
+            # ---
+            # if len(param.strip()) == 1: continue
+            # ---
+            newparam = param.ljust(17)
+            # ---
+            arg.name = newparam
+            arg.value = f"{value}\n"
+        # ---
+        new_temp = template.string
+        break
+    # ---
+    new_temp = do_comments(new_temp)
+    # ---
+    return new_temp
+
+
+def Expend_Infobox(text, title, section_0):
+    """Expand the infobox in the provided text.
+
+    This function processes the input text to expand an infobox based on the
+    specified title. It identifies sections within the text and modifies
+    them accordingly. If the section is empty, it attempts to extract
+    relevant information from the text. The function also handles template
+    extraction and ensures that the infobox is formatted correctly.
 
     Args:
-        text: Text containing title
-        title: Title to fix
+        text (str): The input text containing the infobox to be expanded.
+        title (str): The title of the infobox to be processed.
+        section_0 (str): An optional section of text that may contain relevant information.
 
     Returns:
-        Text with title fixed
+        str: The modified text with the expanded infobox.
     """
+
+    # ---
+    newtext = text
+    # ---
+    if not section_0:
+        section_0 = make_section_0(title, newtext)
+    # ---
     try:
-        title2 = "''" + title + "''"
+        title2 = re.escape(title)
     except Exception:
         title2 = title
-
-    # Pattern: } followed by title in triple quotes - use named capture group
-    triple_quote = "'" + "'" + "'"
-    pattern = r'\}\s*' + triple_quote + r'(?:' + re.escape(title2) + r')' + triple_quote
-    text = re.sub(pattern, r'}\n\n<fullmatch>', text)
-
-    return text
-
-
-def make_section_0(title: str, newtext: str) -> str:
-    """Extract section_0 template content from text
-
-    Args:
-        title: Title to search for
-        newtext: Text to search in
-
-    Returns:
-        Section_0 content
-    """
-    section_0 = ""
-
-    if "==" in newtext:
-        section_0 = newtext.split("==")[0]
+    # ---
+    newtext = re.sub(r"\}\s*(\'\'\'%s\'\'\')" % title2, r"}\n\n\g<1>", newtext)
+    section_0 = re.sub(r"\}\s*(\'\'\'%s\'\'\')" % title2, r"}\n\n\g<1>", section_0)
+    # ---
+    tempse_by_u = {}
+    tempse = {}
+    # ---
+    ingr = extract_templates_and_params(section_0)
+    u = 0
+    for temp in ingr:
+        u += 1
+        params, template = temp['params'], temp['item']
+        if len(params) > 4 and section_0.find(f'>{template}') == -1:
+            tempse_by_u[u] = temp
+            # ---
+            tempse[u] = len(template)
+    # ---
+    main_temp = {}
+    # ---
+    if len(tempse_by_u) == 1:
+        for _x, v in tempse_by_u.items():
+            main_temp = v
     else:
-        tagg = "''" + title + "'''"
-        if tagg in newtext:
+        PP = [[y1, u1] for u1, y1 in tempse.items()]
+        PP.sort(reverse=True)
+        # ---
+        for y2, u2 in PP:
+            main_temp = tempse_by_u[u2]
+            break
+    # ---
+    # work in main_temp:
+    if main_temp != {}:
+        main_temp_text = main_temp.get('item', '')
+        params = main_temp.get('params', [])
+        # ---
+        new_temp = expend_new(main_temp_text)
+        # ---
+        if new_temp != main_temp_text:
+            newtext = newtext.replace(main_temp_text, new_temp)
+            newtext = newtext.replace(f"{new_temp}'''", f"{new_temp}\n'''")
+    # ---
+    return newtext
+
+
+def make_section_0(title, newtext):
+    if newtext.find('==') != -1:
+        section_0 = newtext.split('==')[0]
+    else:
+        tagg = f"'''{title}'''"
+        if newtext.find(tagg) != -1:
             section_0 = newtext.split(tagg)[0]
         else:
             section_0 = newtext
-
     return section_0
-
-
-def expend_new(main_temp: str) -> str:
-    """Expand template using simple string manipulation
-
-    Args:
-        main_temp: Template text to expand
-
-    Returns:
-        Expanded template text
-    """
-    main_temp = str(main_temp).strip()
-
-    # PHP uses (?R) for recursion - simplify to match any braces
-    pattern = r'\{([^{}]*)\}\}'
-    match = re.search(pattern, main_temp)
-
-    if match:
-        temp_content = match.group(1)
-        simple_temp = temp_content
-
-        temp = "{{" + simple_temp + "}}"
-        new_temp = do_comments(temp)
-        new_temp = new_temp.strip()
-
-        return new_temp
-
-    return main_temp
-
-
-def make_tempse(section_0: str) -> Dict[str, str]:
-    """Create tempse dictionary from section_0 content
-
-    Args:
-        section_0: Section content
-
-    Returns:
-        Dictionary of templates sorted by length (longest first)
-    """
-    # Simple regex-based template extraction
-    tempse: Dict[str, str] = {}
-
-    # Pattern to match full template with double braces {{...}}
-    # Match templates that don't contain nested braces
-    pattern = r'\{\{[^{}]*\}\}'
-    matches = re.finditer(pattern, section_0, re.IGNORECASE)
-
-    for match in matches:
-        template_text = match.group(0)
-        # Store template for sorting by length
-        tempse[template_text] = template_text
-
-    return tempse
-
-
-def find_max_value_key(dictionary: Dict[str, int]) -> str:
-    """Sort dictionary by value in descending order and return first key
-
-    Args:
-        dictionary: Dictionary to sort
-
-    Returns:
-        First key (corresponding to max value)
-    """
-    sorted_items = sorted(dictionary.items(), key=lambda x: x[1], reverse=True)
-    return sorted_items[0][0] if sorted_items else ""
-
-
-def make_main_temp(tempse: Dict[str, str]) -> Dict[str, str]:
-    """Return the longest template (main infobox)
-
-    Args:
-        tempse: Dictionary of templates
-
-    Returns:
-        Dictionary with main template
-    """
-    if len(tempse) == 1:
-        return {'name': list(tempse.keys())[0], 'item': list(tempse.values())[0]}
-
-    # Get template with max length
-    main_template_name = find_max_value_key({k: len(v) for k, v in tempse.items()})
-    main_template = tempse.get(main_template_name, "")
-
-    return {'name': main_template_name, 'item': main_template}
-
-
-def Expend_Infobox(text: str, title: str, section_0: str = "") -> str:
-    """Expand infobox by extracting parameters from section_0 template
-
-    Args:
-        text: Text to process
-        title: Page title
-        section_0: Section_0 template content (can be empty)
-
-    Returns:
-        Text with expanded infobox
-    """
-    newtext = text
-
-    if not section_0:
-        section_0 = make_section_0(title, newtext)
-
-    tab = make_tempse(section_0)
-
-    if not tab:
-        return newtext
-
-    main_temp = make_main_temp(tab)
-
-    if not main_temp['name']:
-        return newtext
-
-    main_temp_text = main_temp['item']
-    new_temp = expend_new(main_temp_text)
-
-    if new_temp != main_temp_text:
-        newtext = newtext.replace(main_temp_text, new_temp)
-        newtext = fix_title_bold(newtext, title)
-
-    return newtext

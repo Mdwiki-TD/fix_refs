@@ -2,12 +2,9 @@
 
 Converted from tests/infoboxes/infoboxTest.php and tests/infoboxes/infobox2Test.php
 """
-import pytest
 from src.infobox import expend_infobox as ei_module
 
 expend_new = ei_module.expend_new
-make_tempse = ei_module.make_tempse
-fix_title_bold = ei_module.fix_title_bold
 make_section_0 = ei_module.make_section_0
 expend_infobox = ei_module.Expend_Infobox
 
@@ -19,28 +16,7 @@ class TestInfobox:
         """Test expend_new with a simple template"""
         # Test with basic template
         result = expend_new("{{test}}")
-        assert result == "{{test}}"
-
-    def test_make_tempse(self):
-        """Test make_tempse function"""
-        text = """{{Infobox drug
-|name=Test
-|value=123
-}}
-Some text {{other template}}"""
-        result = make_tempse(text)
-
-        # make_tempse returns a dict mapping template text to template text
-        assert isinstance(result, dict)
-        assert len(result) > 0
-
-    def test_fix_title_bold(self):
-        """Test fix_title_bold function"""
-        # The function expects: }'''``''title''``''' pattern (} + 5 quotes + title + 5 quotes)
-        text = "}'''''TestTitle'''''Some text"
-        result = fix_title_bold(text, "TestTitle")
-        # The function should replace the }'''``''TestTitle''``''' pattern
-        assert "'''''TestTitle'''''" not in result
+        assert result == "{{test\n}}"
 
     def test_make_section_0(self):
         """Test make_section_0 function"""
