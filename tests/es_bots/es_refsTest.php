@@ -7,9 +7,9 @@ class es_refsTest extends MyFunctionTest
 {
     public function testFileText()
     {
-        $text_input   = file_get_contents(__DIR__ . "/texts/es_refs_input.txt");
-        $text_output  = file_get_contents(__DIR__ . "/texts/es_refs_output.txt");
-        $file_3  = __DIR__ . "/texts/es_refs_output_fixed.txt";
+        $text_input   = file_get_contents(__DIR__ . "/texts/1/input.txt");
+        $text_output  = file_get_contents(__DIR__ . "/texts/1/expected.txt");
+        $file_3  = __DIR__ . "/texts/1/output.txt";
         // --
         $result = mv_es_refs($text_input);
         // --
