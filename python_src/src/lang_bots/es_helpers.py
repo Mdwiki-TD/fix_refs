@@ -105,7 +105,9 @@ def get_refs(text: str) -> dict:
     new_text = text
     refs = {}
     # Match refs with content, excluding self-closing refs
-    citations = re.finditer(r'<ref([^>]*?)>(.*?)<\/ref>', text, re.IGNORECASE | re.DOTALL)
+    # Use negative lookbehind to exclude refs ending with />
+    # Pattern: <ref + attributes (not ending with /) + > + content + </ref>
+    citations = re.finditer(r'<ref([^/>]*|[^>]*/[^/>][^>]*)>(.*?)<\/ref>', text, re.IGNORECASE | re.DOTALL)
 
     numb = 0
 
@@ -188,27 +190,29 @@ def add_line_to_temp(line: str, text: str) -> str:
         Text with references added to template
     """
     # Find templates like {{reflist|...}} or {{listaref|...}}
-    pattern = r'\{\{\s*(reflist|listaref)[^}]*\}\}'
-    match = re.search(pattern, text, re.IGNORECASE)
+    # Handle multi-line templates with nested braces by matching until the closing }}
+    # that is on its own line or at end of content
+    pattern = r'(\{\{\s*(reflist|listaref)\s*\|[^}]*refs\s*=)(.*?)(\}\})'
+    match = re.search(pattern, text, re.IGNORECASE | re.DOTALL)
 
     new_text = text
     temp_already_in = False
 
     if match:
-        temp_text = match.group(0)
-        # Extract refs parameter if exists
-        refs_match = re.search(r'refs\s*=\s*(.*?)\s*(?:\||\}\})', temp_text, re.IGNORECASE)
+        template_start = match.group(1)  # {{Reflist|refs=
+        refs_content = match.group(3)     # existing refs content
+        template_end = match.group(4)     # }}
 
-        if refs_match:
-            # Update refs parameter
-            refn_param = refs_match.group(1)
-            refn_param = check_short_refs(refn_param)
-            line = refn_param.strip() + "\n" + line.strip()
-
-            # Replace in the full text, not just temp_text
-            new_temp_text = temp_text.replace(refs_match.group(0), f"refs={line.strip()}\n")
-            new_text = text.replace(temp_text, new_temp_text)
-            temp_already_in = True
+        # Clean up existing refs content
+        refs_content = check_short_refs(refs_content)
+        
+        # Combine existing refs with new refs
+        combined_refs = refs_content.strip() + "\n" + line.strip() if refs_content.strip() else line.strip()
+        
+        # Replace the template - keep }} on same line as last ref
+        new_template = f"{template_start}\n{combined_refs}{template_end}"
+        new_text = text[:match.start()] + new_template + text[match.end():]
+        temp_already_in = True
 
     # If no template found, add section
     if not temp_already_in:
