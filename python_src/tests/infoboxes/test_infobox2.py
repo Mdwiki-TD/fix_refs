@@ -4,11 +4,8 @@ Converted from tests/infoboxes/infobox2Test.php
 
 Note: This test requires the infobox2 Python module which may need to be implemented.
 """
-import json
 from pathlib import Path
-from src.infobox import expend_infobox as ei_module
-
-expend_new = ei_module.expend_new
+from src.infobox.expend_infobox import expend_new
 
 tests_dir = Path(__file__).parent / "texts_infobox2"
 
@@ -28,8 +25,8 @@ class TestInfobox2:
         result = expend_new(text_input)
 
         with open(tests_dir / "output.txt", 'w', encoding='utf-8') as f:
-            f.write(text_output)
+            f.write(result)
 
-        result = result.replace('\r\n', '\n')
-        text_output = text_output.replace('\r\n', '\n')
+        # result = result.replace('\r\n', '\n')
+        # text_output = text_output.replace('\r\n', '\n')
         assert text_output.strip() == result.strip()
