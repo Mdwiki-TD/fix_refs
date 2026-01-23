@@ -4,13 +4,14 @@ Converted from tests/es_bots/es_refsTest.php
 """
 import pytest
 from pathlib import Path
-from src.lang_bots.es_helpers import mv_es_refs
+# from src.lang_bots.es_helpers import mv_es_refs
+from src.lang_bots.es_refs import mv_es_refs
 
 
 class TestEsRefs:
     """Test cases for Spanish reference moving"""
 
-    def test_file_text(self):
+    def test_file_text_1(self):
         """Test with file input for Spanish references"""
         tests_dir = Path(__file__).parent / "texts/1"
 
@@ -18,17 +19,17 @@ class TestEsRefs:
             text_input = f.read()
 
         with open(tests_dir / "expected.txt", 'r', encoding='utf-8') as f:
-            text_output = f.read()
+            expected = f.read()
 
-        # Optionally write output for comparison
-        output_file = tests_dir / "output.txt"
         result = mv_es_refs(text_input)
-        # Uncomment to write output file:
+
+        # write output for comparison
+        output_file = tests_dir / "output.txt"
         with open(output_file, 'w', encoding='utf-8') as f:
             f.write(result)
 
         # Normalize line endings for comparison
-        assert result.replace('\r\n', '\n') == text_output.replace('\r\n', '\n')
+        assert result.strip() == expected.strip()
 
     def test_file_text_2(self):
         """Test with file input for Spanish references"""
@@ -38,14 +39,34 @@ class TestEsRefs:
             text_input = f.read()
 
         with open(tests_dir / "expected.txt", 'r', encoding='utf-8') as f:
-            text_output = f.read()
+            expected = f.read()
 
-        # Optionally write output for comparison
-        output_file = tests_dir / "output.txt"
         result = mv_es_refs(text_input)
-        # Uncomment to write output file:
+
+        # write output for comparison
+        output_file = tests_dir / "output.txt"
         with open(output_file, 'w', encoding='utf-8') as f:
             f.write(result)
 
         # Normalize line endings for comparison
-        assert result.replace('\r\n', '\n') == text_output.replace('\r\n', '\n')
+        assert result.strip() == expected.strip()
+
+    def test_file_text_3(self):
+        """Test with file input for Spanish references"""
+        tests_dir = Path(__file__).parent / "texts/3"
+
+        with open(tests_dir / "input.txt", 'r', encoding='utf-8') as f:
+            text_input = f.read()
+
+        with open(tests_dir / "expected.txt", 'r', encoding='utf-8') as f:
+            expected = f.read()
+
+        result = mv_es_refs(text_input)
+
+        # write output for comparison
+        output_file = tests_dir / "output.txt"
+        with open(output_file, 'w', encoding='utf-8') as f:
+            f.write(result)
+
+        # Normalize line endings for comparison
+        assert result.strip() == expected.strip()
