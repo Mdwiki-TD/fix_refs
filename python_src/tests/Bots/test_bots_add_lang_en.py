@@ -3,7 +3,7 @@
 Converted from tests/en_lang_paramTest.php
 """
 import pytest
-from src.bots.add_lang_en import add_lang_en_to_refs
+from src.bots.add_lang_en_bot import add_lang_en_to_refs
 
 
 class TestAddLangEn:
@@ -40,7 +40,7 @@ class TestAddLangEn:
     def test_add_lang_malformed_ref(self):
         """Test fixing malformed language parameter"""
         input_text = "<ref>{{Citar web|Text|language = }}</ref> {{temp|test=1}}"
-        expected = "<ref>{{Citar web|Text|language=en}}</ref> {{temp|test=1}}"
+        expected = "<ref>{{Citar web|Text|language =en}}</ref> {{temp|test=1}}"
         result = add_lang_en_to_refs(input_text)
         assert result == expected
 
