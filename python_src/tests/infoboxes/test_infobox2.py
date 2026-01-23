@@ -19,13 +19,16 @@ class TestInfobox2:
     def test_expend_new_file_text(self):
         """Test expend_new with file input"""
 
-        with open(tests_dir / "infobox2_input.txt", 'r', encoding='utf-8') as f:
+        with open(tests_dir / "input.txt", 'r', encoding='utf-8') as f:
             text_input = f.read()
 
-        with open(tests_dir / "infobox2_output.txt", 'r', encoding='utf-8') as f:
+        with open(tests_dir / "expected.txt", 'r', encoding='utf-8') as f:
             text_output = f.read()
 
         result = expend_new(text_input)
+
+        with open(tests_dir / "output.txt", 'w', encoding='utf-8') as f:
+            f.write(text_output)
 
         result = result.replace('\r\n', '\n')
         text_output = text_output.replace('\r\n', '\n')
