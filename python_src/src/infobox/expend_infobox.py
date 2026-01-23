@@ -115,8 +115,9 @@ def make_tempse(section_0: str) -> Dict[str, str]:
     # Simple regex-based template extraction
     tempse: Dict[str, str] = {}
 
-    # Pattern to match full template
-    pattern = r'\{([^{}:]+?)(\|.*?)?\}\}'
+    # Pattern to match full template with double braces {{...}}
+    # Match templates that don't contain nested braces
+    pattern = r'\{\{[^{}]*\}\}'
     matches = re.finditer(pattern, section_0, re.IGNORECASE)
 
     for match in matches:

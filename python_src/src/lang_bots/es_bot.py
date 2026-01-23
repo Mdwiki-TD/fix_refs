@@ -41,12 +41,18 @@ def work_one_temp(temp_text: str, name: str) -> str:
         replacement = '|' + new_param + '='
         new_temp = re.sub(pattern, replacement, new_temp, flags=re.IGNORECASE)
 
-    # Remove url-status parameter
-    pattern = r'\|\s*url-status\s*=\s*[^\}]\s*'
+    # Remove url-status parameter - match until next | or }}
+    pattern = r'\|\s*url-status\s*=\s*[^|}]*'
     new_temp = re.sub(pattern, '', new_temp, flags=re.IGNORECASE)
 
     # Clean up double pipes
     new_temp = re.sub(r'\|\s*\|', '|', new_temp)
+
+    # Strip trailing spaces from parameter values (value followed by |)
+    new_temp = re.sub(r'\s+\|', '|', new_temp)
+
+    # Strip trailing spaces before closing braces
+    new_temp = re.sub(r'\s+\}\}', '}}', new_temp)
 
     return new_temp
 

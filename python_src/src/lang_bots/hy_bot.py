@@ -69,10 +69,15 @@ def get_parts(newtext: str, charters: str) -> list:
 
 
 def remove_spaces_between_last_word_and_beginning_of_ref(newtext: str, lang: str) -> str:
-    """Remove spaces around refs at the end of paragraphs/text
+    """Remove spaces around refs in specific patterns
 
-    This function processes each paragraph (split by double newlines) and removes
-    spaces around refs that end the paragraph followed by punctuation.
+    This function removes spaces in several patterns:
+    1. 'word <ref /> :' -> 'word<ref />:' (space between ref/punct)
+    2. 'word  <ref />:' -> 'word<ref />:' (multiple spaces before ref)
+    3. At end of text with content ref: 'word <ref>...</ref>:$' -> 'word<ref>...</ref>:$'
+
+    Note: Pattern 3 only applies when the last ref is a content ref (>...</ref>),
+    not a self-closing ref (/>).
 
     Args:
         newtext: Text to process
@@ -87,33 +92,57 @@ def remove_spaces_between_last_word_and_beginning_of_ref(newtext: str, lang: str
     else:
         dots = r".,।"
 
-    # Split by double newlines to get paragraphs
-    # If no double newlines, treat entire text as one paragraph
-    paragraphs = newtext.split("\n\n")
-    if len(paragraphs) == 1:
-        paragraphs = newtext.split("\r\n\r\n")
+    # Pattern 1: space between ref ending and punctuation - remove all spaces
+    # Use [^<]* for simple refs, pattern won't match complex nested content
+    pattern1 = r'(\S)(\s+)((?:<ref[^>]*(?:/\s*>|>[^<]*</ref>))+)(\s+)([' + re.escape(dots) + r'])'
 
-    result_paragraphs = []
-    for para in paragraphs:
-        # Check if paragraph ends with refs followed by punctuation
-        # Pattern: word + optional space + one or more refs + optional space + punctuation at end
-        end_pattern = r'(\S)(\s+)((?:<ref[^>]*(?:/\s*>|>[^<]*</ref>))+)(\s*)([' + re.escape(dots) + r'])\s*$'
-        match = re.search(end_pattern, para)
+    def replace_func1(match):
+        return match.group(1) + match.group(3) + match.group(5)
 
-        if match:
-            before_space = match.group(1)  # last non-space char before refs
-            space_before = match.group(2)  # space(s) before refs
-            refs = match.group(3)          # refs
-            space_after = match.group(4)   # space(s) after refs (before punctuation)
-            punct = match.group(5)         # punctuation
+    newtext = re.sub(pattern1, replace_func1, newtext)
 
-            # Remove spaces: before refs and between refs and punctuation
-            new_end = before_space + refs + punct
-            para = para[:match.start()] + new_end
+    # Pattern 2: multiple spaces (2+) before ref followed by punctuation
+    pattern2 = r'(\S)(\s{2,})((?:<ref[^>]*(?:/\s*>|>[^<]*</ref>))+)([' + re.escape(dots) + r'])'
 
-        result_paragraphs.append(para)
+    def replace_func2(match):
+        return match.group(1) + match.group(3) + match.group(4)
 
-    return "\n\n".join(result_paragraphs)
+    newtext = re.sub(pattern2, replace_func2, newtext)
+
+    # Pattern 3: at end of text with CONTENT ref - handle manually to avoid greedy matching
+    # Find last punctuation character
+    last_punct_pos = -1
+    for c in dots:
+        pos = newtext.rfind(c)
+        if pos > last_punct_pos:
+            last_punct_pos = pos
+
+    if last_punct_pos >= 0:
+        before_punct = newtext[:last_punct_pos]
+        after_punct = newtext[last_punct_pos:]
+
+        # Check if before_punct ends with content ref (</ref>)
+        if before_punct.rstrip().endswith('</ref>'):
+            # Look for pattern: word + space + consecutive refs at end
+            # Use pattern that doesn't cross ref boundaries
+            single_ref = r'<ref[^>]*(?:/\s*>|>(?:(?!<ref)[^<]|<(?!ref))*</ref>)'
+            end_pattern = r'(\S)(\s+)((?:' + single_ref + r')+)$'
+            match = re.search(end_pattern, before_punct)
+
+            if match:
+                # Check if this match is for consecutive refs (no text between refs)
+                refs_text = match.group(3)
+                # Only proceed if there's no alphabetic text between refs
+                refs_without_tags = re.sub(r'<ref[^>]*>', '', refs_text)
+                refs_without_tags = re.sub(r'</ref>', '', refs_without_tags)
+                refs_without_templates = re.sub(r'\{\{[^}]*\}\}', '', refs_without_tags)
+                # Check for any letter characters
+                has_text_between = bool(re.search(r'[a-zA-Z]', refs_without_templates))
+
+                if not has_text_between:
+                    # Replace: remove space before refs
+                    new_before = before_punct[:match.start()] + match.group(1) + match.group(3)
+                    newtext = new_before + after_punct
 
     return newtext
 
