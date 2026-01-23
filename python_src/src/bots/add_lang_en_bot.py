@@ -3,7 +3,6 @@ Add English language parameter to references
 """
 
 import wikitextparser as wtp
-from ..parsers.citations import get_citations
 from ..utils.debug import echo_debug
 
 
@@ -37,12 +36,19 @@ def add_lang_en_to_refs(text: str) -> str:
         Text with language parameter added to references
     """
     echo_debug("\n add_lang_en_to_refs:\n")
-    new_text = text
-    citations = get_citations(text)
+    parsed = wtp.parse(text)
 
-    for citation in citations:
-        cite_temp = citation.get_content()
-        new_temp = add_lang_en_new(cite_temp)
-        new_text = new_text.replace(cite_temp, new_temp)
+    # Get all ref tags
+    ref_tags = parsed.get_tags('ref')
 
-    return new_text
+    for ref in ref_tags:
+        # Access templates inside this ref tag
+        inner_templates = ref.templates
+
+        for temp in inner_templates:
+            # Add language parameter if needed
+            language_arg = temp.get_arg('language')
+            if not language_arg or not language_arg.value.strip():
+                temp.set_arg('language', 'en')
+
+    return parsed.string
