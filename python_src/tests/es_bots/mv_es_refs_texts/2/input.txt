@@ -1,20 +1,3 @@
-{{#unlinkedwikibase:id=Q5375342}}
-{{short description|Species of parasitic fungus}}
-{{Taxobox
-| image =
-| image_caption =
-| regnum = [[Fungi]]
-| phylum = [[Microsporidia]]
-| divisio =
-| classis =
-| ordo =
-| familia = [[Unikaryonidae]]
-| genus = ''[[Encephalitozoon]]''
-| species = '''''E. intestinalis'''''
-| binomial = ''Encephalitozoon intestinalis''
-| binomial_authority = (A.Cali, D.P.Kotler & J.M.Orenstein) anon.
-}}
-
 '''''Encephalitozoon intestinalis''''' is a [[parasitism|parasite]].<ref name=Doed1998/> It can cause [[microsporidiosis]].<ref name=Lanternier2009/>
 
 It is notable as having one of the smallest [[genome]] among known [[Eukaryote|eukaryotic]] organisms, containing only 2.25 million base pairs.<ref name="scienceshot"/> Its genome was completely [[genome sequencing|sequenced]] in 2010.<ref name=Corradi2010/>
