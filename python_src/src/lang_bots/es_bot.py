@@ -3,7 +3,6 @@ Spanish-specific bot fixes
 """
 
 import re
-from typing import Optional
 from ..utils.debug import echo_test
 from .es_data import REFS_TEMPS, ARGS_TO
 from .es_helpers import (

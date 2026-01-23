@@ -71,13 +71,17 @@ def fix_page(
 
     if lang == "pt":
         text = pt_fixes(text)
+
     elif lang == "bg":
         text = bg_fixes(text, source_title, mdwiki_revid)
+
     elif lang == "es":
         text = fix_es(text, title)
         text = es_section(source_title, text, str(mdwiki_revid))
+
     elif lang == "sw":
         text = sw_fixes(text)
+
     elif lang == "hy":
         text = hy_fixes(text)
 
