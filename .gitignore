@@ -15,3 +15,4 @@ src/helps_bots/output.txt
 z.php
 /.claude
 *.pyc
+/python_src/.claude
