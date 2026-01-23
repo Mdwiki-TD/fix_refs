@@ -42,6 +42,11 @@ def add_lang_en_to_refs(text: str) -> str:
     ref_tags = parsed.get_tags('ref')
 
     for ref in ref_tags:
+        contents = ref.contents
+        # Only process if it looks like a template
+        if not (contents.startswith("{{") and contents.endswith("}}")):
+            continue
+
         # Access templates inside this ref tag
         inner_templates = ref.templates
 
@@ -50,5 +55,6 @@ def add_lang_en_to_refs(text: str) -> str:
             language_arg = temp.get_arg('language')
             if not language_arg or not language_arg.value.strip():
                 temp.set_arg('language', 'en')
+            break  # Only process the first template
 
     return parsed.string
