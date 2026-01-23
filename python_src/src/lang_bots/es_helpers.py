@@ -3,6 +3,7 @@ Spanish helper functions
 """
 
 import re
+import wikitextparser as wtp
 from ..bots.months import make_date_new_val_es
 from ..parsers.citations import get_short_citations
 
@@ -21,45 +22,17 @@ def fix_es_months_in_texts(temp_text: str) -> str:
     Returns:
         Template text with translated months
     """
-    new_text = temp_text
+    parsed = wtp.parse(temp_text)
 
-    # Find all templates using a simple brace counter approach
-    def process_single_template(template_str: str) -> str:
-        """Process a single template string"""
-        if not (template_str.startswith('{{') and template_str.endswith('}}')):
-            return template_str
+    for temp in parsed.templates:
+        arguments = temp.arguments
+        for arg in arguments:
+            old_val = arg.value
+            new_val = make_date_new_val_es(old_val)
+            if new_val and new_val.strip() != old_val.strip():
+                temp.set_arg(arg.name, new_val)
 
-        # Remove outer braces
-        inner = template_str[2:-2]
-
-        # Process each parameter
-        new_params = []
-        for param in inner.split('|'):
-            if '=' in param:
-                key, value = param.split('=', 1)
-                new_value = make_date_new_val_es(value)
-                if new_value and new_value.strip() != value.strip():
-                    new_params.append(f"{key.strip()}={new_value.strip()}")
-                else:
-                    # Normalize spaces
-                    new_params.append(f"{key.strip()}={value.strip()}")
-            else:
-                new_params.append(param.strip())
-
-        return "{{" + "|".join(new_params) + "}}"
-
-    # Find all {{...}} patterns (simple, non-nested)
-    # This regex matches templates that don't contain nested templates
-    template_pattern = r'\{\{[^{}]*\}\}'
-    matches = list(re.finditer(template_pattern, temp_text))
-
-    # Process templates from end to start (to preserve positions)
-    for match in reversed(matches):
-        original = match.group(0)
-        processed = process_single_template(original)
-        new_text = new_text[:match.start()] + processed + new_text[match.end():]
-
-    return new_text
+    return parsed.string
 
 
 def fix_es_months_in_refs(text: str) -> str:
@@ -71,26 +44,18 @@ def fix_es_months_in_refs(text: str) -> str:
     Returns:
         Text with translated months in citations
     """
-    new_text = text
+    parsed = wtp.parse(text)
 
-    # Get all citations
-    pattern = r'<ref([^>]*?)>(.*?)<\/ref>'
-    citations = re.finditer(pattern, text, re.IGNORECASE | re.DOTALL)
+    # Get all ref tags
+    ref_tags = parsed.get_tags('ref')
 
-    for match in citations:
-        cite_attrs = match.group(1)
-        cite_temp = match.group(2)
-
+    for ref in ref_tags:
+        contents = ref.contents
         # Only process if it looks like a template
-        if not (cite_temp.startswith("{{") and cite_temp.endswith("}}")):
+        if not start_end(contents):
             continue
-
-        new_temp = fix_es_months_in_texts(cite_temp)
-        if new_temp != cite_temp:
-            new_text = new_text.replace(f"<ref{cite_attrs}>{cite_temp}</ref>",
-                                     f"<ref{cite_attrs}>{new_temp}</ref>")
-
-    return new_text
+        ref.contents = fix_es_months_in_texts(contents)
+    return parsed.string
 
 
 def get_refs(text: str) -> dict:

@@ -51,7 +51,7 @@ def fix_pt_months_in_refs(text: str) -> str:
     for ref in ref_tags:
         contents = ref.contents
         # Only process if it looks like a template
-        if not (contents.startswith("{{") and contents.endswith("}}")):
+        if not start_end(contents):
             continue
         ref.contents = fix_pt_months_in_texts(contents)
     return parsed.string
