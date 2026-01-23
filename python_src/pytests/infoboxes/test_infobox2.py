@@ -12,6 +12,7 @@ from pathlib import Path
 class TestInfobox2:
     """Test cases for infobox2 template processing"""
 
+    @pytest.mark.skip(reason="Python infobox2 module and test data not yet implemented")
     def test_expend_new_file_text(self):
         """Test expend_new with file input"""
         tests_dir = Path(__file__).parent.parent / "tests" / "infoboxes" / "texts_infobox2"
@@ -32,8 +33,7 @@ class TestInfobox2:
         # text_output = text_output.replace('\r\n', '\n')
         # assert text_output.strip() == result.strip()
 
-        pytest.skip("Python infobox2 module not yet implemented")
-
+    @pytest.mark.skip(reason="Python infobox2 module and test data not yet implemented")
     def test_make_tempse_file_text(self):
         """Test make_tempse with file input"""
         tests_dir = Path(__file__).parent.parent / "tests" / "infoboxes" / "texts_infobox2"
@@ -54,5 +54,3 @@ class TestInfobox2:
         # with open(output_file, 'w', encoding='utf-8') as f:
         #     json.dump(result, f, indent=2, ensure_ascii=False)
         # assert text_output == result
-
-        pytest.skip("Python infobox2 module not yet implemented")
