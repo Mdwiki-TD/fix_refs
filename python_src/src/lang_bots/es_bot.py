@@ -3,13 +3,13 @@ Spanish-specific bot fixes
 """
 
 import re
+import wikitextparser as wtp
 from ..utils.debug import echo_test
 from .es_data import REFS_TEMPS, ARGS_TO
 from .es_helpers import (
     fix_es_months_in_refs,
     mv_es_refs
 )
-from .es_section import es_section
 
 
 def work_one_temp(temp_text: str, name: str) -> str:
@@ -65,23 +65,22 @@ def fix_temps(text: str) -> str:
     Returns:
         Text with transformed templates
     """
+    parsed = wtp.parse(text)
+
+    refs_temps_keys_lower = {k.lower() for k in REFS_TEMPS.keys()}
+    refs_temps_values_lower = {k.lower() for k in REFS_TEMPS.values()}
+
     new_text = text
 
-    # Find all templates
-    pattern = r'\{\{([^}:]+?)(\|.*?)?\}\}'
-    matches = list(re.finditer(pattern, text, re.IGNORECASE | re.DOTALL))
-
-    for match in matches:
-        name = match.group(1).strip()
-        old_text_template = match.group(0)
-
-        # Skip if not in refs_temps (case-insensitive check)
+    for template in parsed.templates:
+        name = template.name.strip()
         name_lower = name.lower()
-        in_refs = name_lower in [k.lower() for k in REFS_TEMPS.keys()]
 
-        if not in_refs and name_lower not in [k.lower() for k in REFS_TEMPS.values()]:
+        # Skip if not in refs_temps
+        if name_lower not in refs_temps_keys_lower and name_lower not in refs_temps_values_lower:
             continue
 
+        old_text_template = str(template)
         new_text_str = work_one_temp(old_text_template, name)
         new_text = new_text.replace(old_text_template, new_text_str)
 

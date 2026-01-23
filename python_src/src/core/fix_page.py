@@ -2,7 +2,6 @@
 Main fix_page function and interface
 """
 
-from typing import Optional
 from ..bots.remove_duplicate_refs import remove_duplicate_refs_with_attrs
 from ..bots.mini_fixes import mini_fixes, mini_fixes_after_fixing
 from ..bots.add_lang_en_bot import add_lang_en_to_refs
@@ -14,7 +13,8 @@ from ..infobox.expend_infobox import Expend_Infobox
 from ..lang_bots.pl_bot import pl_fixes
 from ..lang_bots.pt_bot import pt_fixes
 from ..lang_bots.bg_bot import bg_fixes
-from ..lang_bots.es_bot import fix_es, es_section
+from ..lang_bots.es_bot import fix_es
+from ..lang_bots.es_section_bot import es_section
 from ..lang_bots.sw_bot import sw_fixes
 from ..lang_bots.hy_bot import hy_fixes
 from ..utils.debug import echo_test
