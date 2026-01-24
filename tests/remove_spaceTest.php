@@ -3,6 +3,7 @@
 
 use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\RemoveSpace\remove_spaces_between_last_word_and_beginning_of_ref;
+use function WpRefs\RemoveSpace\remove_spaces_between_ref_and_punctuation;
 
 class remove_spaceTest extends MyFunctionTest
 {
@@ -134,6 +135,25 @@ class remove_spaceTest extends MyFunctionTest
         $expected = 'Գոյություն ունի լյարդի ճարպային հիվանդության երկու տեսակ՝ ոչ ալկոհոլային ճարպային լյարդի հիվանդություն (ՈԱՃՀ) և ալկոհոլային լյարդի հիվանդություն <ref name="NIH2016" />։ ՈԱՃՀՀ-ն բաղկացած է պարզ ճարպային լյարդից և ոչ ալկոհոլային ստեատոհեպատիտից (ՈԱՃՀ): <ref name="AFP2013">{{Cite journal|last=Iser|first=D|last2=Ryan|first2=M|title=Fatty liver disease—a practical guide for GPs.|journal=Australian Family Physician|date=July 2013|volume=42|issue=7|pages=444–7|pmid=23826593}}</ref><ref name="NIH2016" /> Հիմնական ռիսկերից են [[Էթիլ սպիրտ|ալկոհոլը]], [[Տիպ 2 շաքարային դիաբետ|2-րդ տիպի շաքարախտը]] և [[Ճարպակալում|ճարպակալումը]] <ref name="Ant2019" /><ref name="NIH2016" />։ Այլ ռիսկի գործոններից են որոշակի դեղամիջոցները, ինչպիսիք են [[Գլյուկոկորտիկոիդներ|գլյուկոկորտիկոիդները]] և [[Հեպատիտ C|հեպատիտ C-ն]] : <ref name="NIH2016" /> Անհասկանալի է, թե ինչու են ոչ ալկոհոլային ճարպային լյարդի հիվանդություն ունեցող որոշ մարդիկ զարգացնում պարզ ճարպային լյարդ, իսկ մյուսները՝ ոչ ալկոհոլային հեպատիտ: <ref name="NIH2016" /> Ախտորոշումը հիմնված է [[Անամնեզ|բժշկական պատմության]] վրա, որը հաստատվում է արյան անալիզներով, բժշկական պատկերագրական հետազոտություններով և երբեմն լյարդի բիոպսիայով<ref name="NIH2016" />։';
         // ---
         $result = remove_spaces_between_last_word_and_beginning_of_ref($input, 'hy');
+        // ---
+        $this->assertEqualCompare($expected, $input, $result);
+    }
+    public function testPart5()
+    {
+        $input    = 'Գոյություն ունի լյարդի ճարպային հիվանդություն <ref name="NIH2016" />։ ՈԱՃՀՀ-ն բաղկացած է <ref name="AFP2013">{{Cite journal}}</ref><ref name="NIH2016" /> Հիմնական ռիսկերից են <ref name="Ant2019" /><ref name="NIH2016" />։';
+        $expected = 'Գոյություն ունի լյարդի ճարպային հիվանդություն <ref name="NIH2016" />։ ՈԱՃՀՀ-ն բաղկացած է <ref name="AFP2013">{{Cite journal}}</ref><ref name="NIH2016" /> Հիմնական ռիսկերից են<ref name="Ant2019" /><ref name="NIH2016" />։';
+        // ---
+        $result = remove_spaces_between_last_word_and_beginning_of_ref($input, 'hy');
+        // ---
+        $this->assertEqualCompare($expected, $input, $result);
+    }
+    public function testPart6()
+    {
+        $input    = 'Բուժումը ներառում է [[Թերապիա (բուժում)|օժանդակ միջոցառումներ]] <ref name="NORD2004" /> : Ոսկրային որոշակի անոմալիաներ շտկելու համար կարող է իրականացվել վիրահատություն <ref name="GARD2016" /> :';
+        $expected = 'Բուժումը ներառում է [[Թերապիա (բուժում)|օժանդակ միջոցառումներ]] <ref name="NORD2004" />: Ոսկրային որոշակի անոմալիաներ շտկելու համար կարող է իրականացվել վիրահատություն<ref name="GARD2016" />:';
+        // ---
+        $result = remove_spaces_between_ref_and_punctuation($input, 'hy');
+        $result = remove_spaces_between_last_word_and_beginning_of_ref($result, 'hy');
         // ---
         $this->assertEqualCompare($expected, $input, $result);
     }

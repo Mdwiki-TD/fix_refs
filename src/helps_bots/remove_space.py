@@ -64,7 +64,12 @@ def remove_spaces_between_last_word_and_beginning_of_ref(newtext: str, lang: str
                 # ---
                 print("endswith ")
                 # ---s
-                new_part = part.split(end_part)[0].strip() + f"{ref_text.strip()}{charter}"
+
+                first_part_clean_end = part[:-len(end_part)]
+                first_part_clean_end = first_part_clean_end.rstrip()
+
+                new_part = first_part_clean_end + ref_text.strip() + charter
+
                 # ---
                 newtext = newtext.replace(part, new_part)
 

@@ -71,7 +71,7 @@ function remove_spaces_between_last_word_and_beginning_of_ref($newtext, $lang)
     if ($lang === "hy") {
         $dots = ".,。।։:";
     }
-
+    $newtext = preg_replace('/>\s*<ref/', '><ref', $newtext);
     $parts = get_parts($newtext, $dots);
     // ---
     foreach ($parts as $pair) {
