@@ -1,1 +1,0 @@
-"""MDWiki integration"""
