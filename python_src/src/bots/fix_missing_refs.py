@@ -7,19 +7,26 @@ from pathlib import Path
 from typing import Dict, Any
 from ..utils.debug import echo_test, echo_debug
 from .expend_refs import refs_expand, find_empty_short
+from ..config import revisions_path
 
 
-def find_mdwiki_revid(sourcetitle: str, path: str) -> str:
+def get_revision_file_path(mdwiki_revid) -> Path:
+
+    file = revisions_path / f"{mdwiki_revid}/wikitext.txt"
+
+    return file
+
+
+def find_mdwiki_revid(sourcetitle: str) -> str:
     """Find MDWiki revision ID from JSON file
 
     Args:
         sourcetitle: Source page title
-        path: Path to revisions directory
 
     Returns:
         MDWiki revision ID or empty string
     """
-    json_file = f"{path}/revisions_new/json_data.json"
+    json_file = f"{revisions_path}/json_data.json"
 
     if not Path(json_file).exists():
         return ""
@@ -49,20 +56,15 @@ def get_full_text(sourcetitle: str, mdwiki_revid: int) -> str:
     """
     sourcetitle = sourcetitle.replace(" ", "_")
 
-    path = "I:/medwiki/new/medwiki.toolforge.org_repo/public_html"
-
     if mdwiki_revid == 0:
-        revid_str = find_mdwiki_revid(sourcetitle, path)
+        revid_str = find_mdwiki_revid(sourcetitle)
         mdwiki_revid = int(revid_str) if revid_str.isdigit() else 0
 
     if mdwiki_revid == 0:
         echo_test(f"empty mdwiki_revid, sourcetitle:({sourcetitle})")
         return ""
 
-    file = f"{path}/revisions_new/{mdwiki_revid}/wikitext.txt"
-
-    if not Path(file).exists():
-        file = f"{Path(__file__).parent.parent.parent.parent}/resources/revisions/{mdwiki_revid}/wikitext.txt"
+    file = get_revision_file_path(mdwiki_revid)
 
     echo_test(file)
 
