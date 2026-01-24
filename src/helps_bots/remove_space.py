@@ -83,7 +83,7 @@ def assert_equal_compare(expected: str, input_text: str, result: str):
 # --- الملفات
 base_path = Path(__file__).parent.parent.parent / "tests/texts/remove_space_texts"
 
-for i in tqdm([1, 2]):
+for i in tqdm([1, 2, 3]):
     base_path_sub = base_path / str(i)
     input_file = base_path_sub / "input.txt"
     if not input_file.exists():
