@@ -4,7 +4,7 @@ Remove duplicate references by converting them to named short references
 
 import re
 from typing import Dict, List
-from ..parsers.citations import get_citations, Citation
+from ..parsers.citations import get_citations
 from ..bots.attrs_utils import get_attrs
 from ..bots.refs_utils import remove_start_end_quotes
 from ..utils.debug import echo_debug
