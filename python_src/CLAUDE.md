@@ -59,11 +59,6 @@ Language-agnostic fix operations:
 - `fix_missing_refs.py` - Attempts to recover missing references
 - `attrs_utils.py`, `refs_utils.py`, `txtlib2.py` - Utility functions
 
-### Parsers (`src/parsers/`)
-- `citations.py` - Parses `<ref>` tags into `Citation` dataclass objects
-- `category.py` - Extracts `[[Category:...]]` tags from wikitext
-- `template.py` - Template parsing utilities
-
 ### Other Modules
 - `src/infobox/expend_infobox.py` - Expands infobox templates
 - `src/mdwiki/category.py` - Adds "translated from" categories
