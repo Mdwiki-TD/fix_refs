@@ -3,8 +3,8 @@
 Converted from tests/es_bots/esTest.php and tests/es_bots/es_months_new_valueTest.php
 """
 import pytest
-from src.lang_bots.es_bot import fix_temps, fix_es
-from src.lang_bots.es_helpers import fix_es_months_in_refs
+from src.lang_bots.es.es_bot import fix_temps, fix_es
+from src.lang_bots.es.es_helpers import fix_es_months_in_refs
 from src.bots.months import make_date_new_val_es
 
 

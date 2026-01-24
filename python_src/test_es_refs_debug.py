@@ -1,7 +1,7 @@
 import sys
 sys.path.insert(0, '.')
 from pathlib import Path
-from src.lang_bots.es_helpers import get_refs, add_line_to_temp, make_line
+from src.lang_bots.es.es_helpers import get_refs, add_line_to_temp, make_line
 import re
 
 tests_dir = Path('pytests/es_bots/texts')

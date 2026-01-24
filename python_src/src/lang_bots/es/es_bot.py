@@ -4,7 +4,7 @@ Spanish-specific bot fixes
 
 import re
 import wikitextparser as wtp
-from ..utils.debug import echo_test
+from ...utils.debug import echo_test
 from .es_data import REFS_TEMPS, ARGS_TO
 from .es_helpers import (
     fix_es_months_in_refs,
@@ -115,5 +115,4 @@ def fix_es(text: str, title: str = "") -> str:
     newtext = fix_es_months_in_refs(newtext)
     newtext = fix_temps(newtext)
     newtext = mv_es_refs(newtext)
-
     return newtext

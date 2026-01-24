@@ -3,7 +3,7 @@
 Converted from tests/es_bots/es_refsTest.php and tests/es_bots/es_monthsTest.php
 """
 import pytest
-from src.lang_bots.es_helpers import (
+from src.lang_bots.es.es_helpers import (
     fix_es_months_in_texts,
     fix_es_months_in_refs,
     mv_es_refs,
