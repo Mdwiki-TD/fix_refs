@@ -2,14 +2,11 @@
 
 Converted from tests/es_bots/es_refsTest.php and tests/es_bots/es_monthsTest.php
 """
-import pytest
+from src.lang_bots.es.es_refs import mv_es_refs
 from src.lang_bots.es.es_helpers import (
     fix_es_months_in_texts,
     fix_es_months_in_refs,
-    mv_es_refs,
     start_end,
-    get_refs,
-    make_line
 )
 from src.bots.months import make_date_new_val_es
 
@@ -38,6 +35,7 @@ class TestEsMonths:
         expected = '<ref name="test" group="notes">{{cite web|date=25 de diciembre de 2016|}}</ref>'
         result = fix_es_months_in_refs(input_text)
         assert result == expected
+
 
 class TestSpanishHelpers:
     """Test cases for Spanish language helpers"""
@@ -117,26 +115,6 @@ class TestSpanishHelpers:
         assert start_end("{{template") is False
         assert start_end("template}}") is False
         assert start_end("template") is False
-
-    def test_get_refs(self):
-        """Test extracting references from text"""
-        text = '<ref name="test">Content here</ref> Some text <ref>Another</ref>'
-        result = get_refs(text)
-
-        assert 'refs' in result
-        assert 'new_text' in result
-        assert len(result['refs']) == 2
-
-    def test_make_line(self):
-        """Test creating reference lines"""
-        refs = {
-            "name='test'": "Content here",
-            "name='autogen_1'": "Another"
-        }
-        result = make_line(refs)
-
-        assert "<ref name='test'>Content here</ref>" in result
-        assert "<ref name='autogen_1'>Another</ref>" in result
 
     def test_mv_es_refs_basic(self):
         """Test mv_es_refs basic functionality"""

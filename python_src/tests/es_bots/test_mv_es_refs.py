@@ -2,9 +2,7 @@
 
 Converted from tests/es_bots/es_refsTest.php
 """
-import pytest
 from pathlib import Path
-# from src.lang_bots.es_helpers import mv_es_refs
 from src.lang_bots.es.es_refs import mv_es_refs
 from src.lang_bots.es.es_bot import fix_es
 

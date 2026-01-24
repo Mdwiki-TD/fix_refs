@@ -58,63 +58,6 @@ def fix_es_months_in_refs(text: str) -> str:
     return parsed.string
 
 
-def get_refs(text: str) -> dict:
-    """Extract references from text and create ref mapping
-
-    Args:
-        text: Text to process
-
-    Returns:
-        Dictionary with 'refs' and 'new_text' keys
-    """
-    new_text = text
-    refs = {}
-    # Match refs with content, excluding self-closing refs like <ref name=foo/>
-    # Pattern explanation:
-    #   <ref                 - Opening tag
-    #   (                    - Capture group 1 for attributes:
-    #     [^/>]*             - Chars that are not / or > (simple case: no / before >)
-    #     |                  - OR
-    #     [^>]*/[^/>][^>]*   - Contains / but not followed by > (handles name=foo/bar cases)
-    #   )
-    #   >                    - End of opening tag (NOT />)
-    #   (.*?)                - Capture group 2: content (non-greedy)
-    #   </ref>               - Closing tag
-    citations = re.finditer(r'<ref([^/>]*|[^>]*/[^/>][^>]*)>(.*?)<\/ref>', text, re.IGNORECASE | re.DOTALL)
-
-    numb = 0
-
-    for match in citations:
-        full_match = match.group(0)
-        cite_attrs = match.group(1)
-        cite_contents = match.group(2)
-
-        # Skip self-closing refs like <ref name=foo/> (they end with /> in the opening tag)
-        # Check if full_match starts with <ref.../> before any content
-        opening_tag = full_match[:full_match.find('>') + 1] if '>' in full_match else full_match[:20]
-        if opening_tag.rstrip().endswith('/>'):
-            continue
-
-        cite_attrs = cite_attrs.strip() if cite_attrs else ""
-
-        # Check if ref already has a name attribute
-        has_name = bool(re.search(r'name\s*=', cite_attrs, re.IGNORECASE))
-
-        if not has_name:
-            # Generate autogen name for refs without a name
-            numb += 1
-            name = f"autogen_{numb}"
-            cite_attrs = f"name='{name}'"
-
-        refs[cite_attrs] = cite_contents
-
-        # Replace with self-closing ref
-        cite_newtext = f"<ref {cite_attrs} />"
-        new_text = new_text.replace(full_match, cite_newtext)
-
-    return {"refs": refs, "new_text": new_text}
-
-
 def check_short_refs(line: str) -> str:
     """Remove short citations from line
 
@@ -130,25 +73,6 @@ def check_short_refs(line: str) -> str:
 
     # Remove multiple newlines
     line = re.sub(r'\n+', '\n', line)
-    return line
-
-
-def make_line(refs: dict) -> str:
-    """Create reference line from refs dict
-
-    Args:
-        refs: Dictionary of ref attributes to content
-
-    Returns:
-        Formatted reference lines
-    """
-    line = "\n"
-
-    for name, ref in refs.items():
-        la = f'<ref {name.strip()}>{ref}</ref>\n'
-        line += la
-
-    line = line.strip()
     return line
 
 
@@ -193,25 +117,5 @@ def add_line_to_temp(line: str, text: str) -> str:
     if not temp_already_in:
         section_ref = "\n== Referencias ==\n{{listaref|refs=\n" + line.strip() + "\n}}"
         new_text += section_ref
-
-    return new_text
-
-
-def mv_es_refs(text: str) -> str:
-    """Move references to {{listaref}} template
-
-    Args:
-        text: Text to process
-
-    Returns:
-        Text with references moved to listaref template
-    """
-    if not text:
-        return text
-
-    refs = get_refs(text)
-    new_lines = make_line(refs['refs'])
-    new_text = refs['new_text']
-    new_text = add_line_to_temp(new_lines, new_text)
 
     return new_text

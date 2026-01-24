@@ -6,10 +6,8 @@ import re
 import wikitextparser as wtp
 from ...utils.debug import echo_test
 from .es_data import REFS_TEMPS, ARGS_TO
-from .es_helpers import (
-    fix_es_months_in_refs,
-    mv_es_refs
-)
+from .es_helpers import fix_es_months_in_refs
+from .es_refs import mv_es_refs
 
 
 def work_one_temp(temp_text: str, name: str) -> str:

@@ -1,5 +1,6 @@
 """
 """
+import re
 import wikitextparser as wtp
 
 
@@ -71,6 +72,20 @@ def get_refs(text):
     return refs, new_text
 
 
+def remove_short_refs(text: str) -> str:
+    """
+    Remove short citations from text
+    """
+    parsed = wtp.parse(text)
+    for tag in parsed.get_tags():
+        if tag.name == "ref" and not tag.contents:
+            tag.string = ""
+    text = parsed.string
+    # Remove multiple newlines
+    text = re.sub(r'\n+', '\n', text)
+    return text
+
+
 def add_line_to_temp(line, new_text):
     # ---
     parsed = wtp.parse(new_text)
@@ -87,8 +102,11 @@ def add_line_to_temp(line, new_text):
         # ---
         refs_arg = template.get_arg("refs")
         # ---
-        if refs_arg and refs_arg.value and refs_arg.value.strip():
-            line = f"{refs_arg.value.strip():}\n{line.strip()}"
+        value = refs_arg.value.strip() if refs_arg and refs_arg.value.strip() else ""
+        # ---
+        if refs_arg and value:
+            value = remove_short_refs(value)
+            line = f"{value}\n{line.strip()}"
         # ---
         template.set_arg("refs", f"\n{line}")
         # ---
