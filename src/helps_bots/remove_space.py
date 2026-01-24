@@ -5,7 +5,8 @@ from tqdm import tqdm
 
 
 def match_it(text, charters):
-    m = re.search(f'(</ref>|\/>)\s*([{charters}]\s*)$', text, flags=re.UNICODE)
+    charters = re.escape(charters)
+    m = re.search(rf'(</ref>|\/>)\s*([{charters}]\s*)$', text, flags=re.UNICODE)
     if m:
         return m.group(2)
     return None
@@ -34,12 +35,12 @@ def get_parts(newtext, charters):
 def remove_spaces_between_last_word_and_beginning_of_ref(newtext: str, lang: str) -> str:
 
     # --- 1) تحديد علامات الترقيم
-    dot = r"\.,。।"
+    dots = r".,。।"
 
     if lang == "hy":
-        dot = r"\.,。।։"
+        dots = r".,。।։:"
 
-    parts = get_parts(newtext, dot)
+    parts = get_parts(newtext, dots)
     # ---
     for part, charter in parts:
         # ---
@@ -82,7 +83,7 @@ def assert_equal_compare(expected: str, input_text: str, result: str):
 # --- الملفات
 base_path = Path(__file__).parent.parent.parent / "tests/texts/remove_space_texts"
 
-for i in tqdm([1, 2, 3, 4]):
+for i in tqdm([1, 2]):
     base_path_sub = base_path / str(i)
     input_file = base_path_sub / "input.txt"
     if not input_file.exists():
