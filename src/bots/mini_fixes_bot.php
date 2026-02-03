@@ -98,6 +98,15 @@ function fix_preffix($text, $lang)
     return $text;
 }
 
+function remove_template_rtt_links($text)
+{
+    // Remove wiki links to Template:RTT like [[Template:RTT|සැකිල්ල:RTT]]
+    // Use [^\[\]]+ to match the second part (anything except square brackets)
+    $text = preg_replace('/\[\[Template:RTT\|[^\[\]]+\]\]/u', '', $text);
+    // ---
+    return $text;
+}
+
 function mini_fixes_after_fixing($text, $lang)
 {
     // ---
@@ -117,6 +126,8 @@ function mini_fixes($text, $lang)
     $text = fix_sections_titles($text, $lang);
     // ---
     $text = remove_space_before_ref_tags($text, $lang);
+    // ---
+    $text = remove_template_rtt_links($text);
     // ---
     return $text;
 }

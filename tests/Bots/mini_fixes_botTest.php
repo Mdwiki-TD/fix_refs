@@ -7,6 +7,7 @@ use function WpRefs\Bots\Mini\remove_space_before_ref_tags;
 use function WpRefs\Bots\Mini\fix_sections_titles;
 use function WpRefs\Bots\Mini\refs_tags_spaces;
 use function WpRefs\Bots\Mini\fix_preffix;
+use function WpRefs\Bots\Mini\remove_template_rtt_links;
 
 class mini_fixes_botTest extends MyFunctionTest
 {
@@ -200,6 +201,53 @@ class mini_fixes_botTest extends MyFunctionTest
 
         foreach ($tests as $test) {
             $result = fix_preffix($test['text'], $test['lang']);
+            $this->assertEqualCompare($test['expected'], $test['text'], $result);
+        }
+    }
+
+    // Test for remove_template_rtt_links
+    public function testRemoveTemplateRttLinks()
+    {
+        $tests = [
+            // Basic case: Template:RTT with Sinhala text
+            [
+                "text" => "[[Template:RTT|සැකිල්ල:RTT]]",
+                "expected" => ""
+            ],
+            // Case: Template:RTT with different second part
+            [
+                "text" => "[[Template:RTT|xyz]]",
+                "expected" => ""
+            ],
+            // Case: Template:RTT within text
+            [
+                "text" => "Some text [[Template:RTT|සැකිල්ල:RTT]] more text",
+                "expected" => "Some text  more text"
+            ],
+            // Case: Multiple Template:RTT links
+            [
+                "text" => "[[Template:RTT|A]] and [[Template:RTT|B]]",
+                "expected" => " and "
+            ],
+            // Case: Template:RTT with special characters
+            [
+                "text" => "[[Template:RTT|සැකිල්ල:RTT විස්තරය]]",
+                "expected" => ""
+            ],
+            // Case: Text without Template:RTT (should not change)
+            [
+                "text" => "Normal text without template",
+                "expected" => "Normal text without template"
+            ],
+            // Case: Template:RTT with spaces
+            [
+                "text" => "[[Template:RTT|Text with spaces]]",
+                "expected" => ""
+            ]
+        ];
+
+        foreach ($tests as $test) {
+            $result = remove_template_rtt_links($test['text']);
             $this->assertEqualCompare($test['expected'], $test['text'], $result);
         }
     }
