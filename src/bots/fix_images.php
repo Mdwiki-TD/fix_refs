@@ -1,0 +1,169 @@
+<?php
+
+namespace WpRefs\Bots\FixImages;
+
+/*
+usage:
+
+use function WpRefs\Bots\FixImages\check_commons_image_exists;
+use function WpRefs\Bots\FixImages\remove_missing_infobox_images;
+use function WpRefs\Bots\FixImages\remove_missing_inline_images;
+use function WpRefs\Bots\FixImages\remove_missing_images;
+
+*/
+
+/**
+ * Check if an image exists on Wikimedia Commons
+ * 
+ * @param string $filename The filename to check (without File: prefix)
+ * @return bool True if the image exists, false otherwise
+ */
+function check_commons_image_exists(string $filename): bool
+{
+    // Handle empty filenames
+    if (empty(trim($filename))) {
+        return false;
+    }
+
+    // Remove File: or Image: prefix if present
+    $filename = preg_replace('/^(File|Image):/i', '', $filename);
+    $filename = trim($filename);
+
+    if (empty($filename)) {
+        return false;
+    }
+
+    $url = "https://commons.wikimedia.org/w/api.php?" . http_build_query([
+        'action' => 'query',
+        'titles' => 'File:' . $filename,
+        'format' => 'json'
+    ]);
+
+    $response = @file_get_contents($url);
+    if ($response === false) {
+        return true; // Assume exists on API failure
+    }
+
+    $json = json_decode($response, true);
+    foreach ($json['query']['pages'] ?? [] as $page) {
+        return !isset($page['missing']);
+    }
+    return false;
+}
+
+/**
+ * Remove infobox images that don't exist on Commons
+ * Handles patterns like: |image = filename.png and |caption = text
+ * 
+ * @param string $text The wikitext to process
+ * @return string The processed wikitext
+ */
+function remove_missing_infobox_images(string $text): string
+{
+    // Pattern to match infobox image fields: |image = filename.png or |image2 = filename.png, etc.
+    // This pattern captures the field name (e.g., image, image2) and the filename
+    $pattern = '/^\s*\|(\s*image\d*\s*)=\s*([^\n]*?)\s*$/m';
+
+    // Collect fields to remove
+    $fieldsToRemove = [];
+    
+    preg_replace_callback($pattern, function ($matches) use (&$fieldsToRemove) {
+        $fullMatch = $matches[0];
+        $fieldName = trim($matches[1]);
+        $filename = trim($matches[2]);
+
+        // If empty or doesn't exist, mark for removal
+        if (empty($filename) || !check_commons_image_exists($filename)) {
+            // Add both image and caption fields to removal list
+            $fieldsToRemove[] = $fieldName;
+            
+            // The caption field would be like caption or caption2
+            $number = preg_replace('/^image(\d*)$/i', '$1', $fieldName);
+            $captionFieldName = 'caption' . $number;
+            $fieldsToRemove[] = $captionFieldName;
+        }
+
+        return $fullMatch;
+    }, $text);
+
+    // Remove the marked fields
+    foreach ($fieldsToRemove as $field) {
+        $fieldPattern = '/^\s*\|\s*' . preg_quote($field, '/') . '\s*=\s*[^\n]*\s*\n?/m';
+        $text = preg_replace($fieldPattern, '', $text);
+    }
+
+    return $text;
+}
+
+/**
+ * Remove inline [[File:...]] or [[Image:...]] images that don't exist on Commons
+ * Handles nested links in captions
+ * 
+ * @param string $text The wikitext to process
+ * @return string The processed wikitext
+ */
+function remove_missing_inline_images(string $text): string
+{
+    // Pattern to match [[File:...]] or [[Image:...]] with proper bracket counting
+    // This needs to handle nested [[links]] inside the caption
+    
+    $offset = 0;
+    while (preg_match('/\[\[(File|Image):([^\]|]+)/i', $text, $matches, PREG_OFFSET_CAPTURE, $offset)) {
+        $startPos = $matches[0][1];
+        $prefix = $matches[1][0];
+        $filename = $matches[2][0];
+        
+        // Find the matching closing brackets by counting bracket depth
+        $bracketDepth = 2; // We start with [[
+        $pos = $startPos + strlen($matches[0][0]);
+        $endPos = false;
+        
+        while ($pos < strlen($text) && $bracketDepth > 0) {
+            if ($text[$pos] === '[' && isset($text[$pos + 1]) && $text[$pos + 1] === '[') {
+                $bracketDepth += 2;
+                $pos += 2;
+            } elseif ($text[$pos] === ']' && isset($text[$pos + 1]) && $text[$pos + 1] === ']') {
+                $bracketDepth -= 2;
+                if ($bracketDepth === 0) {
+                    $endPos = $pos + 1;
+                    break;
+                }
+                $pos += 2;
+            } else {
+                $pos++;
+            }
+        }
+        
+        if ($endPos !== false) {
+            $fullImageBlock = substr($text, $startPos, $endPos - $startPos + 1);
+            
+            // Check if the image exists
+            if (!check_commons_image_exists($filename)) {
+                // Remove the entire image block
+                $text = substr($text, 0, $startPos) . substr($text, $endPos + 1);
+                $offset = $startPos;
+            } else {
+                // Move past this image
+                $offset = $endPos + 1;
+            }
+        } else {
+            // Malformed image tag, skip it
+            $offset = $startPos + 1;
+        }
+    }
+    
+    return $text;
+}
+
+/**
+ * Main function: Remove all missing images (both infobox and inline)
+ * 
+ * @param string $text The wikitext to process
+ * @return string The processed wikitext with missing images removed
+ */
+function remove_missing_images(string $text): string
+{
+    $text = remove_missing_infobox_images($text);
+    $text = remove_missing_inline_images($text);
+    return $text;
+}
