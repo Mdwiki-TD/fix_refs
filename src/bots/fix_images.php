@@ -12,6 +12,8 @@ use function WpRefs\Bots\FixImages\remove_missing_images;
 
 */
 
+use function WikiParse\Template\getTemplates;
+
 /**
  * Check if an image exists on Wikimedia Commons
  * 
@@ -54,16 +56,56 @@ function check_commons_image_exists(string $filename): bool
 /**
  * Remove infobox images that don't exist on Commons
  * Handles patterns like: |image = filename.png and |caption = text
+ * Uses WikiParse\Template\getTemplates for proper template parsing
+ * Falls back to regex for non-template infobox parameters
  * 
  * @param string $text The wikitext to process
  * @return string The processed wikitext
  */
 function remove_missing_infobox_images(string $text): string
 {
-    // Pattern to match infobox image fields: |image = filename.png or |image2 = filename.png, etc.
-    // This pattern captures the field name (e.g., image, image2) and the filename
+    // First, try to parse templates using getTemplates
+    $templates = getTemplates($text);
+    
+    // Process templates using the template parser
+    foreach ($templates as $template) {
+        $originalText = $template->getOriginalText();
+        $params = $template->getParameters();
+        $modified = false;
+        
+        // Check all image parameters (image, image2, image3, etc.)
+        foreach ($params as $paramName => $paramValue) {
+            // Match image parameters (case-insensitive)
+            if (preg_match('/^image(\d*)$/i', $paramName, $matches)) {
+                $imageNumber = $matches[1]; // Could be empty string for 'image', or '2', '3', etc.
+                $filename = trim($paramValue);
+                
+                // If empty or doesn't exist, remove it and corresponding caption
+                if (empty($filename) || !check_commons_image_exists($filename)) {
+                    $template->deleteParameter($paramName);
+                    
+                    // Also remove corresponding caption parameter
+                    $captionParam = 'caption' . $imageNumber;
+                    if (array_key_exists($captionParam, $params)) {
+                        $template->deleteParameter($captionParam);
+                    }
+                    
+                    $modified = true;
+                }
+            }
+        }
+        
+        // Replace the original template with the modified one
+        if ($modified) {
+            $newText = $template->toString();
+            $text = str_replace($originalText, $newText, $text);
+        }
+    }
+    
+    // Also handle non-template infobox parameters using regex
+    // This handles cases where infobox fields are not wrapped in a template
     $pattern = '/^\s*\|(\s*image\d*\s*)=([^\n]*)/m';
-
+    
     // Collect fields to remove
     $fieldsToRemove = [];
     
@@ -91,7 +133,7 @@ function remove_missing_infobox_images(string $text): string
         $fieldPattern = '/^\s*\|\s*' . preg_quote($field, '/') . '\s*=[^\n]*\n?/m';
         $text = preg_replace($fieldPattern, '', $text);
     }
-
+    
     return $text;
 }
 
