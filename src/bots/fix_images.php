@@ -62,7 +62,7 @@ function remove_missing_infobox_images(string $text): string
 {
     // Pattern to match infobox image fields: |image = filename.png or |image2 = filename.png, etc.
     // This pattern captures the field name (e.g., image, image2) and the filename
-    $pattern = '/^\s*\|(\s*image\d*\s*)=\s*([^\n]*?)\s*$/m';
+    $pattern = '/^\s*\|(\s*image\d*\s*)=([^\n]*)/m';
 
     // Collect fields to remove
     $fieldsToRemove = [];
@@ -88,7 +88,7 @@ function remove_missing_infobox_images(string $text): string
 
     // Remove the marked fields
     foreach ($fieldsToRemove as $field) {
-        $fieldPattern = '/^\s*\|\s*' . preg_quote($field, '/') . '\s*=\s*[^\n]*\s*\n?/m';
+        $fieldPattern = '/^\s*\|\s*' . preg_quote($field, '/') . '\s*=[^\n]*\n?/m';
         $text = preg_replace($fieldPattern, '', $text);
     }
 

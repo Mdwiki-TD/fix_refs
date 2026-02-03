@@ -9,10 +9,30 @@ use function WpRefs\Bots\FixImages\remove_missing_images;
 class fix_imagesTest extends MyFunctionTest
 {
     /**
+     * Check if we can reach the Wikimedia Commons API
+     */
+    private function canReachCommonsAPI(): bool
+    {
+        $url = "https://commons.wikimedia.org/w/api.php?action=query&titles=File:Test&format=json";
+        $context = stream_context_create([
+            'http' => [
+                'timeout' => 2,
+                'ignore_errors' => true
+            ]
+        ]);
+        $response = @file_get_contents($url, false, $context);
+        return $response !== false;
+    }
+
+    /**
      * Test that check_commons_image_exists returns true for a known existing image
      */
     public function testCheckCommonsImageExists()
     {
+        if (!$this->canReachCommonsAPI()) {
+            $this->markTestSkipped('Cannot reach Wikimedia Commons API');
+        }
+
         // Test with a well-known Commons image that should exist
         $result = check_commons_image_exists('AwareLogo.png');
         $this->assertTrue($result, 'AwareLogo.png should exist on Commons');
@@ -23,8 +43,12 @@ class fix_imagesTest extends MyFunctionTest
      */
     public function testCheckCommonsImageNotExists()
     {
+        if (!$this->canReachCommonsAPI()) {
+            $this->markTestSkipped('Cannot reach Wikimedia Commons API');
+        }
+
         // Test with an image that definitely doesn't exist
-        $result = check_commons_image_exists('NonExistentImageFileNameThatDoesNotExist12345.png');
+        $result = check_commons_image_exists('NonExistentImageFileNameThatDoesNotExist12345678901234567890.png');
         $this->assertFalse($result, 'Non-existent image should return false');
     }
 
@@ -39,9 +63,14 @@ class fix_imagesTest extends MyFunctionTest
 
     /**
      * TEST 1: Infobox image exists - no changes
+     * Note: This test requires API access and may be skipped in environments without internet
      */
     public function testInfoboxImageExists()
     {
+        if (!$this->canReachCommonsAPI()) {
+            $this->markTestSkipped('Cannot reach Wikimedia Commons API');
+        }
+
         $input = "|name             ={{PAGENAME}}\n|image            =AwareLogo.png\n|caption          =This is a valid image\n|specialty        =[[Orthopedics]]";
         
         $result = remove_missing_infobox_images($input);
@@ -52,10 +81,15 @@ class fix_imagesTest extends MyFunctionTest
 
     /**
      * TEST 2: Infobox image missing - remove image and caption
+     * Note: This test requires API access and may be skipped in environments without internet
      */
     public function testInfoboxImageMissing()
     {
-        $input = "|name             ={{PAGENAME}}\n|image            =Non_existent_image.png\n|caption          =This caption should be removed\n|specialty        =[[Orthopedics]]";
+        if (!$this->canReachCommonsAPI()) {
+            $this->markTestSkipped('Cannot reach Wikimedia Commons API');
+        }
+
+        $input = "|name             ={{PAGENAME}}\n|image            =Non_existent_image_xyz789.png\n|caption          =This caption should be removed\n|specialty        =[[Orthopedics]]";
         
         $expected = "|name             ={{PAGENAME}}\n|specialty        =[[Orthopedics]]";
         
@@ -80,10 +114,15 @@ class fix_imagesTest extends MyFunctionTest
 
     /**
      * TEST 4: Multiple infobox images - mixed existence
+     * Note: This test requires API access and may be skipped in environments without internet
      */
     public function testInfoboxMultipleImagesMixed()
     {
-        $input = "|name             ={{PAGENAME}}\n|image            =AwareLogo.png\n|caption          =Valid caption\n|image2           =Missing_image_xyz123.png\n|caption2         =This should be removed\n|specialty        =[[Orthopedics]]";
+        if (!$this->canReachCommonsAPI()) {
+            $this->markTestSkipped('Cannot reach Wikimedia Commons API');
+        }
+
+        $input = "|name             ={{PAGENAME}}\n|image            =AwareLogo.png\n|caption          =Valid caption\n|image2           =Missing_image_xyz123456.png\n|caption2         =This should be removed\n|specialty        =[[Orthopedics]]";
         
         $expected = "|name             ={{PAGENAME}}\n|image            =AwareLogo.png\n|caption          =Valid caption\n|specialty        =[[Orthopedics]]";
         
@@ -94,9 +133,14 @@ class fix_imagesTest extends MyFunctionTest
 
     /**
      * TEST 5: Inline image exists - no changes
+     * Note: This test requires API access and may be skipped in environments without internet
      */
     public function testInlineImageExists()
     {
+        if (!$this->canReachCommonsAPI()) {
+            $this->markTestSkipped('Cannot reach Wikimedia Commons API');
+        }
+
         $input = "This is some text with an image:\n[[File:AwareLogo.png|thumb|A valid image caption]]\nMore text here.";
         
         $result = remove_missing_inline_images($input);
@@ -106,10 +150,15 @@ class fix_imagesTest extends MyFunctionTest
 
     /**
      * TEST 6: Inline image missing - remove entire block
+     * Note: This test requires API access and may be skipped in environments without internet
      */
     public function testInlineImageMissing()
     {
-        $input = "This is some text with an image:\n[[File:Non_existent_image_xyz.png|thumb|This should be removed]]\nMore text here.";
+        if (!$this->canReachCommonsAPI()) {
+            $this->markTestSkipped('Cannot reach Wikimedia Commons API');
+        }
+
+        $input = "This is some text with an image:\n[[File:Non_existent_image_xyz654.png|thumb|This should be removed]]\nMore text here.";
         
         $expected = "This is some text with an image:\n\nMore text here.";
         
@@ -120,10 +169,15 @@ class fix_imagesTest extends MyFunctionTest
 
     /**
      * TEST 7: Multiple inline images - mixed existence
+     * Note: This test requires API access and may be skipped in environments without internet
      */
     public function testInlineMultipleImagesMixed()
     {
-        $input = "Start of article.\n[[File:AwareLogo.png|thumb|Keep this image]]\nSome middle text.\n[[File:Missing_file_xyz.jpg|left|200px|Remove this]]\nEnd of article.";
+        if (!$this->canReachCommonsAPI()) {
+            $this->markTestSkipped('Cannot reach Wikimedia Commons API');
+        }
+
+        $input = "Start of article.\n[[File:AwareLogo.png|thumb|Keep this image]]\nSome middle text.\n[[File:Missing_file_xyz987.jpg|left|200px|Remove this]]\nEnd of article.";
         
         $expected = "Start of article.\n[[File:AwareLogo.png|thumb|Keep this image]]\nSome middle text.\n\nEnd of article.";
         
@@ -134,10 +188,15 @@ class fix_imagesTest extends MyFunctionTest
 
     /**
      * TEST 8: Inline image with nested links in caption
+     * Note: This test requires API access and may be skipped in environments without internet
      */
     public function testInlineImageNestedLinks()
     {
-        $input = "[[File:Missing_image_nested_xyz.png|thumb|See [[Orthopedics]] for more info]]";
+        if (!$this->canReachCommonsAPI()) {
+            $this->markTestSkipped('Cannot reach Wikimedia Commons API');
+        }
+
+        $input = "[[File:Missing_image_nested_xyz321.png|thumb|See [[Orthopedics]] for more info]]";
         
         $expected = "";
         
@@ -148,10 +207,15 @@ class fix_imagesTest extends MyFunctionTest
 
     /**
      * TEST 9: Inline image using Image: prefix (alias) - missing
+     * Note: This test requires API access and may be skipped in environments without internet
      */
     public function testInlineImagePrefixMissing()
     {
-        $input = "[[Image:Non_existent_old_xyz.png|thumb|Old style image link]]";
+        if (!$this->canReachCommonsAPI()) {
+            $this->markTestSkipped('Cannot reach Wikimedia Commons API');
+        }
+
+        $input = "[[Image:Non_existent_old_xyz111.png|thumb|Old style image link]]";
         
         $expected = "";
         
@@ -162,9 +226,14 @@ class fix_imagesTest extends MyFunctionTest
 
     /**
      * TEST 10: Inline image exists using Image: prefix
+     * Note: This test requires API access and may be skipped in environments without internet
      */
     public function testInlineImagePrefixExists()
     {
+        if (!$this->canReachCommonsAPI()) {
+            $this->markTestSkipped('Cannot reach Wikimedia Commons API');
+        }
+
         $input = "[[Image:AwareLogo.png|thumb|Old style but valid]]";
         
         $result = remove_missing_inline_images($input);
@@ -174,10 +243,15 @@ class fix_imagesTest extends MyFunctionTest
 
     /**
      * TEST 11: Both infobox and inline images - mixed
+     * Note: This test requires API access and may be skipped in environments without internet
      */
     public function testCombinedMixed()
     {
-        $input = "{{Infobox disease\n|name             ={{PAGENAME}}\n|image            =Non_existent_infobox_xyz.png\n|caption          =Remove this caption\n|specialty        =[[Orthopedics]]\n}}\n\nThis article discusses the condition.\n\n[[File:AwareLogo.png|thumb|right|A valid inline image]]\n\nMore information here.\n\n[[File:Another_missing_xyz.jpg|left|Remove this too]]\n\nEnd of article.";
+        if (!$this->canReachCommonsAPI()) {
+            $this->markTestSkipped('Cannot reach Wikimedia Commons API');
+        }
+
+        $input = "{{Infobox disease\n|name             ={{PAGENAME}}\n|image            =Non_existent_infobox_xyz222.png\n|caption          =Remove this caption\n|specialty        =[[Orthopedics]]\n}}\n\nThis article discusses the condition.\n\n[[File:AwareLogo.png|thumb|right|A valid inline image]]\n\nMore information here.\n\n[[File:Another_missing_xyz333.jpg|left|Remove this too]]\n\nEnd of article.";
         
         $expected = "{{Infobox disease\n|name             ={{PAGENAME}}\n|specialty        =[[Orthopedics]]\n}}\n\nThis article discusses the condition.\n\n[[File:AwareLogo.png|thumb|right|A valid inline image]]\n\nMore information here.\n\n\n\nEnd of article.";
         
@@ -200,9 +274,14 @@ class fix_imagesTest extends MyFunctionTest
 
     /**
      * TEST 13: Complex nested caption with existing image
+     * Note: This test requires API access and may be skipped in environments without internet
      */
     public function testComplexNestedCaption()
     {
+        if (!$this->canReachCommonsAPI()) {
+            $this->markTestSkipped('Cannot reach Wikimedia Commons API');
+        }
+
         $input = "[[File:AwareLogo.png|thumb|upright=1.3|Logo of the [[WHO]] Aware [[Classification]]]]";
         
         $result = remove_missing_inline_images($input);
