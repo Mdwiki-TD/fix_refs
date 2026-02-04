@@ -45,7 +45,7 @@ function add_missing_params_to_choroba_infobox($text)
         $name = $temp->getStripName();
         // ---
         // Check if template name matches "Choroba infobox" (case-insensitive)
-        if (strcasecmp($name, "Choroba infobox") === 0) {
+        if (strtolower($name) === "choroba infobox") {
             // ---
             echo_test("Found Choroba infobox template\n");
             // ---

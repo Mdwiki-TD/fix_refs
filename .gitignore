@@ -14,9 +14,3 @@ src/helps_bots/output.txt
 /tests/texts/**/output.txt
 z.php
 /.claude
-*.pyc
-/python_src/.claude
-/python_src/src/fix_refs.egg-info
-python_src/tests/es_bots/texts/1/output.txt
-python_src/tests/es_bots/texts/2/output.txt
-python_src/tests/infoboxes/texts_infobox2/output.txt
