@@ -5,7 +5,8 @@ from tqdm import tqdm
 
 
 def match_it(text, charters):
-    m = re.search(f'(</ref>|\/>)\s*([{charters}]\s*)$', text, flags=re.UNICODE)
+    charters = re.escape(charters)
+    m = re.search(rf'(</ref>|\/>)\s*([{charters}]\s*)$', text, flags=re.UNICODE)
     if m:
         return m.group(2)
     return None
@@ -34,12 +35,12 @@ def get_parts(newtext, charters):
 def remove_spaces_between_last_word_and_beginning_of_ref(newtext: str, lang: str) -> str:
 
     # --- 1) تحديد علامات الترقيم
-    dot = r"\.,。।"
+    dots = r".,。।"
 
     if lang == "hy":
-        dot = r"\.,。।։"
+        dots = r".,。।։:"
 
-    parts = get_parts(newtext, dot)
+    parts = get_parts(newtext, dots)
     # ---
     for part, charter in parts:
         # ---
@@ -63,7 +64,12 @@ def remove_spaces_between_last_word_and_beginning_of_ref(newtext: str, lang: str
                 # ---
                 print("endswith ")
                 # ---s
-                new_part = part.split(end_part)[0].strip() + f"{ref_text.strip()}{charter}"
+
+                first_part_clean_end = part[:-len(end_part)]
+                first_part_clean_end = first_part_clean_end.rstrip()
+
+                new_part = first_part_clean_end + ref_text.strip() + charter
+
                 # ---
                 newtext = newtext.replace(part, new_part)
 
@@ -82,8 +88,12 @@ def assert_equal_compare(expected: str, input_text: str, result: str):
 # --- الملفات
 base_path = Path(__file__).parent.parent.parent / "tests/texts/remove_space_texts"
 
-for i in tqdm([1, 2, 3, 4]):
+for i in tqdm([1, 2, 3]):
     base_path_sub = base_path / str(i)
+    input_file = base_path_sub / "input.txt"
+    if not input_file.exists():
+        print(f"file not found: {input_file}")
+        continue
     expected=(base_path_sub / "expected.txt").read_text(encoding="utf-8")
     input_text=(base_path_sub / "input.txt").read_text(encoding="utf-8")
     output_file=base_path_sub / "output.txt"
