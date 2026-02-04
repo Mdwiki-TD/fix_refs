@@ -8,7 +8,7 @@ use function WpRefs\EsBots\es_refs\mv_es_refs;
 */
 
 use function WikiParse\Template\getTemplates;
-use function WpRefs\Parse\Reg_Citations\getShortCitations;
+use function WpRefs\Parse\Reg_Citations\get_short_citations;
 use function WpRefs\Parse\Citations\getCitationsOld;
 
 function get_refs(string $text): array
@@ -57,7 +57,7 @@ function get_refs(string $text): array
 function check_short_refs($line)
 {
     // ---
-    $shorts = getShortCitations($line);
+    $shorts = get_short_citations($line);
     // ---
     foreach ($shorts as $short) {
         $line = str_replace($short["tag"], "", $line);

@@ -10,7 +10,7 @@ use function WpRefs\ExpendRefs\refs_expend_work;
 */
 
 use function WpRefs\Parse\Reg_Citations\get_full_refs;
-use function WpRefs\Parse\Reg_Citations\getShortCitations;
+use function WpRefs\Parse\Reg_Citations\get_short_citations;
 
 function refs_expend_work($first, $alltext = "")
 {
@@ -20,7 +20,7 @@ function refs_expend_work($first, $alltext = "")
     $refs = get_full_refs($alltext);
     // echo  "get_full_refs:" . count($refs) . "<br>";
 
-    $short_refs = getShortCitations($first);
+    $short_refs = get_short_citations($first);
     // echo  "short_refs:" . count($short_refs) . "<br>";
 
     foreach ($short_refs as $cite) {
