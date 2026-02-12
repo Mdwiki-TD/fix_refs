@@ -11,7 +11,7 @@ use function WpRefs\MissingRefs\fix_missing_refs;
 
 use function WpRefs\TestBot\echo_test;
 use function WpRefs\TestBot\echo_debug;
-use function WpRefs\Parse\Reg_Citations\getShortCitations;
+use function WpRefs\Parse\Reg_Citations\get_short_citations;
 use function WpRefs\Parse\Reg_Citations\get_full_refs;
 use function WpRefs\MdCat\get_url_curl;
 
@@ -122,7 +122,7 @@ function refs_expend($short_refs, $text, $alltext)
 
 function find_empty_short($text)
 {
-    $shorts = getShortCitations($text);
+    $shorts = get_short_citations($text);
     $fulls = get_full_refs($text);
     $empty_refs = [];
     foreach ($shorts as $cite) {
