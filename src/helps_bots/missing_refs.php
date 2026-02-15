@@ -23,7 +23,7 @@ function get_full_text_url($sourcetitle, $mdwiki_revid)
         : "https://mdwikicx.toolforge.org";
 
     if (empty($mdwiki_revid) || $mdwiki_revid == 0) {
-        $json_file = "$server_path/revisions_new/json_data.json";
+        $json_file = "$server_path/revisions_new1/json_data.json";
         $data = json_decode(get_url_curl($json_file), true) ?? [];
         echo_test("url" . $json_file);
         echo_test("count of data: " . count($data));
@@ -35,7 +35,7 @@ function get_full_text_url($sourcetitle, $mdwiki_revid)
         return "";
     }
 
-    $full_url = "$server_path/revisions_new/$mdwiki_revid/wikitext.txt";
+    $full_url = "$server_path/revisions_new1/$mdwiki_revid/wikitext.txt";
     echo_test("url" . $full_url);
     $text = get_url_curl($full_url);
     if (!$text) {
@@ -48,7 +48,7 @@ function get_full_text_url($sourcetitle, $mdwiki_revid)
 
 function find_mdwiki_revid($sourcetitle, $path)
 {
-    $json_file = "$path/revisions_new/json_data.json";
+    $json_file = "$path/revisions_new1/json_data.json";
     if (!is_file($json_file)) {
         return "";
     }
@@ -82,7 +82,7 @@ function get_full_text($sourcetitle, $mdwiki_revid)
         return "";
     }
     // ---
-    $file = "$path/revisions_new/$mdwiki_revid/wikitext.txt";
+    $file = "$path/revisions_new1/$mdwiki_revid/wikitext.txt";
     // ---
     if (!file_exists($file)) {
         $file = dirname(__DIR__, 2) . "/resources/revisions/$mdwiki_revid/wikitext.txt";
