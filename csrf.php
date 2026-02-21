@@ -19,6 +19,7 @@ namespace WpRefs\csrf;
 if (session_status() === PHP_SESSION_NONE) {
 	session_start();
 }
+const CSRF_SESSION_KEY = CSRF_SESSION_KEY;
 
 /**
  * Verify the CSRF token submitted with a POST request.
@@ -30,11 +31,9 @@ if (session_status() === PHP_SESSION_NONE) {
  */
 function verify_csrf_token(): bool
 {
-	$csrf_key = "csrf_tokens";
-
 	// Initialize empty token array if not set
-	if (!isset($_SESSION[$csrf_key]) || !is_array($_SESSION[$csrf_key])) {
-		$_SESSION[$csrf_key] = [];
+	if (!isset($_SESSION[CSRF_SESSION_KEY]) || !is_array($_SESSION[CSRF_SESSION_KEY])) {
+		$_SESSION[CSRF_SESSION_KEY] = [];
 		// Security: No tokens in session means form was not properly initialized
 		return false;
 	}
@@ -48,10 +47,10 @@ function verify_csrf_token(): bool
 	}
 
 	// Check if token exists in the valid tokens list
-	if (in_array($submitted_token, $_SESSION[$csrf_key], true)) {
+	if (in_array($submitted_token, $_SESSION[CSRF_SESSION_KEY], true)) {
 		// Valid token - remove it (single use)
-		$_SESSION[$csrf_key] = array_values(
-			array_diff($_SESSION[$csrf_key], [$submitted_token])
+		$_SESSION[CSRF_SESSION_KEY] = array_values(
+			array_diff($_SESSION[CSRF_SESSION_KEY], [$submitted_token])
 		);
 		return true;
 	}
@@ -71,9 +70,9 @@ function verify_csrf_token(): bool
 function generate_csrf_token(): string
 {
 	$token = bin2hex(random_bytes(32));
-	if (!isset($_SESSION['csrf_tokens'])) {
-		$_SESSION['csrf_tokens'] = [];
+	if (!isset($_SESSION[CSRF_SESSION_KEY])) {
+		$_SESSION[CSRF_SESSION_KEY] = [];
 	}
-	$_SESSION['csrf_tokens'][] = $token;
+	$_SESSION[CSRF_SESSION_KEY][] = $token;
 	return $token;
 }
