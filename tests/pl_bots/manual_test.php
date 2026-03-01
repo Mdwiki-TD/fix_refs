@@ -2,7 +2,7 @@
 
 // Simple manual test for Polish infobox functionality
 
-require_once __DIR__ . '/../../fix_src/include_files.php';
+require_once __DIR__ . '/../../src/fix_src/include_files.php';
 
 use function WpRefs\PL\FixPlInfobox\add_missing_params_to_choroba_infobox;
 use function WpRefs\PL\FixPlInfobox\pl_fixes;
