@@ -19,7 +19,7 @@ namespace WpRefs\csrf;
 if (session_status() === PHP_SESSION_NONE) {
 	session_start();
 }
-const CSRF_SESSION_KEY = CSRF_SESSION_KEY;
+const CSRF_SESSION_KEY = "csrf_tokens";
 
 /**
  * Verify the CSRF token submitted with a POST request.
