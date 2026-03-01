@@ -1,9 +1,9 @@
 <?php
 
-foreach (glob(__DIR__ . "/fix_src/DataModel/*.php") as $filename) {
+foreach (glob(__DIR__ . "/src/DataModel/*.php") as $filename) {
     include_once $filename;
 }
-foreach (glob(__DIR__ . "/fix_src/*.php") as $filename) {
+foreach (glob(__DIR__ . "/src/*.php") as $filename) {
     include_once $filename;
 }
 foreach (glob(__DIR__ . "/*.php") as $filename) {
