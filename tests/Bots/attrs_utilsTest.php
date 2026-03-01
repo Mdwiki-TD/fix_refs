@@ -54,7 +54,6 @@ class attrs_utilsTest extends MyFunctionTest
     }
 
     /**
-     * @dataProvider attributesProvider
      */
     public function testParseAttributes()
     {
@@ -65,7 +64,6 @@ class attrs_utilsTest extends MyFunctionTest
     }
 
     /**
-     * @dataProvider attributesProvider
      */
     public function testGetAttrs()
     {

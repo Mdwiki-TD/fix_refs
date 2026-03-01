@@ -2,7 +2,7 @@
 
 // Debug test to see what parameters are in the template
 
-require_once __DIR__ . '/../../src/include_files.php';
+require_once __DIR__ . '/../../src/fix_src/include_files.php';
 
 use function WikiParse\Template\getTemplates;
 
@@ -22,7 +22,7 @@ $temps = getTemplates($input);
 foreach ($temps as $temp) {
     $name = $temp->getStripName();
     echo "Template name: $name\n";
-    
+
     $params = $temp->getParameters();
     echo "Parameters:\n";
     foreach ($params as $key => $value) {

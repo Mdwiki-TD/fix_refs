@@ -11,9 +11,9 @@ error_reporting(E_ALL);
 require __DIR__ . '/../vendor/autoload.php';
 
 // تحميل ملف include_files.php
-require __DIR__ . '/../work.php';
+require __DIR__ . '/../src/work.php';
 
-require __DIR__ . '/../src/include_files.php';
+require __DIR__ . '/../src/fix_src/include_files.php';
 
 use PHPUnit\Framework\TestCase;
 
