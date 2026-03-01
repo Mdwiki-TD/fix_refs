@@ -15,7 +15,7 @@ use function WpRefs\FixPage\DoChangesToText1;
 // $text = DoChangesToText1($sourcetitle, $text, $lang, $mdwiki_revid);
 */
 
-include_once __DIR__ . '/src/include_files.php';
+include_once __DIR__ . '/fix_src/include_files.php';
 
 use function WpRefs\WprefText\fix_page;
 use function WpRefs\TestBot\echo_test;

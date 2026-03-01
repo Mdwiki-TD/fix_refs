@@ -2,7 +2,7 @@
 
 // Integration test for Polish language fixes in main workflow
 
-require_once __DIR__ . '/../../src/include_files.php';
+require_once __DIR__ . '/../../fix_src/include_files.php';
 
 use function WpRefs\WprefText\fix_page;
 

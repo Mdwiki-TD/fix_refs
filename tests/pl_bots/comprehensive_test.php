@@ -2,7 +2,7 @@
 
 // Comprehensive test to verify Polish language fixes work correctly
 
-require_once __DIR__ . '/../../src/include_files.php';
+require_once __DIR__ . '/../../fix_src/include_files.php';
 
 use function WpRefs\WprefText\fix_page;
 
@@ -84,11 +84,11 @@ $failed = 0;
 foreach ($test_cases as $index => $test) {
     echo "Test " . ($index + 1) . ": " . $test['name'] . "\n";
     echo str_repeat('-', 60) . "\n";
-    
+
     $result = fix_page($test['input'], "Test Article", false, true, false, $test['lang'], "", "");
-    
+
     $all_checks_passed = true;
-    
+
     // Check expected parameters are present
     if (!empty($test['expected_params'])) {
         foreach ($test['expected_params'] as $param) {
@@ -99,7 +99,7 @@ foreach ($test_cases as $index => $test) {
             }
         }
     }
-    
+
     // Check parameters that should not be added
     if (!empty($test['should_not_add'])) {
         foreach ($test['should_not_add'] as $param) {
@@ -110,7 +110,7 @@ foreach ($test_cases as $index => $test) {
             }
         }
     }
-    
+
     // Check parameters are not duplicated
     if (!empty($test['not_duplicated'])) {
         foreach ($test['not_duplicated'] as $param) {
@@ -121,7 +121,7 @@ foreach ($test_cases as $index => $test) {
             }
         }
     }
-    
+
     if ($all_checks_passed) {
         echo "  ✅ PASS\n";
         $passed++;
@@ -134,7 +134,7 @@ foreach ($test_cases as $index => $test) {
             $input_preview .= "\n  ... (" . (count($input_lines) - 5) . " more lines)";
         }
         echo "  Input:\n  $input_preview\n";
-        
+
         // Show result (preserve template structure)
         $result_lines = explode("\n", $result);
         $result_preview = implode("\n  ", array_slice($result_lines, 0, 10));

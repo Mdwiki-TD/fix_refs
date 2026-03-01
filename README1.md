@@ -7,32 +7,32 @@ This project is a PHP-based tool designed to process and correct Wikipedia artic
 
 ### 1. Core Controller
 - **Main entry point:** `index.php` (root directory)
-- **Additional controller logic:** `src/index.php`
+- **Additional controller logic:** `fix_src/index.php`
 - **Reads configuration:** `fixwikirefs.json`
 - **Coordinates execution:** Calls `fix_page_here` function
 
 ### 2. WikiParse Module
 - **Responsible for parsing Wikipedia syntax elements**
-- **Located in:** `src/WikiParse`
+- **Located in:** `fix_src/WikiParse`
 - **Submodules:**
-  - **Parsing logic:** `src/WikiParse/src`
-  - **Data models:** `src/WikiParse/src/DataModel`
+  - **Parsing logic:** `fix_src/WikiParse/fix_src`
+  - **Data models:** `fix_src/WikiParse/fix_src/DataModel`
     - `Citation.php`
     - `ExternalLink.php`
     - `InternalLink.php`
     - `Table.php`
     - `Template.php`
 - **Specific parsing files:**
-  - `src/WikiParse/Category.php`
-  - `src/WikiParse/Citations.php`
-  - `src/WikiParse/Citations_reg.php`
-  - `src/WikiParse/Template.php`
-  - `src/WikiParse/include_it.php`
-  - Various parser files under `src/WikiParse/src`
+  - `fix_src/WikiParse/Category.php`
+  - `fix_src/WikiParse/Citations.php`
+  - `fix_src/WikiParse/Citations_reg.php`
+  - `fix_src/WikiParse/Template.php`
+  - `fix_src/WikiParse/include_it.php`
+  - Various parser files under `fix_src/WikiParse/fix_src`
 
 ### 3. Bot Module
 - **Automated scripts for text fixes**
-- **Located in:** `src/bots`
+- **Located in:** `fix_src/bots`
 - **Includes:**
   - `es_months.php`
   - `es_refs.php`
@@ -43,7 +43,7 @@ This project is a PHP-based tool designed to process and correct Wikipedia artic
 
 ### 4. Additional Utility Scripts
 - **Provides auxiliary functionalities**
-- **Located in:** `src/`
+- **Located in:** `fix_src/`
 - **Includes:**
   - `infobox.php`, `infobox2.php`
   - `md_cat.php`
@@ -65,7 +65,7 @@ This project is a PHP-based tool designed to process and correct Wikipedia artic
    - The **WikiParse Module** identifies elements such as citations, links, and templates.
    - Uses **DataModel** classes (`Citation.php`, `ExternalLink.php`, etc.) to structure parsed data.
 3. **Automated Fixes**
-   - **Bot scripts** (`src/bots`) apply language-specific rules and remove duplicate references.
+   - **Bot scripts** (`fix_src/bots`) apply language-specific rules and remove duplicate references.
 4. **Final Output**
    - The **fixed text** is returned to the main script.
 

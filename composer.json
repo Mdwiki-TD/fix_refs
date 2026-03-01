@@ -10,7 +10,7 @@
     "license": "GPL-3.0-or-later",
     "autoload": {
         "psr-4": {
-            "WpRefs\\": "src/"
+            "WpRefs\\": "src/fix_src/"
         }
     },
     "authors": [
