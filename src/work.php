@@ -99,7 +99,6 @@ function fix_page_here($text, $title, $langcode, $sourcetitle, $mdwiki_revid)
     // ---
     return $text;
 }
-// $text = DoChangesToText1($sourcetitle, $title, $text, $lang, $mdwiki_revid);
 
 function DoChangesToText1($sourcetitle, $title, $text, $lang, $mdwiki_revid)
 {
