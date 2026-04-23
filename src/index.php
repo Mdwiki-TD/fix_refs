@@ -70,9 +70,9 @@ function make_result($lang, $title, $sourcetitle, $mdwiki_revid)
         $text,
         $lang,
         $mdwiki_revid,
-        $move_dots = null,
-        $expand = null,
-        $add_en_lang = null,
+        null,
+        null,
+        null,
     );
     //---
     $new_text_sanitized = htmlspecialchars($new_text, ENT_QUOTES, 'UTF-8');

@@ -43,9 +43,9 @@ if (!empty($lang) && !empty($title) && !empty($text)) {
         $text,
         $lang,
         $mdwiki_revid,
-        $move_dots = null,
-        $expand = null,
-        $add_en_lang = null,
+        null,
+        null,
+        null,
     );
     if (trim($new_text) === trim($text)) {
         $final_text = 'no changes';
