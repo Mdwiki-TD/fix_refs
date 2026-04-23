@@ -114,7 +114,7 @@ function fix_page_with_setting(
     $mdwiki_revid,
     $move_dots = null,
     $expand = null,
-    $add_en_lang = null,
+    $add_en_lang = null
 ) {
     // ---
     if ($move_dots === null && $expand === null && $add_en_lang === null) {
