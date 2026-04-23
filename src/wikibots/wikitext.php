@@ -16,6 +16,7 @@ use function WpRefs\WikiText\get_wikipedia_text;
 
 function from_api($title, $lang)
 {
+    $usr_agent = 'WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)';
     $url = "https://{$lang}.wikipedia.org/w/api.php";
     $data = [
         'action' => 'query',
@@ -30,6 +31,7 @@ function from_api($title, $lang)
 
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_USERAGENT, $usr_agent);
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data, '', '&', PHP_QUERY_RFC3986));
     $response = curl_exec($ch);
