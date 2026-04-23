@@ -1,20 +1,21 @@
 <?php
-/*
 
-use function WpRefs\FixPage\DoChangesToText1;
-
-*/
 if (!empty($_GET['test'] ?? $_POST['test'] ?? '') || $_SERVER['SERVER_NAME'] == 'localhost') {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 }
 
+use function WpRefs\FixPage\fix_page_with_setting;
+use function WpRefs\WikiText\get_wikipedia_text;
+use function WpRefs\csrf\generate_csrf_token;
+use function WpRefs\csrf\verify_csrf_token; // if (verify_csrf_token())  {
+
 $header_path = __DIR__ . '/../header.php';
 
 if (!file_exists($header_path)) {
-    // "I:\mdwiki\mdwiki\public_html\header.php"
-    $header_path = __DIR__ . '/../mdwiki/public_html/header.php';
+    // "I:\MD_TOOLS\MDWIKI_MAIN_REPO\public_html\header.php"
+    $header_path = dirname(dirname(dirname(dirname(__DIR__)))) . '/MDWIKI_MAIN_REPO/public_html/header.php';
 }
 
 include_once $header_path;
@@ -35,10 +36,6 @@ include_once __DIR__ . '/work.php';
 include_once __DIR__ . '/wikibots/wikitext.php';
 // include_once __DIR__ . '/wikibots/save.php';
 
-use function WpRefs\FixPage\DoChangesToText1;
-use function WpRefs\WikiText\get_wikipedia_text;
-use function WpRefs\csrf\generate_csrf_token;
-use function WpRefs\csrf\verify_csrf_token; // if (verify_csrf_token())  {
 
 echo "
     <div class='card'>
@@ -67,7 +64,16 @@ function make_result($lang, $title, $sourcetitle, $mdwiki_revid)
         HTML;
     }
     // ---
-    $new_text = DoChangesToText1($sourcetitle, $title, $text, $lang, $mdwiki_revid);
+    $new_text = fix_page_with_setting(
+        $sourcetitle,
+        $title,
+        $text,
+        $lang,
+        $mdwiki_revid,
+        $move_dots = null,
+        $expand = null,
+        $add_en_lang = null,
+    );
     //---
     $new_text_sanitized = htmlspecialchars($new_text, ENT_QUOTES, 'UTF-8');
     //---
