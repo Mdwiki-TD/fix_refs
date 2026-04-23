@@ -10,6 +10,11 @@ if (!empty($_GET['test'] ?? $_POST['test'] ?? '') || $_SERVER['SERVER_NAME'] == 
     error_reporting(E_ALL);
 }
 
+use function WpRefs\FixPage\DoChangesToText1;
+use function WpRefs\WikiText\get_wikipedia_text;
+use function WpRefs\csrf\generate_csrf_token;
+use function WpRefs\csrf\verify_csrf_token; // if (verify_csrf_token())  {
+
 $header_path = __DIR__ . '/../header.php';
 
 if (!file_exists($header_path)) {
@@ -35,10 +40,6 @@ include_once __DIR__ . '/work.php';
 include_once __DIR__ . '/wikibots/wikitext.php';
 // include_once __DIR__ . '/wikibots/save.php';
 
-use function WpRefs\FixPage\DoChangesToText1;
-use function WpRefs\WikiText\get_wikipedia_text;
-use function WpRefs\csrf\generate_csrf_token;
-use function WpRefs\csrf\verify_csrf_token; // if (verify_csrf_token())  {
 
 echo "
     <div class='card'>

@@ -7,13 +7,6 @@ if (isset($_GET['test']) || (($_SERVER['SERVER_NAME'] ?? '') === 'localhost')) {
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 }
-/*
-usage:
-
-use function WpRefs\FixPage\fix_page_here;
-use function WpRefs\FixPage\DoChangesToText1;
-// $text = DoChangesToText1($sourcetitle, $text, $lang, $mdwiki_revid);
-*/
 
 include_once __DIR__ . '/fix_src/include_files.php';
 
@@ -81,18 +74,14 @@ function load_settings_new()
     return $new;
 }
 
-function fix_page_here($text, $title, $langcode, $sourcetitle, $mdwiki_revid)
+function fix_page_no_setting($text, $title, $langcode, $sourcetitle, $mdwiki_revid)
 {
     $setting = load_settings_new();
     // ---
     $lang_default = isset($setting[$langcode]) ? $setting[$langcode] : [];
     // ---
-    // if (empty($lang_default)) { echo 'no settings for ' . $langcode; };
-    // ---
-    // var_export($lang_default);
-    // ---
     $move_dots = isset($lang_default['move_dots']) && $lang_default['move_dots'] == 1;
-    $expand = (isset($lang_default['expend']) && $lang_default['expend'] == 1) || true;
+    $expand = true; // (isset($lang_default['expend']) && $lang_default['expend'] == 1);
     $add_en_lang = isset($lang_default['add_en_lang']) && $lang_default['add_en_lang'] == 1;
     // ---
     $text = fix_page($text, $title, $move_dots, $expand, $add_en_lang, $langcode, $sourcetitle, $mdwiki_revid);
@@ -103,7 +92,19 @@ function fix_page_here($text, $title, $langcode, $sourcetitle, $mdwiki_revid)
 function DoChangesToText1($sourcetitle, $title, $text, $lang, $mdwiki_revid)
 {
     // ---
-    $newtext = fix_page_here($text, $title, $lang, $sourcetitle, $mdwiki_revid);
+    $newtext = fix_page_no_setting($text, $title, $lang, $sourcetitle, $mdwiki_revid);
+    // ---
+    if (empty($newtext)) {
+        $newtext = $text;
+    }
+    // ---
+    return $newtext;
+}
+
+function fix_page_with_setting($sourcetitle, $title, $text, $lang, $mdwiki_revid, $move_dots, $expand, $add_en_lang)
+{
+    // ---
+    $newtext = fix_page($text, $title, $move_dots, $expand, $add_en_lang, $lang, $sourcetitle, $mdwiki_revid);
     // ---
     if (empty($newtext)) {
         $newtext = $text;
