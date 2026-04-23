@@ -8,8 +8,8 @@ if (isset($_GET['test']) || $_SERVER['SERVER_NAME'] == 'localhost') {
 $header_path = __DIR__ . '/../header.php';
 
 if (!file_exists($header_path)) {
-    // "I:\mdwiki\mdwiki\public_html\header.php"
-    $header_path = __DIR__ . '/../mdwiki/public_html/header.php';
+    // "I:\MD_TOOLS\MDWIKI_MAIN_REPO\public_html\header.php"
+    $header_path = dirname(dirname(dirname(dirname(__DIR__)))) . '/MDWIKI_MAIN_REPO/public_html/header.php';
 }
 
 include_once $header_path;

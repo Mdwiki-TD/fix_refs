@@ -89,8 +89,13 @@ function fix_page_no_setting($text, $title, $langcode, $sourcetitle, $mdwiki_rev
     return $text;
 }
 
-function DoChangesToText1($sourcetitle, $title, $text, $lang, $mdwiki_revid)
-{
+function DoChangesToText1(
+    $sourcetitle,
+    $title,
+    $text,
+    $lang,
+    $mdwiki_revid
+) {
     // ---
     $newtext = fix_page_no_setting($text, $title, $lang, $sourcetitle, $mdwiki_revid);
     // ---
@@ -101,10 +106,22 @@ function DoChangesToText1($sourcetitle, $title, $text, $lang, $mdwiki_revid)
     return $newtext;
 }
 
-function fix_page_with_setting($sourcetitle, $title, $text, $lang, $mdwiki_revid, $move_dots, $expand, $add_en_lang)
-{
+function fix_page_with_setting(
+    $sourcetitle,
+    $title,
+    $text,
+    $lang,
+    $mdwiki_revid,
+    $move_dots = null,
+    $expand = null,
+    $add_en_lang = null,
+) {
     // ---
-    $newtext = fix_page($text, $title, $move_dots, $expand, $add_en_lang, $lang, $sourcetitle, $mdwiki_revid);
+    if ($move_dots === null && $expand === null && $add_en_lang === null) {
+        $newtext = fix_page_no_setting($text, $title, $lang, $sourcetitle, $mdwiki_revid);
+    } else {
+        $newtext = fix_page($text, $title, $move_dots, $expand, $add_en_lang, $lang, $sourcetitle, $mdwiki_revid);
+    }
     // ---
     if (empty($newtext)) {
         $newtext = $text;
