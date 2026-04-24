@@ -29,7 +29,7 @@ $user = $GLOBALS['global_username'] ?? '';
 // ---
 $submit_or_login = (!empty($user))
     ? "<input class='btn btn-outline-primary' type='submit' value='start'>"
-    : "<a class='btn btn-outline-primary' href='/auth/index.php?a=login'>login</a>";
+    : "<a class='btn btn-outline-primary' href='/auth/login.php'>login</a>";
 // ---
 include_once __DIR__ . '/csrf.php';
 include_once __DIR__ . '/work.php';
