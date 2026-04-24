@@ -29,7 +29,7 @@ $user = $GLOBALS['global_username'] ?? '';
 // ---
 $submit_or_login = (!empty($user))
     ? "<input class='btn btn-outline-primary' type='submit' value='start'>"
-    : "<a class='btn btn-outline-primary' href='/auth/index.php?a=login'>login</a>";
+    : "<a class='btn btn-outline-primary' href='/auth/login.php'>login</a>";
 // ---
 include_once __DIR__ . '/csrf.php';
 include_once __DIR__ . '/work.php';
@@ -70,9 +70,9 @@ function make_result($lang, $title, $sourcetitle, $mdwiki_revid)
         $text,
         $lang,
         $mdwiki_revid,
-        $move_dots = null,
-        $expand = null,
-        $add_en_lang = null,
+        null,
+        null,
+        null,
     );
     //---
     $new_text_sanitized = htmlspecialchars($new_text, ENT_QUOTES, 'UTF-8');
