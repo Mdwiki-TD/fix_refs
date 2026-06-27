@@ -10,48 +10,48 @@ Fix Refs automates the cleanup and standardization of `<ref>` tags, citation tem
 
 ### Main Features
 
-- **Reference Deduplication** - Detects and removes duplicate `<ref>` tags, consolidating them with `name` attributes
-- **Missing Reference Recovery** - Expands short/self-closing `<ref name="..." />` tags by fetching full reference content from the source MDWiki revision
-- **Citation Template Localization** - Translates English citation templates (e.g., `{{cite web}}`) to language-specific equivalents (e.g., `{{cita web}}` for Spanish)
-- **Parameter Renaming** - Maps English citation parameters to localized names (e.g., `title` -> `título`, `access-date` -> `fechaacceso`)
-- **Month Localization** - Converts English month names in citation dates to Portuguese and Spanish
-- **Punctuation Normalization** - Moves trailing punctuation (`.`, `,`, `。`, `।`) after reference tags to follow MediaWiki conventions
-- **Language Parameter Injection** - Adds `|language=en` to citation templates that lack a language parameter
-- **Infobox Expansion** - Reformats compact infobox templates into multi-line readable format
-- **Category Management** - Adds `[[Category:Translated from MDWiki]]` (or localized equivalent) to translated articles
-- **Section Title Translation** - Localizes "References" section headings for Croatian, Swahili, and Russian
-- **CSRF Protection** - Token-based form protection for the web interface
+-   **Reference Deduplication** - Detects and removes duplicate `<ref>` tags, consolidating them with `name` attributes
+-   **Missing Reference Recovery** - Expands short/self-closing `<ref name="..." />` tags by fetching full reference content from the source MDWiki revision
+-   **Citation Template Localization** - Translates English citation templates (e.g., `{{cite web}}`) to language-specific equivalents (e.g., `{{cita web}}` for Spanish)
+-   **Parameter Renaming** - Maps English citation parameters to localized names (e.g., `title` -> `título`, `access-date` -> `fechaacceso`)
+-   **Month Localization** - Converts English month names in citation dates to Portuguese and Spanish
+-   **Punctuation Normalization** - Moves trailing punctuation (`.`, `,`, `。`, `।`) after reference tags to follow MediaWiki conventions
+-   **Language Parameter Injection** - Adds `|language=en` to citation templates that lack a language parameter
+-   **Infobox Expansion** - Reformats compact infobox templates into multi-line readable format
+-   **Category Management** - Adds `[[Category:Translated from MDWiki]]` (or localized equivalent) to translated articles
+-   **Section Title Translation** - Localizes "References" section headings for Croatian, Swahili, and Russian
+-   **CSRF Protection** - Token-based form protection for the web interface
 
 ### Supported Languages
 
-| Code | Language   | Specific Fixes                                      |
-|------|------------|-----------------------------------------------------|
+| Code | Language   | Specific Fixes                                                                |
+| ---- | ---------- | ----------------------------------------------------------------------------- |
 | `es` | Spanish    | Template/parameter translation, month localization, ref section restructuring |
-| `pt` | Portuguese | Month localization, reference spacing               |
-| `pl` | Polish     | Infobox parameter completion for `Choroba infobox`   |
-| `bg` | Bulgarian  | Translation attribution template (`Превод от`)      |
-| `sw` | Swahili    | Section title correction                            |
-| `hy` | Armenian   | Reference-punctuation spacing                       |
-| `ar` | Arabic     | Reference spacing                                   |
-| `zh` | Chinese    | Punctuation-aware dot moving                        |
-| `hi` | Hindi      | Punctuation-aware dot moving                        |
-| `ru` | Russian    | Section title translation                           |
-| `hr` | Croatian   | Section title translation                           |
+| `pt` | Portuguese | Month localization, reference spacing                                         |
+| `pl` | Polish     | Infobox parameter completion for `Choroba infobox`                            |
+| `bg` | Bulgarian  | Translation attribution template (`Превод от`)                                |
+| `sw` | Swahili    | Section title correction                                                      |
+| `hy` | Armenian   | Reference-punctuation spacing                                                 |
+| `ar` | Arabic     | Reference spacing                                                             |
+| `zh` | Chinese    | Punctuation-aware dot moving                                                  |
+| `hi` | Hindi      | Punctuation-aware dot moving                                                  |
+| `ru` | Russian    | Section title translation                                                     |
+| `hr` | Croatian   | Section title translation                                                     |
 
 ### Frameworks & Technologies
 
-- **PHP 8.2+** (platform target in `composer.json`)
-- **No framework** - Pure PHP with PSR-4 autoloading
-- **MediaWiki API** - Fetches wikitext via Action API and REST API
-- **cURL** - HTTP requests to Wikipedia and Wikidata APIs
-- **Bootstrap** - Web UI styling (loaded from external MDWiki header)
+-   **PHP 8.2+** (platform target in `composer.json`)
+-   **No framework** - Pure PHP with PSR-4 autoloading
+-   **MediaWiki API** - Fetches wikitext via Action API and REST API
+-   **cURL** - HTTP requests to Wikipedia and Wikidata APIs
+-   **Bootstrap** - Web UI styling (loaded from external MDWiki header)
 
 ### Dependencies
 
-| Package | Version | Type | Purpose |
-|---------|---------|------|---------|
-| `phpstan/phpstan` | ^2.1 | dev | Static analysis |
-| `phpunit/phpunit` | ^11.5 | dev | Unit testing |
+| Package           | Version | Type | Purpose         |
+| ----------------- | ------- | ---- | --------------- |
+| `phpstan/phpstan` | ^2.1    | dev  | Static analysis |
+| `phpunit/phpunit` | ^11.5   | dev  | Unit testing    |
 
 No runtime dependencies - the library is self-contained.
 
@@ -158,47 +158,47 @@ The project follows a modular architecture with clear separation between parsing
 
 ### Design Patterns
 
-- **Pipeline Pattern** - `fix_page()` chains transformations sequentially
-- **Strategy Pattern** - Language-specific bots are selected based on `$lang` parameter
-- **Data Model / Value Object** - `Template`, `Tag`, `Parameters` encapsulate parsed structures
-- **Facade** - `WikiParse/Template.php` provides simple `getTemplates()` entry point
-- **Static Registry** - `ESData` class holds translation mappings as static properties
+-   **Pipeline Pattern** - `fix_page()` chains transformations sequentially
+-   **Strategy Pattern** - Language-specific bots are selected based on `$lang` parameter
+-   **Data Model / Value Object** - `Template`, `Tag`, `Parameters` encapsulate parsed structures
+-   **Facade** - `WikiParse/Template.php` provides simple `getTemplates()` entry point
+-   **Static Registry** - `ESData` class holds translation mappings as static properties
 
 ### SOLID Principles Compliance
 
-| Principle | Assessment |
-|-----------|------------|
-| **S**RP | Moderate - Most functions have single responsibilities, but some files mix parsing and transformation |
-| **O**CP | Low - Adding a new language requires modifying `fix_page()` directly with new `if` branches |
-| **L**SP | N/A - Minimal inheritance hierarchy |
-| **I**SP | Good - Interfaces are minimal (no forced implementations) |
-| **D**IP | Low - Direct function calls, no dependency injection or abstractions |
+| Principle | Assessment                                                                                            |
+| --------- | ----------------------------------------------------------------------------------------------------- |
+| **S**RP   | Moderate - Most functions have single responsibilities, but some files mix parsing and transformation |
+| **O**CP   | Low - Adding a new language requires modifying `fix_page()` directly with new `if` branches           |
+| **L**SP   | N/A - Minimal inheritance hierarchy                                                                   |
+| **I**SP   | Good - Interfaces are minimal (no forced implementations)                                             |
+| **D**IP   | Low - Direct function calls, no dependency injection or abstractions                                  |
 
 ### Maintainability
 
-- **Good**: Each language bot is in its own file/directory, making language-specific changes isolated
-- **Good**: The WikiParse module is well-structured with proper data models
-- **Concern**: The `include_files.php` uses glob-based includes rather than Composer autoloading for all files
-- **Concern**: The `fix_page()` function has a growing list of language-specific `if` blocks
+-   **Good**: Each language bot is in its own file/directory, making language-specific changes isolated
+-   **Good**: The WikiParse module is well-structured with proper data models
+-   **Concern**: The `include_files.php` uses glob-based includes rather than Composer autoloading for all files
+-   **Concern**: The `fix_page()` function has a growing list of language-specific `if` blocks
 
 ### Readability
 
-- **Good**: Function names are descriptive (e.g., `remove_Duplicate_refs_With_attrs`, `move_dots_after_refs`)
-- **Good**: Arabic comments provide context for bilingual developers
-- **Concern**: Inconsistent naming conventions (camelCase, snake_case, PascalCase mixed)
-- **Concern**: Some commented-out code remains in production files
+-   **Good**: Function names are descriptive (e.g., `remove_Duplicate_refs_With_attrs`, `move_dots_after_refs`)
+-   **Good**: Arabic comments provide context for bilingual developers
+-   **Concern**: Inconsistent naming conventions (camelCase, snake_case, PascalCase mixed)
+-   **Concern**: Some commented-out code remains in production files
 
 ### Scalability
 
-- The current architecture works well for the existing set of ~11 languages
-- Adding more languages requires: creating a new lang_bot file, adding `if` block to `fix_page()`, and updating settings
-- The cURL-based API calls have 5-second timeouts, which is reasonable for the use case
+-   The current architecture works well for the existing set of ~11 languages
+-   Adding more languages requires: creating a new lang_bot file, adding `if` block to `fix_page()`, and updating settings
+-   The cURL-based API calls have 5-second timeouts, which is reasonable for the use case
 
 ### Dependency Management
 
-- Minimal dependencies (only dev tools) reduces supply chain risk
-- No runtime Composer dependencies means zero autoload overhead for the library itself
-- The glob-based include system in `include_files.php` bypasses Composer autoloading
+-   Minimal dependencies (only dev tools) reduces supply chain risk
+-   No runtime Composer dependencies means zero autoload overhead for the library itself
+-   The glob-based include system in `include_files.php` bypasses Composer autoloading
 
 ## Strengths
 
@@ -259,35 +259,41 @@ The project follows a modular architecture with clear separation between parsing
 ## Areas That Need Attention
 
 ### Missing Validation
-- `$lang` parameter is not validated against a whitelist of supported languages
-- `$title` is not sanitized before being used in regex patterns (`preg_quote` is used in some places but not all)
-- No length limits on input text
+
+-   `$lang` parameter is not validated against a whitelist of supported languages
+-   `$title` is not sanitized before being used in regex patterns (`preg_quote` is used in some places but not all)
+-   No length limits on input text
 
 ### Missing Tests
-- No integration tests for the full `fix_page()` pipeline
-- No tests for the web endpoints (`index.php`, `text_post.php`)
-- No tests for CSRF module
-- No tests for `wikibots/wikitext.php` (API calls)
-- `sw_bot.php` has minimal test coverage
+
+-   No integration tests for the full `fix_page()` pipeline
+-   No tests for the web endpoints (`index.php`, `text_post.php`)
+-   No tests for CSRF module
+-   No tests for `wikibots/wikitext.php` (API calls)
+-   `sw_bot.php` has minimal test coverage
 
 ### Outdated Patterns
-- `include_files.php` should be replaced with Composer autoloading
-- `CitationOld` class should be deprecated in favor of `ParserCitations`
-- The `$_SERVER['SERVER_NAME']` check for environment detection should use environment variables
+
+-   `include_files.php` should be replaced with Composer autoloading
+-   `CitationOld` class should be deprecated in favor of `ParserCitations`
+-   The `$_SERVER['SERVER_NAME']` check for environment detection should use environment variables
 
 ### Error Handling
-- cURL errors in `get_curl()` are echoed to output but not properly handled
-- `json_decode` failures are not logged
-- File operations (`file_get_contents`) don't check for `false` returns consistently
+
+-   cURL errors in `get_curl()` are echoed to output but not properly handled
+-   `json_decode` failures are not logged
+-   File operations (`file_get_contents`) don't check for `false` returns consistently
 
 ### Documentation
-- No API documentation for the public functions
-- No changelog
-- Arabic comments are helpful for bilingual teams but could benefit from English translations
+
+-   No API documentation for the public functions
+-   No changelog
+-   Arabic comments are helpful for bilingual teams but could benefit from English translations
 
 ## Improvement Plan
 
 ### Quick Fixes (1-2 days)
+
 1. Fix the `$new_text` vs `$newtext` variable name bug in `text_post.php`
 2. Uncomment and enable CSRF verification in `text_post.php`
 3. Remove or gate debug mode (`display_errors`) behind an environment variable instead of `$_GET['test']`
@@ -295,6 +301,7 @@ The project follows a modular architecture with clear separation between parsing
 5. Add input length limits to web endpoints
 
 ### Medium-term Improvements (1-2 weeks)
+
 1. Replace glob-based includes with proper Composer PSR-4 autoloading
 2. Consolidate duplicate `str_starts_with`/`str_ends_with` polyfills into a single location
 3. Add `$lang` whitelist validation in `work.php`
@@ -303,6 +310,7 @@ The project follows a modular architecture with clear separation between parsing
 6. Standardize naming conventions across the codebase
 
 ### Long-term Refactoring (1-2 months)
+
 1. Extract language handling into a plugin/strategy pattern - create a `LanguageFixerInterface` with implementations per language, eliminating the `if` chain in `fix_page()`
 2. Depare `CitationOld` in favor of `ParserCitations` from WikiParse
 3. Add a proper dependency injection container or at minimum constructor-based DI
@@ -311,6 +319,7 @@ The project follows a modular architecture with clear separation between parsing
 6. Implement proper logging (PSR-3) instead of `echo_test()`
 
 ### Security Hardening
+
 1. Validate and sanitize all `$_POST` inputs against expected formats
 2. Replace `$_SERVER['SERVER_NAME']` checks with environment variables
 3. Add rate limiting for external API calls
@@ -318,6 +327,7 @@ The project follows a modular architecture with clear separation between parsing
 5. Add input text length limits (e.g., 1MB max)
 
 ### Performance Optimization
+
 1. Parse citations once and pass the result to all bot functions
 2. Use `str_contains()` (PHP 8.0+) instead of `strpos() !== false` for readability
 3. Consider precompiling regex patterns that are reused across calls
@@ -325,14 +335,14 @@ The project follows a modular architecture with clear separation between parsing
 
 ## Comprehensive Review
 
-| Metric | Score | Notes |
-|--------|-------|-------|
-| **Overall Rating** | 6.5/10 | Functional and well-tested for its purpose, but has code quality issues |
-| **Production Readiness** | 7/10 | Already in production on Toolforge; works reliably for its use case |
-| **Security Score** | 5/10 | CSRF partially implemented, no input validation, debug mode exposed |
-| **Technical Debt** | 6/10 | Moderate - mixed parsing systems, naming inconsistencies, glob includes |
-| **Maintainability** | 6/10 | Good module isolation but growing `if` chain and no DI |
-| **Risk Assessment** | Low-Medium | The tool processes wikitext text transformations; bugs cause formatting issues, not data loss |
+| Metric                   | Score      | Notes                                                                                         |
+| ------------------------ | ---------- | --------------------------------------------------------------------------------------------- |
+| **Overall Rating**       | 6.5/10     | Functional and well-tested for its purpose, but has code quality issues                       |
+| **Production Readiness** | 7/10       | Already in production on Toolforge; works reliably for its use case                           |
+| **Security Score**       | 5/10       | CSRF partially implemented, no input validation, debug mode exposed                           |
+| **Technical Debt**       | 6/10       | Moderate - mixed parsing systems, naming inconsistencies, glob includes                       |
+| **Maintainability**      | 6/10       | Good module isolation but growing `if` chain and no DI                                        |
+| **Risk Assessment**      | Low-Medium | The tool processes wikitext text transformations; bugs cause formatting issues, not data loss |
 
 ## Setup & Usage
 
@@ -404,19 +414,24 @@ $result = fix_page_with_setting(
 
 Language settings are loaded from a remote API with local fallback:
 
-- **Remote**: `https://mdwiki.toolforge.org/api.php?get=language_settings`
-- **Local fallback**: `src/resources/language_settings.json`
+-   **Remote**: `https://mdwiki.toolforge.org/api.php?get=language_settings`
+-   **Local fallback**: `src/resources/language_settings.json`
 
 Each language entry controls:
-- `move_dots` - Whether to move punctuation after references
-- `expend` - Whether to expand infobox templates
-- `add_en_lang` - Whether to add `|language=en` to citations
+
+-   `move_dots` - Whether to move punctuation after references
+-   `expend` - Whether to expand infobox templates
+-   `add_en_lang` - Whether to add `|language=en` to citations
+
+## End points
+
+| Endpoint         | Method | Description                                     |
+| ---------------- | ------ | ----------------------------------------------- |
+| `/`              | GET    | Main entry - web form for fixing references     |
+| `/`              | POST   | Process a Wikipedia article by title & language |
+| `/text_post.php` | POST   | Process raw wikitext (API-style)                |
+| `/test.php`      | GET    | Test form with pre-filled sample data           |
 
 ### Deployment
 
-The project is deployed on Wikimedia Toolforge. The `src/` directory is the web root. Key endpoints:
-
-- `GET /index.php` - Web form for manual testing
-- `POST /index.php` - Process a Wikipedia article by title
-- `POST /text_post.php` - Process raw wikitext (API-style)
-- `GET /test.php` - Test form with pre-filled sample data
+The project is deployed on Wikimedia Toolforge. The `src/` directory is the web root. See [End points](#end-points) for available routes.
