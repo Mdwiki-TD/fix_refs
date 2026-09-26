@@ -1,16 +1,16 @@
 <?php
 
-include_once __DIR__ . '/include.php';
+use function WpRefs\csrf\generate_csrf_token;
+
+include_once __DIR__ . '/../include.php';
 $headerPath = __DIR__ . '/../header.php';
 
 if (!file_exists($headerPath)) {
     // "I:\MD_TOOLS\MDWIKI_MAIN_REPO\public_html\header.php"
-    $headerPath = dirname(dirname(dirname(dirname(__DIR__)))) . '/MDWIKI_MAIN_REPO/src/public_html/header.php';
+    $headerPath = dirname(dirname(dirname(dirname(dirname(__DIR__))))) . '/MDWIKI_MAIN_REPO/src/public_html/header.php';
 }
 
 include_once $headerPath;
-
-use function WpRefs\csrf\generate_csrf_token;
 
 $testText = file_get_contents(__DIR__ . '/test.wikitext') ?: '';
 // ---
@@ -28,7 +28,7 @@ $csrfToken = generate_csrf_token(); // <input name='csrf_token' value="$csrfToke
     input infos
 </div>
 <div class='card-body'>
-    <form action='text_post.php' method='POST'>
+    <form action='test_post.php' method='POST'>
         <input name='csrf_token' value="<?php echo $csrfToken; ?>" type="hidden" />
         <div class='container'>
             <div class='row'>

@@ -133,7 +133,7 @@ Simple, focused, and easy to understand. Limited scope keeps complexity low.
 ### Basic Usage
 
 ```php
-require_once __DIR__ . '/../fix_src/include_files.php';
+require_once __DIR__ . '/../app/fix_src/include_files.php';
 
 use function WpRefs\WikiText\get_wikipedia_text;
 

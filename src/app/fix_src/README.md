@@ -4,24 +4,24 @@ The core PHP library for parsing and fixing MediaWiki references. This is the ma
 
 ## Project Overview
 
-`fix_src` contains the complete pipeline for transforming wikitext references. It provides a wikitext parser (`WikiParse`), a set of text transformation bots, language-specific processors, and helper utilities. The main entry point is the `fix_page()` function in `index.php`.
+`app/fix_src` contains the complete pipeline for transforming wikitext references. It provides a wikitext parser (`WikiParse`), a set of text transformation bots, language-specific processors, and helper utilities. The main entry point is the `fix_page()` function in `index.php`.
 
 ### Main Features
 
-- Recursive wikitext template parser with parameter extraction
-- Citation (`<ref>`) tag parsing (both OOP and regex approaches)
-- Duplicate reference detection and consolidation
-- Short reference expansion (resolving `<ref name="X" />` to full content)
-- Punctuation-reference spacing normalization
-- `|language=en` parameter injection into citations
-- Language-specific citation template translation (EN -> ES/PT/PL/BG/SW)
-- Infobox template expansion to multi-line format
-- MDWiki category management via Wikidata
-- Redirect page detection and skipping
+-   Recursive wikitext template parser with parameter extraction
+-   Citation (`<ref>`) tag parsing (both OOP and regex approaches)
+-   Duplicate reference detection and consolidation
+-   Short reference expansion (resolving `<ref name="X" />` to full content)
+-   Punctuation-reference spacing normalization
+-   `|language=en` parameter injection into citations
+-   Language-specific citation template translation (EN -> ES/PT/PL/BG/SW)
+-   Infobox template expansion to multi-line format
+-   MDWiki category management via Wikidata
+-   Redirect page detection and skipping
 
 ### PHP Version Requirements
 
-- PHP 8.2+ (configured in `composer.json` platform)
+-   PHP 8.2+ (configured in `composer.json` platform)
 
 ### Dependencies
 
@@ -30,7 +30,7 @@ No runtime dependencies. Uses only PHP built-in functions (`preg_*`, `str_*`, `c
 ## Project Structure
 
 ```
-fix_src/
+app/fix_src/
 ├── index.php                   # fix_page() - main processing pipeline
 ├── include_files.php           # Autoloader (glob-based file includes)
 ├── test_bot.php                # Debug output helpers (echo_test, echo_debug)
@@ -124,34 +124,36 @@ Output wikitext
 
 ### Design Patterns
 
-| Pattern | Usage |
-|---------|-------|
-| **Pipeline** | `fix_page()` chains transformations sequentially |
-| **Strategy** | Language bots selected by `$lang` parameter |
-| **Value Object** | `Template`, `Tag`, `Parameters` are immutable-style data carriers |
-| **Facade** | `WikiParse/Template.php` provides `getTemplates()` entry point |
-| **Recursive Descent** | `ParserTemplates` uses stack-based recursive parsing |
-| **Registry** | `ESData` static class holds translation mapping tables |
+| Pattern               | Usage                                                             |
+| --------------------- | ----------------------------------------------------------------- |
+| **Pipeline**          | `fix_page()` chains transformations sequentially                  |
+| **Strategy**          | Language bots selected by `$lang` parameter                       |
+| **Value Object**      | `Template`, `Tag`, `Parameters` are immutable-style data carriers |
+| **Facade**            | `WikiParse/Template.php` provides `getTemplates()` entry point    |
+| **Recursive Descent** | `ParserTemplates` uses stack-based recursive parsing              |
+| **Registry**          | `ESData` static class holds translation mapping tables            |
 
 ### Code Organization
 
 **Strengths:**
-- Clear separation between parsing (WikiParse, Parse) and transformation (bots, helps_bots, lang_bots)
-- Each language has its own directory/file, enabling independent changes
-- Data models in `WikiParse/src/DataModel/` are clean value objects with proper encapsulation
+
+-   Clear separation between parsing (WikiParse, Parse) and transformation (bots, helps_bots, lang_bots)
+-   Each language has its own directory/file, enabling independent changes
+-   Data models in `WikiParse/src/DataModel/` are clean value objects with proper encapsulation
 
 **Concerns:**
-- Two parallel parsing systems exist (`Parse/Citations.php` with `CitationOld` and `WikiParse/src/ParserCitations.php`)
-- `include_files.php` uses glob includes instead of relying on Composer PSR-4 autoloading
-- The `bots/tests/` directory contains manual test scripts that shouldn't be in the library source
+
+-   Two parallel parsing systems exist (`Parse/Citations.php` with `CitationOld` and `WikiParse/src/ParserCitations.php`)
+-   `include_files.php` uses glob includes instead of relying on Composer PSR-4 autoloading
+-   The `bots/tests/` directory contains manual test scripts that shouldn't be in the library source
 
 ### SOLID Principles
 
-- **SRP**: Generally good - each file has a focused purpose. Exception: `es.php` contains both translation tables and transformation logic.
-- **OCP**: Poor - adding a language requires modifying `fix_page()` directly. A plugin/strategy pattern would help.
-- **LSP**: N/A - minimal inheritance.
-- **ISP**: Good - no forced interface implementations.
-- **DIP**: Poor - all function calls are direct, no abstractions or injection points.
+-   **SRP**: Generally good - each file has a focused purpose. Exception: `es.php` contains both translation tables and transformation logic.
+-   **OCP**: Poor - adding a language requires modifying `fix_page()` directly. A plugin/strategy pattern would help.
+-   **LSP**: N/A - minimal inheritance.
+-   **ISP**: Good - no forced interface implementations.
+-   **DIP**: Poor - all function calls are direct, no abstractions or injection points.
 
 ### Maintainability Rating: 6/10
 
@@ -182,11 +184,12 @@ The modular file structure aids navigation, but the growing `if` chain in `fix_p
 4. **Static global state** - `ESData` class uses public static arrays populated at include time, creating implicit coupling and making testing harder.
 
 5. **Hardcoded paths** - `missing_refs.php` lines 71-72 contain hardcoded Windows and Toolforge paths:
-   ```php
-   $path = ($server == "localhost")
-       ? "I:/medwiki/new/medwiki.toolforge.org_repo/public_html"
-       : "/data/project/mdwikicx/public_html";
-   ```
+
+    ```php
+    $path = ($server == "localhost")
+        ? "I:/medwiki/new/medwiki.toolforge.org_repo/public_html"
+        : "/data/project/mdwikicx/public_html";
+    ```
 
 6. **No Composer autoloading for all files** - Despite PSR-4 configuration in `composer.json`, `include_files.php` manually globs and includes files, bypassing the autoloader.
 
@@ -215,36 +218,42 @@ The modular file structure aids navigation, but the growing `if` chain in `fix_p
 ## Areas That Need Attention
 
 ### Missing Validation
-- `$lang` is not validated against supported language codes before being used in regex patterns
-- `$sourcetitle` is used in file path construction without sanitization
-- No maximum text length limit
+
+-   `$lang` is not validated against supported language codes before being used in regex patterns
+-   `$sourcetitle` is used in file path construction without sanitization
+-   No maximum text length limit
 
 ### Missing Tests
-- No integration test for the complete `fix_page()` pipeline
-- `infobox2.php` has limited test coverage
-- `sw_fixes()` has a single test case
-- No tests for edge cases (empty input, malformed wikitext, extremely long articles)
+
+-   No integration test for the complete `fix_page()` pipeline
+-   `infobox2.php` has limited test coverage
+-   `sw_fixes()` has a single test case
+-   No tests for edge cases (empty input, malformed wikitext, extremely long articles)
 
 ### Technical Debt
-- Deprecate `CitationOld` / `ParserCitationsOld` in favor of `WikiParse/src/ParserCitations`
-- Remove glob-based includes and rely on Composer autoloading
-- Clean up commented-out code
-- Extract `ESData` static properties into a configuration file or injected dependency
+
+-   Deprecate `CitationOld` / `ParserCitationsOld` in favor of `WikiParse/src/ParserCitations`
+-   Remove glob-based includes and rely on Composer autoloading
+-   Clean up commented-out code
+-   Extract `ESData` static properties into a configuration file or injected dependency
 
 ### Error Handling
-- `get_url_curl()` in `md_cat.php` returns empty string on failure without logging
-- `file_get_contents()` calls don't consistently check for `false`
-- No exception handling around `json_decode()` calls
+
+-   `get_url_curl()` in `md_cat.php` returns empty string on failure without logging
+-   `file_get_contents()` calls don't consistently check for `false`
+-   No exception handling around `json_decode()` calls
 
 ## Improvement Plan
 
 ### Quick Fixes
+
 1. Consolidate `str_starts_with()`/`str_ends_with()` into a single file
 2. Remove all commented-out code from production files
 3. Remove `bots/tests/` directory (move to `tests/` if needed)
 4. Add `preg_quote($title, '/')` consistently in all regex patterns using `$title`
 
 ### Medium-term
+
 1. Replace `include_files.php` glob system with Composer PSR-4 autoloading
 2. Add a `LanguageFixerInterface` with per-language implementations
 3. Parse citations once in `fix_page()` and pass the result to all bot functions
@@ -252,6 +261,7 @@ The modular file structure aids navigation, but the growing `if` chain in `fix_p
 5. Extract `ESData` mappings into a JSON configuration file
 
 ### Long-term
+
 1. Implement a plugin system for language-specific fixes
 2. Merge `CitationOld` and `ParserCitations` into a single parser
 3. Add PSR-3 logging to replace `echo_test()`/`echo_debug()`

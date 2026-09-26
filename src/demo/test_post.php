@@ -1,10 +1,9 @@
 <?php
 
-use function WpRefs\FixPage\fix_page_with_setting;
+use function WpRefs\Run\fixPgeWithSetting;
 use function WpRefs\csrf\verify_csrf_token;
 
-include_once __DIR__ . '/work.php';
-include_once __DIR__ . '/csrf.php';
+include_once __DIR__ . '/../include.php';
 
 $fields = ['lang', 'title', 'text', 'revid', 'sourcetitle'];
 
@@ -30,14 +29,14 @@ foreach ($fields as $field) {
 $lang         = $data['lang'];
 $title        = $data['title'];
 $text         = $data['text'];
-$mdwikiRevid = $data['revid'];
+$mdwikiRevid  = $data['revid'];
 $sourcetitle  = $data['sourcetitle'];
 
 
 if (!empty($lang) && !empty($title) && !empty($text)) {
     // ---
     // if (verify_csrf_token()) {
-    $newText = fix_page_with_setting(
+    $newText = fixPgeWithSetting(
         $sourcetitle,
         $title,
         $text,
