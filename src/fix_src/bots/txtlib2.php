@@ -10,19 +10,19 @@ function extract_templates_and_params($text)
 {
     // ---
     $temps = [];
-    $temps_in = getTemplates($text);
+    $tempsIn = getTemplates($text);
     // ---
-    foreach ($temps_in as $temp) {
+    foreach ($tempsIn as $temp) {
         // ---
         $name = $temp->getStripName();
         // ---
-        $text_template = $temp->getOriginalText();
+        $textTemplate = $temp->getOriginalText();
         // ---
         $params = $temp->getParameters();
         // ---
         $temps[] = [
             "name" => $name,
-            "item" => $text_template,
+            "item" => $textTemplate,
             "params" => $params,
         ];
         // ---

@@ -18,27 +18,27 @@ function do_comments($text)
 
     return $text;
 }
-function expend_new($main_temp)
+function expend_new($mainTemp)
 {
     // ---
-    $main_temp = trim($main_temp);
+    $mainTemp = trim($mainTemp);
     // ---
-    $parser = new ParserTemplate($main_temp);
+    $parser = new ParserTemplate($mainTemp);
     // ---
     $temp = $parser->getTemplate();
     // ---
-    $new_temp = $temp->toString($newLine = true, $ljust = 17);
+    $newTemp = $temp->toString($newLine = true, $ljust = 17);
     // ---
-    $new_temp = do_comments($new_temp);
+    $newTemp = do_comments($newTemp);
     // ---
-    $new_temp = trim($new_temp);
+    $newTemp = trim($newTemp);
     // ---
-    return $new_temp;
+    return $newTemp;
 }
 
 function make_tempse($section_0)
 {
-    $tempse_by_u = [];
+    $tempseBy_u = [];
     $tempse = [];
 
     $ingr = extract_templates_and_params($section_0);
@@ -46,12 +46,12 @@ function make_tempse($section_0)
 
     foreach ($ingr as $temp) {
         $u++;
-        $tmp_name = $temp['name'];
+        $tmpName = $temp['name'];
         $params = $temp['params'];
         $template = $temp['item'];
 
         if (count($params) > 4 && strpos($section_0, ">$template") === false) {
-            $tempse_by_u[$u] = $temp;
+            $tempseBy_u[$u] = $temp;
             $tempse[$u] = strlen($template);
             // ---
             // print_s($namestrip);
@@ -59,7 +59,7 @@ function make_tempse($section_0)
     }
     // ---
     return [
-        "tempse_by_u" => $tempse_by_u,
+        "tempse_by_u" => $tempseBy_u,
         "tempse" => $tempse,
     ];
 }

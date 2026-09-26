@@ -21,10 +21,10 @@ use function WpRefs\RemoveSpace\remove_spaces_between_ref_and_punctuation;
 use function WpRefs\MissingRefs\fix_missing_refs;
 use function WpRefs\Bots\Redirect\page_is_redirect;
 
-function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sourcetitle, $mdwiki_revid)
+function fix_page($text, $title, $moveDots, $infobox, $addEnLang, $lang, $sourcetitle, $mdwikiRevid)
 {
     // ---
-    $text_org = $text;
+    $textOrg = $text;
     // ---
     if (page_is_redirect($title, $text)) {
         return $text;
@@ -34,7 +34,7 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sou
         $text = pl_fixes($text);
     }
     // ---
-    // print_s("fix page: $title, move_dots:$move_dots, expend_infobox:$infobox");
+    // print_s("fix page: $title, move_dots:$moveDots, expend_infobox:$infobox");
     // ---
     if ($infobox || $lang === "es") {
         echo_test("Expend_Infobox\n");
@@ -47,16 +47,16 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sou
     // ---
     $text = mini_fixes($text, $lang);
     // ---
-    $text = fix_missing_refs($text, $sourcetitle, $mdwiki_revid);
+    $text = fix_missing_refs($text, $sourcetitle, $mdwikiRevid);
     // ---
     $text = remove_Duplicate_refs_With_attrs($text);
     // ---
-    if ($move_dots) {
+    if ($moveDots) {
         echo_test("move_dots\n");
         $text = move_dots_after_refs($text, $lang);
     }
     // ---
-    if ($add_en_lang) {
+    if ($addEnLang) {
         echo_test("add_en_lang\n");
         $text = add_lang_en_to_refs($text);
     }
@@ -66,12 +66,12 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sou
     }
     // ---
     if ($lang === "bg") {
-        $text = bg_fixes($text, $sourcetitle, $mdwiki_revid);
+        $text = bg_fixes($text, $sourcetitle, $mdwikiRevid);
     }
     // ---
     if ($lang === "es") {
         $text = fix_es($text, $title);
-        $text = es_section($sourcetitle, $text, $mdwiki_revid);
+        $text = es_section($sourcetitle, $text, $mdwikiRevid);
     }
     // ---
     if ($lang == 'sw') {
@@ -93,5 +93,5 @@ function fix_page($text, $title, $move_dots, $infobox, $add_en_lang, $lang, $sou
         return $text;
     }
     // ---
-    return $text_org;
+    return $textOrg;
 }

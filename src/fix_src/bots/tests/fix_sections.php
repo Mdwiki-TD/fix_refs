@@ -21,13 +21,13 @@ $texts = [
 
 foreach ($texts as $lang => $text) {
     echo "lang $lang:\n";
-    $new_text = fix_sections_titles($text, $lang);
+    $newText = fix_sections_titles($text, $lang);
 
-    if ($new_text != $text) {
+    if ($newText != $text) {
         echo "Changes made\n";
     } else {
         echo "No changes made\n";
     }
 
-    echo "new_text: $new_text:\n";
+    echo "new_text: $newText:\n";
 }

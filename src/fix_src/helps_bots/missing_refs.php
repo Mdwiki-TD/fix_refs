@@ -10,78 +10,78 @@ use function WpRefs\Parse\Reg_Citations\get_short_citations;
 use function WpRefs\Parse\Reg_Citations\get_full_refs;
 use function WpRefs\MdCat\get_url_curl;
 
-function get_full_text_url($sourcetitle, $mdwiki_revid)
+function get_full_text_url($sourcetitle, $mdwikiRevid)
 {
     $server = $_SERVER["SERVER_NAME"] ?? "localhost";
-    $server_path = ($server == "localhost")
+    $serverPath = ($server == "localhost")
         ? "http://localhost:9001"
         : "https://mdwikicx.toolforge.org";
 
-    if (empty($mdwiki_revid) || $mdwiki_revid == 0) {
-        $json_file = "$server_path/revisions_new1/json_data.json";
-        $data = json_decode(get_url_curl($json_file), true) ?? [];
-        echo_test("url" . $json_file);
+    if (empty($mdwikiRevid) || $mdwikiRevid == 0) {
+        $jsonFile = "$serverPath/revisions_new1/json_data.json";
+        $data = json_decode(get_url_curl($jsonFile), true) ?? [];
+        echo_test("url" . $jsonFile);
         echo_test("count of data: " . count($data));
-        $mdwiki_revid = $data[str_replace(" ", "_", $sourcetitle)] ?? "";
+        $mdwikiRevid = $data[str_replace(" ", "_", $sourcetitle)] ?? "";
     }
 
-    if (empty($mdwiki_revid)) {
+    if (empty($mdwikiRevid)) {
         echo_test("empty mdwiki_revid");
         return "";
     }
 
-    $full_url = "$server_path/revisions_new1/$mdwiki_revid/wikitext.txt";
-    echo_test("url" . $full_url);
-    $text = get_url_curl($full_url);
+    $fullUrl = "$serverPath/revisions_new1/$mdwikiRevid/wikitext.txt";
+    echo_test("url" . $fullUrl);
+    $text = get_url_curl($fullUrl);
     if (!$text) {
-        echo_test("Failed to fetch URL: $full_url");
+        echo_test("Failed to fetch URL: $fullUrl");
         return "";
     }
 
     return $text;
 }
 
-function find_mdwiki_revid($sourcetitle, $json_file)
+function find_mdwiki_revid($sourcetitle, $jsonFile)
 {
-    if (!is_file($json_file)) {
+    if (!is_file($jsonFile)) {
         return "";
     }
-    $content = file_get_contents($json_file);
+    $content = file_get_contents($jsonFile);
     $data = json_decode($content, true) ?? [];
-    echo_test("url" . $json_file);
+    echo_test("url" . $jsonFile);
     echo_test("count of data: " . count($data));
-    $mdwiki_revid = $data[$sourcetitle] ?? "";
-    return $mdwiki_revid;
+    $mdwikiRevid = $data[$sourcetitle] ?? "";
+    return $mdwikiRevid;
 }
 
-function get_full_text($sourcetitle, $mdwiki_revid)
+function get_full_text($sourcetitle, $mdwikiRevid)
 {
     // ---
     $sourcetitle = str_replace(" ", "_", $sourcetitle);
     // ---
-    $revisions_dir = getenv('REVISIONS_DIR') ?: ($_ENV['REVISIONS_DIR'] ?? null);
-    if (!$revisions_dir) {
+    $revisionsDir = getenv('REVISIONS_DIR') ?: ($_ENV['REVISIONS_DIR'] ?? null);
+    if (!$revisionsDir) {
         $home = getenv('HOME') ?: ($_ENV['HOME'] ?? '');
-        $revisions_dir = $home ? $home . '/public_html/revisions_new1' : dirname(__DIR__) . '/revisions_new1';
+        $revisionsDir = $home ? $home . '/public_html/revisions_new1' : dirname(__DIR__) . '/revisions_new1';
     }
     // ---
-    $json_file = "$revisions_dir/json_data.json";
+    $jsonFile = "$revisionsDir/json_data.json";
     //---
-    if (empty($mdwiki_revid) || $mdwiki_revid == 0) {
-        $mdwiki_revid = find_mdwiki_revid($sourcetitle, $json_file);
+    if (empty($mdwikiRevid) || $mdwikiRevid == 0) {
+        $mdwikiRevid = find_mdwiki_revid($sourcetitle, $jsonFile);
     };
     // ---
-    if (empty($mdwiki_revid)) {
+    if (empty($mdwikiRevid)) {
         // ---
         echo_test("empty mdwiki_revid, sourcetitle:($sourcetitle)");
         // ---
         return "";
     }
     // ---
-    $file = "$revisions_dir/$mdwiki_revid/wikitext.txt";
+    $file = "$revisionsDir/$mdwikiRevid/wikitext.txt";
     // ---
     if (!file_exists($file)) {
-        $file = dirname(__DIR__, 2) . "/resources/revisions/$mdwiki_revid/wikitext.txt";
+        $file = dirname(__DIR__, 2) . "/resources/revisions/$mdwikiRevid/wikitext.txt";
     }
     // ---
     echo_test($file);
@@ -98,11 +98,11 @@ function get_full_text($sourcetitle, $mdwiki_revid)
     return $text;
 }
 
-function refs_expend($short_refs, $text, $alltext)
+function refs_expend($shortRefs, $text, $alltext)
 {
     $refs = get_full_refs($alltext);
 
-    foreach ($short_refs as $cite) {
+    foreach ($shortRefs as $cite) {
         $name = $cite["name"];
         $refe = $cite["tag"];
         // ---
@@ -120,32 +120,32 @@ function find_empty_short($text)
 {
     $shorts = get_short_citations($text);
     $fulls = get_full_refs($text);
-    $empty_refs = [];
+    $emptyRefs = [];
     foreach ($shorts as $cite) {
         $name = $cite["name"];
         // ---
         $rr = $fulls[$name] ?? false;
         if (!$rr) {
-            $empty_refs[$name] = $cite;
+            $emptyRefs[$name] = $cite;
         }
     }
     // ---
-    return $empty_refs;
+    return $emptyRefs;
 }
 
-function fix_missing_refs($text, $sourcetitle, $mdwiki_revid)
+function fix_missing_refs($text, $sourcetitle, $mdwikiRevid)
 {
-    $empty_short = find_empty_short($text);
+    $emptyShort = find_empty_short($text);
     // ---
-    echo_debug("empty refs: " . count($empty_short));
+    echo_debug("empty refs: " . count($emptyShort));
     // ---
-    if (empty($empty_short)) return $text;
+    if (empty($emptyShort)) return $text;
     // ---
-    $full_text = get_full_text($sourcetitle, $mdwiki_revid);
+    $fullText = get_full_text($sourcetitle, $mdwikiRevid);
     // ---
-    if (empty($full_text)) return $text;
+    if (empty($fullText)) return $text;
     // ---
-    $text = refs_expend($empty_short, $text, $full_text);
+    $text = refs_expend($emptyShort, $text, $fullText);
     // ---
     return $text;
 }

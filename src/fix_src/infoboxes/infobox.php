@@ -15,21 +15,21 @@ function find_max_value_key($dictionary)
     return key($dictionary);
 }
 
-function make_main_temp($tempse_by_u, $tempse)
+function make_main_temp($tempseBy_u, $tempse)
 {
     // ---
-    if (count($tempse_by_u) === 1) {
-        return array_values($tempse_by_u)[0];
+    if (count($tempseBy_u) === 1) {
+        return array_values($tempseBy_u)[0];
     }
     // ---
-    $main_temp = [];
+    $mainTemp = [];
     // ---
     # sort tempse by len of its value then get the first one
     $u2 = find_max_value_key($tempse);
     # ---
-    $main_temp = $tempse_by_u[$u2] ?? [];
+    $mainTemp = $tempseBy_u[$u2] ?? [];
     // ---
-    return $main_temp;
+    return $mainTemp;
 }
 
 
@@ -90,21 +90,21 @@ function Expend_Infobox($text, $title, $section_0)
     // ---
     $tab = make_tempse($section_0);
     // ---
-    $tempse_by_u = $tab["tempse_by_u"];
+    $tempseBy_u = $tab["tempse_by_u"];
     $tempse = $tab["tempse"];
     // ---
-    $main_temp = make_main_temp($tempse_by_u, $tempse);
+    $mainTemp = make_main_temp($tempseBy_u, $tempse);
     // ---
     # work in main_temp:
-    if (!empty($main_temp)) {
-        $main_temp_text = $main_temp["item"] ?? "";
-        // $params = $main_temp["params"] ?? [];
+    if (!empty($mainTemp)) {
+        $mainTempText = $mainTemp["item"] ?? "";
+        // $params = $mainTemp["params"] ?? [];
         // ---
-        $new_temp = expend_new($main_temp_text);
+        $newTemp = expend_new($mainTempText);
         // ---
-        if ($new_temp !== $main_temp_text) {
-            $newtext = str_replace($main_temp_text, $new_temp, $newtext);
-            $newtext = str_replace($new_temp . "'''", $new_temp . "\n'''", $newtext);
+        if ($newTemp !== $mainTempText) {
+            $newtext = str_replace($mainTempText, $newTemp, $newtext);
+            $newtext = str_replace($newTemp . "'''", $newTemp . "\n'''", $newtext);
         }
     }
     // ---
