@@ -1,12 +1,7 @@
 <?php
 
 namespace WpRefs\PL\FixPlInfobox;
-/*
-usage:
 
-use function WpRefs\PL\FixPlInfobox\pl_fixes;
-
-*/
 
 use function WikiParse\Template\getTemplates;
 use function WpRefs\TestBot\echo_test;
@@ -16,13 +11,13 @@ function add_missing_params_to_choroba_infobox($text)
     // ---
     echo_test("\n add_missing_params_to_choroba_infobox:\n");
     // ---
-    $new_text = $text;
+    $newText = $text;
     // ---
     // Get all templates
     $temps = getTemplates($text);
     // ---
     // Parameters to add if missing
-    $params_to_add = [
+    $paramsToAdd = [
         "nazwa naukowa" => "",
         "ICD11" => "",
         "ICD11 nazwa" => "",
@@ -49,24 +44,24 @@ function add_missing_params_to_choroba_infobox($text)
             // ---
             echo_test("Found Choroba infobox template\n");
             // ---
-            $temp_old = $temp->getOriginalText();
+            $tempOld = $temp->getOriginalText();
             $params = $temp->getParameters();
             // ---
             // Add missing parameters
-            foreach ($params_to_add as $param_name => $param_value) {
-                if (!array_key_exists($param_name, $params)) {
-                    $temp->setParameter($param_name, $param_value);
+            foreach ($paramsToAdd as $paramName => $paramValue) {
+                if (!array_key_exists($paramName, $params)) {
+                    $temp->setParameter($paramName, $paramValue);
                 }
             }
             // ---
-            $temp_new = $temp->toString();
+            $tempNew = $temp->toString();
             // ---
-            $new_text = str_replace($temp_old, $temp_new, $new_text);
+            $newText = str_replace($tempOld, $tempNew, $newText);
             // ---
         }
     }
     // ---
-    return $new_text;
+    return $newText;
 }
 
 function pl_fixes($text)

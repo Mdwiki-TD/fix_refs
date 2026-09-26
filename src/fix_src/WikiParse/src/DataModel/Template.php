@@ -123,9 +123,9 @@ class Template
     {
         $this->parameters->changeParametersNames([$old => $new]);
     }
-    public function changeParametersNames(array $params_new): void
+    public function changeParametersNames(array $paramsNew): void
     {
-        $this->parameters->changeParametersNames($params_new);
+        $this->parameters->changeParametersNames($paramsNew);
     }
     /**
      * Convert the content to a string.

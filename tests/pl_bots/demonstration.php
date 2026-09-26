@@ -11,7 +11,7 @@ echo "DEMONSTRATION: Polish Choroba Infobox Parameter Addition\n";
 echo "==========================================================\n\n";
 
 // Example Polish Wikipedia article with Choroba infobox
-$original_article = <<<'ARTICLE'
+$originalArticle = <<<'ARTICLE'
 {{Choroba infobox
 |nazwa polska = Astma oskrzelowa
 |obraz = Blausen 0620 Lungs NormalvsInflamedAirway.png
@@ -42,12 +42,12 @@ ARTICLE;
 
 echo "ORIGINAL ARTICLE:\n";
 echo str_repeat("-", 60) . "\n";
-echo $original_article;
+echo $originalArticle;
 echo "\n" . str_repeat("-", 60) . "\n\n";
 
 // Process the article through fix_page function for Polish language
-$processed_article = fix_page(
-    $original_article,
+$processedArticle = fix_page(
+    $originalArticle,
     "Astma oskrzelowa",  // title
     false,                // move_dots
     true,                 // infobox expansion enabled
@@ -59,11 +59,11 @@ $processed_article = fix_page(
 
 echo "PROCESSED ARTICLE:\n";
 echo str_repeat("-", 60) . "\n";
-echo $processed_article;
+echo $processedArticle;
 echo "\n" . str_repeat("-", 60) . "\n\n";
 
 // Extract and display the infobox to show the added parameters
-preg_match('/\{\{Choroba infobox.*?\}\}/s', $processed_article, $matches);
+preg_match('/\{\{Choroba infobox.*?\}\}/s', $processedArticle, $matches);
 if (isset($matches[0])) {
     echo "EXTRACTED INFOBOX (with added parameters):\n";
     echo str_repeat("-", 60) . "\n";
@@ -79,7 +79,7 @@ if (isset($matches[0])) {
 // Show which parameters were added
 echo "PARAMETERS ADDED:\n";
 echo str_repeat("-", 60) . "\n";
-$added_params = [
+$addedParams = [
     'nazwa naukowa' => 'Scientific name',
     'ICD11' => 'ICD-11 classification code',
     'ICD11 nazwa' => 'ICD-11 classification name',
@@ -97,8 +97,8 @@ $added_params = [
     'commons' => 'Wikimedia Commons category',
 ];
 
-foreach ($added_params as $param => $description) {
-    $present = strpos($processed_article, $param) !== false ? '✅' : '❌';
+foreach ($addedParams as $param => $description) {
+    $present = strpos($processedArticle, $param) !== false ? '✅' : '❌';
     echo "$present |$param = ($description)\n";
 }
 

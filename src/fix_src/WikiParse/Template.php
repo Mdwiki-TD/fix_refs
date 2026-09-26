@@ -2,16 +2,6 @@
 
 namespace WikiParse\Template;
 
-/*
-Usage:
-
-use function WikiParse\Template\getTemplate;
-use function WikiParse\Template\getTemplates;
-
-*/
-
-// include_once __DIR__ . '/../WikiParse/Template.php';
-
 use WikiConnect\ParseWiki\ParserTemplate;
 use WikiConnect\ParseWiki\ParserTemplates;
 

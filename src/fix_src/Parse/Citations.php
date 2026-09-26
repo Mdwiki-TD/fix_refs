@@ -2,27 +2,22 @@
 
 namespace WpRefs\Parse\Citations;
 
-/*
-Usage:
 
-use function WpRefs\Parse\Citations\getCitationsOld;
-
-*/
 
 class CitationOld
 {
     private string $text;
     private string $options;
-    private string $cite_text;
-    public function __construct(string $text, string $options = "", string $cite_text = "")
+    private string $citeText;
+    public function __construct(string $text, string $options = "", string $citeText = "")
     {
         $this->text = $text;
         $this->options = $options;
-        $this->cite_text = $cite_text;
+        $this->citeText = $citeText;
     }
     public function getOriginalText(): string
     {
-        return $this->cite_text;
+        return $this->citeText;
     }
     public function getContent(): string
     {
@@ -54,10 +49,10 @@ class ParserCitationsOld
     }
     public function parse(): void
     {
-        $text_citations = $this->find_sub_citations($this->text);
+        $textCitations = $this->find_sub_citations($this->text);
         $this->citations = [];
-        foreach ($text_citations[1] as $key => $text_citation) {
-            $_Citation = new CitationOld($text_citations[2][$key], $text_citation, $text_citations[0][$key]);
+        foreach ($textCitations[1] as $key => $textCitation) {
+            $_Citation = new CitationOld($textCitations[2][$key], $textCitation, $textCitations[0][$key]);
             $this->citations[] = $_Citation;
         }
     }

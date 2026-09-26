@@ -2,12 +2,7 @@
 
 namespace WpRefs\MovesDots;
 
-/*
-usage:
 
-use function WpRefs\MovesDots\move_dots_after_refs;
-
-*/
 
 function move_dots_before_refs(string $text, string $lang): string
 {

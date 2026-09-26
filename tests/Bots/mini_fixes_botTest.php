@@ -29,9 +29,9 @@ class mini_fixes_botTest extends MyFunctionTest
             $text = $tab['old'];
             $new  = $tab['new'];
             // ---
-            $new_text = fix_sections_titles($text, "ru");
+            $newText = fix_sections_titles($text, "ru");
             // ---
-            $this->assertEqualCompare($new, $text, $new_text);
+            $this->assertEqualCompare($new, $text, $newText);
         }
     }
 
@@ -52,9 +52,9 @@ class mini_fixes_botTest extends MyFunctionTest
             $text = $tab['old'];
             $new  = $tab['new'];
             // ---
-            $new_text = fix_sections_titles($text, "hr");
+            $newText = fix_sections_titles($text, "hr");
             // ---
-            $this->assertEqualCompare($new, $text, $new_text);
+            $this->assertEqualCompare($new, $text, $newText);
         }
     }
     public function testSectionsTitlesSw()
@@ -62,9 +62,9 @@ class mini_fixes_botTest extends MyFunctionTest
         $text = "== Marejeleo 1 ==\n\n====Marejeleo====\n\n=== Marejeleo ===";
         $new  = "== Marejeleo 1 ==\n\n==== Marejeo ====\n\n=== Marejeo ===";
         // ---
-        $new_text = fix_sections_titles($text, "sw");
+        $newText = fix_sections_titles($text, "sw");
         // ---
-        $this->assertEqualCompare($new, $text, $new_text);
+        $this->assertEqualCompare($new, $text, $newText);
     }
 
     // اختبارات دالة remove_space_before_ref_tags

@@ -10,7 +10,7 @@ $fields = ['lang', 'title', 'text', 'revid', 'sourcetitle'];
 
 $data = [];
 
-$final_text = '';
+$finalText = '';
 
 foreach ($fields as $field) {
     $value = trim($_POST[$field] ?? '');
@@ -21,7 +21,7 @@ foreach ($fields as $field) {
     // ---
     // Basic validation for required fields
     if (in_array($field, ['lang', 'title', 'text']) && empty($value)) {
-        $final_text = "Missing required field: $field";
+        $finalText = "Missing required field: $field";
         break;
     }
     // ---
@@ -30,36 +30,36 @@ foreach ($fields as $field) {
 $lang         = $data['lang'];
 $title        = $data['title'];
 $text         = $data['text'];
-$mdwiki_revid = $data['revid'];
+$mdwikiRevid = $data['revid'];
 $sourcetitle  = $data['sourcetitle'];
 
 
 if (!empty($lang) && !empty($title) && !empty($text)) {
     // ---
     // if (verify_csrf_token()) {
-    $newtext = fix_page_with_setting(
+    $newText = fix_page_with_setting(
         $sourcetitle,
         $title,
         $text,
         $lang,
-        $mdwiki_revid,
+        $mdwikiRevid,
         null,
         null,
         null,
     );
-    if (trim($new_text) === trim($text)) {
-        $final_text = 'no changes';
+    if (trim($newText) === trim($text)) {
+        $finalText = 'no changes';
     } else {
-        $final_text = $new_text;
+        $finalText = $newText;
     }
     // }
 } else {
-    $final_text = 'no text';
+    $finalText = 'no text';
 }
 
-if (!empty($final_text)) {
+if (!empty($finalText)) {
 
     header('Content-Type: text/plain; charset=utf-8');
 
-    echo $final_text;
+    echo $finalText;
 }

@@ -2,33 +2,27 @@
 
 namespace WpRefs\Parse\Category;
 
-/*
-Usage:
-
-use function WpRefs\Parse\Category\get_categories_reg;
-
-*/
 
 function get_categories_reg(string $text): array
 {
     $categories = array();
 
-    // هذا التعبير النمطي يستخدم العودية (?R) للتعامل مع الأقواس المتداخلة بشكل صحيح.
-    // (?R) تطابق النمط بأكمله مرة أخرى، مما يسمح بمطابقة هياكل متداخلة مثل [[...[...]...]].
+    // This regular expression uses recursion (?R) to correctly handle nested brackets.
+    // (?R) matches the entire pattern again, allowing it to match nested structures like [[...[...]...]].
     $pattern = "/\[\[\s*Category\s*:([^\]\]]+?)\]\]/is";
     // $pattern = "/\[\[\s*Category\s*:(.*?)\]\](?!\])/is";
 
     preg_match_all($pattern, $text, $matches);
 
     if (!empty($matches[1])) {
-        foreach ($matches[0] as $i => $full_match) {
-            $category_content = $matches[1][$i];
-            // الآن نقوم بتقسيم المحتوى بناءً على "|" للحصول على اسم التصنيف فقط
-            $parts = explode('|', $category_content);
-            $category_name = trim(array_shift($parts));
+        foreach ($matches[0] as $i => $fullMatch) {
+            $categoryContent = $matches[1][$i];
+            // Split the content based on "|" to retrieve only the category name
+            $parts = explode('|', $categoryContent);
+            $categoryName = trim(array_shift($parts));
 
-            // لا نزال نستخدم المطابقة الكاملة كقيمة في المصفوفة النهائية
-            $categories[$category_name] = $full_match;
+            // Use the full match as the value in the final array
+            $categories[$categoryName] = $fullMatch;
         }
     }
 

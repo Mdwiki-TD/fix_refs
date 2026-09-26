@@ -101,10 +101,10 @@ class ParserTags
      */
     public function parse(): void
     {
-        $text_tags = $this->find_sub_tags($this->text);
+        $textTags = $this->find_sub_tags($this->text);
         $this->tags = [];
 
-        foreach ($text_tags as $citationData) {
+        foreach ($textTags as $citationData) {
             if ($this->tagname != "" && trim($citationData['name']) != trim($this->tagname)) {
                 continue;
             }

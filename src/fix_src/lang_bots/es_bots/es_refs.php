@@ -1,11 +1,6 @@
 <?php
 
 namespace WpRefs\EsBots\es_refs;
-/*
-usage:
-
-use function WpRefs\EsBots\es_refs\mv_es_refs;
-*/
 
 use function WikiParse\Template\getTemplates;
 use function WpRefs\Parse\Reg_Citations\get_short_citations;
@@ -14,43 +9,43 @@ use function WpRefs\Parse\Citations\getCitationsOld;
 function get_refs(string $text): array
 {
     // ---
-    $new_text = $text;
+    $newText = $text;
     // ---
     $refs = [];
     // ---
     $citations = getCitationsOld($text);
     // ---
-    $new_text = $text;
+    $newText = $text;
     // ---
     $numb = 0;
     // ---
     foreach ($citations as $key => $citation) {
         // ---
-        $cite_text = $citation->getOriginalText();
+        $citeText = $citation->getOriginalText();
         // ---
-        $cite_contents = $citation->getContent();
+        $citeContents = $citation->getContent();
         // ---
-        $cite_attrs = $citation->getAttributes();
-        $cite_attrs = $cite_attrs ? trim($cite_attrs) : "";
+        $citeAttrs = $citation->getAttributes();
+        $citeAttrs = $citeAttrs ? trim($citeAttrs) : "";
         // ---
-        if (empty($cite_attrs)) {
+        if (empty($citeAttrs)) {
             $numb += 1;
             $name = "autogen_" . $numb;
-            $cite_attrs = "name='$name'";
+            $citeAttrs = "name='$name'";
         }
         // ---
-        $refs[$cite_attrs] = $cite_contents;
+        $refs[$citeAttrs] = $citeContents;
         // ---
-        // echo_test("\n$cite_attrs\n");
+        // echo_test("\n$citeAttrs\n");
         // ---
-        $cite_newtext = "<ref $cite_attrs />";
+        $citeNewtext = "<ref $citeAttrs />";
         // ---
-        $new_text = str_replace($cite_text, $cite_newtext, $new_text);
+        $newText = str_replace($citeText, $citeNewtext, $newText);
     }
     // ---
     return [
         "refs" => $refs,
-        "new_text" => $new_text,
+        "new_text" => $newText,
     ];
 }
 
@@ -86,21 +81,21 @@ function make_line(array $refs): string
 function add_line_to_temp($line, $text)
 {
     // ---
-    $temps_in = getTemplates($text);
+    $tempsIn = getTemplates($text);
     // ---
-    // echo_test("lenth temps_in:" . count($temps_in) . "\n");
+    // echo_test("lenth temps_in:" . count($tempsIn) . "\n");
     // ---
-    $new_text = $text;
+    $newText = $text;
     // ---
-    $temp_already_in = false;
+    $tempAlreadyIn = false;
     // ---
-    foreach ($temps_in as $temp) {
+    foreach ($tempsIn as $temp) {
         // ---
         $name = $temp->getStripName();
         // ---
         // echo_test("\n$name\n");
         // ---
-        $old_text_template = $temp->getOriginalText();
+        $oldTextTemplate = $temp->getOriginalText();
         // ---
         if (!in_array(strtolower($name), ["reflist", "listaref"])) {
             continue;
@@ -108,31 +103,31 @@ function add_line_to_temp($line, $text)
         // ---
         // echo_test("\n$name\n");
         // ---
-        $refn_param = $temp->getParameter("refs");
+        $refnParam = $temp->getParameter("refs");
         // ---
-        if ($refn_param) {
-            $refn_param = check_short_refs($refn_param);
+        if ($refnParam) {
+            $refnParam = check_short_refs($refnParam);
             // ---
-            $line = trim($refn_param) . "\n" . trim($line);
+            $line = trim($refnParam) . "\n" . trim($line);
         };
         // ---
         $temp->setParameter("refs", "\n" . trim($line) . "\n");
         // ---
-        $temp_already_in = true;
+        $tempAlreadyIn = true;
         // ---
-        $new_text_str = $temp->toString();
+        $newTextStr = $temp->toString();
         // ---
-        $new_text = str_replace($old_text_template, $new_text_str, $new_text);
+        $newText = str_replace($oldTextTemplate, $newTextStr, $newText);
         // ---
         break;
     };
     // ---
-    if (!$temp_already_in) {
-        $section_ref = "\n== Referencias ==\n{{listaref|refs=\n$line\n}}";
-        $new_text .= $section_ref;
+    if (!$tempAlreadyIn) {
+        $sectionRef = "\n== Referencias ==\n{{listaref|refs=\n$line\n}}";
+        $newText .= $sectionRef;
     }
     // ---
-    return $new_text;
+    return $newText;
 }
 
 function mv_es_refs(string $text): string
@@ -145,11 +140,11 @@ function mv_es_refs(string $text): string
     // ---
     $refs = get_refs($text);
     // ---
-    $new_lines = make_line($refs['refs']);
+    $newLines = make_line($refs['refs']);
     // ---
-    $new_text = $refs['new_text'];
+    $newText = $refs['new_text'];
     // ---
-    $new_text = add_line_to_temp($new_lines, $new_text);
+    $newText = add_line_to_temp($newLines, $newText);
     // ---
-    return $new_text;
+    return $newText;
 }

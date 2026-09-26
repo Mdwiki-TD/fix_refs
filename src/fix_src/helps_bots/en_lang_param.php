@@ -2,15 +2,6 @@
 
 namespace WpRefs\EnLangParam;
 
-/*
-usage:
-
-use function WpRefs\EnLangParam\add_lang_en;
-use function WpRefs\EnLangParam\add_lang_en_to_refs;
-
-*/
-
-// use function WpRefs\TestBot\echo_test;
 use function WpRefs\TestBot\echo_debug;
 use function WpRefs\Parse\Citations\getCitationsOld;
 use function WikiParse\Template\getTemplates;
@@ -49,20 +40,20 @@ function add_lang_en($text)
     return $text;
 }
 
-function add_lang_en_new($temp_text)
+function add_lang_en_new($tempText)
 {
     // ---
-    $new_text = $temp_text;
+    $newText = $tempText;
     // ---
-    $temp_text = trim($temp_text);
+    $tempText = trim($tempText);
     // ---
-    $temps = getTemplates($temp_text);
+    $temps = getTemplates($tempText);
     // ---
     foreach ($temps as $temp) {
         // ---
-        $temp_old = $temp->getOriginalText();
+        $tempOld = $temp->getOriginalText();
         // ---
-        // echo_debug("temp_old:($temp_old)\n");
+        // echo_debug("temp_old:($tempOld)\n");
         // ---
         $params = $temp->parameters;
         // ---
@@ -72,13 +63,13 @@ function add_lang_en_new($temp_text)
             // ---
             $params->set("language", "en");
             // ---
-            $temp_new = $temp->toString();
+            $tempNew = $temp->toString();
             // ---
-            $new_text = str_replace($temp_old, $temp_new, $new_text);
+            $newText = str_replace($tempOld, $tempNew, $newText);
         }
     }
     // ---
-    return $new_text;
+    return $newText;
 }
 
 function add_lang_en_to_refs($text)
@@ -86,18 +77,18 @@ function add_lang_en_to_refs($text)
     // ---
     echo_debug("\n add_lang_en_to_refs:\n");
     // ---
-    $new_text = $text;
+    $newText = $text;
     // ---
     $citations = getCitationsOld($text);
     // ---
     foreach ($citations as $key => $citation) {
         // ---
-        $cite_temp = $citation->getContent();
+        $citeTemp = $citation->getContent();
         // ---
-        $new_temp = add_lang_en_new($cite_temp);
+        $newTemp = add_lang_en_new($citeTemp);
         // ---
-        $new_text = str_replace($cite_temp, $new_temp, $new_text);
+        $newText = str_replace($citeTemp, $newTemp, $newText);
     }
     // ---
-    return $new_text;
+    return $newText;
 }

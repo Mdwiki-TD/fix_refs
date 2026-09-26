@@ -8,11 +8,11 @@ use function WpRefs\Infobox\Expend_Infobox;
 
 class Texts
 {
-    static $TEXT_INPUT = "";
-    static $TEXT_OUTPUT = "";
+    static $TEXTINPUT = "";
+    static $TEXTOUTPUT = "";
 }
 
-Texts::$TEXT_INPUT = <<<'TXT'
+Texts::$TEXTINPUT = <<<'TXT'
 {{Infobox drug|verifiedrevid=461217017|image=Omaveloxolone structure.svg|width=250|alt=|caption=<!-- Names -->|pronounce=|tradename=Skyclarys|synonyms=RTA 408|IUPAC_name=N-((4aS,6aR,6bS,8aR,12aS,14aR,14bS)-1 1-cyano-2,2,6a,6b,9,9,12a-heptamethyl-10,14-dioxo-1,2,3,4,4a,5,6,6a,6b,7,8,8a,9,10,12a,14,14a,14b- octadecahydropicen-4a-yl)-2,2-difluoropropanamide
 
 <!-- Clinical data -->|pregnancy_AU=<!-- A / B1 / B2 / B3 / C / D / X -->|pregnancy_AU_comment=|pregnancy_category=|routes_of_administration=[[By mouth]]|onset=|duration_of_action=|Drugs.com={{Drugs.com|monograph|omaveloxolone}}|MedlinePlus=<!-- Legal data -->|legal_AU=<!-- S2, S3, S4, S5, S6, S7, S8, S9 or Unscheduled -->|legal_AU_comment=|legal_CA=<!-- OTC, Rx-only, Schedule I, II, III, IV, V, VI, VII, VIII -->|legal_CA_comment=|legal_DE=<!-- Anlage I, II, III or Unscheduled -->|legal_DE_comment=|legal_EU=|legal_EU_comment=|legal_NZ=<!-- Class A, B, C -->|legal_NZ_comment=|legal_UN=<!-- N I, II, III, IV / P I, II, III, IV -->|legal_UN_comment=|legal_UK=<!-- GSL, P, POM, CD, CD Lic, CD POM, CD No Reg POM, CD (Benz) POM, CD (Anab) POM or CD Inv POM / Class A, B, C -->|legal_UK_comment=|legal_US=Rx-only|legal_US_comment=<ref name="Skyclarys FDA label">{{Cite web |url=https://www.accessdata.fda.gov/drugsatfda_docs/label/2023/216718Orig1s000lbl.pdf |title=Archived copy |access-date=1 March 2023 |archive-date=1 March 2023 |archive-url=https://web.archive.org/web/20230301063942/https://www.accessdata.fda.gov/drugsatfda_docs/label/2023/216718Orig1s000lbl.pdf |url-status=live }}</ref>|legal_status=<!-- For countries not listed above -->|DailyMedID=Omaveloxolone
@@ -21,7 +21,7 @@ Texts::$TEXT_INPUT = <<<'TXT'
 
 TXT;
 
-Texts::$TEXT_OUTPUT = <<<'TXT'
+Texts::$TEXTOUTPUT = <<<'TXT'
 {{Infobox drug
 |verifiedrevid    =461217017
 |image            =Omaveloxolone structure.svg
@@ -101,16 +101,16 @@ class infoboxTest extends MyFunctionTest
 {
     public function test_expend_new_FileText()
     {
-        // $text_output  = file_get_contents(__DIR__ . "/texts/infobox_output.txt");
+        // $textOutput  = file_get_contents(__DIR__ . "/texts/infobox_output.txt");
         // --
-        $result = Expend_Infobox(Texts::$TEXT_INPUT, "Penciclovir", "");
+        $result = Expend_Infobox(Texts::$TEXTINPUT, "Penciclovir", "");
         $result = preg_replace("/\r\n/", "\n", $result);
         // --
-        $text_output = preg_replace("/\r\n/", "\n", Texts::$TEXT_OUTPUT);
+        $textOutput = preg_replace("/\r\n/", "\n", Texts::$TEXTOUTPUT);
         // --
         // $file_3  = __DIR__ . "/texts/infobox_fixed.txt";
         // file_put_contents($file_3, $result);
         // --
-        $this->assertEquals(trim($text_output), trim($result), "Unexpected result");
+        $this->assertEquals(trim($textOutput), trim($result), "Unexpected result");
     }
 }

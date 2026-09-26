@@ -6,9 +6,9 @@ use function WpRefs\WprefText\fix_page;
 class indexTest extends MyFunctionTest
 {
 
-    private function fix_page_wrap(string $text, string $lang, $move_dots, $infobox, $add_en_lang)
+    private function fix_page_wrap(string $text, string $lang, $moveDots, $infobox, $addEnLang)
     {
-        return fix_page($text, "title", $move_dots, $infobox, $add_en_lang, $lang, 'SomeTitle', 0);
+        return fix_page($text, "title", $moveDots, $infobox, $addEnLang, $lang, 'SomeTitle', 0);
     }
 
     // skip it
@@ -20,8 +20,8 @@ class indexTest extends MyFunctionTest
         // --
         $result = $this->fix_page_wrap($input, 'hy', true, true, true);
         // --
-        $output_file   = __DIR__ . "/texts/indexTest/1/output.txt";
-        file_put_contents($output_file, $result);
+        $outputFile   = __DIR__ . "/texts/indexTest/1/output.txt";
+        file_put_contents($outputFile, $result);
         // --
         $this->assertEqualCompare($expected, $input, $result);
     }
@@ -32,8 +32,8 @@ class indexTest extends MyFunctionTest
         // --
         $result = $this->fix_page_wrap($input, 'hy', true, true, true);
         // --
-        $output_file   = __DIR__ . "/texts/indexTest/2/output.txt";
-        file_put_contents($output_file, $result);
+        $outputFile   = __DIR__ . "/texts/indexTest/2/output.txt";
+        file_put_contents($outputFile, $result);
         // --
         $this->assertEqualCompare($expected, $input, $result);
     }

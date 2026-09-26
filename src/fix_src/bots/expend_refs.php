@@ -2,13 +2,6 @@
 
 namespace WpRefs\ExpendRefs;
 
-/*
-Usage:
-
-use function WpRefs\ExpendRefs\refs_expend_work;
-
-*/
-
 use function WpRefs\Parse\Reg_Citations\get_full_refs;
 use function WpRefs\Parse\Reg_Citations\get_short_citations;
 
@@ -20,10 +13,10 @@ function refs_expend_work($first, $alltext = "")
     $refs = get_full_refs($alltext);
     // echo  "get_full_refs:" . count($refs) . "<br>";
 
-    $short_refs = get_short_citations($first);
-    // echo  "short_refs:" . count($short_refs) . "<br>";
+    $shortRefs = get_short_citations($first);
+    // echo  "short_refs:" . count($shortRefs) . "<br>";
 
-    foreach ($short_refs as $cite) {
+    foreach ($shortRefs as $cite) {
         $name = $cite["name"];
         $refe = $cite["tag"];
         // ---

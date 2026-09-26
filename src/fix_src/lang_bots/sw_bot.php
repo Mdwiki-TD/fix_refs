@@ -1,13 +1,7 @@
 <?php
 
 namespace WpRefs\SW;
-/*
 
-usage:
-
-use function WpRefs\SW\sw_fixes;
-
-*/
 
 function sw_fixes($text)
 {

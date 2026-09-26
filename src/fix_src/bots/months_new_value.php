@@ -1,16 +1,11 @@
 <?php
 
 namespace WpRefs\Bots\MonthNewValue;
-/*
-usage:
-use function WpRefs\Bots\MonthNewValue\make_date_new_val_pt;
-use function WpRefs\Bots\MonthNewValue\make_date_new_val_es;
-*/
 
 function new_date($val, $lang = 'pt')
 {
     // Define month translations per language
-    $months_translations = [
+    $monthsTranslations = [
         'pt' => [
             "January" => "janeiro",
             "February" => "fevereiro",
@@ -42,16 +37,16 @@ function new_date($val, $lang = 'pt')
     ];
 
     // Ensure language exists
-    if (!isset($months_translations[$lang])) {
+    if (!isset($monthsTranslations[$lang])) {
         return trim($val);
     }
 
-    $months_lower = array_change_key_case($months_translations[$lang], CASE_LOWER);
+    $monthsLower = array_change_key_case($monthsTranslations[$lang], CASE_LOWER);
 
-    $month_part = "(?P<m>January|February|March|April|May|June|July|August|September|October|November|December)";
+    $monthPart = "(?P<m>January|February|March|April|May|June|July|August|September|October|November|December)";
     $patterns = [
-        "/^(?:(?P<d>\d{1,2})\s+)?$month_part,?\s+(?P<y>\d{4})$/iu",
-        "/^$month_part\s+(?P<d>\d{1,2}),?\s+(?P<y>\d{4})$/iu",
+        "/^(?:(?P<d>\d{1,2})\s+)?$monthPart,?\s+(?P<y>\d{4})$/iu",
+        "/^$monthPart\s+(?P<d>\d{1,2}),?\s+(?P<y>\d{4})$/iu",
     ];
 
     foreach ($patterns as $pattern) {
@@ -59,7 +54,7 @@ function new_date($val, $lang = 'pt')
             $day   = $matches['d'];
             $month = strtolower($matches['m']);
             $year  = $matches['y'];
-            $translatedMonth = $months_lower[$month] ?? "";
+            $translatedMonth = $monthsLower[$month] ?? "";
 
             if ($translatedMonth) {
                 // Build result depending on language

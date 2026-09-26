@@ -15,3 +15,5 @@ fix_src/helps_bots/output.txt
 z.php
 /.claude
 /.commandcode
+src/resources/revisions/1503213/wikitext.txt
+src/test.wikitext

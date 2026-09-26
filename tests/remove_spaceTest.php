@@ -15,8 +15,8 @@ class remove_spaceTest extends MyFunctionTest
         // --
         $result = remove_spaces_between_last_word_and_beginning_of_ref($input, 'hy');
         // --
-        $output_file   = __DIR__ . "/texts/remove_space_texts/1/output.txt";
-        file_put_contents($output_file, $result);
+        $outputFile   = __DIR__ . "/texts/remove_space_texts/1/output.txt";
+        file_put_contents($outputFile, $result);
         // --
         $this->assertEqualCompare($expected, $input, $result);
     }
@@ -27,8 +27,8 @@ class remove_spaceTest extends MyFunctionTest
         // --
         $result = remove_spaces_between_last_word_and_beginning_of_ref($input, 'hy');
         // --
-        $output_file   = __DIR__ . "/texts/remove_space_texts/2/output.txt";
-        file_put_contents($output_file, $result);
+        $outputFile   = __DIR__ . "/texts/remove_space_texts/2/output.txt";
+        file_put_contents($outputFile, $result);
         // --
         $this->assertEqualCompare($expected, $input, $result);
     }
@@ -39,8 +39,8 @@ class remove_spaceTest extends MyFunctionTest
         // --
         $result = remove_spaces_between_last_word_and_beginning_of_ref($input, 'hy');
         // --
-        $output_file   = __DIR__ . "/texts/remove_space_texts/3/output.txt";
-        file_put_contents($output_file, $result);
+        $outputFile   = __DIR__ . "/texts/remove_space_texts/3/output.txt";
+        file_put_contents($outputFile, $result);
         // --
         $this->assertEqualCompare($expected, $input, $result);
     }
@@ -103,8 +103,8 @@ class remove_spaceTest extends MyFunctionTest
         WIKI;
         $result = remove_spaces_between_last_word_and_beginning_of_ref($input, 'hy');
         // --
-        // $output_file   = __DIR__ . "/texts/remove_space_texts/5/output.txt";
-        // file_put_contents($output_file, $result);
+        // $outputFile   = __DIR__ . "/texts/remove_space_texts/5/output.txt";
+        // file_put_contents($outputFile, $result);
         // --
         $this->assertEqualCompare($expected, $input, $result);
     }

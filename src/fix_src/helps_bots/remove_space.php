@@ -2,16 +2,6 @@
 
 namespace WpRefs\RemoveSpace;
 
-/*
-usage:
-
-use function WpRefs\RemoveSpace\remove_spaces_between_last_word_and_beginning_of_ref;
-use function WpRefs\RemoveSpace\remove_spaces_between_ref_and_punctuation;
-
-*/
-// ---
-// define("DEBUG", true);
-
 use function WpRefs\TestBot\echo_debug;
 
 if (!function_exists('str_ends_with')) {
@@ -47,18 +37,18 @@ function get_parts($newtext, $charters)
     // ---
     echo_debug("count(matches)=" . count($matches) . "\n");
     // ---
-    $new_parts = [];
+    $newParts = [];
     // ---
     foreach ($matches as $p) {
         $chart = match_it($p, $charters);
         if ($chart) {
-            $new_parts[] = [$p, $chart];
+            $newParts[] = [$p, $chart];
         }
     }
     // ---
-    echo_debug("count(new_parts)=" . count($new_parts) . "\n");
+    echo_debug("count(new_parts)=" . count($newParts) . "\n");
     // ---
-    return $new_parts;
+    return $newParts;
 }
 
 
@@ -81,24 +71,24 @@ function remove_spaces_between_last_word_and_beginning_of_ref($newtext, $lang)
         // ---
         $regline = '/((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)/us';
         // ---
-        preg_match_all($regline, $part, $last_ref_matches);
-        $last_ref = $last_ref_matches[1];
+        preg_match_all($regline, $part, $lastRefMatches);
+        $lastRef = $lastRefMatches[1];
         // ---
-        echo_debug("count(last_ref)=" . count($last_ref) . "\n");
+        echo_debug("count(last_ref)=" . count($lastRef) . "\n");
         // ---
-        if (!empty($last_ref)) {
-            $ref_text = end($last_ref);
-            $end_part = $ref_text . $charter;
-            if (str_ends_with($part, $end_part)) {
+        if (!empty($lastRef)) {
+            $refText = end($lastRef);
+            $endPart = $refText . $charter;
+            if (str_ends_with($part, $endPart)) {
                 // ---
                 echo_debug("endswith\n");
                 // ---
-                $first_part_clean_end = substr($part, 0, -strlen($end_part));
-                $first_part_clean_end = rtrim($first_part_clean_end);
+                $firstPartCleanEnd = substr($part, 0, -strlen($endPart));
+                $firstPartCleanEnd = rtrim($firstPartCleanEnd);
                 // ---
-                $new_part = $first_part_clean_end . trim($ref_text) . $charter;
+                $newPart = $firstPartCleanEnd . trim($refText) . $charter;
                 // ---
-                $newtext = str_replace($part, $new_part, $newtext);
+                $newtext = str_replace($part, $newPart, $newtext);
             }
         }
     }

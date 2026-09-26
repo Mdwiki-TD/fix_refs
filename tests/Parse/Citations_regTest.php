@@ -60,20 +60,20 @@ class Citations_regTest extends MyFunctionTest
     public function test_get_full_refs()
     {
         $text = '<ref name="ref1">Content 1</ref> <ref name="ref2">Content 2</ref>';
-        $full_refs = get_full_refs($text);
+        $fullRefs = get_full_refs($text);
 
-        $this->assertCount(2, $full_refs);
-        $this->assertEquals('<ref name="ref1">Content 1</ref>', $full_refs["ref1"]);
-        $this->assertEquals('<ref name="ref2">Content 2</ref>', $full_refs["ref2"]);
+        $this->assertCount(2, $fullRefs);
+        $this->assertEquals('<ref name="ref1">Content 1</ref>', $fullRefs["ref1"]);
+        $this->assertEquals('<ref name="ref2">Content 2</ref>', $fullRefs["ref2"]);
     }
 
     public function test_get_short_citations()
     {
         $text = '<ref name="ref1"/> Text <ref name="ref2"/>';
-        $short_refs = get_short_citations($text);
+        $shortRefs = get_short_citations($text);
 
-        $this->assertCount(2, $short_refs);
-        $this->assertEquals("ref1", $short_refs[0]["name"]);
-        $this->assertEquals('<ref name="ref1"/>', $short_refs[0]["tag"]);
+        $this->assertCount(2, $shortRefs);
+        $this->assertEquals("ref1", $shortRefs[0]["name"]);
+        $this->assertEquals('<ref name="ref1"/>', $shortRefs[0]["tag"]);
     }
 }

@@ -12,12 +12,12 @@ class pl_infoboxTest extends MyFunctionTest
         $input = <<<'TXT'
 {{Choroba infobox
 |nazwa polska = Astma oskrzelowa
-|obraz = 
-|opis obrazu = 
+|obraz =
+|opis obrazu =
 }}
 TXT;
         $result = add_missing_params_to_choroba_infobox($input);
-        
+
         // Check that all required parameters are present (without requiring specific spacing)
         $this->assertStringContainsString('nazwa naukowa', $result);
         $this->assertStringContainsString('ICD11', $result);
@@ -36,7 +36,7 @@ TXT;
         $this->assertStringContainsString('MedlinePlus', $result);
         $this->assertStringContainsString('MeshID', $result);
         $this->assertStringContainsString('commons', $result);
-        
+
         // Check that original parameters are still present
         $this->assertStringContainsString('nazwa polska', $result);
         $this->assertStringContainsString('Astma oskrzelowa', $result);
@@ -51,7 +51,7 @@ TXT;
             '{{Choroba Infobox|nazwa polska=Test}}',
             '{{ChOrObA iNfObOx|nazwa polska=Test}}'
         ];
-        
+
         foreach ($inputs as $input) {
             $result = add_missing_params_to_choroba_infobox($input);
             $this->assertStringContainsString('nazwa naukowa', $result, "Failed for input: $input");
@@ -69,14 +69,14 @@ TXT;
 }}
 TXT;
         $result = add_missing_params_to_choroba_infobox($input);
-        
+
         // Count occurrences using regex - should be exactly 1 for each existing param
         $icd10_count = preg_match_all('/\|ICD10\s*=/', $result, $icd10_matches);
-        $meshid_count = preg_match_all('/\|MeshID\s*=/', $result, $meshid_matches);
-        
+        $meshidCount = preg_match_all('/\|MeshID\s*=/', $result, $meshidMatches);
+
         $this->assertEquals(1, $icd10_count);
-        $this->assertEquals(1, $meshid_count);
-        
+        $this->assertEquals(1, $meshidCount);
+
         // But should still add missing ones
         $this->assertStringContainsString('nazwa naukowa', $result);
         $this->assertStringContainsString('ICD11', $result);
@@ -86,7 +86,7 @@ TXT;
     {
         $input = '{{Some other template|param=value}}';
         $result = add_missing_params_to_choroba_infobox($input);
-        
+
         // Should return unchanged
         $this->assertEquals($input, $result);
     }
@@ -99,7 +99,7 @@ TXT;
 }}
 TXT;
         $result = pl_fixes($input);
-        
+
         // Test that pl_fixes calls the add_missing_params function
         $this->assertStringContainsString('nazwa naukowa', $result);
         $this->assertStringContainsString('ICD10', $result);
@@ -119,7 +119,7 @@ Some text here.
 }}
 TXT;
         $result = add_missing_params_to_choroba_infobox($input);
-        
+
         // Both templates should get the parameters
         // Use regex to match exact parameter (not substring that matches both ICD10 and ICD10 nazwa)
         $icd10Count = preg_match_all('/\|ICD10\s*=/', $result, $matches);

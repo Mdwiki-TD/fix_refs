@@ -2,6 +2,21 @@
 
 namespace WpRefs\FixPage;
 
+/**
+ * WARNING / DEPENDENCY NOTICE:
+ *
+ * The functions `\WpRefs\FixPage\DoChangesToText1` and `\WpRefs\FixPage\fix_page_with_setting`
+ * defined or modified here are referenced and used in:
+ * https://github.com/Mdwiki-TD/publish/blob/main/src/su/text_edit.php
+ *
+ * E.g.,
+ * if (function_exists('\WpRefs\FixPage\fix_page_with_setting')) { ... }
+ * if (function_exists('\WpRefs\FixPage\DoChangesToText1')) { ... }
+ *
+ * Any structural or behavioral changes made to this file must be synchronized
+ * and reflected in the referenced file to avoid breaking external functionality.
+ */
+
 if (isset($_GET['test']) || (($_SERVER['SERVER_NAME'] ?? '') === 'localhost')) {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
@@ -15,12 +30,12 @@ use function WpRefs\TestBot\echo_test;
 
 function get_curl(string $url): string
 {
-    $usr_agent = 'WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)';
+    $usrAgent = 'WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)';
     $ch = curl_init();
 
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_USERAGENT, $usr_agent);
+    curl_setopt($ch, CURLOPT_USERAGENT, $usrAgent);
 
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
     curl_setopt($ch, CURLOPT_TIMEOUT, 5);
@@ -54,12 +69,12 @@ function load_settings_new()
     $url = "http://localhost:9001/api.php?get=language_settings";
     if (($_SERVER['SERVER_NAME'] ?? '') === 'mdwiki.toolforge.org') {
         $url = "https://mdwiki.toolforge.org/api.php?get=language_settings";
-        $remote_data = get_curl($url);
+        $remoteData = get_curl($url);
     } else {
-        $remote_data = @file_get_contents($url);
+        $remoteData = @file_get_contents($url);
     }
 
-    $decoded = json_decode($remote_data, true);
+    $decoded = json_decode($remoteData, true);
 
     if (!is_array($decoded) || empty($decoded['results'])) {
         $localFile = __DIR__ . '/resources/language_settings.json';
@@ -74,17 +89,17 @@ function load_settings_new()
     return $new;
 }
 
-function fix_page_no_setting($text, $title, $langcode, $sourcetitle, $mdwiki_revid)
+function fix_page_no_setting($text, $title, $langcode, $sourcetitle, $mdwikiRevid)
 {
     $setting = load_settings_new();
     // ---
-    $lang_default = isset($setting[$langcode]) ? $setting[$langcode] : [];
+    $langDefault = isset($setting[$langcode]) ? $setting[$langcode] : [];
     // ---
-    $move_dots = isset($lang_default['move_dots']) && $lang_default['move_dots'] == 1;
-    $expand = true; // (isset($lang_default['expend']) && $lang_default['expend'] == 1);
-    $add_en_lang = isset($lang_default['add_en_lang']) && $lang_default['add_en_lang'] == 1;
+    $moveDots = isset($langDefault['move_dots']) && $langDefault['move_dots'] == 1;
+    $expand = true; // (isset($langDefault['expend']) && $langDefault['expend'] == 1);
+    $addEnLang = isset($langDefault['add_en_lang']) && $langDefault['add_en_lang'] == 1;
     // ---
-    $text = fix_page($text, $title, $move_dots, $expand, $add_en_lang, $langcode, $sourcetitle, $mdwiki_revid);
+    $text = fix_page($text, $title, $moveDots, $expand, $addEnLang, $langcode, $sourcetitle, $mdwikiRevid);
     // ---
     return $text;
 }
@@ -94,10 +109,10 @@ function DoChangesToText1(
     $title,
     $text,
     $lang,
-    $mdwiki_revid
+    $mdwikiRevid
 ) {
     // ---
-    $newtext = fix_page_no_setting($text, $title, $lang, $sourcetitle, $mdwiki_revid);
+    $newtext = fix_page_no_setting($text, $title, $lang, $sourcetitle, $mdwikiRevid);
     // ---
     if (empty($newtext)) {
         $newtext = $text;
@@ -111,16 +126,16 @@ function fix_page_with_setting(
     $title,
     $text,
     $lang,
-    $mdwiki_revid,
-    $move_dots = null,
+    $mdwikiRevid,
+    $moveDots = null,
     $expand = null,
-    $add_en_lang = null
+    $addEnLang = null
 ) {
     // ---
-    if ($move_dots === null && $expand === null && $add_en_lang === null) {
-        $newtext = fix_page_no_setting($text, $title, $lang, $sourcetitle, $mdwiki_revid);
+    if ($moveDots === null && $expand === null && $addEnLang === null) {
+        $newtext = fix_page_no_setting($text, $title, $lang, $sourcetitle, $mdwikiRevid);
     } else {
-        $newtext = fix_page($text, $title, $move_dots, $expand, $add_en_lang, $lang, $sourcetitle, $mdwiki_revid);
+        $newtext = fix_page($text, $title, $moveDots, $expand, $addEnLang, $lang, $sourcetitle, $mdwikiRevid);
     }
     // ---
     if (empty($newtext)) {

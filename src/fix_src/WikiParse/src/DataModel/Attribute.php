@@ -11,7 +11,7 @@ class Attribute
     /**
      * @var array The attributes of the citation.
      */
-    private array $attributes_array = [];
+    private array $attributesArray = [];
 
     /**
      * Attribute constructor.
@@ -51,9 +51,9 @@ class Attribute
         // <ref name="source" group="bar">This is a citation</ref>
 
         $text = "<ref " . $this->content . ">";
-        // $attrfind_tolerant = '/((?<=[\'"\s\/])[^\s\/>][^\s\/=>]*)(\s*=+\s*(\'[^\']*\'|"[^"]*"|(?![\'"])[^>\s]*))?(?:\s|\/(?!>))*/';
+        // $attrfindTolerant = '/((?<=[\'"\s\/])[^\s\/>][^\s\/=>]*)(\s*=+\s*(\'[^\']*\'|"[^"]*"|(?![\'"])[^>\s]*))?(?:\s|\/(?!>))*/';
 
-        $attrfind_tolerant = '/
+        $attrfindTolerant = '/
             ((?<=[\'"\s\/])[^\s\/>][^\s\/=>]*)             # Attribute name
             (\s*=+\s*                                      # Equals sign(s)
             (
@@ -63,13 +63,13 @@ class Attribute
             ))?
             (?:\s|\/(?!>))*                                # Trailing space or slash not followed by >
         /x';
-        $this->attributes_array = [];
+        $this->attributesArray = [];
 
-        if (preg_match_all($attrfind_tolerant, $text, $matches, PREG_SET_ORDER)) {
+        if (preg_match_all($attrfindTolerant, $text, $matches, PREG_SET_ORDER)) {
             foreach ($matches as $match) {
-                $attr_name = strtolower($match[1]);
-                $attr_value = isset($match[3]) ? $match[3] : "";
-                $this->attributes_array[$attr_name] = $attr_value;
+                $attrName = strtolower($match[1]);
+                $attrValue = isset($match[3]) ? $match[3] : "";
+                $this->attributesArray[$attrName] = $attrValue;
             }
         }
     }
@@ -81,7 +81,7 @@ class Attribute
 
     public function getAttributesArray(): array
     {
-        return $this->attributes_array;
+        return $this->attributesArray;
     }
 
     /**
@@ -94,7 +94,7 @@ class Attribute
 
     public function has(string $key): bool
     {
-        return array_key_exists($key, $this->attributes_array);
+        return array_key_exists($key, $this->attributesArray);
     }
     /**
      * Get the value of an attribute of the citation.
@@ -107,7 +107,7 @@ class Attribute
 
     public function get(string $key, string $default = ""): string
     {
-        return $this->attributes_array[$key] ?? $default;
+        return $this->attributesArray[$key] ?? $default;
     }
 
     /**
@@ -121,7 +121,7 @@ class Attribute
 
     public function set(string $key, string $value): void
     {
-        $this->attributes_array[$key] = $value;
+        $this->attributesArray[$key] = $value;
     }
     /**
      * Delete an attribute of the citation.
@@ -141,8 +141,8 @@ class Attribute
 
     public function delete(string $key): void
     {
-        if (array_key_exists($key, $this->attributes_array)) {
-            unset($this->attributes_array[$key]);
+        if (array_key_exists($key, $this->attributesArray)) {
+            unset($this->attributesArray[$key]);
         }
     }
 
@@ -157,7 +157,7 @@ class Attribute
     {
         $result = [];
 
-        foreach ($this->attributes_array as $key => $value) {
+        foreach ($this->attributesArray as $key => $value) {
             if (!$value) {
                 $result[] = $key;
                 continue;

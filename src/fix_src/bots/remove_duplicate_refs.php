@@ -2,14 +2,7 @@
 
 namespace WpRefs\DelDuplicateRefs;
 
-/*
 
-Usage:
-
-use function WpRefs\DelDuplicateRefs\remove_Duplicate_refs_With_attrs;
-use function WpRefs\DelDuplicateRefs\fix_refs_names;
-
-*/
 
 use function WpRefs\Bots\AttrsUtils\get_attrs;
 use function WpRefs\Bots\RefsUtils\remove_start_end_quotes;
@@ -19,98 +12,98 @@ use function WpRefs\TestBot\echo_debug;
 function fix_refs_names(string $text): string
 {
     // ---
-    $new_text = $text;
+    $newText = $text;
     // ---
     $citations = getCitationsOld($text);
     // ---
-    $new_text = $text;
+    $newText = $text;
     // ---
     foreach ($citations as $key => $citation) {
         // ---
-        $cite_attrs = $citation->getAttributes();
-        $cite_attrs = $cite_attrs ? trim($cite_attrs) : "";
+        $citeAttrs = $citation->getAttributes();
+        $citeAttrs = $citeAttrs ? trim($citeAttrs) : "";
         // ---
-        $if_in = "<ref $cite_attrs>";
+        $ifIn = "<ref $citeAttrs>";
         // ---
-        if (strpos($new_text, $if_in) === false) {
+        if (strpos($newText, $ifIn) === false) {
             continue;
         }
         // ---
-        $attrs = get_attrs($cite_attrs);
+        $attrs = get_attrs($citeAttrs);
         // ---
-        if (empty($cite_attrs)) {
+        if (empty($citeAttrs)) {
             continue;
         }
         // ---
-        $new_cite_attrs = "";
+        $newCiteAttrs = "";
         // ---
         foreach ($attrs as $key => $value) {
             // ---
             $value2 = remove_start_end_quotes($value);
             // ---
-            $new_cite_attrs .= " $key=$value2";
+            $newCiteAttrs .= " $key=$value2";
             // ---
         }
         // ---
-        $new_cite_attrs = trim($new_cite_attrs);
+        $newCiteAttrs = trim($newCiteAttrs);
         // ---
-        $cite_newtext = "<ref $new_cite_attrs>";
+        $citeNewtext = "<ref $newCiteAttrs>";
         // ---
-        $new_text = str_replace($if_in, $cite_newtext, $new_text);
+        $newText = str_replace($ifIn, $citeNewtext, $newText);
     }
     // ---
-    return $new_text;
+    return $newText;
 }
 
 function remove_Duplicate_refs_With_attrs(string $text): string
 {
     // ---
-    $new_text = $text;
+    $newText = $text;
     // ---
-    $refs_to_check = [];
+    $refsToCheck = [];
     // ---
     $refs = [];
     // ---
-    $citations = getCitationsOld($new_text);
+    $citations = getCitationsOld($newText);
     // ---
     $numb = 0;
     // ---
     foreach ($citations as $key => $citation) {
         // ---
-        $cite_fulltext = $citation->getOriginalText();
+        $citeFulltext = $citation->getOriginalText();
         // ---
-        $cite_attrs = $citation->getAttributes();
-        $cite_attrs = $cite_attrs ? trim($cite_attrs) : "";
+        $citeAttrs = $citation->getAttributes();
+        $citeAttrs = $citeAttrs ? trim($citeAttrs) : "";
         // ---
-        if (empty($cite_attrs)) {
+        if (empty($citeAttrs)) {
             $numb += 1;
             $name = "autogen_" . $numb;
-            $cite_attrs = "name='$name'";
+            $citeAttrs = "name='$name'";
         }
         // ---
-        // echo_debug("\n cite_text: (($cite_fulltext))");
-        echo_debug("\n cite_attrs: (($cite_attrs))");
+        // echo_debug("\n cite_text: (($citeFulltext))");
+        echo_debug("\n cite_attrs: (($citeAttrs))");
         // ---
-        $cite_newtext = "<ref $cite_attrs />";
+        $citeNewtext = "<ref $citeAttrs />";
         // ---
-        if (isset($refs[$cite_attrs])) {
+        if (isset($refs[$citeAttrs])) {
             // ---
-            $new_text = str_replace($cite_fulltext, $cite_newtext, $new_text);
+            $newText = str_replace($citeFulltext, $citeNewtext, $newText);
         } else {
-            $refs_to_check[$cite_newtext] = $cite_fulltext;
+            $refsToCheck[$citeNewtext] = $citeFulltext;
             // ---
-            $refs[$cite_attrs] = $cite_newtext;
+            $refs[$citeAttrs] = $citeNewtext;
         };
     }
     // ---
-    foreach ($refs_to_check as $key => $value) {
-        if (strpos($new_text, $value) === false) {
+    foreach ($refsToCheck as $key => $value) {
+        if (strpos($newText, $value) === false) {
             $pattern = '/' . preg_quote($key, '/') . '/u';
-            $new_text = preg_replace($pattern, $value, $new_text, 1);
+            $newText = preg_replace($pattern, $value, $newText, 1);
         }
     }
     // ---
     // echo count($citations);
     // ---
-    return $new_text;
+    return $newText;
 }

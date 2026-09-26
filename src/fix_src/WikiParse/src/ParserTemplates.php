@@ -82,18 +82,18 @@ class ParserTemplates
                 continue;
             }
 
-            $text_templates = $this->find_sub_templates($currentText);
+            $textTemplates = $this->find_sub_templates($currentText);
 
-            foreach ($text_templates as $match) {
-                $template_full = $match[0]; // Including brackets
-                $template_inner = $match[1]; // المحتوى فقط
+            foreach ($textTemplates as $match) {
+                $templateFull = $match[0]; // Including brackets
+                $templateInner = $match[1]; // المحتوى فقط
 
-                $_parser = new ParserTemplate($template_full);
+                $_parser = new ParserTemplate($templateFull);
                 $this->templates[] = $_parser->getTemplate();
 
                 // Add the inner template to the stack for later parsing
                 $stack[] = [
-                    'text' => $template_inner,
+                    'text' => $templateInner,
                     'depth' => $currentDepth + 1
                 ];
             }

@@ -11,23 +11,23 @@ use function WpRefs\WikiText\get_wikipedia_text;
 use function WpRefs\csrf\generate_csrf_token;
 use function WpRefs\csrf\verify_csrf_token; // if (verify_csrf_token())  {
 
-$header_path = __DIR__ . '/../header.php';
+$headerPath = __DIR__ . '/../header.php';
 
-if (!file_exists($header_path)) {
+if (!file_exists($headerPath)) {
     // "I:\MD_TOOLS\MDWIKI_MAIN_REPO\public_html\header.php"
-    $header_path = dirname(dirname(dirname(dirname(__DIR__)))) . '/MDWIKI_MAIN_REPO/public_html/header.php';
+    $headerPath = dirname(dirname(dirname(dirname(__DIR__)))) . '/MDWIKI_MAIN_REPO/public_html/header.php';
 }
 
-include_once $header_path;
+include_once $headerPath;
 
 $lang         = trim($_POST['lang'] ?? '');
 $title        = trim($_POST['title'] ?? '');
-$mdwiki_revid = trim($_POST['revid'] ?? '');
+$mdwikiRevid = trim($_POST['revid'] ?? '');
 $sourcetitle  = trim($_POST['sourcetitle'] ?? '');
 
 $user = $GLOBALS['global_username'] ?? '';
 // ---
-$submit_or_login = (!empty($user))
+$submitOrLogin = (!empty($user))
     ? "<input class='btn btn-outline-primary' type='submit' value='start'>"
     : "<a class='btn btn-outline-primary' href='/auth/login.php'>login</a>";
 // ---
@@ -53,7 +53,7 @@ $footer = <<<HTML
 </html>
 HTML;
 // ---
-function make_result($lang, $title, $sourcetitle, $mdwiki_revid)
+function make_result($lang, $title, $sourcetitle, $mdwikiRevid)
 {
     // ---
     $text = get_wikipedia_text($title, $lang);
@@ -64,35 +64,35 @@ function make_result($lang, $title, $sourcetitle, $mdwiki_revid)
         HTML;
     }
     // ---
-    $new_text = fix_page_with_setting(
+    $newText = fix_page_with_setting(
         $sourcetitle,
         $title,
         $text,
         $lang,
-        $mdwiki_revid,
+        $mdwikiRevid,
         null,
         null,
         null,
     );
     //---
-    $new_text_sanitized = htmlspecialchars($new_text, ENT_QUOTES, 'UTF-8');
+    $newTextSanitized = htmlspecialchars($newText, ENT_QUOTES, 'UTF-8');
     //---
-    $no_changes = (trim($new_text) === trim($text)) ? "true" : "false";
+    $noChanges = (trim($newText) === trim($text)) ? "true" : "false";
     //---
     return <<<HTML
-        <h2>New Text: (no_changes: $no_changes)</h2>
-            <textarea name="new_text" rows="15" cols="100">$new_text_sanitized</textarea>
+        <h2>New Text: (no_changes: $noChanges)</h2>
+            <textarea name="new_text" rows="15" cols="100">$newTextSanitized</textarea>
     HTML;
 }
 
 if (empty($lang) || empty($title)) {
     //---
-    $csrf_token = generate_csrf_token(); // <input name='csrf_token' value="$csrf_token" type="hidden"/>
+    $csrfToken = generate_csrf_token(); // <input name='csrf_token' value="$csrfToken" type="hidden"/>
     //---
     // عرض نموذج لإرسال البيانات إلى text_changes.php
     echo <<<HTML
         <form action='index.php' method='POST'>
-            <input name='csrf_token' value="$csrf_token" type="hidden"/>
+            <input name='csrf_token' value="$csrfToken" type="hidden"/>
             <div class='container'>
                 <div class='row'>
                     <div class='col-md-3'>
@@ -131,7 +131,7 @@ if (empty($lang) || empty($title)) {
                 <div class='row'>
                     <div class='col-md-3'>
                         <h4 class='aligncenter'>
-                            $submit_or_login
+                            $submitOrLogin
                         </h4>
                     </div>
                 </div>
@@ -141,7 +141,7 @@ if (empty($lang) || empty($title)) {
     //---
 } else {
     if (verify_csrf_token()) {
-        echo make_result($lang, $title, $sourcetitle, $mdwiki_revid);
+        echo make_result($lang, $title, $sourcetitle, $mdwikiRevid);
     }
 }
 //---
