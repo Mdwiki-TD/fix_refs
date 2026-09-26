@@ -14,7 +14,7 @@ use function WpRefs\TestBot\echo_test;
 
 function get_url_curl(string $url): string
 {
-    $usr_agent = 'WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)';
+    $usrAgent = 'WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)';
 
     $ch = curl_init();
 
@@ -23,7 +23,7 @@ function get_url_curl(string $url): string
     // curl_setopt($ch, CURLOPT_COOKIEJAR, "cookie.txt");
     // curl_setopt($ch, CURLOPT_COOKIEFILE, "cookie.txt");
 
-    curl_setopt($ch, CURLOPT_USERAGENT, $usr_agent);
+    curl_setopt($ch, CURLOPT_USERAGENT, $usrAgent);
 
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
     curl_setopt($ch, CURLOPT_TIMEOUT, 5);
@@ -78,11 +78,11 @@ function Get_MdWiki_Category($lang)
 {
     // ---
     // https://it.wikipedia.org/w/index.php?title=Categoria:Translated_from_MDWiki&action=edit&redlink=1
-    $skip_langs = [
+    $skipLangs = [
         "it"
     ];
     // ---
-    if (in_array($lang, $skip_langs)) {
+    if (in_array($lang, $skipLangs)) {
         return "";
     }
     // ---

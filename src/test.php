@@ -5,27 +5,27 @@ if (isset($_GET['test']) || $_SERVER['SERVER_NAME'] == 'localhost') {
     error_reporting(E_ALL);
 }
 
-$header_path = __DIR__ . '/../header.php';
+$headerPath = __DIR__ . '/../header.php';
 
-if (!file_exists($header_path)) {
+if (!file_exists($headerPath)) {
     // "I:\MD_TOOLS\MDWIKI_MAIN_REPO\public_html\header.php"
-    $header_path = dirname(dirname(dirname(dirname(__DIR__)))) . '/MDWIKI_MAIN_REPO/src/public_html/header.php';
+    $headerPath = dirname(dirname(dirname(dirname(__DIR__)))) . '/MDWIKI_MAIN_REPO/src/public_html/header.php';
 }
 
-include_once $header_path;
+include_once $headerPath;
 include_once __DIR__ . '/csrf.php';
 
 use function WpRefs\csrf\generate_csrf_token;
 
-$test_text = file_get_contents(__DIR__ . '/test.wikitext') ?: '';
+$testText = file_get_contents(__DIR__ . '/test.wikitext') ?: '';
 // ---
 $user = $GLOBALS['global_username'] ?? '';
 // ---
-$submit_or_login = (!empty($user))
+$submitOrLogin = (!empty($user))
     ? "<input class='btn btn-outline-primary' type='submit' value='start'>"
     : "<a class='btn btn-outline-primary' href='/auth/login.php'>login</a>";
 // ---
-$csrf_token = generate_csrf_token(); // <input name='csrf_token' value="$csrf_token" type="hidden"/>
+$csrfToken = generate_csrf_token(); // <input name='csrf_token' value="$csrfToken" type="hidden"/>
 //---
 ?>
 
@@ -34,7 +34,7 @@ $csrf_token = generate_csrf_token(); // <input name='csrf_token' value="$csrf_to
 </div>
 <div class='card-body'>
     <form action='text_post.php' method='POST'>
-        <input name='csrf_token' value="<?php echo $csrf_token; ?>" type="hidden" />
+        <input name='csrf_token' value="<?php echo $csrfToken; ?>" type="hidden" />
         <div class='container'>
             <div class='row'>
                 <div class='col-md-3'>
@@ -81,14 +81,14 @@ $csrf_token = generate_csrf_token(); // <input name='csrf_token' value="$csrf_to
                 </div>
                 <div class='col-md-3'>
                     <h4 class='aligncenter'>
-                        <?php echo $submit_or_login; ?>
+                        <?php echo $submitOrLogin; ?>
                     </h4>
                 </div>
             </div>
         </div>
         <div class="mb-3">
             <label for="text" class="form-label">Text:</label>
-            <textarea id="text" name="text" rows="5" class="form-control" required><?php echo $test_text; ?></textarea>
+            <textarea id="text" name="text" rows="5" class="form-control" required><?php echo $testText; ?></textarea>
         </div>
     </form>
 </div>

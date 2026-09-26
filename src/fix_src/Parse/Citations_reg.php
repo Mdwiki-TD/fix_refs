@@ -30,13 +30,13 @@ function get_regex_citations($text)
     // ---
     $citations = [];
     // ---
-    foreach ($matches[1] as $key => $citation_options) {
+    foreach ($matches[1] as $key => $citationOptions) {
         $content = $matches[2][$key];
-        $ref_tag = $matches[0][$key];
-        $options = $citation_options;
+        $refTag = $matches[0][$key];
+        $options = $citationOptions;
         $citation = [
             "content" => $content,
-            "tag" => $ref_tag,
+            "tag" => $refTag,
             "name" => get_name($options),
             "options" => $options
         ];
@@ -67,12 +67,12 @@ function get_short_citations($text)
     // ---
     $citations = [];
     // ---
-    foreach ($matches[1] as $key => $citation_options) {
-        $ref_tag = $matches[0][$key];
-        $options = $citation_options;
+    foreach ($matches[1] as $key => $citationOptions) {
+        $refTag = $matches[0][$key];
+        $options = $citationOptions;
         $citation = [
             "content" => "",
-            "tag" => $ref_tag,
+            "tag" => $refTag,
             "name" => get_name($options),
             "options" => $options
         ];

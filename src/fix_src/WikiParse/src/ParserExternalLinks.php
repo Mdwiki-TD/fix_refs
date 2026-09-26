@@ -48,10 +48,10 @@ class ParserExternalLinks
      */
     public function parse(): void
     {
-        $text_links = $this->find_sub_links($this->text);
+        $textLinks = $this->find_sub_links($this->text);
         $this->links = [];
-        foreach ($text_links[1] as $key => $text_link) {
-            $_ExternalLinks = new ExternalLink($text_link, trim($text_links[2][$key]));
+        foreach ($textLinks[1] as $key => $textLink) {
+            $_ExternalLinks = new ExternalLink($textLink, trim($textLinks[2][$key]));
             $this->links[] = $_ExternalLinks;
         }
     }

@@ -11,12 +11,12 @@ use function WpRefs\TestBot\echo_test;
 
 class ESData
 {
-    public static $args_to = [];
-    public static $refs_temps = [];
+    public static $argsTo = [];
+    public static $refsTemps = [];
 }
 
 // Mapping templates
-ESData::$refs_temps = [
+ESData::$refsTemps = [
     "cite web" => "cita web",
     "cite arxiv" => "cita arxiv",
     "cite certification" => "cita certificación",
@@ -43,7 +43,7 @@ ESData::$refs_temps = [
 
 // ---
 // Mapping arguments
-ESData::$args_to = [
+ESData::$argsTo = [
     "title" => "título",
     "website" => "sitioweb",
     "access-date" => "fechaacceso",
@@ -64,7 +64,7 @@ ESData::$args_to = [
 
 // ---
 // More mapping with grouped parameters
-$params_es_up = [
+$paramsEsUp = [
     "nombre1" => ["first1", "given1"],
     "enlaceautor1" => [
         "authorlink1",
@@ -138,10 +138,10 @@ $params_es_up = [
     "otros" => ["others"],
 ];
 
-// Populate $args_to with $params_es_up
-foreach ($params_es_up as $new => $list) {
+// Populate $argsTo with $paramsEsUp
+foreach ($paramsEsUp as $new => $list) {
     foreach ($list as $old) {
-        ESData::$args_to[$old] = $new;
+        ESData::$argsTo[$old] = $new;
     }
 }
 
@@ -151,52 +151,52 @@ function work_one_temp($temp, $name)
     // ---
     // echo_test("\n$name\n");
     // ---
-    $temp_name2 = isset(ESData::$refs_temps[$name]) ? ESData::$refs_temps[$name] : $name;
+    $tempName2 = isset(ESData::$refsTemps[$name]) ? ESData::$refsTemps[$name] : $name;
     // ---
-    if (strtolower($temp_name2) !== strtolower($name)) {
-        $temp->setName($temp_name2);
+    if (strtolower($tempName2) !== strtolower($name)) {
+        $temp->setName($tempName2);
     }
     // ---
-    // $params_es_up = $temp->getParameters();
+    // $paramsEsUp = $temp->getParameters();
     // ---
-    $temp->changeParametersNames(ESData::$args_to);
+    $temp->changeParametersNames(ESData::$argsTo);
     // ---
     $temp->deleteParameter("url-status");
     // ---
-    $new_text_str = $temp->toString();
+    $newTextStr = $temp->toString();
     // ---
-    return $new_text_str;
+    return $newTextStr;
 }
 
 function fix_temps($text)
 {
     // ---
-    $temps_in = getTemplates($text);
+    $tempsIn = getTemplates($text);
     // ---
-    // echo_test("lenth temps_in:" . count($temps_in) . "\n");
+    // echo_test("lenth temps_in:" . count($tempsIn) . "\n");
     // ---
-    $new_text = $text;
+    $newText = $text;
     // ---
-    foreach ($temps_in as $temp) {
+    foreach ($tempsIn as $temp) {
         // ---
         $name = $temp->getStripName();
         // ---
         // echo_test("* name: $name\n");
         // ---
-        $old_text_template = $temp->getOriginalText();
+        $oldTextTemplate = $temp->getOriginalText();
         // ---
-        if (!array_key_exists($name, ESData::$refs_temps) && !in_array($name, ESData::$refs_temps)) {
+        if (!array_key_exists($name, ESData::$refsTemps) && !in_array($name, ESData::$refsTemps)) {
             // echo_test("not found: $name\n");
             continue;
         }
         // ---
-        $new_text_str = work_one_temp($temp, $name);
+        $newTextStr = work_one_temp($temp, $name);
         // ---
-        $new_text = str_replace($old_text_template, $new_text_str, $new_text);
+        $newText = str_replace($oldTextTemplate, $newTextStr, $newText);
         // ---
     };
     // ---
-    return $new_text;
+    return $newText;
 }
 
 function fix_es($text, $title = "")

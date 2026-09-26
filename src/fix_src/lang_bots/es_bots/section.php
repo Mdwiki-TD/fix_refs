@@ -3,7 +3,7 @@
 namespace WpRefs\EsBots\Section;
 
 
-function es_section($sourcetitle, $text, $mdwiki_revid)
+function es_section($sourcetitle, $text, $mdwikiRevid)
 {
     // Replace old template with new one
     // replace ({{Traducido ref|mdwiki|) with ({{Traducido ref MDWiki|en|)
@@ -20,8 +20,8 @@ function es_section($sourcetitle, $text, $mdwiki_revid)
 
     $date = "{{subst:CURRENTDAY}} de {{subst:CURRENTMONTHNAME}} de {{subst:CURRENTYEAR}}";
 
-    // $temp = "{{Traducido ref|mdwiki|$sourcetitle|oldid=$mdwiki_revid|trad=|fecha=$date}}";
-    $temp = "{{Traducido ref MDWiki|en|$sourcetitle|oldid=$mdwiki_revid|trad=|fecha=$date}}";
+    // $temp = "{{Traducido ref|mdwiki|$sourcetitle|oldid=$mdwikiRevid|trad=|fecha=$date}}";
+    $temp = "{{Traducido ref MDWiki|en|$sourcetitle|oldid=$mdwikiRevid|trad=|fecha=$date}}";
 
 
     // Insert after "== Enlaces externos ==" if it exists, otherwise append

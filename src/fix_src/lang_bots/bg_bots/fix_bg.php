@@ -6,7 +6,7 @@ namespace WpRefs\BG;
 use function WpRefs\TestBot\echo_test;
 use function WpRefs\TestBot\echo_debug;
 
-function bg_section($text, $sourcetitle, $mdwiki_revid)
+function bg_section($text, $sourcetitle, $mdwikiRevid)
 {
     // ---
     // {{Превод от|mdwiki|Naproxen|1468415}}
@@ -17,7 +17,7 @@ function bg_section($text, $sourcetitle, $mdwiki_revid)
         return $text;
     }
     // ---
-    $temp = "{{Превод от|mdwiki|$sourcetitle|$mdwiki_revid}}\n";
+    $temp = "{{Превод от|mdwiki|$sourcetitle|$mdwikiRevid}}\n";
     // ---
     // add $temp before first match of "[[Категория:" or "[[Category:" and if there is no match then add it at the end
     if (preg_match('/\[\[(Категория|Category):/ui', $text, $m, PREG_OFFSET_CAPTURE)) {
@@ -31,10 +31,10 @@ function bg_section($text, $sourcetitle, $mdwiki_revid)
 }
 
 
-function bg_fixes($text, $sourcetitle, $mdwiki_revid)
+function bg_fixes($text, $sourcetitle, $mdwikiRevid)
 {
     // ---
-    $text = bg_section($text, $sourcetitle, $mdwiki_revid);
+    $text = bg_section($text, $sourcetitle, $mdwikiRevid);
     // ---
     // remove [[Category:Translated from MDWiki]]
     $text = preg_replace('/\[\[\s*(Категория|Category)\s*:\s*Translated from MDWiki\s*\]\]/ui', '', $text);

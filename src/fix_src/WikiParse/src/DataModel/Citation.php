@@ -6,16 +6,16 @@ class Citation
 {
     private string $text;
     private string $options;
-    private string $cite_text;
-    public function __construct(string $text, string $options = "", string $cite_text = "")
+    private string $citeText;
+    public function __construct(string $text, string $options = "", string $citeText = "")
     {
         $this->text = $text;
         $this->options = $options;
-        $this->cite_text = $cite_text;
+        $this->citeText = $citeText;
     }
     public function getOriginalText(): string
     {
-        return $this->cite_text;
+        return $this->citeText;
     }
     public function getTemplate(): string
     {

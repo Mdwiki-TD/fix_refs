@@ -15,14 +15,14 @@ function get_categories_reg(string $text): array
     preg_match_all($pattern, $text, $matches);
 
     if (!empty($matches[1])) {
-        foreach ($matches[0] as $i => $full_match) {
-            $category_content = $matches[1][$i];
+        foreach ($matches[0] as $i => $fullMatch) {
+            $categoryContent = $matches[1][$i];
             // Split the content based on "|" to retrieve only the category name
-            $parts = explode('|', $category_content);
-            $category_name = trim(array_shift($parts));
+            $parts = explode('|', $categoryContent);
+            $categoryName = trim(array_shift($parts));
 
             // Use the full match as the value in the final array
-            $categories[$category_name] = $full_match;
+            $categories[$categoryName] = $fullMatch;
         }
     }
 
