@@ -6,5 +6,7 @@ if (!empty($_GET['test'] ?? $_POST['test'] ?? '') || $_SERVER['SERVER_NAME'] == 
     error_reporting(E_ALL);
 }
 
-include_once __DIR__ . '/Settings.php';
-include_once __DIR__ . '/fix_src/include_files.php';
+include_once __DIR__ . '/app/Settings.php';
+include_once __DIR__ . '/app/csrf.php';
+include_once __DIR__ . '/app/wikibots/wikitext.php';
+include_once __DIR__ . '/app/fix_src/include_files.php';
