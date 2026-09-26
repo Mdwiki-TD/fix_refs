@@ -4,7 +4,7 @@ namespace WpRefs\Bots\Mini;
 
 function fix_sections_titles($text, $lang)
 {
-    $to_replace = [
+    $toReplace = [
         "hr" => [
             "Reference" => "Izvori",
             "References" => "Izvori",
@@ -21,11 +21,11 @@ function fix_sections_titles($text, $lang)
         ]
     ];
 
-    if (! array_key_exists($lang, $to_replace)) {
+    if (! array_key_exists($lang, $toReplace)) {
         return $text;
     }
 
-    foreach ($to_replace[$lang] as $key => $value) {
+    foreach ($toReplace[$lang] as $key => $value) {
         // Quote the key to avoid regex special characters
         $k = preg_quote($key, '/');
 
@@ -49,9 +49,9 @@ function fix_sections_titles($text, $lang)
 function remove_space_before_ref_tags($text, $lang)
 {
     // ---
-    $for_langs = ["sw", "bn", "ar"];
+    $forLangs = ["sw", "bn", "ar"];
     // ---
-    // if (in_array($lang, $for_langs)) {
+    // if (in_array($lang, $forLangs)) {
     $text = preg_replace("/\s*(\.|,|。|।)\s*<ref/iu", "$1<ref", $text);
     // }
     // ---

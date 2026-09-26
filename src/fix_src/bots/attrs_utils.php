@@ -6,7 +6,7 @@ function parseAttributes($text): array
 {
     $text = "<ref " . $text . ">";
 
-    $attrfind_tolerant = '/
+    $attrfindTolerant = '/
             ((?<=[\'"\s\/])[^\s\/>][^\s\/=>]*)             # Attribute name
             (\s*=+\s*                                      # Equals sign(s)
             (
@@ -16,30 +16,30 @@ function parseAttributes($text): array
             ))?
             (?:\s|\/(?!>))*                                # Trailing space or slash not followed by >
         /xu';
-    $attributes_array = [];
+    $attributesArray = [];
 
-    if (preg_match_all($attrfind_tolerant, $text, $matches, PREG_SET_ORDER)) {
+    if (preg_match_all($attrfindTolerant, $text, $matches, PREG_SET_ORDER)) {
         foreach ($matches as $match) {
-            $attr_name = strtolower($match[1]);
-            $attr_value = isset($match[3]) ? $match[3] : "";
-            $attributes_array[$attr_name] = $attr_value;
+            $attrName = strtolower($match[1]);
+            $attrValue = isset($match[3]) ? $match[3] : "";
+            $attributesArray[$attrName] = $attrValue;
         }
     }
 
-    return $attributes_array;
+    return $attributesArray;
 }
 
 function get_attrs($text)
 {
     $text = "<ref $text>";
-    $attrfind_tolerant = '/((?<=[\'"\s\/])[^\s\/>][^\s\/=>]*)(\s*=+\s*(\'[^\']*\'|"[^"]*"|(?![\'"])[^>\s]*))?(?:\s|\/(?!>))*/u';
+    $attrfindTolerant = '/((?<=[\'"\s\/])[^\s\/>][^\s\/=>]*)(\s*=+\s*(\'[^\']*\'|"[^"]*"|(?![\'"])[^>\s]*))?(?:\s|\/(?!>))*/u';
     $attrs = [];
 
-    if (preg_match_all($attrfind_tolerant, $text, $matches, PREG_SET_ORDER)) {
+    if (preg_match_all($attrfindTolerant, $text, $matches, PREG_SET_ORDER)) {
         foreach ($matches as $match) {
-            $attr_name = strtolower($match[1]);
-            $attr_value = isset($match[3]) ? $match[3] : "";
-            $attrs[$attr_name] = $attr_value;
+            $attrName = strtolower($match[1]);
+            $attrValue = isset($match[3]) ? $match[3] : "";
+            $attrs[$attrName] = $attrValue;
         }
     }
     // ---
