@@ -132,11 +132,11 @@ class remove_duplicate_refsTest extends MyFunctionTest
     }
     public function testFileText()
     {
-        $text_input   = file_get_contents(__DIR__ . "/texts/del_dup_input.txt");
-        $text_output  = file_get_contents(__DIR__ . "/texts/del_dup_output.txt");
+        $textInput   = file_get_contents(__DIR__ . "/texts/del_dup_input.txt");
+        $textOutput  = file_get_contents(__DIR__ . "/texts/del_dup_output.txt");
         // --
-        $result = remove_Duplicate_refs_With_attrs($text_input);
+        $result = remove_Duplicate_refs_With_attrs($textInput);
         // --
-        $this->assertEqualCompare($text_output, $text_input, $result);
+        $this->assertEqualCompare($textOutput, $textInput, $result);
     }
 }

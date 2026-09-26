@@ -58,28 +58,28 @@ class esTest extends MyFunctionTest
     }
     public function test_fix_temps_1()
     {
-        $text_input   = file_get_contents(__DIR__ . "/texts/3/input.txt");
-        $text_output  = file_get_contents(__DIR__ . "/texts/3/expected.txt");
+        $textInput   = file_get_contents(__DIR__ . "/texts/3/input.txt");
+        $textOutput  = file_get_contents(__DIR__ . "/texts/3/expected.txt");
         // --
-        $result = fix_temps($text_input);
+        $result = fix_temps($textInput);
         // --
-        $this->assertEquals($text_output, $result);
+        $this->assertEquals($textOutput, $result);
     }
 
     public function test_fix_es_1()
     {
-        $text_input   = file_get_contents(__DIR__ . "/texts/2/input.txt");
-        $text_output  = file_get_contents(__DIR__ . "/texts/2/output.txt");
+        $textInput   = file_get_contents(__DIR__ . "/texts/2/input.txt");
+        $textOutput  = file_get_contents(__DIR__ . "/texts/2/output.txt");
         // --
-        $result = fix_es($text_input);
+        $result = fix_es($textInput);
         // --
-        $fixed_file = __DIR__ . "/texts/2/expected.txt";
-        file_put_contents($fixed_file, $result);
+        $fixedFile = __DIR__ . "/texts/2/expected.txt";
+        file_put_contents($fixedFile, $result);
         // --
         $result = preg_replace("/\r\n/", "\n", $result);
-        $text_output = preg_replace("/\r\n/", "\n", $text_output);
+        $textOutput = preg_replace("/\r\n/", "\n", $textOutput);
         // --
-        $this->assertEquals($text_output, $result);
+        $this->assertEquals($textOutput, $result);
     }
 
     public function test_fix_temps_and_months_with_month()

@@ -10,7 +10,7 @@ echo "=======================================================\n";
 echo "COMPREHENSIVE TEST: Polish Choroba Infobox Support\n";
 echo "=======================================================\n\n";
 
-$test_cases = [
+$testCases = [
     [
         'name' => 'Standard Choroba infobox - all parameters missing',
         'input' => '{{Choroba infobox|nazwa polska=Astma}}',
@@ -81,13 +81,13 @@ TXT
 $passed = 0;
 $failed = 0;
 
-foreach ($test_cases as $index => $test) {
+foreach ($testCases as $index => $test) {
     echo "Test " . ($index + 1) . ": " . $test['name'] . "\n";
     echo str_repeat('-', 60) . "\n";
 
     $result = fix_page($test['input'], "Test Article", false, true, false, $test['lang'], "", "");
 
-    $all_checks_passed = true;
+    $allChecksPassed = true;
 
     // Check expected parameters are present
     if (!empty($test['expected_params'])) {
@@ -95,7 +95,7 @@ foreach ($test_cases as $index => $test) {
             $found = strpos($result, $param) !== false;
             if (!$found) {
                 echo "  ❌ FAIL: Expected parameter '$param' not found\n";
-                $all_checks_passed = false;
+                $allChecksPassed = false;
             }
         }
     }
@@ -106,7 +106,7 @@ foreach ($test_cases as $index => $test) {
             $found = strpos($result, $param) !== false;
             if ($found) {
                 echo "  ❌ FAIL: Parameter '$param' should not be present\n";
-                $all_checks_passed = false;
+                $allChecksPassed = false;
             }
         }
     }
@@ -117,31 +117,31 @@ foreach ($test_cases as $index => $test) {
             $count = preg_match_all('/\|' . preg_quote($param, '/') . '\s*=/', $result, $matches);
             if ($count > 1) {
                 echo "  ❌ FAIL: Parameter '$param' duplicated ($count occurrences)\n";
-                $all_checks_passed = false;
+                $allChecksPassed = false;
             }
         }
     }
 
-    if ($all_checks_passed) {
+    if ($allChecksPassed) {
         echo "  ✅ PASS\n";
         $passed++;
     } else {
         $failed++;
         // Show input (preserve template structure)
-        $input_lines = explode("\n", $test['input']);
-        $input_preview = implode("\n  ", array_slice($input_lines, 0, 5));
-        if (count($input_lines) > 5) {
-            $input_preview .= "\n  ... (" . (count($input_lines) - 5) . " more lines)";
+        $inputLines = explode("\n", $test['input']);
+        $inputPreview = implode("\n  ", array_slice($inputLines, 0, 5));
+        if (count($inputLines) > 5) {
+            $inputPreview .= "\n  ... (" . (count($inputLines) - 5) . " more lines)";
         }
-        echo "  Input:\n  $input_preview\n";
+        echo "  Input:\n  $inputPreview\n";
 
         // Show result (preserve template structure)
-        $result_lines = explode("\n", $result);
-        $result_preview = implode("\n  ", array_slice($result_lines, 0, 10));
-        if (count($result_lines) > 10) {
-            $result_preview .= "\n  ... (" . (count($result_lines) - 10) . " more lines)";
+        $resultLines = explode("\n", $result);
+        $resultPreview = implode("\n  ", array_slice($resultLines, 0, 10));
+        if (count($resultLines) > 10) {
+            $resultPreview .= "\n  ... (" . (count($resultLines) - 10) . " more lines)";
         }
-        echo "  Result:\n  $result_preview\n";
+        echo "  Result:\n  $resultPreview\n";
     }
     echo "\n";
 }

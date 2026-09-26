@@ -89,18 +89,18 @@ class md_catTest extends MyFunctionTest
             "ur" => "زمرہ:ایم ڈی وکی سے ترجمہ شدہ",
         ];
         foreach ($langs as $lang => $cat) {
-            $text_no_cat = "This is a sample text\n\n";
-            $expected = "{$text_no_cat}\n[[{$cat}]]\n";
-            $result = add_Translated_from_MDWiki($text_no_cat, $lang);
-            $this->assertEqualCompare($expected, $text_no_cat, $result);
+            $textNoCat = "This is a sample text\n\n";
+            $expected = "{$textNoCat}\n[[{$cat}]]\n";
+            $result = add_Translated_from_MDWiki($textNoCat, $lang);
+            $this->assertEqualCompare($expected, $textNoCat, $result);
             // ---
-            $text_with_cat = "This is a sample text\n\n[[{$cat}]]\n";
-            $result = add_Translated_from_MDWiki($text_with_cat, $lang);
-            $this->assertEquals($text_with_cat, $result);
+            $textWithCat = "This is a sample text\n\n[[{$cat}]]\n";
+            $result = add_Translated_from_MDWiki($textWithCat, $lang);
+            $this->assertEquals($textWithCat, $result);
             // ---
-            $text_with_cat2 = "This is a sample text\n\n[[category:Translated_from_MDWiki]]\n";
-            $result = add_Translated_from_MDWiki($text_with_cat2, $lang);
-            $this->assertEquals($text_with_cat2, $result);
+            $textWithCat2 = "This is a sample text\n\n[[category:Translated_from_MDWiki]]\n";
+            $result = add_Translated_from_MDWiki($textWithCat2, $lang);
+            $this->assertEquals($textWithCat2, $result);
             // ---
         }
     }

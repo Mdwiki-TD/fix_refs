@@ -8,38 +8,38 @@ use function WpRefs\ExpendRefs\refs_expend_work;
 class expend_refsTest extends MyFunctionTest
 {
 
-    private $text_input = "";
-    private $text_output = "";
-    private $refs_expends = "";
+    private $textInput = "";
+    private $textOutput = "";
+    private $refsExpends = "";
 
     protected function setUp(): void
     {
-        $this->text_input   = file_get_contents(__DIR__ . "/texts/expend_input.txt");
-        $this->text_output  = file_get_contents(__DIR__ . "/texts/expend_output.txt");
-        $this->refs_expends  = refs_expend_work($this->text_input);
+        $this->textInput   = file_get_contents(__DIR__ . "/texts/expend_input.txt");
+        $this->textOutput  = file_get_contents(__DIR__ . "/texts/expend_output.txt");
+        $this->refsExpends  = refs_expend_work($this->textInput);
     }
 
     public function test_input_text_not_empty(): void
     {
-        $this->assertNotEmpty($this->text_input, "Input text file is empty!");
+        $this->assertNotEmpty($this->textInput, "Input text file is empty!");
     }
 
     public function test_text_output_not_empty(): void
     {
-        $this->assertNotEmpty($this->text_output, "output file is empty!");
+        $this->assertNotEmpty($this->textOutput, "output file is empty!");
     }
 
     public function test_not_same(): void
     {
-        $this->assertNotEquals($this->text_input, $this->text_output, "Input and output are the same!");
+        $this->assertNotEquals($this->textInput, $this->textOutput, "Input and output are the same!");
     }
     public function test_expend_refs_not_empty(): void
     {
-        $this->assertNotEmpty($this->refs_expends, "output file is empty!");
+        $this->assertNotEmpty($this->refsExpends, "output file is empty!");
     }
     public function test_expend_refs_the_same_as_output(): void
     {
-        $this->assertEquals($this->text_output, $this->refs_expends, "Expend refs not working!");
+        $this->assertEquals($this->textOutput, $this->refsExpends, "Expend refs not working!");
     }
     // اختبارات إضافية للدالة الرئيسية
     public function test_refs_expend_work_with_simple_case()
