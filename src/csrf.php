@@ -32,18 +32,18 @@ function verify_csrf_token(): bool
 	}
 
 	// Get the submitted token
-	$submitted_token = $_POST['csrf_token'] ?? null;
+	$submittedToken = $_POST['csrf_token'] ?? null;
 
 	// No token submitted - verification fails
-	if (!$submitted_token) {
+	if (!$submittedToken) {
 		return false;
 	}
 
 	// Check if token exists in the valid tokens list
-	if (in_array($submitted_token, $_SESSION[CSRF_SESSION_KEY], true)) {
+	if (in_array($submittedToken, $_SESSION[CSRF_SESSION_KEY], true)) {
 		// Valid token - remove it (single use)
 		$_SESSION[CSRF_SESSION_KEY] = array_values(
-			array_diff($_SESSION[CSRF_SESSION_KEY], [$submitted_token])
+			array_diff($_SESSION[CSRF_SESSION_KEY], [$submittedToken])
 		);
 		return true;
 	}
