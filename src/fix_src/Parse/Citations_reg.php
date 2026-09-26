@@ -2,18 +2,6 @@
 
 namespace WpRefs\Parse\Reg_Citations;
 
-/*
-Usage:
-
-use function WpRefs\Parse\Reg_Citations\get_name;
-use function WpRefs\Parse\Reg_Citations\get_regex_citations;
-use function WpRefs\Parse\Reg_Citations\get_full_refs;
-use function WpRefs\Parse\Reg_Citations\get_short_citations;
-
-*/
-
-// include_once __DIR__ . '/../WikiParse/Citations_reg.php';
-
 /**
  * Get the name attribute from citation options.
  *

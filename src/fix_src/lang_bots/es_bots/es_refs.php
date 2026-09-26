@@ -1,11 +1,6 @@
 <?php
 
 namespace WpRefs\EsBots\es_refs;
-/*
-usage:
-
-use function WpRefs\EsBots\es_refs\mv_es_refs;
-*/
 
 use function WikiParse\Template\getTemplates;
 use function WpRefs\Parse\Reg_Citations\get_short_citations;

@@ -2,17 +2,6 @@
 
 namespace WpRefs\Bots\RefsUtils;
 
-/*
-
-Usage:
-
-use function WpRefs\Bots\RefsUtils\str_ends_with;
-use function WpRefs\Bots\RefsUtils\str_starts_with;
-use function WpRefs\Bots\RefsUtils\rm_str_from_start_and_end;
-use function WpRefs\Bots\RefsUtils\remove_start_end_quotes;
-
-*/
-
 if (!function_exists('str_ends_with')) {
     function str_ends_with($string, $endString)
     {

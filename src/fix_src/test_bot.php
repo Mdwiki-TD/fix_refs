@@ -2,14 +2,6 @@
 
 namespace WpRefs\TestBot;
 
-/*
-usage:
-
-use function WpRefs\TestBot\echo_test;
-use function WpRefs\TestBot\echo_debug;
-
-*/
-
 function echo_test($str)
 {
     // ---

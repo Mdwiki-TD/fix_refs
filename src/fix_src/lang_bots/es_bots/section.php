@@ -1,13 +1,7 @@
 <?php
 
 namespace WpRefs\EsBots\Section;
-/*
 
-usage:
-
-use function WpRefs\EsBots\Section\es_section;
-
-*/
 
 function es_section($sourcetitle, $text, $mdwiki_revid)
 {

@@ -2,13 +2,6 @@
 
 namespace WpRefs\ExpendRefs;
 
-/*
-Usage:
-
-use function WpRefs\ExpendRefs\refs_expend_work;
-
-*/
-
 use function WpRefs\Parse\Reg_Citations\get_full_refs;
 use function WpRefs\Parse\Reg_Citations\get_short_citations;
 

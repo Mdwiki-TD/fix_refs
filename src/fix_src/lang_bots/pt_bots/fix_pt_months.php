@@ -1,12 +1,7 @@
 <?php
 
 namespace WpRefs\PT\FixPtMonth;
-/*
-usage:
 
-use function WpRefs\PT\FixPtMonth\fix_pt_months_in_refs;
-
-*/
 
 use function WpRefs\TestBot\echo_test;
 use function WpRefs\TestBot\echo_debug;

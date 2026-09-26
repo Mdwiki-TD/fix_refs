@@ -2,14 +2,7 @@
 
 namespace WpRefs\DelDuplicateRefs;
 
-/*
 
-Usage:
-
-use function WpRefs\DelDuplicateRefs\remove_Duplicate_refs_With_attrs;
-use function WpRefs\DelDuplicateRefs\fix_refs_names;
-
-*/
 
 use function WpRefs\Bots\AttrsUtils\get_attrs;
 use function WpRefs\Bots\RefsUtils\remove_start_end_quotes;

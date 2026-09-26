@@ -1,12 +1,7 @@
 <?php
 
 namespace WpRefs\BG;
-/*
-usage:
 
-use function WpRefs\BG\bg_fixes;
-
-*/
 
 use function WpRefs\TestBot\echo_test;
 use function WpRefs\TestBot\echo_debug;

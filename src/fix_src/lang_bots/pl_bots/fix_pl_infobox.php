@@ -1,12 +1,7 @@
 <?php
 
 namespace WpRefs\PL\FixPlInfobox;
-/*
-usage:
 
-use function WpRefs\PL\FixPlInfobox\pl_fixes;
-
-*/
 
 use function WikiParse\Template\getTemplates;
 use function WpRefs\TestBot\echo_test;

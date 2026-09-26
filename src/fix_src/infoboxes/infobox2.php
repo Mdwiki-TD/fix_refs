@@ -1,13 +1,7 @@
 <?php
 
 namespace WpRefs\Infobox2;
-/*
-usage:
 
-use function WpRefs\Infobox2\make_tempse;
-use function WpRefs\Infobox2\expend_new;
-
-*/
 
 use function WpRefs\Bots\TxtLib2\extract_templates_and_params;
 use WikiConnect\ParseWiki\ParserTemplate;

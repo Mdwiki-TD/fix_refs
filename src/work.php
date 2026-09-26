@@ -2,6 +2,21 @@
 
 namespace WpRefs\FixPage;
 
+/**
+ * WARNING / DEPENDENCY NOTICE:
+ *
+ * The functions `\WpRefs\FixPage\DoChangesToText1` and `\WpRefs\FixPage\fix_page_with_setting`
+ * defined or modified here are referenced and used in:
+ * https://github.com/Mdwiki-TD/publish/blob/main/src/su/text_edit.php
+ *
+ * E.g.,
+ * if (function_exists('\WpRefs\FixPage\fix_page_with_setting')) { ... }
+ * if (function_exists('\WpRefs\FixPage\DoChangesToText1')) { ... }
+ *
+ * Any structural or behavioral changes made to this file must be synchronized
+ * and reflected in the referenced file to avoid breaking external functionality.
+ */
+
 if (isset($_GET['test']) || (($_SERVER['SERVER_NAME'] ?? '') === 'localhost')) {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);

@@ -1,11 +1,6 @@
 <?php
 
 namespace WpRefs\Bots\MonthNewValue;
-/*
-usage:
-use function WpRefs\Bots\MonthNewValue\make_date_new_val_pt;
-use function WpRefs\Bots\MonthNewValue\make_date_new_val_es;
-*/
 
 function new_date($val, $lang = 'pt')
 {

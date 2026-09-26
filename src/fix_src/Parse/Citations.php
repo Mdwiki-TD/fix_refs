@@ -2,12 +2,7 @@
 
 namespace WpRefs\Parse\Citations;
 
-/*
-Usage:
 
-use function WpRefs\Parse\Citations\getCitationsOld;
-
-*/
 
 class CitationOld
 {

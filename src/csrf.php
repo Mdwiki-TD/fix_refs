@@ -7,13 +7,6 @@ namespace WpRefs\csrf;
  *
  * Provides functions to generate and verify CSRF tokens for form protection.
  *
- * Usage:
- *   include_once __DIR__ . '/csrf.php';
- *   use function WpRefs\csrf\generate_csrf_token;
- *   use function WpRefs\csrf\verify_csrf_token;
- *
- * @package WpRefs\csrf
- * @author MDWiki Team
  */
 
 if (session_status() === PHP_SESSION_NONE) {

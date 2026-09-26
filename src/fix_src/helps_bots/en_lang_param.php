@@ -2,15 +2,6 @@
 
 namespace WpRefs\EnLangParam;
 
-/*
-usage:
-
-use function WpRefs\EnLangParam\add_lang_en;
-use function WpRefs\EnLangParam\add_lang_en_to_refs;
-
-*/
-
-// use function WpRefs\TestBot\echo_test;
 use function WpRefs\TestBot\echo_debug;
 use function WpRefs\Parse\Citations\getCitationsOld;
 use function WikiParse\Template\getTemplates;

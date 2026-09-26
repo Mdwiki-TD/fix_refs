@@ -2,14 +2,6 @@
 
 namespace WpRefs\Bots\AttrsUtils;
 
-/*
-
-Usage:
-use function WpRefs\Bots\AttrsUtils\parseAttributes;
-use function WpRefs\Bots\AttrsUtils\get_attrs;
-
-*/
-
 function parseAttributes($text): array
 {
     $text = "<ref " . $text . ">";

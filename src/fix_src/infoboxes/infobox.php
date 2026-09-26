@@ -1,12 +1,7 @@
 <?php
 
 namespace WpRefs\Infobox;
-/*
-usage:
 
-use function WpRefs\Infobox\Expend_Infobox;
-
-*/
 
 use function WpRefs\Infobox2\make_tempse;
 use function WpRefs\Infobox2\expend_new;

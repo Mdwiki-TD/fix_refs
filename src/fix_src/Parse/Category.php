@@ -2,12 +2,7 @@
 
 namespace WpRefs\Parse\Category;
 
-/*
-Usage:
 
-use function WpRefs\Parse\Category\get_categories_reg;
-
-*/
 
 function get_categories_reg(string $text): array
 {

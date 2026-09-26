@@ -7,12 +7,10 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 // use FixRefs\Tests\MyFunctionTest;
-// تحميل autoloader الخاص بـ Composer
+// Load the Composer autoloader
 require __DIR__ . '/../vendor/autoload.php';
-
-// تحميل ملف include_files.php
+// Load include_files.php file
 require __DIR__ . '/../src/work.php';
-
 require __DIR__ . '/../src/fix_src/include_files.php';
 
 use PHPUnit\Framework\TestCase;

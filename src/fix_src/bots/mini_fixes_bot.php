@@ -1,14 +1,6 @@
 <?php
 
 namespace WpRefs\Bots\Mini;
-/*
-usage:
-
-use function WpRefs\Bots\Mini\mini_fixes;
-use function WpRefs\Bots\Mini\fix_sections_titles;
-use function WpRefs\Bots\Mini\mini_fixes_after_fixing;
-
-*/
 
 function fix_sections_titles($text, $lang)
 {

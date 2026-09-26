@@ -7,13 +7,6 @@ if (isset($_GET['test']) || $_SERVER['SERVER_NAME'] == 'localhost') {
     error_reporting(E_ALL);
 }
 
-/*
-usage:
-
-use function WpRefs\WikiText\get_wikipedia_text;
-
-*/
-
 function from_api($title, $lang)
 {
     $usr_agent = 'WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)';

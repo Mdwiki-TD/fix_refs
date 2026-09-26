@@ -2,16 +2,6 @@
 
 namespace WpRefs\RemoveSpace;
 
-/*
-usage:
-
-use function WpRefs\RemoveSpace\remove_spaces_between_last_word_and_beginning_of_ref;
-use function WpRefs\RemoveSpace\remove_spaces_between_ref_and_punctuation;
-
-*/
-// ---
-// define("DEBUG", true);
-
 use function WpRefs\TestBot\echo_debug;
 
 if (!function_exists('str_ends_with')) {

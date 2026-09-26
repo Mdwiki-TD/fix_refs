@@ -2,12 +2,7 @@
 
 namespace WpRefs\MissingRefs;
 
-/*
-usage:
 
-use function WpRefs\MissingRefs\fix_missing_refs;
-
-*/
 
 use function WpRefs\TestBot\echo_test;
 use function WpRefs\TestBot\echo_debug;
