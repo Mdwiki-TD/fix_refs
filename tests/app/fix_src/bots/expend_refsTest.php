@@ -14,8 +14,8 @@ class expend_refsTest extends MyFunctionTest
 
     protected function setUp(): void
     {
-        $this->textInput   = file_get_contents(__DIR__ . "/texts/expend_input.txt");
-        $this->textOutput  = file_get_contents(__DIR__ . "/texts/expend_output.txt");
+        $this->textInput   = file_get_contents(__DIR__ . "/fixtures/expend_input.txt");
+        $this->textOutput  = file_get_contents(__DIR__ . "/fixtures/expend_output.txt");
         $this->refsExpends  = refs_expend_work($this->textInput);
     }
 

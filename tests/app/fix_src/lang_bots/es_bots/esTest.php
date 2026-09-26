@@ -58,8 +58,8 @@ class esTest extends MyFunctionTest
     }
     public function test_fix_temps_1()
     {
-        $textInput   = file_get_contents(__DIR__ . "/texts/3/input.txt");
-        $textOutput  = file_get_contents(__DIR__ . "/texts/3/expected.txt");
+        $textInput   = file_get_contents(__DIR__ . "/fixtures/3/input.txt");
+        $textOutput  = file_get_contents(__DIR__ . "/fixtures/3/expected.txt");
         // --
         $result = fix_temps($textInput);
         // --
@@ -68,12 +68,12 @@ class esTest extends MyFunctionTest
 
     public function test_fix_es_1()
     {
-        $textInput   = file_get_contents(__DIR__ . "/texts/2/input.txt");
-        $textOutput  = file_get_contents(__DIR__ . "/texts/2/output.txt");
+        $textInput   = file_get_contents(__DIR__ . "/fixtures/2/input.txt");
+        $textOutput  = file_get_contents(__DIR__ . "/fixtures/2/output.txt");
         // --
         $result = fix_es($textInput);
         // --
-        $fixedFile = __DIR__ . "/texts/2/expected.txt";
+        $fixedFile = __DIR__ . "/fixtures/2/expected.txt";
         file_put_contents($fixedFile, $result);
         // --
         $result = preg_replace("/\r\n/", "\n", $result);

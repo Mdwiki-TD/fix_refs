@@ -101,14 +101,14 @@ class infoboxTest extends MyFunctionTest
 {
     public function test_expend_new_FileText()
     {
-        // $textOutput  = file_get_contents(__DIR__ . "/texts/infobox_output.txt");
+        // $textOutput  = file_get_contents(__DIR__ . "/fixtures/infobox_output.txt");
         // --
         $result = Expend_Infobox(Texts::$TEXTINPUT, "Penciclovir", "");
         $result = preg_replace("/\r\n/", "\n", $result);
         // --
         $textOutput = preg_replace("/\r\n/", "\n", Texts::$TEXTOUTPUT);
         // --
-        // $file_3  = __DIR__ . "/texts/infobox_fixed.txt";
+        // $file_3  = __DIR__ . "/fixtures/infobox_fixed.txt";
         // file_put_contents($file_3, $result);
         // --
         $this->assertEquals(trim($textOutput), trim($result), "Unexpected result");

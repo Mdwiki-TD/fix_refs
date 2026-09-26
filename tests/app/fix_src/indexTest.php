@@ -15,24 +15,24 @@ class indexTest extends MyFunctionTest
 
     public function testPart1()
     {
-        $input     = file_get_contents(__DIR__ . "/texts/indexTest/1/input.txt");
-        $expected  = file_get_contents(__DIR__ . "/texts/indexTest/1/expected.txt");
+        $input     = file_get_contents(__DIR__ . "/fixtures/indexTest/1/input.txt");
+        $expected  = file_get_contents(__DIR__ . "/fixtures/indexTest/1/expected.txt");
         // --
         $result = $this->fix_page_wrap($input, 'hy', true, true, true);
         // --
-        $outputFile   = __DIR__ . "/texts/indexTest/1/output.txt";
+        $outputFile   = __DIR__ . "/fixtures/indexTest/1/output.txt";
         file_put_contents($outputFile, $result);
         // --
         $this->assertEqualCompare($expected, $input, $result);
     }
     public function testPart2()
     {
-        $input     = file_get_contents(__DIR__ . "/texts/indexTest/2/input.txt");
-        $expected  = file_get_contents(__DIR__ . "/texts/indexTest/2/expected.txt");
+        $input     = file_get_contents(__DIR__ . "/fixtures/indexTest/2/input.txt");
+        $expected  = file_get_contents(__DIR__ . "/fixtures/indexTest/2/expected.txt");
         // --
         $result = $this->fix_page_wrap($input, 'hy', true, true, true);
         // --
-        $outputFile   = __DIR__ . "/texts/indexTest/2/output.txt";
+        $outputFile   = __DIR__ . "/fixtures/indexTest/2/output.txt";
         file_put_contents($outputFile, $result);
         // --
         $this->assertEqualCompare($expected, $input, $result);

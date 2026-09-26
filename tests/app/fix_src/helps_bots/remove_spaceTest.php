@@ -10,36 +10,36 @@ class remove_spaceTest extends MyFunctionTest
 
     public function testRemoveSpaceEnd1stFile()
     {
-        $input   = file_get_contents(__DIR__ . "/texts/remove_space_texts/1/input.txt");
-        $expected   = file_get_contents(__DIR__ . "/texts/remove_space_texts/1/expected.txt");
+        $input   = file_get_contents(__DIR__ . "/fixtures/remove_space_texts/1/input.txt");
+        $expected   = file_get_contents(__DIR__ . "/fixtures/remove_space_texts/1/expected.txt");
         // --
         $result = remove_spaces_between_last_word_and_beginning_of_ref($input, 'hy');
         // --
-        $outputFile   = __DIR__ . "/texts/remove_space_texts/1/output.txt";
+        $outputFile   = __DIR__ . "/fixtures/remove_space_texts/1/output.txt";
         file_put_contents($outputFile, $result);
         // --
         $this->assertEqualCompare($expected, $input, $result);
     }
     public function testRemoveSpaceEnd2ndFile()
     {
-        $input   = file_get_contents(__DIR__ . "/texts/remove_space_texts/2/input.txt");
-        $expected   = file_get_contents(__DIR__ . "/texts/remove_space_texts/2/expected.txt");
+        $input   = file_get_contents(__DIR__ . "/fixtures/remove_space_texts/2/input.txt");
+        $expected   = file_get_contents(__DIR__ . "/fixtures/remove_space_texts/2/expected.txt");
         // --
         $result = remove_spaces_between_last_word_and_beginning_of_ref($input, 'hy');
         // --
-        $outputFile   = __DIR__ . "/texts/remove_space_texts/2/output.txt";
+        $outputFile   = __DIR__ . "/fixtures/remove_space_texts/2/output.txt";
         file_put_contents($outputFile, $result);
         // --
         $this->assertEqualCompare($expected, $input, $result);
     }
     public function testRemoveSpaceEnd3rdFile()
     {
-        $input   = file_get_contents(__DIR__ . "/texts/remove_space_texts/3/input.txt");
-        $expected   = file_get_contents(__DIR__ . "/texts/remove_space_texts/3/expected.txt");
+        $input   = file_get_contents(__DIR__ . "/fixtures/remove_space_texts/3/input.txt");
+        $expected   = file_get_contents(__DIR__ . "/fixtures/remove_space_texts/3/expected.txt");
         // --
         $result = remove_spaces_between_last_word_and_beginning_of_ref($input, 'hy');
         // --
-        $outputFile   = __DIR__ . "/texts/remove_space_texts/3/output.txt";
+        $outputFile   = __DIR__ . "/fixtures/remove_space_texts/3/output.txt";
         file_put_contents($outputFile, $result);
         // --
         $this->assertEqualCompare($expected, $input, $result);
@@ -80,8 +80,8 @@ class remove_spaceTest extends MyFunctionTest
     }
     public function testRemoveSpaceEnd6thFile()
     {
-        // $input   = file_get_contents(__DIR__ . "/texts/remove_space_texts/5/input.txt");
-        // $expected   = file_get_contents(__DIR__ . "/texts/remove_space_texts/5/expected.txt");
+        // $input   = file_get_contents(__DIR__ . "/fixtures/remove_space_texts/5/input.txt");
+        // $expected   = file_get_contents(__DIR__ . "/fixtures/remove_space_texts/5/expected.txt");
         // --
         $input   = <<<WIKI
             Article text <ref>{{Citar web|Text|author=John|language=en}}</ref> [[Հիպոկրատ|Հիպոկրատի]] կողմից <ref name="Os2018" /><ref>{{ref
@@ -103,7 +103,7 @@ class remove_spaceTest extends MyFunctionTest
         WIKI;
         $result = remove_spaces_between_last_word_and_beginning_of_ref($input, 'hy');
         // --
-        // $outputFile   = __DIR__ . "/texts/remove_space_texts/5/output.txt";
+        // $outputFile   = __DIR__ . "/fixtures/remove_space_texts/5/output.txt";
         // file_put_contents($outputFile, $result);
         // --
         $this->assertEqualCompare($expected, $input, $result);
