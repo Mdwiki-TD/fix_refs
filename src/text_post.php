@@ -37,7 +37,7 @@ $sourcetitle  = $data['sourcetitle'];
 if (!empty($lang) && !empty($title) && !empty($text)) {
     // ---
     // if (verify_csrf_token()) {
-    $newtext = fix_page_with_setting(
+    $new_text = fix_page_with_setting(
         $sourcetitle,
         $title,
         $text,
