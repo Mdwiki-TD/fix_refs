@@ -2,7 +2,7 @@
 .phpunit.result.cache
 /.claude
 /.commandcode
-/tests/texts/**/output.txt
+/tests/**/texts/**/output.txt
 /tests_x
 /TestsX
 /vendor
