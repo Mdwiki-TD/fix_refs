@@ -1,11 +1,5 @@
 <?php
 
-if (!empty($_GET['test'] ?? $_POST['test'] ?? '') || $_SERVER['SERVER_NAME'] == 'localhost') {
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-}
-
 use function WpRefs\FixPage\fix_page_with_setting;
 use function WpRefs\WikiText\get_wikipedia_text;
 use function WpRefs\csrf\generate_csrf_token;

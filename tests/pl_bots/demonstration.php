@@ -2,8 +2,6 @@
 
 // Demonstration of Polish Choroba Infobox Parameter Addition Feature
 
-require_once __DIR__ . '/../../src/fix_src/include_files.php';
-
 use function WpRefs\WprefText\fix_page;
 
 echo "==========================================================\n";

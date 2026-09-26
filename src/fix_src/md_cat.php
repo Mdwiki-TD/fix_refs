@@ -29,7 +29,7 @@ function get_url_curl(string $url): string
     curl_setopt($ch, CURLOPT_TIMEOUT, 5);
 
     $output = curl_exec($ch);
-    if ($output === FALSE) {
+    if ($output === false) {
         echo_test("<br>cURL Error: " . curl_error($ch) . "<br>$url");
     }
 

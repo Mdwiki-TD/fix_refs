@@ -17,130 +17,86 @@ namespace WpRefs\FixPage;
  * and reflected in the referenced file to avoid breaking external functionality.
  */
 
-if (isset($_GET['test']) || (($_SERVER['SERVER_NAME'] ?? '') === 'localhost')) {
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-}
-
-include_once __DIR__ . '/fix_src/include_files.php';
-
+use function WpRefs\Settings\loadSettings;
 use function WpRefs\WprefText\fix_page;
-use function WpRefs\TestBot\echo_test;
 
-function get_curl(string $url): string
-{
-    $usrAgent = 'WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)';
-    $ch = curl_init();
+include_once __DIR__ . '/include.php';
 
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_USERAGENT, $usrAgent);
+function fix_page_no_setting(
+    string $text,
+    string $title,
+    string $langcode,
+    string $sourcetitle,
+    int|string $mdwikiRevid
+): string {
+    $setting = loadSettings();
+    $langDefault = isset($setting[$langcode]) && is_array($setting[$langcode])
+        ? $setting[$langcode]
+        : [];
 
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+    $moveDots = isset($langDefault['move_dots']) && (int)$langDefault['move_dots'] === 1;
+    $expand = true; // (isset($langDefault['expend']) && (int)$langDefault['expend'] === 1);
 
-    $output = curl_exec($ch);
-    if ($output === FALSE) {
-        echo_test("<br>cURL Error: " . curl_error($ch) . "<br>$url");
-    }
+    $addEnLang = isset($langDefault['add_en_lang']) && (int)$langDefault['add_en_lang'] === 1;
 
-    curl_close($ch);
+    $processedText = fix_page(
+        $text,
+        $title,
+        $moveDots,
+        $expand,
+        $addEnLang,
+        $langcode,
+        $sourcetitle,
+        $mdwikiRevid,
+    );
 
-    return $output;
-}
-
-function json_load_file($filename)
-{
-    if (!is_file($filename)) {
-        return [];
-    }
-
-    $content = file_get_contents($filename);
-    if ($content === false || $content === '') {
-        return [];
-    }
-
-    return json_decode($content, true) ?: [];
-}
-
-function load_settings_new()
-{
-    $url = "http://localhost:9001/api.php?get=language_settings";
-    if (($_SERVER['SERVER_NAME'] ?? '') === 'mdwiki.toolforge.org') {
-        $url = "https://mdwiki.toolforge.org/api.php?get=language_settings";
-        $remoteData = get_curl($url);
-    } else {
-        $remoteData = @file_get_contents($url);
-    }
-
-    $decoded = json_decode($remoteData, true);
-
-    if (!is_array($decoded) || empty($decoded['results'])) {
-        $localFile = __DIR__ . '/resources/language_settings.json';
-        $decoded = json_load_file($localFile);
-    }
-
-    $data = $decoded['results'] ?? [];
-    $new = [];
-    foreach ($data as $key => $value) {
-        $new[$value['lang_code']] = $value;
-    }
-    return $new;
-}
-
-function fix_page_no_setting($text, $title, $langcode, $sourcetitle, $mdwikiRevid)
-{
-    $setting = load_settings_new();
-    // ---
-    $langDefault = isset($setting[$langcode]) ? $setting[$langcode] : [];
-    // ---
-    $moveDots = isset($langDefault['move_dots']) && $langDefault['move_dots'] == 1;
-    $expand = true; // (isset($langDefault['expend']) && $langDefault['expend'] == 1);
-    $addEnLang = isset($langDefault['add_en_lang']) && $langDefault['add_en_lang'] == 1;
-    // ---
-    $text = fix_page($text, $title, $moveDots, $expand, $addEnLang, $langcode, $sourcetitle, $mdwikiRevid);
-    // ---
-    return $text;
+    return (string)$processedText;
 }
 
 function DoChangesToText1(
-    $sourcetitle,
-    $title,
-    $text,
-    $lang,
-    $mdwikiRevid
-) {
-    // ---
+    string $sourcetitle,
+    string $title,
+    string $text,
+    string $lang,
+    int|string $mdwikiRevid
+): string {
     $newtext = fix_page_no_setting($text, $title, $lang, $sourcetitle, $mdwikiRevid);
-    // ---
+
     if (empty($newtext)) {
         $newtext = $text;
     }
-    // ---
+
     return $newtext;
 }
 
 function fix_page_with_setting(
-    $sourcetitle,
-    $title,
-    $text,
-    $lang,
-    $mdwikiRevid,
-    $moveDots = null,
-    $expand = null,
-    $addEnLang = null
-) {
-    // ---
+    string $sourcetitle,
+    string $title,
+    string $text,
+    string $lang,
+    int|string $mdwikiRevid,
+    ?bool $moveDots = null,
+    ?bool $expand = null,
+    ?bool $addEnLang = null
+): string {
     if ($moveDots === null && $expand === null && $addEnLang === null) {
         $newtext = fix_page_no_setting($text, $title, $lang, $sourcetitle, $mdwikiRevid);
     } else {
-        $newtext = fix_page($text, $title, $moveDots, $expand, $addEnLang, $lang, $sourcetitle, $mdwikiRevid);
+        $newtext = fix_page(
+            $text,
+            $title,
+            $moveDots,
+            $expand,
+            $addEnLang,
+            $lang,
+            $sourcetitle,
+            $mdwikiRevid,
+        );
     }
-    // ---
+
     if (empty($newtext)) {
         $newtext = $text;
     }
-    // ---
-    return $newtext;
+
+    return (string)$newtext;
 }

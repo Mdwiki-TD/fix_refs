@@ -1,10 +1,10 @@
 <?php
 
+use function WpRefs\FixPage\fix_page_with_setting;
+use function WpRefs\csrf\verify_csrf_token;
+
 include_once __DIR__ . '/work.php';
 include_once __DIR__ . '/csrf.php';
-
-use function WpRefs\FixPage\fix_page_with_setting;
-use function WpRefs\csrf\verify_csrf_token; // if (verify_csrf_token())  {
 
 $fields = ['lang', 'title', 'text', 'revid', 'sourcetitle'];
 

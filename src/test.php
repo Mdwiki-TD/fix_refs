@@ -1,10 +1,6 @@
 <?php
-if (isset($_GET['test']) || $_SERVER['SERVER_NAME'] == 'localhost') {
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-}
 
+include_once __DIR__ . '/include.php';
 $headerPath = __DIR__ . '/../header.php';
 
 if (!file_exists($headerPath)) {
@@ -13,7 +9,6 @@ if (!file_exists($headerPath)) {
 }
 
 include_once $headerPath;
-include_once __DIR__ . '/csrf.php';
 
 use function WpRefs\csrf\generate_csrf_token;
 

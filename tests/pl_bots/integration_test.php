@@ -2,8 +2,6 @@
 
 // Integration test for Polish language fixes in main workflow
 
-require_once __DIR__ . '/../../src/fix_src/include_files.php';
-
 use function WpRefs\WprefText\fix_page;
 
 echo "Integration Test: Polish Language Support\n";

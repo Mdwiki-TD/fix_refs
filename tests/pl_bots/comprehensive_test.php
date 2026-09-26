@@ -2,8 +2,6 @@
 
 // Comprehensive test to verify Polish language fixes work correctly
 
-require_once __DIR__ . '/../../src/fix_src/include_files.php';
-
 use function WpRefs\WprefText\fix_page;
 
 echo "=======================================================\n";
