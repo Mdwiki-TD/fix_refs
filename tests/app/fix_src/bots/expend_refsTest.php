@@ -9,13 +9,13 @@ class expend_refsTest extends MyFunctionTest
 {
 
     private $textInput = "";
-    private $textOutput = "";
+    private $textExpected = "";
     private $refsExpends = "";
 
     protected function setUp(): void
     {
-        $this->textInput   = file_get_contents(__DIR__ . "/fixtures/expend_input.txt");
-        $this->textOutput  = file_get_contents(__DIR__ . "/fixtures/expend_output.txt");
+        $this->textInput    = file_get_contents(__DIR__ . "/fixtures/expend/input.txt");
+        $this->textExpected = file_get_contents(__DIR__ . "/fixtures/expend/expected.txt");
         $this->refsExpends  = refs_expend_work($this->textInput);
     }
 
@@ -26,12 +26,12 @@ class expend_refsTest extends MyFunctionTest
 
     public function test_text_output_not_empty(): void
     {
-        $this->assertNotEmpty($this->textOutput, "output file is empty!");
+        $this->assertNotEmpty($this->textExpected, "output file is empty!");
     }
 
     public function test_not_same(): void
     {
-        $this->assertNotEquals($this->textInput, $this->textOutput, "Input and output are the same!");
+        $this->assertNotEquals($this->textInput, $this->textExpected, "Input and output are the same!");
     }
     public function test_expend_refs_not_empty(): void
     {
@@ -39,7 +39,7 @@ class expend_refsTest extends MyFunctionTest
     }
     public function test_expend_refs_the_same_as_output(): void
     {
-        $this->assertEquals($this->textOutput, $this->refsExpends, "Expend refs not working!");
+        $this->assertEquals($this->textExpected, $this->refsExpends, "Expend refs not working!");
     }
     // اختبارات إضافية للدالة الرئيسية
     public function test_refs_expend_work_with_simple_case()

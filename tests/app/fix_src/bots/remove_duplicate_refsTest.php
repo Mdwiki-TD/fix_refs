@@ -132,8 +132,8 @@ class remove_duplicate_refsTest extends MyFunctionTest
     }
     public function testFileText()
     {
-        $textInput   = file_get_contents(__DIR__ . "/fixtures/del_dup_input.txt");
-        $textOutput  = file_get_contents(__DIR__ . "/fixtures/del_dup_output.txt");
+        $textInput   = file_get_contents(__DIR__ . "/fixtures/del_dup/input.txt");
+        $textOutput  = file_get_contents(__DIR__ . "/fixtures/del_dup/expected.txt");
         // --
         $result = remove_Duplicate_refs_With_attrs($textInput);
         // --

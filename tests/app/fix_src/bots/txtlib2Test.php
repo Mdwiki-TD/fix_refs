@@ -14,8 +14,8 @@ class txtlib2Test extends MyFunctionTest
 
     protected function setUp(): void
     {
-        $this->textInput = file_get_contents(__DIR__ . "/fixtures/txtlib2.txt");
-        $this->jsonData = json_decode(file_get_contents(__DIR__ . "/fixtures/txtlib2.json"), true);
+        $this->textInput = file_get_contents(__DIR__ . "/fixtures/txtlib2/input.txt");
+        $this->jsonData = json_decode(file_get_contents(__DIR__ . "/fixtures/expected.json"), true);
         $this->tempData = extract_templates_and_params($this->textInput);
     }
 
