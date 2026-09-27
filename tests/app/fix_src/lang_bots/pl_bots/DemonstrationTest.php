@@ -101,7 +101,7 @@ $addedParams = [
 ];
 
 foreach ($addedParams as $param => $description) {
-    $present = strpos($processedArticle, $param) !== false ? '✅' : '❌';
+    $present = strpos($processedArticle, $param) !== false ? 'Pass' : 'Fail';
     echo "$present |$param = ($description)\n";
 }
 

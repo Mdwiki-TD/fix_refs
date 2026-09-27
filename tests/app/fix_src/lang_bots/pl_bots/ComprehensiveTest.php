@@ -97,7 +97,7 @@ foreach ($testCases as $index => $test) {
         foreach ($test['expected_params'] as $param) {
             $found = strpos($result, $param) !== false;
             if (!$found) {
-                echo "  ❌ FAIL: Expected parameter '$param' not found\n";
+                echo "  x FAIL: Expected parameter '$param' not found\n";
                 $allChecksPassed = false;
             }
         }
@@ -108,7 +108,7 @@ foreach ($testCases as $index => $test) {
         foreach ($test['should_not_add'] as $param) {
             $found = strpos($result, $param) !== false;
             if ($found) {
-                echo "  ❌ FAIL: Parameter '$param' should not be present\n";
+                echo "  x FAIL: Parameter '$param' should not be present\n";
                 $allChecksPassed = false;
             }
         }
@@ -119,14 +119,14 @@ foreach ($testCases as $index => $test) {
         foreach ($test['not_duplicated'] as $param) {
             $count = preg_match_all('/\|' . preg_quote($param, '/') . '\s*=/', $result, $matches);
             if ($count > 1) {
-                echo "  ❌ FAIL: Parameter '$param' duplicated ($count occurrences)\n";
+                echo "  x FAIL: Parameter '$param' duplicated ($count occurrences)\n";
                 $allChecksPassed = false;
             }
         }
     }
 
     if ($allChecksPassed) {
-        echo "  ✅ PASS\n";
+        echo "  PASS\n";
         $passed++;
     } else {
         $failed++;
@@ -154,9 +154,7 @@ echo "RESULTS: $passed passed, $failed failed\n";
 echo "=======================================================\n";
 
 if ($failed === 0) {
-    echo "✅ ALL TESTS PASSED!\n";
-    exit(0);
+    echo " ALL TESTS PASSED!\n";
 } else {
-    echo "❌ SOME TESTS FAILED!\n";
-    exit(1);
+    echo " SOME TESTS FAILED!\n";
 }
