@@ -65,10 +65,10 @@ fix_refs_repo/
 │   ├── text_post.php             # POST handler for API-style text processing
 │   ├── test.php                  # Test form UI for manual testing
 │   ├── csrf.php                  # CSRF token generation and verification
-│   ├── fix_src/                  # Core library (PSR-4: WpRefs\)
+│   ├── app/fix_src/                  # Core library (PSR-4: WpRefs\)
 │   │   ├── index.php             # fix_page() - main processing pipeline
 │   │   ├── include_files.php     # Autoloader via glob includes
-│   │   ├── test_bot.php          # Debug/test output helpers
+│   │   ├── debug_helper.php          # Debug/test output helpers
 │   │   ├── md_cat.php            # MDWiki category management (Wikidata integration)
 │   │   ├── WikiParse/            # MediaWiki wikitext parser module
 │   │   │   ├── Template.php      # getTemplate()/getTemplates() facade
@@ -143,18 +143,18 @@ fix_refs_repo/
 
 1. **Web Layer** (`src/index.php`, `src/text_post.php`, `src/test.php`) - HTML forms and POST handlers
 2. **Orchestration Layer** (`src/work.php`) - Settings loading, environment detection, entry points
-3. **Pipeline Layer** (`src/fix_src/index.php`) - Sequential processing pipeline in `fix_page()`
-4. **Bot Layer** (`src/fix_src/bots/`, `src/fix_src/helps_bots/`) - Individual text transformations
-5. **Language Layer** (`src/fix_src/lang_bots/`) - Language-specific transformations
-6. **Parser Layer** (`src/fix_src/WikiParse/`, `src/fix_src/Parse/`) - Wikitext parsing
-7. **Data Layer** (`src/fix_src/WikiParse/src/DataModel/`) - Value objects and models
+3. **Pipeline Layer** (`src/app/fix_src/index.php`) - Sequential processing pipeline in `fix_page()`
+4. **Bot Layer** (`src/app/fix_src/bots/`, `src/app/fix_src/helps_bots/`) - Individual text transformations
+5. **Language Layer** (`src/app/fix_src/lang_bots/`) - Language-specific transformations
+6. **Parser Layer** (`src/app/fix_src/WikiParse/`, `src/app/fix_src/Parse/`) - Wikitext parsing
+7. **Data Layer** (`src/app/fix_src/WikiParse/src/DataModel/`) - Value objects and models
 8. **API Layer** (`src/wikibots/`) - Wikipedia/Wikidata API communication
 
 ## Architecture & Code Quality Review
 
 ### Code Organization
 
-The project follows a modular architecture with clear separation between parsing, transformation, and language-specific logic. The `fix_page()` function in `src/fix_src/index.php` serves as the main pipeline orchestrator, calling functions in a defined sequence.
+The project follows a modular architecture with clear separation between parsing, transformation, and language-specific logic. The `fix_page()` function in `src/app/fix_src/index.php` serves as the main pipeline orchestrator, calling functions in a defined sequence.
 
 ### Design Patterns
 
@@ -226,7 +226,7 @@ The project follows a modular architecture with clear separation between parsing
 
 3. **Inconsistent naming** - Mixed conventions: `Expend_Infobox` (Pascal+snake), `fix_page` (snake), `getCitationsOld` (camel), `remove_Duplicate_refs_With_attrs` (mixed).
 
-4. **Commented-out code** - Multiple files contain commented-out code blocks (e.g., `// $text = fix_refs_names($text);` in `fix_src/index.php`).
+4. **Commented-out code** - Multiple files contain commented-out code blocks (e.g., `// $text = fix_refs_names($text);` in `app/fix_src/index.php`).
 
 5. **Global state in ESData** - `ESData` uses public static properties populated at file include time, creating implicit coupling.
 
@@ -393,7 +393,7 @@ vendor/bin/phpstan analyse
 The library can be used programmatically:
 
 ```php
-require_once 'src/fix_src/include_files.php';
+require_once 'src/app/fix_src/include_files.php';
 
 use function WpRefs\FixPage\fix_page_with_setting;
 

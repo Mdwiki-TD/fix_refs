@@ -1,15 +1,9 @@
 <?php
 
-if (!empty($_GET['test'] ?? $_POST['test'] ?? '') || $_SERVER['SERVER_NAME'] == 'localhost') {
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-}
-
-use function WpRefs\FixPage\fix_page_with_setting;
 use function WpRefs\WikiText\get_wikipedia_text;
 use function WpRefs\csrf\generate_csrf_token;
-use function WpRefs\csrf\verify_csrf_token; // if (verify_csrf_token())  {
+use function WpRefs\csrf\verify_csrf_token;
+use function WpRefs\Run\fixPgeWithSetting;
 
 $headerPath = __DIR__ . '/../header.php';
 
@@ -22,20 +16,17 @@ include_once $headerPath;
 
 $lang         = trim($_POST['lang'] ?? '');
 $title        = trim($_POST['title'] ?? '');
-$mdwikiRevid = trim($_POST['revid'] ?? '');
+$mdwikiRevid  = trim($_POST['revid'] ?? '');
 $sourcetitle  = trim($_POST['sourcetitle'] ?? '');
 
 $user = $GLOBALS['global_username'] ?? '';
-// ---
+
 $submitOrLogin = (!empty($user))
     ? "<input class='btn btn-outline-primary' type='submit' value='start'>"
     : "<a class='btn btn-outline-primary' href='/auth/login.php'>login</a>";
-// ---
-include_once __DIR__ . '/csrf.php';
-include_once __DIR__ . '/work.php';
-include_once __DIR__ . '/wikibots/wikitext.php';
-// include_once __DIR__ . '/wikibots/save.php';
 
+include_once __DIR__ . '/include.php';
+include_once __DIR__ . '/work.php';
 
 echo "
     <div class='card'>
@@ -44,7 +35,7 @@ echo "
         </div>
         <div class='card-body'>
 ";
-// ---
+
 $footer = <<<HTML
                 </div>
             </div>
@@ -52,19 +43,19 @@ $footer = <<<HTML
     </body>
 </html>
 HTML;
-// ---
+
 function make_result($lang, $title, $sourcetitle, $mdwikiRevid)
 {
-    // ---
+
     $text = get_wikipedia_text($title, $lang);
-    // ---
+
     if (empty($text)) {
         return <<<HTML
             <h2>Wikitext not found</h2>
         HTML;
     }
-    // ---
-    $newText = fix_page_with_setting(
+
+    $newText = fixPgeWithSetting(
         $sourcetitle,
         $title,
         $text,

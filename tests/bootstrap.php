@@ -2,6 +2,8 @@
 
 namespace FixRefs\Tests;
 
+use PHPUnit\Framework\TestCase;
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -9,11 +11,9 @@ error_reporting(E_ALL);
 // use FixRefs\Tests\MyFunctionTest;
 // Load the Composer autoloader
 require __DIR__ . '/../vendor/autoload.php';
-// Load include_files.php file
-require __DIR__ . '/../src/work.php';
-require __DIR__ . '/../src/fix_src/include_files.php';
+// Load include.php file
+require __DIR__ . '/../src/include.php';
 
-use PHPUnit\Framework\TestCase;
 
 class MyFunctionTest extends TestCase
 {

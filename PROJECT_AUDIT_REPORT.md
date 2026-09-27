@@ -11,20 +11,20 @@
 
 Fix Refs is a PHP library that parses and fixes `<ref>` tags and citation templates in MediaWiki wikitext. It is used by the MDWiki Translation Dashboard to standardize references in Wikipedia articles translated from English into 11+ languages. The system fetches wikitext via the MediaWiki API, applies a sequential pipeline of text transformations (deduplication, missing ref recovery, punctuation normalization, template localization, category management), and returns the cleaned wikitext.
 
-| Attribute | Value |
-|-----------|-------|
-| Language | PHP 8.2+ |
-| Framework | None (pure PHP, PSR-4 autoloaded) |
+| Attribute            | Value                              |
+| -------------------- | ---------------------------------- |
+| Language             | PHP 8.2+                           |
+| Framework            | None (pure PHP, PSR-4 autoloaded)  |
 | Runtime Dependencies | Zero (only `ext-curl`, `ext-json`) |
-| Dev Dependencies | PHPStan ^2.1, PHPUnit ^11.5 |
-| Source Files | 53 PHP files |
-| Lines of Code | ~4,700 |
-| Test Files | 30 PHPUnit test classes |
-| Static Analysis | PHPStan Level 5 |
-| License | GPL-3.0-or-later |
-| Deployment Target | Wikimedia Toolforge |
+| Dev Dependencies     | PHPStan ^2.1, PHPUnit ^11.5        |
+| Source Files         | 53 PHP files                       |
+| Lines of Code        | ~4,700                             |
+| Test Files           | 30 PHPUnit test classes            |
+| Static Analysis      | PHPStan Level 5                    |
+| License              | GPL-3.0-or-later                   |
+| Deployment Target    | Wikimedia Toolforge                |
 
-The architecture follows a pipeline pattern: `fix_page()` in `src/fix_src/index.php` chains 11 transformation stages, each calling focused functions from `bots/`, `helps_bots/`, and `lang_bots/` modules. A separate `WikiParse` submodule provides OOP-based wikitext parsing with recursive template extraction.
+The architecture follows a pipeline pattern: `fix_page()` in `src/app/fix_src/index.php` chains 11 transformation stages, each calling focused functions from `bots/`, `helps_bots/`, and `lang_bots/` modules. A separate `WikiParse` submodule provides OOP-based wikitext parsing with recursive template extraction.
 
 ---
 
@@ -58,20 +58,20 @@ The system is already deployed and running on Wikimedia Toolforge, processing re
 
 All modules within `src/` share these patterns:
 
-- **Function-based API** -- Public interfaces are namespaced functions, not classes. Example: `WpRefs\WprefText\fix_page()`.
-- **String-in / string-out transforms** -- Every bot function takes a wikitext string and returns a modified wikitext string.
-- **cURL with User-Agent** -- All HTTP requests use the same User-Agent string (`WikiProjectMed Translation Dashboard/1.0`) and 5-second timeouts.
-- **Regex-heavy processing** -- Core logic relies on `preg_replace`, `preg_match_all`, and `str_replace` rather than AST manipulation.
+-   **Function-based API** -- Public interfaces are namespaced functions, not classes. Example: `WpRefs\WprefText\fix_page()`.
+-   **String-in / string-out transforms** -- Every bot function takes a wikitext string and returns a modified wikitext string.
+-   **cURL with User-Agent** -- All HTTP requests use the same User-Agent string (`WikiProjectMed Translation Dashboard/1.0`) and 5-second timeouts.
+-   **Regex-heavy processing** -- Core logic relies on `preg_replace`, `preg_match_all`, and `str_replace` rather than AST manipulation.
 
 ### Repeated Weaknesses
 
-| Weakness | Occurrences | Files Affected |
-|----------|-------------|----------------|
-| Duplicate `str_starts_with`/`str_ends_with` polyfills | 2 | `refs_utils.php`, `remove_space.php` |
-| Duplicate `start_end()` function | 2 | `fix_pt_months.php`, `es_months.php` |
-| Commented-out code in production | 6+ | `fix_src/index.php`, `text_post.php`, `en_lang_param.php`, `es_months.php`, `fix_pt_months.php` |
-| Debug output controlled by `$_GET['test']` | 4 | `src/index.php`, `src/test.php`, `src/work.php`, `test_bot.php` |
-| No input validation on `$lang` | 3 | `work.php`, `wikitext.php`, `missing_refs.php` |
+| Weakness                                              | Occurrences | Files Affected                                                                                      |
+| ----------------------------------------------------- | ----------- | --------------------------------------------------------------------------------------------------- |
+| Duplicate `str_starts_with`/`str_ends_with` polyfills | 2           | `refs_utils.php`, `remove_space.php`                                                                |
+| Duplicate `start_end()` function                      | 2           | `fix_pt_months.php`, `es_months.php`                                                                |
+| Commented-out code in production                      | 6+          | `app/fix_src/index.php`, `text_post.php`, `en_lang_param.php`, `es_months.php`, `fix_pt_months.php` |
+| Debug output controlled by `$_GET['test']`            | 4           | `src/index.php`, `src/test.php`, `src/work.php`, `debug_helper.php`                                     |
+| No input validation on `$lang`                        | 3           | `work.php`, `wikitext.php`, `missing_refs.php`                                                      |
 
 ### Common Technical Debt
 
@@ -85,15 +85,15 @@ All modules within `src/` share these patterns:
 
 ### Dependency Issues
 
-- **No runtime dependencies** -- This is a strength. Zero supply-chain risk.
-- **Dev tooling is current** -- PHPStan 2.1 and PHPUnit 11.5 are recent versions.
-- **External API coupling** -- The library depends on Wikipedia API, Wikidata API, and MDWiki internal APIs (`mdwikicx.toolforge.org`, `mdwiki.toolforge.org/api.php`). No circuit-breaker or retry logic exists.
+-   **No runtime dependencies** -- This is a strength. Zero supply-chain risk.
+-   **Dev tooling is current** -- PHPStan 2.1 and PHPUnit 11.5 are recent versions.
+-   **External API coupling** -- The library depends on Wikipedia API, Wikidata API, and MDWiki internal APIs (`mdwikicx.toolforge.org`, `mdwiki.toolforge.org/api.php`). No circuit-breaker or retry logic exists.
 
 ### Integration Concerns
 
-- **`src/index.php`** expects a `header.php` from the MDWiki main repo at `../header.php`. This hard-couples the tool to the parent project's directory structure.
-- **`text_post.php`** is the API-style endpoint but has no authentication, no rate limiting, and the CSRF check is disabled.
-- **`work.php`** loads settings from a remote API with a local JSON fallback. If the remote API returns malformed data, the fallback path is silent.
+-   **`src/index.php`** expects a `header.php` from the MDWiki main repo at `../header.php`. This hard-couples the tool to the parent project's directory structure.
+-   **`text_post.php`** is the API-style endpoint but has no authentication, no rate limiting, and the CSRF check is disabled.
+-   **`work.php`** loads settings from a remote API with a local JSON fallback. If the remote API returns malformed data, the fallback path is silent.
 
 ---
 
@@ -130,7 +130,7 @@ CSRF verification is commented out. Any external site can submit POST requests t
 
 ### HIGH -- Debug Mode Exposed to Users
 
-**Files:** `src/index.php:5`, `src/test.php:3`, `src/work.php:5`, `src/fix_src/test_bot.php:16-22`
+**Files:** `src/index.php:5`, `src/test.php:3`, `src/work.php:5`, `src/app/fix_src/debug_helper.php:16-22`
 
 ```php
 if (isset($_GET['test']) || (($_SERVER['SERVER_NAME'] ?? '') === 'localhost')) {
@@ -139,13 +139,13 @@ if (isset($_GET['test']) || (($_SERVER['SERVER_NAME'] ?? '') === 'localhost')) {
 }
 ```
 
-Any user can append `?test=1` to enable full error display, leaking PHP stack traces, file paths, and internal server structure. Additionally, `echo_test()` in `test_bot.php` outputs debug strings when `$_GET['test']` or `$_POST['test']` is set, potentially revealing processing details.
+Any user can append `?test=1` to enable full error display, leaking PHP stack traces, file paths, and internal server structure. Additionally, `echo_test()` in `debug_helper.php` outputs debug strings when `$_GET['test']` or `$_POST['test']` is set, potentially revealing processing details.
 
 **Severity:** High -- information disclosure to unauthenticated users.
 
 ### MEDIUM -- Hardcoded Server Paths
 
-**File:** `src/fix_src/helps_bots/missing_refs.php`, lines 70-72
+**File:** `src/app/fix_src/helps_bots/missing_refs.php`, lines 70-72
 
 ```php
 $path = ($server == "localhost")
@@ -167,7 +167,7 @@ The `$lang` parameter from user input is inserted directly into API URLs (`https
 
 ### MEDIUM -- Repeated Full-Text Parsing
 
-**File:** `src/fix_src/index.php` (pipeline)
+**File:** `src/app/fix_src/index.php` (pipeline)
 
 During a single `fix_page()` call, the following functions each independently parse all citations from the full text:
 
@@ -221,76 +221,76 @@ Functions like `add_Translated_from_MDWiki()`, `bg_section()`, and `es_section()
 
 ### Immediate Fixes (1-2 days)
 
-| # | Fix | File | Effort |
-|---|-----|------|--------|
-| 1 | Fix `$new_text` -> `$newtext` variable name bug | `src/text_post.php:50,53` | 5 min |
-| 2 | Uncomment and enable `verify_csrf_token()` | `src/text_post.php:39` | 5 min |
-| 3 | Gate `display_errors` behind an environment variable (e.g., `FIX_REFS_DEBUG`) instead of `$_GET['test']` | `src/index.php`, `src/test.php`, `src/work.php`, `src/fix_src/test_bot.php` | 30 min |
-| 4 | Remove all commented-out code from production files | Multiple | 30 min |
-| 5 | Add input length limit (e.g., 1MB) to `text_post.php` | `src/text_post.php` | 15 min |
+| #   | Fix                                                                                                      | File                                                                            | Effort |
+| --- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------ |
+| 1   | Fix `$new_text` -> `$newtext` variable name bug                                                          | `src/text_post.php:50,53`                                                       | 5 min  |
+| 2   | Uncomment and enable `verify_csrf_token()`                                                               | `src/text_post.php:39`                                                          | 5 min  |
+| 3   | Gate `display_errors` behind an environment variable (e.g., `FIX_REFS_DEBUG`) instead of `$_GET['test']` | `src/index.php`, `src/test.php`, `src/work.php`, `src/app/fix_src/debug_helper.php` | 30 min |
+| 4   | Remove all commented-out code from production files                                                      | Multiple                                                                        | 30 min |
+| 5   | Add input length limit (e.g., 1MB) to `text_post.php`                                                    | `src/text_post.php`                                                             | 15 min |
 
 ### Short-term Improvements (1-2 weeks)
 
-| # | Improvement | Impact |
-|---|-------------|--------|
-| 1 | Replace glob-based `include_files.php` with Composer PSR-4 autoloading | Eliminates fragile load-order dependency |
-| 2 | Consolidate duplicate `str_starts_with`/`str_ends_with` into a single `polyfills.php` | Removes code duplication |
-| 3 | Add `$lang` whitelist validation in `work.php` (`in_array($lang, ['es','pt','pl','bg','sw','hy','ar','zh','hi','ru','hr'])`) | Prevents invalid input propagation |
-| 4 | Extract User-Agent string to a constant in `wikitext.php` | DRY principle |
-| 5 | Add PHPStan analysis for `src/` (currently only covers `src/fix_src/`) | Catches bugs in web layer |
-| 6 | Validate API responses in `from_api()` before accessing nested keys | Prevents null access on API errors |
-| 7 | Replace `$_SERVER['SERVER_NAME']` checks with `getenv('FIX_REFS_ENV')` | Removes server info leak |
+| #   | Improvement                                                                                                                  | Impact                                   |
+| --- | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
+| 1   | Replace glob-based `include_files.php` with Composer PSR-4 autoloading                                                       | Eliminates fragile load-order dependency |
+| 2   | Consolidate duplicate `str_starts_with`/`str_ends_with` into a single `polyfills.php`                                        | Removes code duplication                 |
+| 3   | Add `$lang` whitelist validation in `work.php` (`in_array($lang, ['es','pt','pl','bg','sw','hy','ar','zh','hi','ru','hr'])`) | Prevents invalid input propagation       |
+| 4   | Extract User-Agent string to a constant in `wikitext.php`                                                                    | DRY principle                            |
+| 5   | Add PHPStan analysis for `src/` (currently only covers `src/app/fix_src/`)                                                   | Catches bugs in web layer                |
+| 6   | Validate API responses in `from_api()` before accessing nested keys                                                          | Prevents null access on API errors       |
+| 7   | Replace `$_SERVER['SERVER_NAME']` checks with `getenv('FIX_REFS_ENV')`                                                       | Removes server info leak                 |
 
 ### Long-term Strategic Refactoring (1-3 months)
 
-| # | Refactoring | Rationale |
-|---|-------------|-----------|
-| 1 | **Extract `LanguageFixerInterface`** with per-language implementations. Replace the `if` chain in `fix_page()` with a registry that loads the appropriate fixer based on `$lang`. | Eliminates the growing `if` chain, enables adding languages without modifying core code |
-| 2 | **Deprecate `CitationOld`** in favor of `WikiParse/src/ParserCitations`. Migrate all bot functions to use the OOP parser. | Eliminates dual parsing systems |
-| 3 | **Parse citations once** at the start of `fix_page()` and pass the result to all bot functions. | Eliminates 5+ redundant full-text regex passes |
-| 4 | **Extract `WikiParse` as a standalone Composer package.** It has no dependencies on the rest of fix_src and could be reused. | Promotes reuse, simplifies testing |
-| 5 | **Replace `echo_test()`/`echo_debug()`** with PSR-3 logger injection. | Proper logging, configurable output |
-| 6 | **Extract `ESData` static arrays** into JSON configuration files. | Removes global state, enables non-PHP tooling |
+| #   | Refactoring                                                                                                                                                                       | Rationale                                                                               |
+| --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| 1   | **Extract `LanguageFixerInterface`** with per-language implementations. Replace the `if` chain in `fix_page()` with a registry that loads the appropriate fixer based on `$lang`. | Eliminates the growing `if` chain, enables adding languages without modifying core code |
+| 2   | **Deprecate `CitationOld`** in favor of `WikiParse/src/ParserCitations`. Migrate all bot functions to use the OOP parser.                                                         | Eliminates dual parsing systems                                                         |
+| 3   | **Parse citations once** at the start of `fix_page()` and pass the result to all bot functions.                                                                                   | Eliminates 5+ redundant full-text regex passes                                          |
+| 4   | **Extract `WikiParse` as a standalone Composer package.** It has no dependencies on the rest of app/fix_src and could be reused.                                                  | Promotes reuse, simplifies testing                                                      |
+| 5   | **Replace `echo_test()`/`echo_debug()`** with PSR-3 logger injection.                                                                                                             | Proper logging, configurable output                                                     |
+| 6   | **Extract `ESData` static arrays** into JSON configuration files.                                                                                                                 | Removes global state, enables non-PHP tooling                                           |
 
 ### Security Hardening Priorities
 
-| Priority | Action |
-|----------|--------|
-| P0 | Enable CSRF verification on `text_post.php` |
-| P0 | Fix the `$new_text`/`$newtext` bug (currently the endpoint is broken, which paradoxically limits exposure) |
-| P1 | Replace `$_GET['test']` debug toggle with environment variable |
-| P1 | Add `$lang` whitelist validation |
-| P1 | Add `$title` sanitization (`preg_quote` or URL-encode consistently) |
-| P2 | Add rate limiting for external API calls (Wikipedia, Wikidata) |
-| P2 | Add Content-Type and X-Content-Type-Options headers to all responses |
-| P2 | Remove hardcoded paths from `missing_refs.php` |
-| P3 | Add Content-Security-Policy headers to HTML endpoints |
+| Priority | Action                                                                                                     |
+| -------- | ---------------------------------------------------------------------------------------------------------- |
+| P0       | Enable CSRF verification on `text_post.php`                                                                |
+| P0       | Fix the `$new_text`/`$newtext` bug (currently the endpoint is broken, which paradoxically limits exposure) |
+| P1       | Replace `$_GET['test']` debug toggle with environment variable                                             |
+| P1       | Add `$lang` whitelist validation                                                                           |
+| P1       | Add `$title` sanitization (`preg_quote` or URL-encode consistently)                                        |
+| P2       | Add rate limiting for external API calls (Wikipedia, Wikidata)                                             |
+| P2       | Add Content-Type and X-Content-Type-Options headers to all responses                                       |
+| P2       | Remove hardcoded paths from `missing_refs.php`                                                             |
+| P3       | Add Content-Security-Policy headers to HTML endpoints                                                      |
 
 ### DevOps and Testing Recommendations
 
-| Area | Recommendation |
-|------|----------------|
-| **CI/CD** | Add GitHub Actions workflow running `composer test` on push/PR |
-| **Integration Tests** | Add end-to-end test for `fix_page()` with sample wikitext for each language |
+| Area                   | Recommendation                                                                             |
+| ---------------------- | ------------------------------------------------------------------------------------------ |
+| **CI/CD**              | Add GitHub Actions workflow running `composer test` on push/PR                             |
+| **Integration Tests**  | Add end-to-end test for `fix_page()` with sample wikitext for each language                |
 | **Web Endpoint Tests** | Add tests for `index.php` and `text_post.php` using PHPUnit's HTTP client or a test server |
-| **Mutation Testing** | Add Infection PHP to verify test quality |
-| **Code Style** | Add PHP-CS-Fixer with a consistent ruleset (PSR-12) |
-| **Static Analysis** | Extend PHPStan to cover `src/` (not just `src/fix_src/`) and raise to level 6 |
-| **Dependency Audit** | Add `composer audit` to CI for dev dependency vulnerability scanning |
-| **Caching** | Add in-memory cache (static array) for repeated Wikipedia API calls in the same request |
+| **Mutation Testing**   | Add Infection PHP to verify test quality                                                   |
+| **Code Style**         | Add PHP-CS-Fixer with a consistent ruleset (PSR-12)                                        |
+| **Static Analysis**    | Extend PHPStan to cover `src/` (not just `src/app/fix_src/`) and raise to level 6          |
+| **Dependency Audit**   | Add `composer audit` to CI for dev dependency vulnerability scanning                       |
+| **Caching**            | Add in-memory cache (static array) for repeated Wikipedia API calls in the same request    |
 
 ---
 
 ## Final Evaluation
 
-| Metric | Score | Notes |
-|--------|-------|-------|
-| **Overall Project Score** | **6.0 / 10** | Functional and purpose-built, but has a critical bug and security gaps |
-| **Risk Level** | **Medium** | The tool processes wikitext; bugs cause formatting issues, not data loss. The broken POST endpoint limits blast radius. |
-| **Technical Debt Level** | **Moderate** | Dual parsing systems, glob includes, naming inconsistencies, commented-out code. Manageable with focused effort. |
-| **Production Readiness** | **65%** | Already deployed on Toolforge and processing real articles. Needs the immediate fixes applied before broader adoption. |
-| **Security Readiness** | **40%** | CSRF disabled, debug mode exposed, no input validation. The tool runs in a constrained Toolforge environment which limits exploit impact. |
-| **Test Coverage** | **60%** | 30 test classes cover core bot functions. Missing: web endpoints, CSRF, integration pipeline, API utilities. |
+| Metric                    | Score        | Notes                                                                                                                                     |
+| ------------------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| **Overall Project Score** | **6.0 / 10** | Functional and purpose-built, but has a critical bug and security gaps                                                                    |
+| **Risk Level**            | **Medium**   | The tool processes wikitext; bugs cause formatting issues, not data loss. The broken POST endpoint limits blast radius.                   |
+| **Technical Debt Level**  | **Moderate** | Dual parsing systems, glob includes, naming inconsistencies, commented-out code. Manageable with focused effort.                          |
+| **Production Readiness**  | **65%**      | Already deployed on Toolforge and processing real articles. Needs the immediate fixes applied before broader adoption.                    |
+| **Security Readiness**    | **40%**      | CSRF disabled, debug mode exposed, no input validation. The tool runs in a constrained Toolforge environment which limits exploit impact. |
+| **Test Coverage**         | **60%**      | 30 test classes cover core bot functions. Missing: web endpoints, CSRF, integration pipeline, API utilities.                              |
 
 ### Recommended Next Steps
 
@@ -302,4 +302,4 @@ Functions like `add_Translated_from_MDWiki()`, `bg_section()`, and `es_section()
 
 ---
 
-*Report generated from analysis of 53 PHP source files (~4,700 lines), 30 test classes, and 4 README documentation files.*
+_Report generated from analysis of 53 PHP source files (~4,700 lines), 30 test classes, and 4 README documentation files._
