@@ -1,9 +1,14 @@
 <?php
+// TODO: Convert this file to class
 
 // Integration test for Polish language fixes in main workflow
 
+use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\WprefText\fix_page;
 
+class IntegrationTest extends MyFunctionTest
+{
+}
 echo "Integration Test: Polish Language Support\n";
 echo "==========================================\n\n";
 

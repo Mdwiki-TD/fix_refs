@@ -1,10 +1,15 @@
 <?php
+// TODO: Convert this file to class
 
 // Simple manual test for Polish infobox functionality
 
-
+use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\PL\FixPlInfobox\add_missing_params_to_choroba_infobox;
 use function WpRefs\PL\FixPlInfobox\pl_fixes;
+
+class ManualTest extends MyFunctionTest
+{
+}
 
 echo "Testing Polish Choroba Infobox Parameter Addition\n";
 echo "==================================================\n\n";

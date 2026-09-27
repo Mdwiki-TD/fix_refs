@@ -1,9 +1,14 @@
 <?php
-
+// TODO: Convert this file to class
 // Comprehensive test to verify Polish language fixes work correctly
 
+use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\WprefText\fix_page;
 
+
+class ComprehensiveTest extends MyFunctionTest
+{
+}
 echo "=======================================================\n";
 echo "COMPREHENSIVE TEST: Polish Choroba Infobox Support\n";
 echo "=======================================================\n\n";

@@ -1,10 +1,15 @@
 <?php
+// TODO: Convert this file to class
 
 // Debug test to see what's happening with duplicate parameters
 
+use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\PL\FixPlInfobox\add_missing_params_to_choroba_infobox;
 use function WikiParse\Template\getTemplates;
 
+class DebugDuplicate extends MyFunctionTest
+{
+}
 $input = <<<'TXT'
 {{Choroba infobox
 |nazwa polska = Astma

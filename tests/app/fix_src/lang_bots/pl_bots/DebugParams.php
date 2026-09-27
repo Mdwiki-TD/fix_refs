@@ -1,9 +1,14 @@
 <?php
+// TODO: Convert this file to class
 
 // Debug test to see what parameters are in the template
 
+use FixRefs\Tests\MyFunctionTest;
 use function WikiParse\Template\getTemplates;
 
+class DebugParams extends MyFunctionTest
+{
+}
 $input = <<<'TXT'
 {{Choroba infobox
 |nazwa polska = Astma

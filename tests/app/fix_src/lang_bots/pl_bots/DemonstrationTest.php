@@ -1,9 +1,14 @@
 <?php
+// TODO: Convert this file to class
 
 // Demonstration of Polish Choroba Infobox Parameter Addition Feature
 
+use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\WprefText\fix_page;
 
+class DemonstrationTest extends MyFunctionTest
+{
+}
 echo "==========================================================\n";
 echo "DEMONSTRATION: Polish Choroba Infobox Parameter Addition\n";
 echo "==========================================================\n\n";

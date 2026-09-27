@@ -1,4 +1,5 @@
 <?php
+// TODO: Convert this file to class
 
 use FixRefs\Tests\MyFunctionTest;
 
