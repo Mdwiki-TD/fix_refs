@@ -9,8 +9,8 @@ $headerPath = __DIR__ . '/../header.php';
 include_once __DIR__ . '/include.php';
 
 if (!file_exists($headerPath)) {
-    // "I:\MD_TOOLS\MDWIKI_MAIN_REPO\public_html\header.php"
-    $headerPath = dirname(dirname(dirname(dirname(__DIR__)))) . '/MDWIKI_MAIN_REPO/public_html/header.php';
+    // "I:/MD_TOOLS/MDWIKI_MAIN_REPO/src/public_html/header.php"
+    $headerPath = dirname(dirname(dirname(dirname(__DIR__)))) . '/MDWIKI_MAIN_REPO/src/public_html/header.php';
 }
 
 include_once $headerPath;
