@@ -146,7 +146,6 @@ class CategoryTest extends MyFunctionTest
 
 
     /**
-     * @test
      * @description يختبر استخراج تصنيف واحد من النص.
      */
     public function testGetSingleCategory()
@@ -159,7 +158,6 @@ class CategoryTest extends MyFunctionTest
     }
 
     /**
-     * @test
      * @description يختبر استخراج عدة تصنيفات من النص.
      */
     public function testGetMultipleCategories()
@@ -173,7 +171,6 @@ class CategoryTest extends MyFunctionTest
     }
 
     /**
-     * @test
      * @description يختبر نصًا لا يحتوي على أي تصنيفات.
      */
     public function testNoCategoriesFound()
@@ -183,7 +180,6 @@ class CategoryTest extends MyFunctionTest
     }
 
     /**
-     * @test
      * @description يختبر وجود مسافات إضافية حول اسم التصنيف.
      */
     public function testCategoryWithExtraWhitespace()
@@ -196,7 +192,6 @@ class CategoryTest extends MyFunctionTest
     }
 
     /**
-     * @test
      * @description يختبر اختلاف حالة الأحرف في كلمة "Category".
      */
     public function testCaseInsensitiveCategoryTag()
@@ -209,7 +204,6 @@ class CategoryTest extends MyFunctionTest
     }
 
     /**
-     * @test
      * @description يختبر التصنيفات التي تحتوي على مفتاح فرز (sort key).
      */
     public function testCategoryWithSortKey()
@@ -222,7 +216,6 @@ class CategoryTest extends MyFunctionTest
     }
 
     /**
-     * @test
      * @description يختبر وجود عدة تصنيفات مع مفاتيح فرز ومسافات.
      */
     public function testMixedAndComplexCategories()

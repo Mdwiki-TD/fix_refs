@@ -112,7 +112,6 @@ TXT
     /**
      * Test integration scenarios for Polish language fixes and infobox processing.
      *
-     * @dataProvider integrationTestCasesProvider
      * @param string $input
      * @param string $title
      * @param bool $expandInfobox

@@ -7,24 +7,11 @@ use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\Bots\RefsUtils\rm_str_from_start_and_end;
 use function WpRefs\Bots\RefsUtils\remove_start_end_quotes;
 
-if (!function_exists('str_ends_with')) {
-    function str_ends_with($string, $endString)
-    {
-        $len = strlen($endString);
-        return substr($string, -$len) === $endString;
-    }
-}
-if (!function_exists('str_starts_with')) {
-    function str_starts_with($text, $start)
-    {
-        return strpos($text, $start) === 0;
-    }
-}
+
 class refsUtilsTest extends MyFunctionTest
 {
 
     /**
-     * @test
      * @description يضيف علامات اقتباس مزدوجة لنص عادي.
      */
     public function testAddsDoubleQuotesToPlainString()
@@ -33,7 +20,6 @@ class refsUtilsTest extends MyFunctionTest
     }
 
     /**
-     * @test
      * @description يزيل علامات الاقتباس المفردة ويضيف مزدوجة.
      */
     public function testReplacesSingleQuotesWithDoubleQuotes()
@@ -43,7 +29,6 @@ class refsUtilsTest extends MyFunctionTest
     }
 
     /**
-     * @test
      * @description يزيل علامات الاقتباس المزدوجة ويضيف مزدوجة مرة أخرى.
      */
     public function testReplacesDoubleQuotesWithDoubleQuotes()
@@ -52,7 +37,6 @@ class refsUtilsTest extends MyFunctionTest
     }
 
     /**
-     * @test
      * @description يحيط النص بعلامات اقتباس مفردة إذا كان يحتوي على علامات مزدوجة بالداخل.
      */
     public function testWrapsWithSingleQuotesIfContainsDoubleQuotes()
@@ -61,7 +45,6 @@ class refsUtilsTest extends MyFunctionTest
     }
 
     /**
-     * @test
      * @description يزيل المسافات الزائدة من البداية والنهاية.
      */
     public function testTrimsWhitespace()
@@ -70,7 +53,6 @@ class refsUtilsTest extends MyFunctionTest
     }
 
     /**
-     * @test
      * @description يتعامل مع نص فارغ.
      */
     public function testHandlesEmptyString()

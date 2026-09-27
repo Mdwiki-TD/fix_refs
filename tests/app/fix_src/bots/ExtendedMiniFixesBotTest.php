@@ -44,7 +44,6 @@ TXT
     /**
      * Test section titles formatting and normalization per language.
      *
-     * @dataProvider sectionTitlesProvider
      * @param string $lang
      * @param string $input
      * @return void

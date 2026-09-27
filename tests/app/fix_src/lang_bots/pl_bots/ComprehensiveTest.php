@@ -92,7 +92,6 @@ TXT,
     /**
      * Test Polish Choroba infobox support with various test cases.
      *
-     * @dataProvider chorobaInfoboxProvider
      * @param string $input
      * @param string $lang
      * @param array $expectedParams
