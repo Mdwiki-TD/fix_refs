@@ -1,81 +1,145 @@
 <?php
-// TODO: Convert this file to class
+
+namespace FixRefs\Tests;
 
 // Simple manual test for Polish infobox functionality
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\PL\FixPlInfobox\add_missing_params_to_choroba_infobox;
 use function WpRefs\PL\FixPlInfobox\pl_fixes;
 
 class ManualTest extends MyFunctionTest
 {
-}
-
-echo "Testing Polish Choroba Infobox Parameter Addition\n";
-echo "==================================================\n\n";
-
-// Test 1: Basic functionality
-echo "Test 1: Add missing parameters to Choroba infobox\n";
-$input1 = <<<'TXT'
+    /**
+     * Data provider for testing Polish infobox parameter addition functionality.
+     *
+     * @return array
+     */
+    public static function manualTestCasesProvider(): array
+    {
+        return [
+            'Basic functionality - Add missing parameters to Choroba infobox' => [
+                'input' => <<<'TXT'
 {{Choroba infobox
 |nazwa polska = Astma oskrzelowa
 |obraz =
 |opis obrazu =
 }}
-TXT;
-
-$result1 = add_missing_params_to_choroba_infobox($input1);
-echo "Input:\n$input1\n\n";
-echo "Output:\n$result1\n\n";
-
-// Check for expected parameters
-$paramsToCheck = ['nazwa naukowa', 'ICD11', 'ICD10', 'DSM-5', 'OMIM', 'MeshID', 'commons'];
-echo "Checking for parameters:\n";
-foreach ($paramsToCheck as $param) {
-    $found = strpos($result1, $param) !== false ? 'FOUND' : 'MISSING';
-    echo "  - $param: $found\n";
-}
-echo "\n";
-
-// Test 2: Case insensitive template name
-echo "Test 2: Case insensitive template name matching\n";
-$input2 = '{{choroba INFOBOX|nazwa polska=Test}}';
-$result2 = add_missing_params_to_choroba_infobox($input2);
-$hasIcd10 = strpos($result2, 'ICD10') !== false;
-echo "Input: $input2\n";
-echo "Has ICD10 parameter: " . ($hasIcd10 ? 'YES' : 'NO') . "\n\n";
-
-// Test 3: Don't add existing parameters
-echo "Test 3: Don't duplicate existing parameters\n";
-$input3 = <<<'TXT'
+TXT
+                ,
+                'targetFunction' => 'add_missing_params_to_choroba_infobox',
+                'expectedParams' => ['nazwa naukowa', 'ICD11', 'ICD10', 'DSM-5', 'OMIM', 'MeshID', 'commons'],
+                'shouldNotContain' => [],
+                'maxParameterCounts' => [],
+                'expectUnchanged' => false,
+            ],
+            'Case insensitive template name matching' => [
+                'input' => '{{choroba INFOBOX|nazwa polska=Test}}',
+                'targetFunction' => 'add_missing_params_to_choroba_infobox',
+                'expectedParams' => ['ICD10'],
+                'shouldNotContain' => [],
+                'maxParameterCounts' => [],
+                'expectUnchanged' => false,
+            ],
+            'Don\'t duplicate existing parameters' => [
+                'input' => <<<'TXT'
 {{Choroba infobox
 |nazwa polska = Astma
 |ICD10 = J45
 |MeshID = D001249
 }}
-TXT;
-$result3 = add_missing_params_to_choroba_infobox($input3);
-$icd10_count = preg_match_all('/\|ICD10\s*=/', $result3, $icd10_matches);
-$meshidCount = preg_match_all('/\|MeshID\s*=/', $result3, $meshidMatches);
-echo "Input:\n$input3\n";
-echo "ICD10 parameter count: $icd10_count (should be 1)\n";
-echo "MeshID parameter count: $meshidCount (should be 1)\n\n";
+TXT
+                ,
+                'targetFunction' => 'add_missing_params_to_choroba_infobox',
+                'expectedParams' => ['ICD10', 'MeshID'],
+                'shouldNotContain' => [],
+                'maxParameterCounts' => [
+                    'ICD10' => 1,
+                    'MeshID' => 1,
+                ],
+                'expectUnchanged' => false,
+            ],
+            'Ignore non-Choroba templates' => [
+                'input' => '{{Some other template|param=value}}',
+                'targetFunction' => 'add_missing_params_to_choroba_infobox',
+                'expectedParams' => [],
+                'shouldNotContain' => ['ICD10', 'ICD11', 'nazwa naukowa'],
+                'maxParameterCounts' => [],
+                'expectUnchanged' => true,
+            ],
+            'pl_fixes wrapper function' => [
+                'input' => '{{Choroba infobox|nazwa polska=Test}}',
+                'targetFunction' => 'pl_fixes',
+                'expectedParams' => ['nazwa naukowa', 'ICD10'],
+                'shouldNotContain' => [],
+                'maxParameterCounts' => [],
+                'expectUnchanged' => false,
+            ],
+        ];
+    }
 
-// Test 4: Ignore other templates
-echo "Test 4: Ignore non-Choroba templates\n";
-$input4 = '{{Some other template|param=value}}';
-$result4 = add_missing_params_to_choroba_infobox($input4);
-$unchanged = ($input4 === $result4);
-echo "Input: $input4\n";
-echo "Unchanged: " . ($unchanged ? 'YES' : 'NO') . "\n\n";
+    /**
+     * Test Polish Choroba Infobox utility functions with various scenarios.
+     *
+     * @dataProvider manualTestCasesProvider
+     * @param string $input
+     * @param string $targetFunction
+     * @param array $expectedParams
+     * @param array $shouldNotContain
+     * @param array $maxParameterCounts
+     * @param bool $expectUnchanged
+     * @return void
+     */
+    #[DataProvider('manualTestCasesProvider')]
+    public function testPolishInfoboxFunctionality(
+        string $input,
+        string $targetFunction,
+        array $expectedParams,
+        array $shouldNotContain,
+        array $maxParameterCounts,
+        bool $expectUnchanged
+    ): void {
+        // Execute target function dynamically based on provider setting
+        $result = ($targetFunction === 'pl_fixes')
+            ? pl_fixes($input)
+            : add_missing_params_to_choroba_infobox($input);
 
-// Test 5: pl_fixes function
-echo "Test 5: pl_fixes wrapper function\n";
-$input5 = '{{Choroba infobox|nazwa polska=Test}}';
-$result5 = pl_fixes($input5);
-$hasParams = strpos($result5, 'nazwa naukowa') !== false && strpos($result5, 'ICD10') !== false;
-echo "Input: $input5\n";
-echo "Has required parameters: " . ($hasParams ? 'YES' : 'NO') . "\n\n";
+        if ($expectUnchanged) {
+            $this->assertSame(
+                $input,
+                $result,
+                "Expected input text to remain completely unchanged."
+            );
+            return;
+        }
 
-echo "==================================================\n";
-echo "All manual tests completed!\n";
+        // Assert expected parameters are present
+        foreach ($expectedParams as $param) {
+            $this->assertStringContainsString(
+                $param,
+                $result,
+                "Expected parameter '$param' not found in processed infobox."
+            );
+        }
+
+        // Assert parameters that should not be present are absent
+        foreach ($shouldNotContain as $param) {
+            $this->assertStringNotContainsString(
+                $param,
+                $result,
+                "Unexpected parameter '$param' found in processed infobox."
+            );
+        }
+
+        // Assert parameters are not duplicated
+        foreach ($maxParameterCounts as $param => $maxAllowed) {
+            $count = preg_match_all('/\|' . preg_quote($param, '/') . '\s*=/', $result, $matches);
+            $this->assertSame(
+                $maxAllowed,
+                $count,
+                "Parameter '$param' occurs $count times, expected exactly $maxAllowed."
+            );
+        }
+    }
+}

@@ -1,19 +1,25 @@
 <?php
-// TODO: Convert this file to class
+
+namespace FixRefs\Tests;
 
 // Integration test for Polish language fixes in main workflow
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\WprefText\fix_page;
 
 class IntegrationTest extends MyFunctionTest
 {
-}
-echo "Integration Test: Polish Language Support\n";
-echo "==========================================\n\n";
-
-// Test case 1: Polish article with Choroba infobox
-$text1 = <<<'TXT'
+    /**
+     * Data provider for integration test scenarios covering Polish language fixes.
+     *
+     * @return array
+     */
+    public static function integrationTestCasesProvider(): array
+    {
+        return [
+            'Polish article with Choroba infobox' => [
+                'input' => <<<'TXT'
 {{Choroba infobox
 |nazwa polska = Astma oskrzelowa
 |obraz = Blausen 0620 Lungs NormalvsInflamedAirway.png
@@ -23,33 +29,17 @@ $text1 = <<<'TXT'
 
 == Przypisy ==
 <references />
-TXT;
-
-echo "Test 1: Polish article with Choroba infobox\n";
-echo "--------------------------------------------\n";
-$result1 = fix_page($text1, "Astma oskrzelowa", false, true, false, "pl", "", "");
-echo "Original text length: " . strlen($text1) . "\n";
-echo "Result text length: " . strlen($result1) . "\n";
-
-// Check if parameters were added
-$paramsAdded = [
-    'nazwa naukowa' => strpos($result1, 'nazwa naukowa') !== false,
-    'ICD11' => strpos($result1, 'ICD11') !== false,
-    'ICD10' => strpos($result1, 'ICD10') !== false,
-    'DSM-5' => strpos($result1, 'DSM-5') !== false,
-    'OMIM' => strpos($result1, 'OMIM') !== false,
-    'MeshID' => strpos($result1, 'MeshID') !== false,
-    'commons' => strpos($result1, 'commons') !== false,
-];
-
-echo "Parameters added:\n";
-foreach ($paramsAdded as $param => $added) {
-    echo "  - $param: " . ($added ? 'YES' : 'NO') . "\n";
-}
-echo "\n";
-
-// Test case 2: Polish article WITHOUT Choroba infobox (should not be modified)
-$text2 = <<<'TXT'
+TXT
+                ,
+                'title' => 'Astma oskrzelowa',
+                'expandInfobox' => true,
+                'lang' => 'pl',
+                'expectedParams' => ['nazwa naukowa', 'ICD11', 'ICD10', 'DSM-5', 'OMIM', 'MeshID', 'commons'],
+                'shouldNotContain' => [],
+                'maxParameterCounts' => [],
+            ],
+            'Polish article without Choroba infobox' => [
+                'input' => <<<'TXT'
 {{Infobox person
 |name = Jan Kowalski
 }}
@@ -58,60 +48,118 @@ $text2 = <<<'TXT'
 
 == Przypisy ==
 <references />
-TXT;
-
-echo "Test 2: Polish article without Choroba infobox\n";
-echo "-----------------------------------------------\n";
-$result2 = fix_page($text2, "Jan Kowalski", false, false, false, "pl", "", "");
-$hasDiseaseParams = strpos($result2, 'ICD10') !== false;
-echo "Has disease parameters: " . ($hasDiseaseParams ? 'YES (UNEXPECTED!)' : 'NO (expected)') . "\n\n";
-
-// Test case 3: Case insensitive template name
-$text3 = <<<'TXT'
+TXT
+                ,
+                'title' => 'Jan Kowalski',
+                'expandInfobox' => false,
+                'lang' => 'pl',
+                'expectedParams' => [],
+                'shouldNotContain' => ['ICD10', 'ICD11', 'OMIM'],
+                'maxParameterCounts' => [],
+            ],
+            'Case insensitive template matching' => [
+                'input' => <<<'TXT'
 {{choroba INFOBOX
 |nazwa polska = Grypa
 }}
 
 Artykuł o grypie.
-TXT;
-
-echo "Test 3: Case insensitive template matching\n";
-echo "-------------------------------------------\n";
-$result3 = fix_page($text3, "Grypa", false, true, false, "pl", "", "");
-$hasIcd10 = strpos($result3, 'ICD10') !== false;
-echo "Has ICD10 parameter: " . ($hasIcd10 ? 'YES' : 'NO') . "\n\n";
-
-// Test case 4: Non-Polish language (should not apply Polish fixes)
-$text4 = <<<'TXT'
+TXT
+                ,
+                'title' => 'Grypa',
+                'expandInfobox' => true,
+                'lang' => 'pl',
+                'expectedParams' => ['ICD10'],
+                'shouldNotContain' => [],
+                'maxParameterCounts' => [],
+            ],
+            'Non-Polish language (English)' => [
+                'input' => <<<'TXT'
 {{Choroba infobox
 |nazwa polska = Test
 }}
-TXT;
-
-echo "Test 4: Non-Polish language (English)\n";
-echo "--------------------------------------\n";
-$result4 = fix_page($text4, "Test", false, true, false, "en", "", "");
-// Since it's marked as English, Polish fixes should not be applied
-// But infobox expansion might still happen
-echo "Text processed for English language\n";
-echo "Result length: " . strlen($result4) . "\n\n";
-
-// Test case 5: Existing parameters should not be duplicated
-$text5 = <<<'TXT'
+TXT
+                ,
+                'title' => 'Test',
+                'expandInfobox' => true,
+                'lang' => 'en',
+                'expectedParams' => [],
+                'shouldNotContain' => ['ICD10', 'ICD11'],
+                'maxParameterCounts' => [],
+            ],
+            'Don\'t duplicate existing parameters' => [
+                'input' => <<<'TXT'
 {{Choroba infobox
 |nazwa polska = Cukrzyca
 |ICD10 = E10-E14
 |OMIM = 222100
 }}
-TXT;
+TXT
+                ,
+                'title' => 'Cukrzyca',
+                'expandInfobox' => true,
+                'lang' => 'pl',
+                'expectedParams' => ['ICD10', 'OMIM'],
+                'shouldNotContain' => [],
+                'maxParameterCounts' => [
+                    'ICD10' => 1,
+                    'OMIM' => 1,
+                ],
+            ],
+        ];
+    }
 
-echo "Test 5: Don't duplicate existing parameters\n";
-echo "--------------------------------------------\n";
-$result5 = fix_page($text5, "Cukrzyca", false, true, false, "pl", "", "");
-$icd10_count = preg_match_all('/\|ICD10\s*=/', $result5, $matches);
-$omimCount = preg_match_all('/\|OMIM\s*=/', $result5, $matches);
-echo "ICD10 parameter count: $icd10_count (should be 1)\n";
-echo "OMIM parameter count: $omimCount (should be 1)\n\n";
+    /**
+     * Test integration scenarios for Polish language fixes and infobox processing.
+     *
+     * @dataProvider integrationTestCasesProvider
+     * @param string $input
+     * @param string $title
+     * @param bool $expandInfobox
+     * @param string $lang
+     * @param array $expectedParams
+     * @param array $shouldNotContain
+     * @param array $maxParameterCounts
+     * @return void
+     */
+    #[DataProvider('integrationTestCasesProvider')]
+    public function testPolishIntegrationWorkflow(
+        string $input,
+        string $title,
+        bool $expandInfobox,
+        string $lang,
+        array $expectedParams,
+        array $shouldNotContain,
+        array $maxParameterCounts
+    ): void {
+        $result = fix_page($input, $title, false, $expandInfobox, false, $lang, "", "");
 
-echo "==========================================\n";
-echo "All integration tests completed!\n";
+        // Assert expected parameters are present
+        foreach ($expectedParams as $param) {
+            $this->assertStringContainsString(
+                $param,
+                $result,
+                "Expected parameter '$param' not found in processed article."
+            );
+        }
+
+        // Assert parameters that should not be present are absent
+        foreach ($shouldNotContain as $param) {
+            $this->assertStringNotContainsString(
+                $param,
+                $result,
+                "Unexpected parameter '$param' found in processed article."
+            );
+        }
+
+        // Assert parameters are not duplicated
+        foreach ($maxParameterCounts as $param => $maxAllowed) {
+            $count = preg_match_all('/\|' . preg_quote($param, '/') . '\s*=/', $result, $matches);
+            $this->assertSame(
+                $maxAllowed,
+                $count,
+                "Parameter '$param' occurs $count times, expected exactly $maxAllowed."
+            );
+        }
+    }
+}

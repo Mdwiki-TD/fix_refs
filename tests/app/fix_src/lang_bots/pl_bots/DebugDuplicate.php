@@ -1,5 +1,6 @@
 <?php
-// TODO: Convert this file to class
+
+namespace FixRefs\Tests;
 
 // Debug test to see what's happening with duplicate parameters
 
@@ -9,8 +10,14 @@ use function WikiParse\Template\getTemplates;
 
 class DebugDuplicate extends MyFunctionTest
 {
-}
-$input = <<<'TXT'
+    /**
+     * Test and verify that parameters in Choroba infobox are not duplicated during processing.
+     *
+     * @return void
+     */
+    public function testDuplicateParametersAreNotAdded(): void
+    {
+        $input = <<<'TXT'
 {{Choroba infobox
 |nazwa polska = Astma
 |ICD10 = J45
@@ -18,29 +25,22 @@ $input = <<<'TXT'
 }}
 TXT;
 
-echo "Debugging duplicate parameter issue:\n";
-echo "=====================================\n\n";
+        // Verify initial template structure
+        $templates = getTemplates($input);
+        $this->assertNotEmpty($templates, "Failed to parse templates from input text.");
 
-echo "Original template:\n";
-$temps = getTemplates($input);
-foreach ($temps as $temp) {
-    $params = $temp->getParameters();
-    echo "Parameters before:\n";
-    foreach ($params as $key => $value) {
-        echo "  '" . $key . "'\n";
+        $initialParams = $templates[0]->getParameters();
+        $this->assertArrayHasKey('ICD10', $initialParams, "Initial input missing expected parameter 'ICD10'.");
+
+        // Process the infobox
+        $result = add_missing_params_to_choroba_infobox($input);
+
+        // Assert that ICD10 parameter is not duplicated
+        $count = preg_match_all('/\|ICD10\s*=/', $result, $matches);
+        $this->assertSame(
+            1,
+            $count,
+            "Parameter '|ICD10 =' should occur exactly once in the processed result, found $count times."
+        );
     }
 }
-
-echo "\nProcessing...\n\n";
-
-$result = add_missing_params_to_choroba_infobox($input);
-
-echo "Result:\n$result\n\n";
-
-echo "Counting ICD10 occurrences:\n";
-$count = substr_count($result, '|ICD10');
-echo "Count of '|ICD10': $count\n";
-
-// Let's also check with different patterns
-$count2 = preg_match_all('/\|ICD10\s*=/', $result, $matches);
-echo "Count of '|ICD10 =' pattern: $count2\n";

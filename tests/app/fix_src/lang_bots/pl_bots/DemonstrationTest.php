@@ -1,20 +1,21 @@
 <?php
-// TODO: Convert this file to class
+
+namespace FixRefs\Tests;
 
 // Demonstration of Polish Choroba Infobox Parameter Addition Feature
-
 use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\WprefText\fix_page;
 
 class DemonstrationTest extends MyFunctionTest
 {
-}
-echo "==========================================================\n";
-echo "DEMONSTRATION: Polish Choroba Infobox Parameter Addition\n";
-echo "==========================================================\n\n";
-
-// Example Polish Wikipedia article with Choroba infobox
-$originalArticle = <<<'ARTICLE'
+    /**
+     * Test and demonstrate the addition of missing medical parameters to the Polish Choroba Infobox.
+     *
+     * @return void
+     */
+    public function testChorobaInfoboxParameterAddition(): void
+    {
+        $originalArticle = <<<'ARTICLE'
 {{Choroba infobox
 |nazwa polska = Astma oskrzelowa
 |obraz = Blausen 0620 Lungs NormalvsInflamedAirway.png
@@ -43,69 +44,47 @@ Leczenie astmy obejmuje stosowanie leków wziewnych.
 [[Kategoria:Choroby układu oddechowego]]
 ARTICLE;
 
-echo "ORIGINAL ARTICLE:\n";
-echo str_repeat("-", 60) . "\n";
-echo $originalArticle;
-echo "\n" . str_repeat("-", 60) . "\n\n";
+        // Process the article through fix_page function for Polish language
+        $processedArticle = fix_page(
+            $originalArticle,
+            "Astma oskrzelowa", // title
+            false,               // move_dots
+            true,                // infobox expansion enabled
+            false,               // add_en_lang
+            "pl",                // language: Polish
+            "Asthma",           // sourcetitle (English)
+            "123456"            // mdwiki_revid
+        );
 
-// Process the article through fix_page function for Polish language
-$processedArticle = fix_page(
-    $originalArticle,
-    "Astma oskrzelowa",  // title
-    false,                // move_dots
-    true,                 // infobox expansion enabled
-    false,                // add_en_lang
-    "pl",                 // language: Polish
-    "Asthma",            // sourcetitle (English)
-    "123456"             // mdwiki_revid
-);
+        // Verify that the infobox was preserved in the processed article
+        $this->assertStringContainsString('{{Choroba infobox', $processedArticle);
 
-echo "PROCESSED ARTICLE:\n";
-echo str_repeat("-", 60) . "\n";
-echo $processedArticle;
-echo "\n" . str_repeat("-", 60) . "\n\n";
+        // Expected medical classification parameters
+        $expectedParams = [
+            'nazwa naukowa',
+            'ICD11',
+            'ICD11 nazwa',
+            'ICD10',
+            'ICD10 nazwa',
+            'DSM-5',
+            'DSM-5 nazwa',
+            'DSM-IV',
+            'DSM-IV nazwa',
+            'ICDO',
+            'DiseasesDB',
+            'OMIM',
+            'MedlinePlus',
+            'MeshID',
+            'commons',
+        ];
 
-// Extract and display the infobox to show the added parameters
-preg_match('/\{\{Choroba infobox.*?\}\}/s', $processedArticle, $matches);
-if (isset($matches[0])) {
-    echo "EXTRACTED INFOBOX (with added parameters):\n";
-    echo str_repeat("-", 60) . "\n";
-    // Format it nicely for display
-    $infobox = $matches[0];
-    $lines = explode('|', $infobox);
-    foreach ($lines as $line) {
-        echo trim($line) . "\n";
+        // Assert that each medical parameter was successfully added to the infobox
+        foreach ($expectedParams as $param) {
+            $this->assertStringContainsString(
+                $param,
+                $processedArticle,
+                "Expected parameter '$param' was not found in the processed infobox."
+            );
+        }
     }
-    echo str_repeat("-", 60) . "\n\n";
 }
-
-// Show which parameters were added
-echo "PARAMETERS ADDED:\n";
-echo str_repeat("-", 60) . "\n";
-$addedParams = [
-    'nazwa naukowa' => 'Scientific name',
-    'ICD11' => 'ICD-11 classification code',
-    'ICD11 nazwa' => 'ICD-11 classification name',
-    'ICD10' => 'ICD-10 classification code',
-    'ICD10 nazwa' => 'ICD-10 classification name',
-    'DSM-5' => 'DSM-5 classification code',
-    'DSM-5 nazwa' => 'DSM-5 classification name',
-    'DSM-IV' => 'DSM-IV classification code',
-    'DSM-IV nazwa' => 'DSM-IV classification name',
-    'ICDO' => 'ICD-O oncology code',
-    'DiseasesDB' => 'Diseases Database identifier',
-    'OMIM' => 'Online Mendelian Inheritance in Man',
-    'MedlinePlus' => 'MedlinePlus identifier',
-    'MeshID' => 'Medical Subject Headings identifier',
-    'commons' => 'Wikimedia Commons category',
-];
-
-foreach ($addedParams as $param => $description) {
-    $present = strpos($processedArticle, $param) !== false ? 'Pass' : 'Fail';
-    echo "$present |$param = ($description)\n";
-}
-
-echo "\n" . str_repeat("=", 60) . "\n";
-echo "Demonstration complete!\n";
-echo "All 15 medical classification parameters have been added.\n";
-echo str_repeat("=", 60) . "\n";

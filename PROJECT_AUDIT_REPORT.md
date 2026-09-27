@@ -70,7 +70,7 @@ All modules within `src/` share these patterns:
 | Duplicate `str_starts_with`/`str_ends_with` polyfills | 2           | `refs_utils.php`, `remove_space.php`                                                                |
 | Duplicate `start_end()` function                      | 2           | `fix_pt_months.php`, `es_months.php`                                                                |
 | Commented-out code in production                      | 6+          | `app/fix_src/index.php`, `text_post.php`, `en_lang_param.php`, `es_months.php`, `fix_pt_months.php` |
-| Debug output controlled by `$_GET['test']`            | 4           | `src/index.php`, `src/test.php`, `src/work.php`, `test_bot.php`                                     |
+| Debug output controlled by `$_GET['test']`            | 4           | `src/index.php`, `src/test.php`, `src/work.php`, `debug_helper.php`                                     |
 | No input validation on `$lang`                        | 3           | `work.php`, `wikitext.php`, `missing_refs.php`                                                      |
 
 ### Common Technical Debt
@@ -130,7 +130,7 @@ CSRF verification is commented out. Any external site can submit POST requests t
 
 ### HIGH -- Debug Mode Exposed to Users
 
-**Files:** `src/index.php:5`, `src/test.php:3`, `src/work.php:5`, `src/app/fix_src/test_bot.php:16-22`
+**Files:** `src/index.php:5`, `src/test.php:3`, `src/work.php:5`, `src/app/fix_src/debug_helper.php:16-22`
 
 ```php
 if (isset($_GET['test']) || (($_SERVER['SERVER_NAME'] ?? '') === 'localhost')) {
@@ -139,7 +139,7 @@ if (isset($_GET['test']) || (($_SERVER['SERVER_NAME'] ?? '') === 'localhost')) {
 }
 ```
 
-Any user can append `?test=1` to enable full error display, leaking PHP stack traces, file paths, and internal server structure. Additionally, `echo_test()` in `test_bot.php` outputs debug strings when `$_GET['test']` or `$_POST['test']` is set, potentially revealing processing details.
+Any user can append `?test=1` to enable full error display, leaking PHP stack traces, file paths, and internal server structure. Additionally, `echo_test()` in `debug_helper.php` outputs debug strings when `$_GET['test']` or `$_POST['test']` is set, potentially revealing processing details.
 
 **Severity:** High -- information disclosure to unauthenticated users.
 
@@ -225,7 +225,7 @@ Functions like `add_Translated_from_MDWiki()`, `bg_section()`, and `es_section()
 | --- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------ |
 | 1   | Fix `$new_text` -> `$newtext` variable name bug                                                          | `src/text_post.php:50,53`                                                       | 5 min  |
 | 2   | Uncomment and enable `verify_csrf_token()`                                                               | `src/text_post.php:39`                                                          | 5 min  |
-| 3   | Gate `display_errors` behind an environment variable (e.g., `FIX_REFS_DEBUG`) instead of `$_GET['test']` | `src/index.php`, `src/test.php`, `src/work.php`, `src/app/fix_src/test_bot.php` | 30 min |
+| 3   | Gate `display_errors` behind an environment variable (e.g., `FIX_REFS_DEBUG`) instead of `$_GET['test']` | `src/index.php`, `src/test.php`, `src/work.php`, `src/app/fix_src/debug_helper.php` | 30 min |
 | 4   | Remove all commented-out code from production files                                                      | Multiple                                                                        | 30 min |
 | 5   | Add input length limit (e.g., 1MB) to `text_post.php`                                                    | `src/text_post.php`                                                             | 15 min |
 

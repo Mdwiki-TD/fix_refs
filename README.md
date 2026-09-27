@@ -68,7 +68,7 @@ fix_refs_repo/
 │   ├── app/fix_src/                  # Core library (PSR-4: WpRefs\)
 │   │   ├── index.php             # fix_page() - main processing pipeline
 │   │   ├── include_files.php     # Autoloader via glob includes
-│   │   ├── test_bot.php          # Debug/test output helpers
+│   │   ├── debug_helper.php          # Debug/test output helpers
 │   │   ├── md_cat.php            # MDWiki category management (Wikidata integration)
 │   │   ├── WikiParse/            # MediaWiki wikitext parser module
 │   │   │   ├── Template.php      # getTemplate()/getTemplates() facade
