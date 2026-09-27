@@ -4,7 +4,7 @@
 use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\RemoveSpace\remove_spaces_between_ref_and_punctuation;
 
-class remove_space2PerformanceTest extends MyFunctionTest
+class removeSpace2PerformanceTest extends MyFunctionTest
 {
     public function testStressWithOneMillionRefs()
     {

@@ -4,7 +4,7 @@ use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\BG\bg_fixes;
 use function WpRefs\BG\bg_section;
 
-class fix_bgTest extends MyFunctionTest
+class fixBgTest extends MyFunctionTest
 {
     // =========================================================================
     // Tests for bg_section() function

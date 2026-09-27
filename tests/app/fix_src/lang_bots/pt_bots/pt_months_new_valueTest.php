@@ -5,7 +5,7 @@
 use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\Bots\MonthNewValue\make_date_new_val_pt;
 
-class pt_months_new_valueTest extends MyFunctionTest
+class ptMonthsNewValueTest extends MyFunctionTest
 {
     public function test_date_with_full_date()
     {

@@ -5,7 +5,7 @@
 use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\MovesDots\move_dots_after_refs;
 
-class mv_dots_afterTest extends MyFunctionTest
+class mvDotsAfterTest extends MyFunctionTest
 {
 
     // Tests for move_dots_after_refs function

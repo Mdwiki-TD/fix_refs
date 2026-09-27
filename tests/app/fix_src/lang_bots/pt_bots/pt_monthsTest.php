@@ -6,7 +6,7 @@ use function WpRefs\PT\FixPtMonth\rm_ref_spaces;
 use function WpRefs\PT\FixPtMonth\fix_pt_months_in_texts;
 use function WpRefs\PT\FixPtMonth\fix_pt_months_in_refs;
 
-class pt_monthsTest extends MyFunctionTest
+class ptMonthsTest extends MyFunctionTest
 {
     public function testTempInWikiTexts()
     {

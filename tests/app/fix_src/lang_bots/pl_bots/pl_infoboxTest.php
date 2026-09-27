@@ -5,7 +5,7 @@ use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\PL\FixPlInfobox\add_missing_params_to_choroba_infobox;
 use function WpRefs\PL\FixPlInfobox\pl_fixes;
 
-class pl_infoboxTest extends MyFunctionTest
+class plInfoboxTest extends MyFunctionTest
 {
     public function testAddMissingParamsToChorobaInfobox()
     {

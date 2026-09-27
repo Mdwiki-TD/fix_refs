@@ -3,7 +3,7 @@
 use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\MissingRefs\fix_missing_refs;
 
-class missing_refsTest extends MyFunctionTest
+class missingRefsTest extends MyFunctionTest
 {
 
     public function testPart1()

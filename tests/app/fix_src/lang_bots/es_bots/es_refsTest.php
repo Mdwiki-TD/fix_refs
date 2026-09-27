@@ -3,7 +3,7 @@
 use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\EsBots\es_refs\mv_es_refs;
 
-class es_refsTest extends MyFunctionTest
+class esRefsTest extends MyFunctionTest
 {
     public function testFileText()
     {

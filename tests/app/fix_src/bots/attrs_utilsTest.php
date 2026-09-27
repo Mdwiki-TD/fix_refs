@@ -6,7 +6,7 @@ use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\Bots\AttrsUtils\parseAttributes;
 use function WpRefs\Bots\AttrsUtils\get_attrs;
 
-class attrs_utilsTest extends MyFunctionTest
+class attrsUtilsTest extends MyFunctionTest
 {
 
     private $data = [];

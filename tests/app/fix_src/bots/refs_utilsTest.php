@@ -20,7 +20,7 @@ if (!function_exists('str_starts_with')) {
         return strpos($text, $start) === 0;
     }
 }
-class refs_utilsTest extends MyFunctionTest
+class refsUtilsTest extends MyFunctionTest
 {
 
     /**

@@ -5,7 +5,7 @@
 use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\EnLangParam\add_lang_en_to_refs;
 
-class en_lang_paramTest extends MyFunctionTest
+class enLangParamTest extends MyFunctionTest
 {
     // Tests for add_lang_en_to_refs function
     public function testAddLangEnSimpleRef()

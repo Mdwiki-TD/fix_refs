@@ -9,7 +9,7 @@ use function WpRefs\Bots\Mini\refs_tags_spaces;
 use function WpRefs\Bots\Mini\fix_preffix;
 use function WpRefs\Bots\Mini\remove_template_rtt_links;
 
-class mini_fixes_botTest extends MyFunctionTest
+class miniFixesBotTest extends MyFunctionTest
 {
 
     public function testSectionsTitlesRu()

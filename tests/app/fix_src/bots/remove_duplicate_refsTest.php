@@ -6,7 +6,7 @@ use function WpRefs\DelDuplicateRefs\remove_Duplicate_refs_With_attrs;
 use function WpRefs\DelDuplicateRefs\fix_refs_names;
 
 
-class remove_duplicate_refsTest extends MyFunctionTest
+class removeDuplicateRefsTest extends MyFunctionTest
 {
     // اختبارات دالة fix_refs_names
     public function testFixRefsNames()

@@ -4,7 +4,7 @@
 use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\RemoveSpace\remove_spaces_between_ref_and_punctuation;
 
-class remove_space2ExtraTest extends MyFunctionTest
+class removeSpace2ExtraTest extends MyFunctionTest
 {
     public function testRefNoPunctuationAfter()
     {
@@ -63,7 +63,7 @@ class remove_space2ExtraTest extends MyFunctionTest
     }
 }
 
-class remove_space2Test extends remove_space2ExtraTest
+class removeSpace2Test extends removeSpace2ExtraTest
 {
 
     public function testRemoveSpaceEnd1()

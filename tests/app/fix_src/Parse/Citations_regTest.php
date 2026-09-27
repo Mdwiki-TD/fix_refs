@@ -9,7 +9,7 @@ use function WpRefs\Parse\Reg_Citations\get_regex_citations;
 use function WpRefs\Parse\Reg_Citations\get_full_refs;
 use function WpRefs\Parse\Reg_Citations\get_short_citations;
 
-class Citations_regTest extends MyFunctionTest
+class CitationsRegTest extends MyFunctionTest
 {
 
     // اختبارات إضافية للدوال المساعدة

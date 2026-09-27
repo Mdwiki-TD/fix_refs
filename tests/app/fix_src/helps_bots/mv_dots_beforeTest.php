@@ -5,7 +5,7 @@
 use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\MovesDots\move_dots_before_refs;
 
-class mv_dots_beforeTest extends MyFunctionTest
+class mvDotsBeforeTest extends MyFunctionTest
 {
 
     public function _testMoveDotsBeforeAR()
