@@ -6,27 +6,27 @@ use function WpRefs\SW\sw_fixes;
 
 class swTest extends MyFunctionTest
 {
-    public function test_fix_temps_and_months_1()
+    public function testFixTempsAndMonths_1()
     {
         $this->assertEquals("== Marejeo ==", sw_fixes("== Marejeleo =="));
     }
 
-    public function test_fix_temps_and_months_2()
+    public function testFixTempsAndMonths_2()
     {
         $this->assertEquals("== Marejeo ==", sw_fixes("==Marejeleo=="));
     }
 
-    public function test_Extra_spaces_around_the_word()
+    public function testExtraSpacesAroundTheWord()
     {
         $this->assertEquals("==== Marejeo ====", sw_fixes("====   Marejeleo   ===="));
     }
 
-    public function test_Case_insensitivity_mixed()
+    public function testCaseInsensitivityMixed()
     {
         $this->assertEquals("====== Marejeo ======", sw_fixes("====== MaReJeLeO ======"));
     }
 
-    public function test_additional_text()
+    public function testAdditionalText()
     {
         $this->assertEquals("== Marejeleo na Maoni ==", sw_fixes("== Marejeleo na Maoni =="));
     }

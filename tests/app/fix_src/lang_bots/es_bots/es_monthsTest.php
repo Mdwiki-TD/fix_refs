@@ -8,7 +8,7 @@ use function WpRefs\EsBots\es_months\fix_es_months_in_refs;
 
 class esMonthsTest extends MyFunctionTest
 {
-    public function test_make_date_new_val_es_with_full_date()
+    public function testMakeDateNewValEsWithFullDate()
     {
         $this->assertEquals("25 de julio de 1975", make_date_new_val_es("July 25, 1975"));
     }

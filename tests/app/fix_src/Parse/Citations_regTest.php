@@ -13,33 +13,33 @@ class CitationsRegTest extends MyFunctionTest
 {
 
     // اختبارات إضافية للدوال المساعدة
-    public function test_get_name_with_double_quotes()
+    public function testGetNameWithDoubleQuotes()
     {
         $this->assertEquals("test_name", get_name('name="test_name"'));
     }
 
-    public function test_get_name_with_single_quotes()
+    public function testGetNameWithSingleQuotes()
     {
         $this->assertEquals("test_name", get_name("name='test_name'"));
     }
 
-    public function test_get_name_without_quotes()
+    public function testGetNameWithoutQuotes()
     {
         $this->assertEquals("test_name", get_name("name=test_name"));
     }
 
-    public function test_get_name_with_spaces()
+    public function testGetNameWithSpaces()
     {
         $this->assertEquals("test name", get_name("name = 'test name'"));
     }
 
-    public function test_get_name_empty()
+    public function testGetNameEmpty()
     {
         $this->assertEquals("", get_name(""));
         $this->assertEquals("", get_name("other_attr=value"));
     }
 
-    public function test_get_regex_citations_with_multiple_refs()
+    public function testGetRegexCitationsWithMultipleRefs()
     {
         $text = '<ref name="ref1">Content 1</ref> Text <ref name="ref2">Content 2</ref>';
         $citations = get_regex_citations($text);
@@ -50,14 +50,14 @@ class CitationsRegTest extends MyFunctionTest
         $this->assertEquals('<ref name="ref1">Content 1</ref>', $citations[0]["tag"]);
     }
 
-    public function test_get_regex_citations_with_no_refs()
+    public function testGetRegexCitationsWithNoRefs()
     {
         $text = 'No references here';
         $citations = get_regex_citations($text);
         $this->assertCount(0, $citations);
     }
 
-    public function test_get_full_refs()
+    public function testGetFullRefs()
     {
         $text = '<ref name="ref1">Content 1</ref> <ref name="ref2">Content 2</ref>';
         $fullRefs = get_full_refs($text);
@@ -67,7 +67,7 @@ class CitationsRegTest extends MyFunctionTest
         $this->assertEquals('<ref name="ref2">Content 2</ref>', $fullRefs["ref2"]);
     }
 
-    public function test_get_short_citations()
+    public function testGetShortCitations()
     {
         $text = '<ref name="ref1"/> Text <ref name="ref2"/>';
         $shortRefs = get_short_citations($text);

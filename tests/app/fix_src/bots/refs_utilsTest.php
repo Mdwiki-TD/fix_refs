@@ -27,7 +27,7 @@ class refsUtilsTest extends MyFunctionTest
      * @test
      * @description يضيف علامات اقتباس مزدوجة لنص عادي.
      */
-    public function test_adds_double_quotes_to_plain_string()
+    public function testAddsDoubleQuotesToPlainString()
     {
         $this->assertEquals('"value"', remove_start_end_quotes('value'));
     }
@@ -36,7 +36,7 @@ class refsUtilsTest extends MyFunctionTest
      * @test
      * @description يزيل علامات الاقتباس المفردة ويضيف مزدوجة.
      */
-    public function test_replaces_single_quotes_with_double_quotes()
+    public function testReplacesSingleQuotesWithDoubleQuotes()
     {
         // سلوك الدالة هو إزالة الاقتباسات الموجودة ثم إضافة جديدة.
         $this->assertEquals('"value"', remove_start_end_quotes("'value'"));
@@ -46,7 +46,7 @@ class refsUtilsTest extends MyFunctionTest
      * @test
      * @description يزيل علامات الاقتباس المزدوجة ويضيف مزدوجة مرة أخرى.
      */
-    public function test_replaces_double_quotes_with_double_quotes()
+    public function testReplacesDoubleQuotesWithDoubleQuotes()
     {
         $this->assertEquals('"value"', remove_start_end_quotes('"value"'));
     }
@@ -55,7 +55,7 @@ class refsUtilsTest extends MyFunctionTest
      * @test
      * @description يحيط النص بعلامات اقتباس مفردة إذا كان يحتوي على علامات مزدوجة بالداخل.
      */
-    public function test_wraps_with_single_quotes_if_contains_double_quotes()
+    public function testWrapsWithSingleQuotesIfContainsDoubleQuotes()
     {
         $this->assertEquals("'val\"ue'", remove_start_end_quotes('val"ue'));
     }
@@ -64,7 +64,7 @@ class refsUtilsTest extends MyFunctionTest
      * @test
      * @description يزيل المسافات الزائدة من البداية والنهاية.
      */
-    public function test_trims_whitespace()
+    public function testTrimsWhitespace()
     {
         $this->assertEquals('"value"', remove_start_end_quotes('  value  '));
     }
@@ -73,21 +73,21 @@ class refsUtilsTest extends MyFunctionTest
      * @test
      * @description يتعامل مع نص فارغ.
      */
-    public function test_handles_empty_string()
+    public function testHandlesEmptyString()
     {
         $this->assertEquals('""', remove_start_end_quotes(''));
     }
-    public function test_one_quotes_double()
+    public function testOneQuotesDouble()
     {
         $this->assertEquals("'\"value'", remove_start_end_quotes('  "value '));
     }
-    public function test_one_quotes_single()
+    public function testOneQuotesSingle()
     {
         $this->assertEquals('"\'value"', remove_start_end_quotes("  'value "));
     }
 
     // اختبارات دالة str_ends_with
-    public function teststr_ends_with()
+    public function teststrEndsWith()
     {
         $tests = [
             // حالة: ينتهي بالنص المطلوب
@@ -115,7 +115,7 @@ class refsUtilsTest extends MyFunctionTest
     }
 
     // اختبارات دالة str_starts_with
-    public function teststr_starts_with()
+    public function teststrStartsWith()
     {
         $tests = [
             // حالة: يبدأ بالنص المطلوب

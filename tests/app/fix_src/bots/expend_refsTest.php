@@ -19,51 +19,51 @@ class expendRefsTest extends MyFunctionTest
         $this->refsExpends  = refs_expend_work($this->textInput);
     }
 
-    public function test_input_text_not_empty(): void
+    public function testInputTextNotEmpty(): void
     {
         $this->assertNotEmpty($this->textInput, "Input text file is empty!");
     }
 
-    public function test_text_output_not_empty(): void
+    public function testTextOutputNotEmpty(): void
     {
         $this->assertNotEmpty($this->textExpected, "output file is empty!");
     }
 
-    public function test_not_same(): void
+    public function testNotSame(): void
     {
         $this->assertNotEquals($this->textInput, $this->textExpected, "Input and output are the same!");
     }
-    public function test_expend_refs_not_empty(): void
+    public function testExpendRefsNotEmpty(): void
     {
         $this->assertNotEmpty($this->refsExpends, "output file is empty!");
     }
-    public function test_expend_refs_the_same_as_output(): void
+    public function testExpendRefsTheSameAsOutput(): void
     {
         $this->assertEquals($this->textExpected, $this->refsExpends, "Expend refs not working!");
     }
     // اختبارات إضافية للدالة الرئيسية
-    public function test_refs_expend_work_with_simple_case()
+    public function testRefsExpendWorkWithSimpleCase()
     {
         $input = '<ref name="ref1">Full content</ref> Text <ref name="ref1"/>';
         $expected = '<ref name="ref1">Full content</ref> Text <ref name="ref1">Full content</ref>';
         $this->assertEquals($expected, refs_expend_work($input));
     }
 
-    public function test_refs_expend_work_with_no_matching_ref()
+    public function testRefsExpendWorkWithNoMatchingRef()
     {
         $input = '<ref name="ref1">Full content</ref> Text <ref name="ref2"/>';
         $expected = '<ref name="ref1">Full content</ref> Text <ref name="ref2"/>';
         $this->assertEquals($expected, refs_expend_work($input));
     }
 
-    public function test_refs_expend_work_with_multiple_refs()
+    public function testRefsExpendWorkWithMultipleRefs()
     {
         $input = '<ref name="ref1">Content 1</ref> <ref name="ref2">Content 2</ref> Text <ref name="ref1"/> <ref name="ref2"/>';
         $expected = '<ref name="ref1">Content 1</ref> <ref name="ref2">Content 2</ref> Text <ref name="ref1">Content 1</ref> <ref name="ref2">Content 2</ref>';
         $this->assertEquals($expected, refs_expend_work($input));
     }
 
-    public function test_refs_expend_work_with_alltext_parameter()
+    public function testRefsExpendWorkWithAlltextParameter()
     {
         $first = 'Text <ref name="ref1"/>';
         $alltext = '<ref name="ref1">Full content</ref>';
@@ -71,25 +71,25 @@ class expendRefsTest extends MyFunctionTest
         $this->assertEquals($expected, refs_expend_work($first, $alltext));
     }
 
-    public function test_refs_expend_work_with_empty_input()
+    public function testRefsExpendWorkWithEmptyInput()
     {
         $this->assertEquals("", refs_expend_work(""));
     }
 
-    public function test_refs_expend_work_with_no_refs()
+    public function testRefsExpendWorkWithNoRefs()
     {
         $input = 'No references here';
         $this->assertEquals($input, refs_expend_work($input));
     }
 
-    public function test_refs_expend_work_preserves_original_formatting()
+    public function testRefsExpendWorkPreservesOriginalFormatting()
     {
         $input = '<ref name="ref1">  Full content  </ref> Text <ref name="ref1"/>';
         $expected = '<ref name="ref1">  Full content  </ref> Text <ref name="ref1">  Full content  </ref>';
         $this->assertEquals($expected, refs_expend_work($input));
     }
 
-    public function test_refs_expend_work_with_special_characters()
+    public function testRefsExpendWorkWithSpecialCharacters()
     {
         $input = '<ref name="ref1">Content with "quotes" & \'apostrophes\'</ref> Text <ref name="ref1"/>';
         $expected = '<ref name="ref1">Content with "quotes" & \'apostrophes\'</ref> Text <ref name="ref1">Content with "quotes" & \'apostrophes\'</ref>';

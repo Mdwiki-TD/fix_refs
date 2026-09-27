@@ -7,7 +7,7 @@ use function WpRefs\Parse\Category\get_categories_reg;
 
 class CategoryTest extends MyFunctionTest
 {
-    public function test_get_categories_with_simple_categories()
+    public function testGetCategoriesWithSimpleCategories()
     {
         $text = "This is some text [[Category:Example]] and more text [[Category:Test]]";
         $expected = [
@@ -19,7 +19,7 @@ class CategoryTest extends MyFunctionTest
         $this->assertEquals($expected, $result);
     }
 
-    public function test_get_categories_with_no_categories()
+    public function testGetCategoriesWithNoCategories()
     {
         $text = "This is some text without any categories";
         $expected = [];
@@ -28,7 +28,7 @@ class CategoryTest extends MyFunctionTest
         $this->assertEquals($expected, $result);
     }
 
-    public function test_get_categories_with_pipe_separator()
+    public function testGetCategoriesWithPipeSeparator()
     {
         $text = "Text with [[Category:Example|sort key]] and [[Category:Test|another key]]";
         $expected = [
@@ -40,7 +40,7 @@ class CategoryTest extends MyFunctionTest
         $this->assertEquals($expected, $result);
     }
 
-    public function test_get_categories_with_spaces()
+    public function testGetCategoriesWithSpaces()
     {
         $text = "Text with [[ Category : Example with spaces ]] and [[  Category:Test  ]]";
         $expected = [
@@ -52,7 +52,7 @@ class CategoryTest extends MyFunctionTest
         $this->assertEquals($expected, $result);
     }
 
-    public function test_get_categories_with_special_characters()
+    public function testGetCategoriesWithSpecialCharacters()
     {
         $text = "Text with [[Category:Example & Test]] and [[Category:Something (else)]]";
         $expected = [
@@ -64,7 +64,7 @@ class CategoryTest extends MyFunctionTest
         $this->assertEquals($expected, $result);
     }
 
-    public function test_get_categories_with_duplicate_categories()
+    public function testGetCategoriesWithDuplicateCategories()
     {
         $text = "Text with [[Category:Example]] and more [[Category:Example]]";
         $expected = [
@@ -75,7 +75,7 @@ class CategoryTest extends MyFunctionTest
         $this->assertEquals($expected, $result);
     }
 
-    public function test_get_categories_with_multiline_text()
+    public function testGetCategoriesWithMultilineText()
     {
         $text = "Start of text\n[[Category:First category]]\nMiddle of text\n[[Category:Second category]]\nEnd of text";
         $expected = [
@@ -87,7 +87,7 @@ class CategoryTest extends MyFunctionTest
         $this->assertEquals($expected, $result);
     }
 
-    public function test_get_categories_with_empty_input()
+    public function testGetCategoriesWithEmptyInput()
     {
         $text = "";
         $expected = [];
@@ -96,7 +96,7 @@ class CategoryTest extends MyFunctionTest
         $this->assertEquals($expected, $result);
     }
 
-    public function test_get_categories_with_multiple_pipes()
+    public function testGetCategoriesWithMultiplePipes()
     {
         $text = "Text with [[Category:Example|sort|key]] and [[Category:Test]]";
         $expected = [
@@ -108,7 +108,7 @@ class CategoryTest extends MyFunctionTest
         $this->assertEquals($expected, $result);
     }
 
-    public function test_get_categories_with_unicode_characters()
+    public function testGetCategoriesWithUnicodeCharacters()
     {
         $text = "Text with [[Category:مثال]] and [[Category:測試]]";
         $expected = [
@@ -120,7 +120,7 @@ class CategoryTest extends MyFunctionTest
         $this->assertEquals($expected, $result);
     }
 
-    public function test_get_categories_with_mixed_case()
+    public function testGetCategoriesWithMixedCase()
     {
         $text = "Text with [[category:example]] and [[CATEGORY:TEST]]";
         $expected = [
@@ -132,7 +132,7 @@ class CategoryTest extends MyFunctionTest
         $this->assertEquals($expected, $result);
     }
 
-    public function test_get_categories_with_templates_inside()
+    public function testGetCategoriesWithTemplatesInside()
     {
         $text = "Text with [[Category:Example{{template}}]] and [[Category:Test]]";
         $expected = [
@@ -149,7 +149,7 @@ class CategoryTest extends MyFunctionTest
      * @test
      * @description يختبر استخراج تصنيف واحد من النص.
      */
-    public function test_get_single_category()
+    public function testGetSingleCategory()
     {
         $text = "Some text here [[Category:PHP]] more text.";
         $expected = [
@@ -162,7 +162,7 @@ class CategoryTest extends MyFunctionTest
      * @test
      * @description يختبر استخراج عدة تصنيفات من النص.
      */
-    public function test_get_multiple_categories()
+    public function testGetMultipleCategories()
     {
         $text = "[[Category:Programming]] and [[Category:Web development]].";
         $expected = [
@@ -176,7 +176,7 @@ class CategoryTest extends MyFunctionTest
      * @test
      * @description يختبر نصًا لا يحتوي على أي تصنيفات.
      */
-    public function test_no_categories_found()
+    public function testNoCategoriesFound()
     {
         $text = "This is a text with no categories.";
         $this->assertEmpty(get_categories_reg($text));
@@ -186,7 +186,7 @@ class CategoryTest extends MyFunctionTest
      * @test
      * @description يختبر وجود مسافات إضافية حول اسم التصنيف.
      */
-    public function test_category_with_extra_whitespace()
+    public function testCategoryWithExtraWhitespace()
     {
         $text = "[[Category:  Test Category  ]]";
         $expected = [
@@ -199,7 +199,7 @@ class CategoryTest extends MyFunctionTest
      * @test
      * @description يختبر اختلاف حالة الأحرف في كلمة "Category".
      */
-    public function test_case_insensitive_category_tag()
+    public function testCaseInsensitiveCategoryTag()
     {
         $text = "[[category:Case Insensitive]]";
         $expected = [
@@ -212,7 +212,7 @@ class CategoryTest extends MyFunctionTest
      * @test
      * @description يختبر التصنيفات التي تحتوي على مفتاح فرز (sort key).
      */
-    public function test_category_with_sort_key()
+    public function testCategoryWithSortKey()
     {
         $text = "[[Category:Musicians|Beatles]]";
         $expected = [
@@ -225,7 +225,7 @@ class CategoryTest extends MyFunctionTest
      * @test
      * @description يختبر وجود عدة تصنيفات مع مفاتيح فرز ومسافات.
      */
-    public function test_mixed_and_complex_categories()
+    public function testMixedAndComplexCategories()
     {
         $text = "A complex text [[Category:Software|S]] and another one [[  category :  Databases  ]].";
         $expected = [
@@ -235,7 +235,7 @@ class CategoryTest extends MyFunctionTest
         $this->assertEquals($expected, get_categories_reg($text));
     }
 
-    public function test_get_categories_with_nested_brackets()
+    public function testGetCategoriesWithNestedBrackets()
     {
         $text = "Text with [[category:Example {{nested}} | {{!}} ]] and [[CategorY:Test]]";
         $expected = [

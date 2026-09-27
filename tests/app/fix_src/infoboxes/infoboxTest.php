@@ -99,7 +99,7 @@ TXT;
 
 class infoboxTest extends MyFunctionTest
 {
-    public function test_expend_new_FileText()
+    public function testExpendNewFileText()
     {
         // $textOutput  = file_get_contents(__DIR__ . "/fixtures/infobox_output.txt");
         // --

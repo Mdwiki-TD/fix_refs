@@ -213,14 +213,14 @@ class fixBgTest extends MyFunctionTest
         $this->assertEqualCompare($expected, $text, $result);
     }
 
-    public function test_already_has_template()
+    public function testAlreadyHasTemplate()
     {
         $text = "Some intro\n{{Превод от|mdwiki|TestTitle|12345}}\n[[Категория:Drugs]]";
         $result = bg_section($text, "Naproxen", 1468415);
         $this->assertEqualCompare($text, $text, $result);
     }
 
-    public function test_add_before_bg_category()
+    public function testAddBeforeBgCategory()
     {
         $text = "Intro text\n[[Категория:Medicine]]";
         $expected = "Intro text\n{{Превод от|mdwiki|Naproxen|1468415}}\n[[Категория:Medicine]]";
@@ -228,7 +228,7 @@ class fixBgTest extends MyFunctionTest
         $this->assertEqualCompare($expected, $text, $result);
     }
 
-    public function test_add_before_en_category()
+    public function testAddBeforeEnCategory()
     {
         $text = "Intro text\n[[Category:Medicine]]";
         $expected = "Intro text\n{{Превод от|mdwiki|Naproxen|1468415}}\n[[Category:Medicine]]";
@@ -236,7 +236,7 @@ class fixBgTest extends MyFunctionTest
         $this->assertEqualCompare($expected, $text, $result);
     }
 
-    public function test_add_at_end_if_no_category()
+    public function testAddAtEndIfNoCategory()
     {
         $text = "Some intro\nSome content";
         $expected = "Some intro\nSome content\n{{Превод от|mdwiki|Naproxen|1468415}}\n";
@@ -244,7 +244,7 @@ class fixBgTest extends MyFunctionTest
         $this->assertEqualCompare($expected, $text, $result);
     }
 
-    public function test_add_before_first_of_multiple_categories()
+    public function testAddBeforeFirstOfMultipleCategories()
     {
         $text = "Intro text\n[[Категория:First]]\n[[Category:Second]]";
         $expected = "Intro text\n{{Превод от|mdwiki|Naproxen|1468415}}\n[[Категория:First]]\n[[Category:Second]]";
@@ -252,7 +252,7 @@ class fixBgTest extends MyFunctionTest
         $this->assertEqualCompare($expected, $text, $result);
     }
 
-    public function test_empty_text()
+    public function testEmptyText()
     {
         $text = "";
         $expected = "\n{{Превод от|mdwiki|Naproxen|1468415}}\n";

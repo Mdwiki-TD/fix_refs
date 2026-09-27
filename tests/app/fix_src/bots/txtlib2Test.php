@@ -19,22 +19,22 @@ class txtlib2Test extends MyFunctionTest
         $this->tempData = extract_templates_and_params($this->textInput);
     }
 
-    public function test_input_text_not_empty(): void
+    public function testInputTextNotEmpty(): void
     {
         $this->assertNotEmpty($this->textInput, "Input text file is empty!");
     }
 
-    public function test_json_data_not_empty(): void
+    public function testJsonDataNotEmpty(): void
     {
         $this->assertNotEmpty($this->jsonData, "JSON file is empty or invalid!");
     }
 
-    public function test_temp_data_not_empty(): void
+    public function testTempDataNotEmpty(): void
     {
         $this->assertNotEmpty($this->tempData, "No templates were extracted!");
     }
 
-    public function test_first_template_name(): void
+    public function testFirstTemplateName(): void
     {
         $this->assertEquals(
             "Infobox drug",
@@ -43,7 +43,7 @@ class txtlib2Test extends MyFunctionTest
         );
     }
 
-    public function test_first_template_item_matches_input(): void
+    public function testFirstTemplateItemMatchesInput(): void
     {
         $this->assertEquals(
             trim($this->textInput),
@@ -52,7 +52,7 @@ class txtlib2Test extends MyFunctionTest
         );
     }
 
-    public function test_first_template_params(): void
+    public function testFirstTemplateParams(): void
     {
         // Check that the extracted parameters match the ones in the JSON file
         $this->assertEquals(
@@ -62,7 +62,7 @@ class txtlib2Test extends MyFunctionTest
         );
     }
 
-    public function test_specific_param_values(): void
+    public function testSpecificParamValues(): void
     {
         // Verify specific parameter values as an additional check
         $params = $this->tempData[0]["params"];
@@ -76,7 +76,7 @@ class txtlib2Test extends MyFunctionTest
         $this->assertEquals("2101700-15-4", $params["CAS_number"]);
     }
 
-    public function test_count_of_params(): void
+    public function testCountOfParams(): void
     {
         // Verify that the number of extracted parameters matches the expected count
         $expectedCount = count($this->jsonData[0]["params"]);

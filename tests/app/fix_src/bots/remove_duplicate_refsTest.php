@@ -122,7 +122,7 @@ class removeDuplicateRefsTest extends MyFunctionTest
         $result = remove_Duplicate_refs_With_attrs($input);
         $this->assertEqualCompare($expected, $input, $result);
     }
-    public function testRemoveIdenticalRefs_WithGroupAttribute()
+    public function testRemoveIdenticalRefsWithGroupAttribute()
     {
         $input = '<ref group="notes">Refs3</ref> <ref group="notes">Refs3</ref>';
         // $expected = '<ref name="autogen_1" group="notes">Refs3</ref> <ref name="autogen_1" group="notes" />';
