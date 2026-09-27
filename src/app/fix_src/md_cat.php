@@ -1,12 +1,6 @@
 <?php
 
 namespace WpRefs\MdCat;
-/*
-
-use function WpRefs\MdCat\add_Translated_from_MDWiki;
-use function WpRefs\MdCat\get_url_curl;
-
-*/
 
 use function WpRefs\TestBot\echo_test;
 
