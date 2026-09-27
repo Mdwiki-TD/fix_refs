@@ -25,5 +25,4 @@ jobs:
         run: composer install --no-progress --prefer-dist --optimize-autoloader
 
       - name: Run PHPStan
-        # --clear-result-cache: Clears the analysis result cache before running
-        run: vendor/bin/phpstan analyse --clear-result-cache
+        run: vendor/bin/phpstan analyse
