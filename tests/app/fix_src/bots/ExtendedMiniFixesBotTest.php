@@ -1,5 +1,6 @@
 <?php
 
+use FixRefs\Tests\MyFunctionTest;
 use function WpRefs\Bots\Mini\fix_sections_titles;
 
 $texts = [
