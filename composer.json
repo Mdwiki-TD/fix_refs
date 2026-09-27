@@ -10,8 +10,9 @@
     "license": "GPL-3.0-or-later",
     "autoload": {
         "psr-4": {
-            "WpRefs\\": "src/app/fix_src/"
-        }
+            "WpRefs\\": "src/app/"
+        },
+        "files": []
     },
     "authors": [
         {
@@ -31,7 +32,7 @@
         }
     },
     "require-dev": {
-        "phpstan/phpstan": "^2.1",
-        "phpunit/phpunit": "^11.5"
+        "phpunit/phpunit": "^11.5",
+        "phpstan/phpstan": "^2.1"
     }
 }

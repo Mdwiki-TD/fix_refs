@@ -1,4 +1,21 @@
 parameters:
     level: 5
     paths:
-        - src/app/fix_src/
+        - src/
+
+    excludePaths:
+        - *_old.php
+
+    # Scan directories for class definitions
+    # scanDirectories:
+        # - I:/MD_TOOLS/mdwiki.toolforge.org/PHP_REPOS/auth_repo/vendor/
+
+    # Scan files for class definitions
+    scanFiles:
+        - src/app/include.php
+        - src/vendor_load.php
+        # - I:/MD_TOOLS/mdwiki.toolforge.org/PHP_REPOS/fix_refs_repo/work.php
+
+    # bootstrap.php
+    bootstrapFiles:
+        - tests/bootstrap.php
