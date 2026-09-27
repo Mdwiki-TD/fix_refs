@@ -1,6 +1,6 @@
 <?php
 
-namespace WikiConnect\ParseWiki\DataModel;
+namespace WpRefs\WikiConnect\ParseWiki\DataModel;
 
 /**
  * Class ExternalLink

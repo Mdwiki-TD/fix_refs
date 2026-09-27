@@ -1,13 +1,13 @@
 <?php
 
-namespace WikiConnect\ParseWiki\DataModel;
+namespace WpRefs\WikiConnect\ParseWiki\DataModel;
 
 /**
  * Class InternalLink
  *
  * Represents an internal link with optional display text.
  *
- * @package WikiConnect\ParseWiki\DataModel
+ * @package WpRefs\WikiConnect\ParseWiki\DataModel
  */
 class InternalLink
 {

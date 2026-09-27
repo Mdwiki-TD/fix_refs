@@ -31,3 +31,7 @@ foreach ($texts as $lang => $text) {
 
     echo "new_text: $newText:\n";
 }
+
+class ExtendedMiniFixesBotTest extends MyFunctionTest
+{
+}

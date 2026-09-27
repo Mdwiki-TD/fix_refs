@@ -1,12 +1,12 @@
 <?php
 
-namespace WikiConnect\ParseWiki;
+namespace WpRefs\WikiConnect\ParseWiki;
 
-use WikiConnect\ParseWiki\DataModel\InternalLink;
+use WpRefs\WikiConnect\ParseWiki\DataModel\InternalLink;
 
 /**
  * Class ParserInternalLinks
- * @package WikiConnect\ParseWiki
+ * @package WpRefs\WikiConnect\ParseWiki
  */
 class ParserInternalLinks
 {

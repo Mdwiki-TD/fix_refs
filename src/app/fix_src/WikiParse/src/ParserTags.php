@@ -1,15 +1,15 @@
 <?php
 
-namespace WikiConnect\ParseWiki;
+namespace WpRefs\WikiConnect\ParseWiki;
 
-use WikiConnect\ParseWiki\DataModel\Tag;
+use WpRefs\WikiConnect\ParseWiki\DataModel\Tag;
 
 /**
  * Class ParserTags
  *
  * Parses text to extract tags from wikitext.
  *
- * @package WikiConnect\ParseWiki
+ * @package WpRefs\WikiConnect\ParseWiki
  */
 class ParserTags
 {

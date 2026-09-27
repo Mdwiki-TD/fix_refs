@@ -1,16 +1,16 @@
 <?php
 
-namespace WikiConnect\ParseWiki;
+namespace WpRefs\WikiConnect\ParseWiki;
 
-use WikiConnect\ParseWiki\DataModel\Template;
-use WikiConnect\ParseWiki\ParserTemplate;
+use WpRefs\WikiConnect\ParseWiki\DataModel\Template;
+use WpRefs\WikiConnect\ParseWiki\ParserTemplate;
 
 /**
  * Class ParserTemplates
  *
  * Parse a text and extract all Templates.
  *
- * @package WikiConnect\ParseWiki
+ * @package WpRefs\WikiConnect\ParseWiki
  */
 class ParserTemplates
 {

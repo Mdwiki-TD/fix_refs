@@ -1,15 +1,15 @@
 <?php
 
-namespace WikiConnect\ParseWiki\DataModel;
+namespace WpRefs\WikiConnect\ParseWiki\DataModel;
 
-use WikiConnect\ParseWiki\DataModel\Attribute;
+use WpRefs\WikiConnect\ParseWiki\DataModel\Attribute;
 
 /**
  * Class Tag
  *
  * Represents a tag in a wikitext document.
  *
- * @package WikiConnect\ParseWiki\DataModel
+ * @package WpRefs\WikiConnect\ParseWiki\DataModel
  */
 class Tag
 {

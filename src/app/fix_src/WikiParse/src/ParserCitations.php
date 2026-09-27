@@ -1,16 +1,16 @@
 <?php
 
-namespace WikiConnect\ParseWiki;
+namespace WpRefs\WikiConnect\ParseWiki;
 
-use WikiConnect\ParseWiki\DataModel\Tag;
-use WikiConnect\ParseWiki\ParserTags;
+use WpRefs\WikiConnect\ParseWiki\DataModel\Tag;
+use WpRefs\WikiConnect\ParseWiki\ParserTags;
 
 /**
  * Class ParserCitations
  *
  * Parses text to extract citations from wikitext.
  *
- * @package WikiConnect\ParseWiki
+ * @package WpRefs\WikiConnect\ParseWiki
  */
 class ParserCitations
 {

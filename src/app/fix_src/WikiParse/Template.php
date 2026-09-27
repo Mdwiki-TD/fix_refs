@@ -2,8 +2,8 @@
 
 namespace WikiParse\Template;
 
-use WikiConnect\ParseWiki\ParserTemplate;
-use WikiConnect\ParseWiki\ParserTemplates;
+use WpRefs\WikiConnect\ParseWiki\ParserTemplate;
+use WpRefs\WikiConnect\ParseWiki\ParserTemplates;
 
 function getTemplate($text)
 {

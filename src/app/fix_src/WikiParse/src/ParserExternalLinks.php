@@ -1,12 +1,12 @@
 <?php
 
-namespace WikiConnect\ParseWiki;
+namespace WpRefs\WikiConnect\ParseWiki;
 
-use WikiConnect\ParseWiki\DataModel\ExternalLink;
+use WpRefs\WikiConnect\ParseWiki\DataModel\ExternalLink;
 
 /**
  * Class ParserExternalLinks
- * @package WikiConnect\ParseWiki
+ * @package WpRefs\WikiConnect\ParseWiki
  */
 class ParserExternalLinks
 {
