@@ -16,3 +16,4 @@ wikibots/save.php
 z.php
 tests/app/fix_src/infoboxes/fixtures/infobox2_tempse/output.json
 tests/fix.py
+.phpunit.cache/**
