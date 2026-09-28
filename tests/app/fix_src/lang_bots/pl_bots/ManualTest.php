@@ -82,7 +82,6 @@ TXT
     /**
      * Test Polish Choroba Infobox utility functions with various scenarios.
      *
-     * @dataProvider manualTestCasesProvider
      * @param string $input
      * @param string $targetFunction
      * @param array $expectedParams
