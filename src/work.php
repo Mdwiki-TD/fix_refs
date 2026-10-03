@@ -27,7 +27,7 @@ function fix_page_with_setting(
     ?bool $expand = null,
     ?bool $addEnLang = null
 ): string {
-    return \App\Run\fixPgeWithSetting(
+    return \App\Run::fixPgeWithSetting(
         $sourcetitle,
         $title,
         $text,

@@ -1,6 +1,6 @@
 <?php
 
-use function App\Run\fixPgeWithSetting;
+use App\Run;
 
 include_once __DIR__ . '/../bootstrap.php';
 
@@ -35,7 +35,7 @@ $sourcetitle  = $data['sourcetitle'];
 if (!empty($lang) && !empty($title) && !empty($text)) {
 
     // if (Csrf::verifyToken()) {
-    $newText = fixPgeWithSetting(
+    $newText = Run::fixPgeWithSetting(
         $sourcetitle,
         $title,
         $text,

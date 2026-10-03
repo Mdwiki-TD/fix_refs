@@ -2,7 +2,7 @@
 
 use function App\Wikibots\WikiText\get_wikipedia_text;
 use App\Csrf;
-use function App\Run\fixPgeWithSetting;
+use App\Run;
 
 $headerPath = __DIR__ . '/../header.php';
 include_once __DIR__ . '/bootstrap.php';
@@ -53,7 +53,7 @@ function make_result($lang, $title, $sourcetitle, $mdwikiRevid)
         HTML;
     }
 
-    $newText = fixPgeWithSetting(
+    $newText = Run::fixPgeWithSetting(
         $sourcetitle,
         $title,
         $text,

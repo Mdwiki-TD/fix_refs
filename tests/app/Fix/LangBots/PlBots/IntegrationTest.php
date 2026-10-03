@@ -6,7 +6,7 @@ namespace Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\MyFunctionTest;
-use function App\Fix\Index\fix_page;
+use App\Fix\Index;
 
 class IntegrationTest extends MyFunctionTest
 {
@@ -131,7 +131,7 @@ TXT
         array $shouldNotContain,
         array $maxParameterCounts
     ): void {
-        $result = fix_page($input, $title, false, $expandInfobox, false, $lang, "", "");
+        $result = Index::fix_page($input, $title, false, $expandInfobox, false, $lang, "", "");
 
         // Assert expected parameters are present
         foreach ($expectedParams as $param) {

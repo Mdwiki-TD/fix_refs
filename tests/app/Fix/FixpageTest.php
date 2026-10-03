@@ -1,14 +1,14 @@
 <?php
 
 use Tests\MyFunctionTest;
-use function App\Fix\Index\fix_page;
+use App\Fix\Index;
 
 class FixpageTest extends MyFunctionTest
 {
 
     private function fix_page_wrap(string $text, string $lang)
     {
-        return fix_page($text, "", true, true, false, $lang, "", 0);
+        return Index::fix_page($text, "", true, true, false, $lang, "", 0);
     }
 
     public function testPart1()

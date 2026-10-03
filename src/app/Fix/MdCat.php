@@ -89,10 +89,9 @@ function Get_MdWiki_Category($lang)
 
 function add_Translated_from_MDWiki($text, $lang)
 {
-
     if (preg_match("/:\s*Translated[ _]from[ _]MDWiki\s*\]\]/iu", $text)) {
         return $text;
-    };
+    }
 
     $cat = Get_MdWiki_Category($lang);
 
