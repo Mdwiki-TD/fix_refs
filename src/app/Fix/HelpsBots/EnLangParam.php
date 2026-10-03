@@ -53,7 +53,7 @@ class EnLangParam
 
     public static function add_lang_en_to_refs($text)
     {
-        DebugHelper::echo_debug("\n add_lang_en_to_refs:\n");
+        DebugHelper::debug("\n add_lang_en_to_refs:\n");
         $newText = $text;
         $citations = Citations::getCitationsOld($text);
         foreach ($citations as $key => $citation) {

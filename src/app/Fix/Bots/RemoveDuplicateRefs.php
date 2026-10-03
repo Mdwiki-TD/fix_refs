@@ -62,7 +62,7 @@ class RemoveDuplicateRefs
                 $citeAttrs = "name='$name'";
             }
 
-            DebugHelper::echo_debug("\n cite_attrs: (($citeAttrs))");
+            DebugHelper::debug("\n cite_attrs: (($citeAttrs))");
             $citeNewtext = "<ref $citeAttrs />";
 
             if (isset($refs[$citeAttrs])) {

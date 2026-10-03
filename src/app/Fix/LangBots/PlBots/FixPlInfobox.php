@@ -9,7 +9,7 @@ class FixPlInfobox
 {
     public static function add_missing_params_to_choroba_infobox($text)
     {
-        DebugHelper::echo_test("\n add_missing_params_to_choroba_infobox:\n");
+        DebugHelper::debug("\n add_missing_params_to_choroba_infobox:\n");
         $newText = $text;
         $temps = Template::getTemplates($text);
         $paramsToAdd = [
@@ -33,7 +33,7 @@ class FixPlInfobox
         foreach ($temps as $temp) {
             $name = $temp->getStripName();
             if (strtolower($name) === "choroba infobox") {
-                DebugHelper::echo_test("Found Choroba infobox template\n");
+                DebugHelper::debug("Found Choroba infobox template\n");
                 $tempOld = $temp->getOriginalText();
                 $params = $temp->getParameters();
                 foreach ($paramsToAdd as $paramName => $paramValue) {

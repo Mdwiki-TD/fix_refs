@@ -181,7 +181,7 @@ class Es
         }
 
         if (substr_count($text, "\n") < 10 && $title != "test!") {
-            DebugHelper::echo_test("less than 10 lines\n");
+            DebugHelper::debug("less than 10 lines\n");
         }
 
         if (strpos($text, "<references />") !== false) {

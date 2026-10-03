@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Fix;
+namespace App;
 
 class DebugHelper
 {
-    public static function echo_test($str)
+    public static function debug($str)
     {
         $test = $_POST['test'] ?? $_GET['test'] ?? '';
         if (!empty($test)) {
@@ -12,7 +12,7 @@ class DebugHelper
         }
     }
 
-    public static function echo_debug($str)
+    public static function debug($str)
     {
         if (defined('DEBUG')) {
             echo $str . "\n";

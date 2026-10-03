@@ -20,7 +20,7 @@ class Settings
 
         $output = curl_exec($ch);
         if ($output === false) {
-            DebugHelper::echo_test("<br>cURL Error: " . curl_error($ch) . "<br>$url");
+            DebugHelper::debug("<br>cURL Error: " . curl_error($ch) . "<br>$url");
             $output = '';
         }
 

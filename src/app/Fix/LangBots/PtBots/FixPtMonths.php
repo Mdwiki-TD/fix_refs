@@ -46,7 +46,7 @@ class FixPtMonths
 
     public static function fix_pt_months_in_refs($text)
     {
-        DebugHelper::echo_debug("\n fix_pt_months_in_refs:\n");
+        DebugHelper::debug("\n fix_pt_months_in_refs:\n");
         $newText = $text;
         $citations = Citations::getCitationsOld($text);
         foreach ($citations as $key => $citation) {
