@@ -3,7 +3,7 @@
 
 
 use Tests\MyFunctionTest;
-use function App\Fix\Bots\MonthNewValue\make_date_new_val_pt;
+use function App\Fix\Bots\MonthsNewValue\make_date_new_val_pt;
 
 class ptMonthsNewValueTest extends MyFunctionTest
 {
