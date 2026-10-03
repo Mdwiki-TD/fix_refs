@@ -53,8 +53,7 @@ src/
 │   │   │   ├── ParserTags.php
 │   │   │   ├── ParserTemplate.php
 │   │   │   └── ParserTemplates.php
-│   │   ├── bootstap.php
-│   │   ├── DebugHelper.php
+│   │   ├── bootstrap.php
 │   │   ├── Index.php
 │   │   ├── MdCat.php
 │   │   └── README.md
@@ -63,9 +62,10 @@ src/
 │   │   └── Wikitext.php
 │   ├── autoload.php
 │   ├── Csrf.php
+│   ├── Logger.php
 │   ├── Run.php
 │   └── Settings.php
-├── bootstap.php
+├── bootstrap.php
 ├── index.php
 └── work.php
 

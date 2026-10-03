@@ -11,4 +11,4 @@ include_once __DIR__ . '/app/Logger.php';
 include_once __DIR__ . '/app/Csrf.php';
 include_once __DIR__ . '/app/Run.php';
 include_once __DIR__ . '/app/Wikibots/Wikitext.php';
-include_once __DIR__ . '/app/Fix/bootstap.php';
+include_once __DIR__ . '/app/Fix/bootstrap.php';
