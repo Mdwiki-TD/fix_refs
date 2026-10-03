@@ -2,14 +2,14 @@
 tests/
 ├── app/
 │   ├── Fix/
-│   │   ├── bots/
-│   │   │   ├── attrsUtilsTest.php
-│   │   │   ├── expendRefsTest.php
+│   │   ├── Bots/
+│   │   │   ├── AttrsUtilsTest.php
+│   │   │   ├── ExpendRefsTest.php
 │   │   │   ├── ExtendedMiniFixesBotTest.php
-│   │   │   ├── miniFixesBotTest.php
-│   │   │   ├── refsUtilsTest.php
-│   │   │   ├── removeDuplicateRefsTest.php
-│   │   │   └── txtlib2Test.php
+│   │   │   ├── MiniFixesBotTest.php
+│   │   │   ├── RefsUtilsTest.php
+│   │   │   ├── RemoveDuplicateRefsTest.php
+│   │   │   └── Txtlib2Test.php
 │   │   ├── HelpsBots/
 │   │   │   ├── EnLangParamTest.php
 │   │   │   ├── MissingRefsTest.php
@@ -48,8 +48,8 @@ tests/
 │   │   │   └── src/
 │   │   │       └── DataModel/
 │   │   ├── FixpageTest.php
-│   │   ├── indexTest.php
-│   │   └── mdCatTest.php
+│   │   ├── IndexTest.php
+│   │   └── MdCatTest.php
 │   └── wikibots/
 └── bootstrap.php
 
