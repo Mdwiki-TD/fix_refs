@@ -58,7 +58,7 @@ The system is already deployed and running on Wikimedia Toolforge, processing re
 
 All modules within `src/` share these patterns:
 
--   **Function-based API** -- Public interfaces are namespaced functions, not classes. Example: `WpRefs\WprefText\fix_page()`.
+-   **Function-based API** -- Public interfaces are namespaced functions, not classes. Example: `App\Fix\Index \fix_page()`.
 -   **String-in / string-out transforms** -- Every bot function takes a wikitext string and returns a modified wikitext string.
 -   **cURL with User-Agent** -- All HTTP requests use the same User-Agent string (`WikiProjectMed Translation Dashboard/1.0`) and 5-second timeouts.
 -   **Regex-heavy processing** -- Core logic relies on `preg_replace`, `preg_match_all`, and `str_replace` rather than AST manipulation.
