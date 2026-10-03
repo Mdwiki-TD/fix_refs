@@ -1,6 +1,6 @@
 <?php
 
-namespace App\wikibots;
+namespace App\Wikibots;
 
 class Wikitext
 {

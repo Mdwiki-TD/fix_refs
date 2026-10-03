@@ -1,6 +1,6 @@
 <?php
 
-use App\wikibots\Wikitext;
+use App\Wikibots\Wikitext;
 use App\Csrf;
 use App\Run;
 
