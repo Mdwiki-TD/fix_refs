@@ -16,7 +16,7 @@ $user = $GLOBALS['global_username'] ?? '';
 $submitOrLogin = (!empty($user))
     ? "<input class='btn btn-outline-primary' type='submit' value='start'>"
     : "<a class='btn btn-outline-primary' href='/auth/login.php'>login</a>";
-$csrfToken = Csrf::generate_csrf_token();
+$csrfToken = Csrf::generateToken();
 ?>
 
 <div class='card-header aligncenter' style='font-weight:bold;'>

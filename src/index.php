@@ -71,7 +71,7 @@ function make_result($lang, $title, $sourcetitle, $mdwikiRevid)
 }
 
 if (empty($lang) || empty($title)) {
-    $csrfToken = Csrf::generate_csrf_token();
+    $csrfToken = Csrf::generateToken();
     echo <<<HTML
         <form action='index.php' method='POST'>
             <input name='csrf_token' value="$csrfToken" type="hidden"/>
@@ -121,7 +121,7 @@ if (empty($lang) || empty($title)) {
         </form>
     HTML;
 } else {
-    if (Csrf::verify_csrf_token()) {
+    if (Csrf::verifyToken()) {
         echo make_result($lang, $title, $sourcetitle, $mdwikiRevid);
     }
 }
