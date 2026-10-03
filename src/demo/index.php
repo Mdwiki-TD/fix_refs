@@ -1,6 +1,6 @@
 <?php
 
-use function App\csrf\generateToken;
+use App\Csrf;
 
 include_once __DIR__ . '/../bootstrap.php';
 $headerPath = __DIR__ . '/../header.php';
@@ -20,7 +20,7 @@ $submitOrLogin = (!empty($user))
     ? "<input class='btn btn-outline-primary' type='submit' value='start'>"
     : "<a class='btn btn-outline-primary' href='/auth/login.php'>login</a>";
 
-$csrfToken = generateToken(); // <input name='csrf_token' value="$csrfToken" type="hidden"/>
+$csrfToken = Csrf::generateToken(); // <input name='csrf_token' value="$csrfToken" type="hidden"/>
 
 ?>
 

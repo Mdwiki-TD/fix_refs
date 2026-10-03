@@ -1,8 +1,7 @@
 <?php
 
 use function App\Wikibots\WikiText\get_wikipedia_text;
-use function App\csrf\generateToken;
-use function App\csrf\verifyToken;
+use App\Csrf;
 use function App\Run\fixPgeWithSetting;
 
 $headerPath = __DIR__ . '/../header.php';
@@ -77,7 +76,7 @@ function make_result($lang, $title, $sourcetitle, $mdwikiRevid)
 
 if (empty($lang) || empty($title)) {
 
-    $csrfToken = generateToken(); // <input name='csrf_token' value="$csrfToken" type="hidden"/>
+    $csrfToken = Csrf::generateToken(); // <input name='csrf_token' value="$csrfToken" type="hidden"/>
 
     // عرض نموذج لإرسال البيانات إلى text_changes.php
     echo <<<HTML
@@ -130,7 +129,7 @@ if (empty($lang) || empty($title)) {
     HTML;
 
 } else {
-    if (verifyToken()) {
+    if (Csrf::verifyToken()) {
         echo make_result($lang, $title, $sourcetitle, $mdwikiRevid);
     }
 }

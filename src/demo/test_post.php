@@ -1,7 +1,6 @@
 <?php
 
 use function App\Run\fixPgeWithSetting;
-use function App\csrf\verifyToken;
 
 include_once __DIR__ . '/../bootstrap.php';
 
@@ -35,7 +34,7 @@ $sourcetitle  = $data['sourcetitle'];
 
 if (!empty($lang) && !empty($title) && !empty($text)) {
 
-    // if (verifyToken()) {
+    // if (Csrf::verifyToken()) {
     $newText = fixPgeWithSetting(
         $sourcetitle,
         $title,
