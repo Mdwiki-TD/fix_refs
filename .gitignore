@@ -1,4 +1,6 @@
 
+*.zip
+.phpunit.cache/**
 .phpunit.result.cache
 /.claude
 /.commandcode
@@ -10,10 +12,8 @@
 app/fix_src/helps_bots/input.txt
 app/fix_src/helps_bots/output.txt
 composer.lock
-*.zip
 src/resources/revisions/1503213/wikitext.txt
+tests/**/output.json
+tests/fix.py
 wikibots/save.php
 z.php
-tests/app/fix_src/infoboxes/fixtures/infobox2_tempse/output.json
-tests/fix.py
-.phpunit.cache/**
