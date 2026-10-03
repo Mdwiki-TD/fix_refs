@@ -1,14 +1,14 @@
 <?php
 
 namespace WpRefs\Bots\TxtLib2;
-use function WpRefs\WikiParse\getTemplates;
+use WpRefs\WikiParse\ParserTemplates;
 
 
 function extract_templates_and_params($text)
 {
     // ---
     $temps = [];
-    $tempsIn = getTemplates($text);
+    $tempsIn = (new ParserTemplates($text))->getTemplates();
     // ---
     foreach ($tempsIn as $temp) {
         // ---

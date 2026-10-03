@@ -4,7 +4,7 @@ namespace WpRefs\EnLangParam;
 
 use App\Logger;
 use function WpRefs\Parse\Citations\getCitationsOld;
-use function WpRefs\WikiParse\getTemplates;
+use WpRefs\WikiParse\ParserTemplates;
 
 function add_lang_en($text)
 {
@@ -47,7 +47,7 @@ function add_lang_en_new($tempText)
     // ---
     $tempText = trim($tempText);
     // ---
-    $temps = getTemplates($tempText);
+    $temps = (new ParserTemplates($tempText))->getTemplates();
     // ---
     foreach ($temps as $temp) {
         // ---

@@ -124,13 +124,3 @@ class ParserTemplates
         return $outtemplates;
     }
 }
-
-function getTemplates($text)
-{
-    if (empty($text)) {
-        return [];
-    }
-    $parser = new ParserTemplates($text);
-    $temps = $parser->getTemplates();
-    return $temps;
-}

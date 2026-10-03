@@ -3,7 +3,7 @@
 namespace WpRefs\PL\FixPlInfobox;
 
 
-use function WpRefs\WikiParse\getTemplates;
+use WpRefs\WikiParse\ParserTemplates;
 use App\Logger;
 
 function add_missing_params_to_choroba_infobox($text)
@@ -14,7 +14,7 @@ function add_missing_params_to_choroba_infobox($text)
     $newText = $text;
     // ---
     // Get all templates
-    $temps = getTemplates($text);
+    $temps = (new ParserTemplates($text))->getTemplates();
     // ---
     // Parameters to add if missing
     $paramsToAdd = [

@@ -5,7 +5,7 @@ namespace WpRefs\EsBots\es_months;
 
 use App\Logger;
 use function WpRefs\Parse\Citations\getCitationsOld;
-use function WpRefs\WikiParse\getTemplates;
+use WpRefs\WikiParse\ParserTemplates;
 use function WpRefs\Bots\MonthNewValue\make_date_new_val_es;
 
 
@@ -21,7 +21,7 @@ function fix_es_months_in_texts($tempText)
     // ---
     $tempText = trim($tempText);
     // ---
-    $temps = getTemplates($tempText);
+    $temps = (new ParserTemplates($tempText))->getTemplates();
     // ---
     foreach ($temps as $temp) {
         // ---

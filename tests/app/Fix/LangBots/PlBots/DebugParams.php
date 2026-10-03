@@ -5,7 +5,7 @@ namespace WpRefs\Tests;
 // Debug test to see what parameters are in the template
 
 use WpRefs\Tests\MyFunctionTest;
-use function WpRefs\WikiParse\getTemplates;
+use WpRefs\WikiParse\ParserTemplates;
 
 class DebugParams extends MyFunctionTest
 {
@@ -23,8 +23,7 @@ class DebugParams extends MyFunctionTest
 |MeshID = D001249
 }}
 TXT;
-
-        $templates = getTemplates($input);
+        $templates = (new ParserTemplates($input))->getTemplates();
 
         // Verify that template parsing succeeded
         $this->assertNotEmpty($templates, "Failed to parse templates from input text.");

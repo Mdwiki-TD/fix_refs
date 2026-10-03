@@ -2,7 +2,7 @@
 
 namespace WpRefs\EsBots\es_refs;
 
-use function WpRefs\WikiParse\getTemplates;
+use WpRefs\WikiParse\ParserTemplates;
 use function WpRefs\Parse\Reg_Citations\get_short_citations;
 use function WpRefs\Parse\Citations\getCitationsOld;
 
@@ -81,7 +81,7 @@ function make_line(array $refs): string
 function add_line_to_temp($line, $text)
 {
     // ---
-    $tempsIn = getTemplates($text);
+    $tempsIn = (new ParserTemplates($text))->getTemplates();
     // ---
     // Logger::debug("lenth temps_in:" . count($tempsIn) . "\n");
     // ---

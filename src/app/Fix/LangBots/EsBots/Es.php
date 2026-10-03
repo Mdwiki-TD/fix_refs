@@ -5,7 +5,7 @@ namespace WpRefs\ES;
 
 use function WpRefs\EsBots\es_months\fix_es_months_in_refs;
 use function WpRefs\EsBots\es_refs\mv_es_refs;
-use function WpRefs\WikiParse\getTemplates;
+use WpRefs\WikiParse\ParserTemplates;
 use App\Logger;
 // ---
 
@@ -171,7 +171,7 @@ function work_one_temp($temp, $name)
 function fix_temps($text)
 {
     // ---
-    $tempsIn = getTemplates($text);
+    $tempsIn = (new ParserTemplates($text))->getTemplates();
     // ---
     // Logger::debug("lenth temps_in:" . count($tempsIn) . "\n");
     // ---
