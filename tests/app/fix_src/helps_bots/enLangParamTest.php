@@ -2,7 +2,7 @@
 
 
 
-use FixRefs\Tests\MyFunctionTest;
+use WpRefs\Tests\MyFunctionTest;
 use App\fix_src\helps_bots\EnLangParam;
 
 class enLangParamTest extends MyFunctionTest

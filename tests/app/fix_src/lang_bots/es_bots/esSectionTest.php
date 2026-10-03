@@ -1,6 +1,6 @@
 <?php
 
-use FixRefs\Tests\MyFunctionTest;
+use WpRefs\Tests\MyFunctionTest;
 use App\fix_src\lang_bots\es_bots\Section;
 
 class esSectionTest extends MyFunctionTest

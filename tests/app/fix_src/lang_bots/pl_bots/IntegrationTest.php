@@ -1,11 +1,11 @@
 <?php
 
-namespace FixRefs\Tests;
+namespace WpRefs\Tests;
 
 // Integration test for Polish language fixes in main workflow
 
 use PHPUnit\Framework\Attributes\DataProvider;
-use FixRefs\Tests\MyFunctionTest;
+use WpRefs\Tests\MyFunctionTest;
 use App\fix_src\Index;
 
 class IntegrationTest extends MyFunctionTest

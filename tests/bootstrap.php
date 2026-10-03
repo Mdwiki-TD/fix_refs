@@ -1,6 +1,6 @@
 <?php
 
-namespace FixRefs\Tests;
+namespace WpRefs\Tests;
 
 use PHPUnit\Framework\TestCase;
 
@@ -8,7 +8,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// use FixRefs\Tests\MyFunctionTest;
+// use WpRefs\Tests\MyFunctionTest;
 // Load the Composer autoloader
 require __DIR__ . '/../vendor/autoload.php';
 // Load include.php file

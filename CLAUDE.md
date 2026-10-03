@@ -51,7 +51,7 @@ The codebase follows a modular architecture with the `fix_page()` function in `a
 
 -   `WpRefs\` - Main namespace for app/fix_src/ (PSR-4 autoloaded)
 -   `WikiConnect\ParseWiki\` - WikiParse module namespace
--   `FixRefs\Tests\` - Test namespace
+-   `WpRefs\Tests\` - Test namespace
 
 ## Testing
 

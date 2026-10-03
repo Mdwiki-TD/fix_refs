@@ -1,10 +1,10 @@
 <?php
 
-namespace FixRefs\Tests;
+namespace WpRefs\Tests;
 
 // Debug test to see what's happening with duplicate parameters
 
-use FixRefs\Tests\MyFunctionTest;
+use WpRefs\Tests\MyFunctionTest;
 use App\fix_src\lang_bots\pl_bots\FixPlInfobox;
 use App\fix_src\WikiParse\Template;
 

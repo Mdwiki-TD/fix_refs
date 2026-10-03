@@ -1,11 +1,11 @@
 <?php
 
-namespace FixRefs\Tests;
+namespace WpRefs\Tests;
 
 // Simple manual test for Polish infobox functionality
 
 use PHPUnit\Framework\Attributes\DataProvider;
-use FixRefs\Tests\MyFunctionTest;
+use WpRefs\Tests\MyFunctionTest;
 use App\fix_src\lang_bots\pl_bots\FixPlInfobox;
 
 

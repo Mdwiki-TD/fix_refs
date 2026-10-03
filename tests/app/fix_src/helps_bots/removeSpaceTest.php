@@ -1,7 +1,7 @@
 <?php
 
 
-use FixRefs\Tests\MyFunctionTest;
+use WpRefs\Tests\MyFunctionTest;
 use App\fix_src\helps_bots\RemoveSpace;
 
 class removeSpaceTest extends MyFunctionTest
