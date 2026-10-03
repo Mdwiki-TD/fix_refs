@@ -4,7 +4,7 @@ namespace Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\MyFunctionTest;
-use function App\Fix\Bots\Mini\fix_sections_titles;
+use function App\Fix\Bots\MiniFixesBot\fix_sections_titles;
 
 class ExtendedMiniFixesBotTest extends MyFunctionTest
 {

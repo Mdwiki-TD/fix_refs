@@ -3,11 +3,11 @@
 
 
 use Tests\MyFunctionTest;
-use function App\Fix\Bots\Mini\remove_space_before_ref_tags;
-use function App\Fix\Bots\Mini\fix_sections_titles;
-use function App\Fix\Bots\Mini\refs_tags_spaces;
-use function App\Fix\Bots\Mini\fix_preffix;
-use function App\Fix\Bots\Mini\remove_template_rtt_links;
+use function App\Fix\Bots\MiniFixesBot\remove_space_before_ref_tags;
+use function App\Fix\Bots\MiniFixesBot\fix_sections_titles;
+use function App\Fix\Bots\MiniFixesBot\refs_tags_spaces;
+use function App\Fix\Bots\MiniFixesBot\fix_preffix;
+use function App\Fix\Bots\MiniFixesBot\remove_template_rtt_links;
 
 class miniFixesBotTest extends MyFunctionTest
 {

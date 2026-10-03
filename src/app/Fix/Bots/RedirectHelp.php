@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Fix\Bots\Redirect;
+namespace App\Fix\Bots\RedirectHelp;
 
 function page_is_redirect($title, $text)
 {

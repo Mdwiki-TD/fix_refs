@@ -1,6 +1,6 @@
 <?php
 
-use function App\WikiText\get_wikipedia_text;
+use function App\Wikibots\WikiText\get_wikipedia_text;
 use function App\csrf\generate_csrf_token;
 use function App\csrf\verify_csrf_token;
 use function App\Run\fixPgeWithSetting;

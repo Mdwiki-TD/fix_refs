@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Fix\Bots\Mini;
+namespace App\Fix\Bots\MiniFixesBot;
 
 function fix_sections_titles($text, $lang)
 {

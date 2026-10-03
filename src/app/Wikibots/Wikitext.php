@@ -1,6 +1,6 @@
 <?php
 
-namespace App\WikiText;
+namespace App\Wikibots\WikiText;
 
 function from_api($title, $lang)
 {
