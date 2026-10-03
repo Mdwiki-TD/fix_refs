@@ -53,7 +53,6 @@ src/
 │   │   │   ├── ParserTags.php
 │   │   │   ├── ParserTemplate.php
 │   │   │   └── ParserTemplates.php
-│   │   ├── bootstrap.php
 │   │   ├── Index.php
 │   │   ├── MdCat.php
 │   │   └── README.md
