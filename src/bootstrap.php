@@ -38,11 +38,11 @@ foreach ($folders as $folder) {
 }
 
 # include sub folder in LangBots
-foreach (glob(__DIR__ . "/LangBots/*/") as $subfolder) {
+foreach (glob(__DIR__ . "/app/Fix/LangBots/*/") as $subfolder) {
     foreach (glob($subfolder . "*.php") as $filename) {
         include_once $filename;
     }
 }
 
-include_once __DIR__ . '/MdCat.php';
-include_once __DIR__ . '/Index.php';
+include_once __DIR__ . '/app/Fix/MdCat.php';
+include_once __DIR__ . '/app/Fix/Index.php';
