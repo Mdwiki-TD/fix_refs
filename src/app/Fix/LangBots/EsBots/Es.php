@@ -7,7 +7,7 @@ use function App\Fix\LangBots\EsBots\EsMonths\fix_es_months_in_refs;
 use function App\Fix\LangBots\EsBots\EsRefs\mv_es_refs;
 use App\Fix\WikiParse\ParserTemplates;
 use App\Logger;
-// ---
+
 
 class ESData
 {
@@ -41,7 +41,7 @@ ESData::$refsTemps = [
     "cite video game" => "cita videojuego",
 ];
 
-// ---
+
 // Mapping arguments
 ESData::$argsTo = [
     "title" => "título",
@@ -62,7 +62,7 @@ ESData::$argsTo = [
     "first2" => "nombre2",
 ];
 
-// ---
+
 // More mapping with grouped parameters
 $paramsEsUp = [
     "nombre1" => ["first1", "given1"],
@@ -148,54 +148,54 @@ foreach ($paramsEsUp as $new => $list) {
 
 function work_one_temp($temp, $name)
 {
-    // ---
+
     // Logger::debug("\n$name\n");
-    // ---
+
     $tempName2 = isset(ESData::$refsTemps[$name]) ? ESData::$refsTemps[$name] : $name;
-    // ---
+
     if (strtolower($tempName2) !== strtolower($name)) {
         $temp->setName($tempName2);
     }
-    // ---
+
     // $paramsEsUp = $temp->getParameters();
-    // ---
+
     $temp->changeParametersNames(ESData::$argsTo);
-    // ---
+
     $temp->deleteParameter("url-status");
-    // ---
+
     $newTextStr = $temp->toString();
-    // ---
+
     return $newTextStr;
 }
 
 function fix_temps($text)
 {
-    // ---
+
     $tempsIn = (new ParserTemplates($text))->getTemplates();
-    // ---
+
     // Logger::debug("lenth temps_in:" . count($tempsIn) . "\n");
-    // ---
+
     $newText = $text;
-    // ---
+
     foreach ($tempsIn as $temp) {
-        // ---
+
         $name = $temp->getStripName();
-        // ---
+
         // Logger::debug("* name: $name\n");
-        // ---
+
         $oldTextTemplate = $temp->getOriginalText();
-        // ---
+
         if (!array_key_exists($name, ESData::$refsTemps) && !in_array($name, ESData::$refsTemps)) {
             // Logger::debug("not found: $name\n");
             continue;
         }
-        // ---
+
         $newTextStr = work_one_temp($temp, $name);
-        // ---
+
         $newText = str_replace($oldTextTemplate, $newTextStr, $newText);
-        // ---
+
     };
-    // ---
+
     return $newText;
 }
 

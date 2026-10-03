@@ -19,7 +19,7 @@ function refs_expend_work($first, $alltext = "")
     foreach ($shortRefs as $cite) {
         $name = $cite["name"];
         $refe = $cite["tag"];
-        // ---
+
         $rr = $refs[$name] ?? false;
         if ($rr) {
             $first = str_replace($refe, $rr, $first);

@@ -64,11 +64,11 @@ function make_result($lang, $title, $sourcetitle, $mdwikiRevid)
         null,
         null,
     );
-    //---
+
     $newTextSanitized = htmlspecialchars($newText, ENT_QUOTES, 'UTF-8');
-    //---
+
     $noChanges = (trim($newText) === trim($text)) ? "true" : "false";
-    //---
+
     return <<<HTML
         <h2>New Text: (no_changes: $noChanges)</h2>
             <textarea name="new_text" rows="15" cols="100">$newTextSanitized</textarea>
@@ -76,9 +76,9 @@ function make_result($lang, $title, $sourcetitle, $mdwikiRevid)
 }
 
 if (empty($lang) || empty($title)) {
-    //---
+
     $csrfToken = generate_csrf_token(); // <input name='csrf_token' value="$csrfToken" type="hidden"/>
-    //---
+
     // عرض نموذج لإرسال البيانات إلى text_changes.php
     echo <<<HTML
         <form action='index.php' method='POST'>
@@ -128,11 +128,11 @@ if (empty($lang) || empty($title)) {
             </div>
         </form>
     HTML;
-    //---
+
 } else {
     if (verify_csrf_token()) {
         echo make_result($lang, $title, $sourcetitle, $mdwikiRevid);
     }
 }
-//---
+
 echo $footer;

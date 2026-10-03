@@ -42,8 +42,8 @@ function get_attrs($text)
             $attrs[$attrName] = $attrValue;
         }
     }
-    // ---
+
     // var_export($attrs);
-    // ---
+
     return $attrs;
 }

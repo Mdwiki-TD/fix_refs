@@ -13,15 +13,15 @@ if (!file_exists($headerPath)) {
 include_once $headerPath;
 
 $testText = file_get_contents(__DIR__ . '/test.wikitext') ?: '';
-// ---
+
 $user = $GLOBALS['global_username'] ?? '';
-// ---
+
 $submitOrLogin = (!empty($user))
     ? "<input class='btn btn-outline-primary' type='submit' value='start'>"
     : "<a class='btn btn-outline-primary' href='/auth/login.php'>login</a>";
-// ---
+
 $csrfToken = generate_csrf_token(); // <input name='csrf_token' value="$csrfToken" type="hidden"/>
-//---
+
 ?>
 
 <div class='card-header aligncenter' style='font-weight:bold;'>

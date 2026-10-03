@@ -28,14 +28,14 @@ function from_api($title, $lang)
     $json = json_decode($response, true);
 
     $pages = $json['query']['pages'] ?? [];
-    // ---
+
     foreach ($pages as $page) {
         $text = $page['revisions'][0]['slots']['main']['*'] ?? '';
         if (!empty($text)) {
             return $text;
         }
     }
-    // ---
+
     return '';
 }
 
@@ -70,14 +70,14 @@ function from_rest($title, $lang)
 function get_wikipedia_text($title, $lang)
 {
     // replace / with "%2F"
-    // ---
+
     $text = "";
-    // ---
+
     $text = from_api($title, $lang);
-    // ---
+
     if (empty($text)) {
         $text = from_rest($title, $lang);
     }
-    // ---
+
     return $text;
 }

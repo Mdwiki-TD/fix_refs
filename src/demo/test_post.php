@@ -13,17 +13,17 @@ $finalText = '';
 
 foreach ($fields as $field) {
     $value = trim($_POST[$field] ?? '');
-    // ---
+
     // $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-    // ---
+
     $data[$field] = $value;
-    // ---
+
     // Basic validation for required fields
     if (in_array($field, ['lang', 'title', 'text']) && empty($value)) {
         $finalText = "Missing required field: $field";
         break;
     }
-    // ---
+
 }
 
 $lang         = $data['lang'];
@@ -34,7 +34,7 @@ $sourcetitle  = $data['sourcetitle'];
 
 
 if (!empty($lang) && !empty($title) && !empty($text)) {
-    // ---
+
     // if (verify_csrf_token()) {
     $newText = fixPgeWithSetting(
         $sourcetitle,
