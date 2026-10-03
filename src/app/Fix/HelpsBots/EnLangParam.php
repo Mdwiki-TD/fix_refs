@@ -2,7 +2,7 @@
 
 namespace WpRefs\EnLangParam;
 
-use function WpRefs\TestBot\echo_debug;
+use App\Logger;
 use function WpRefs\Parse\Citations\getCitationsOld;
 use function WpRefs\WikiParse\getTemplates;
 
@@ -53,7 +53,7 @@ function add_lang_en_new($tempText)
         // ---
         $tempOld = $temp->getOriginalText();
         // ---
-        // echo_debug("temp_old:($tempOld)\n");
+        // Logger::debug("temp_old:($tempOld)\n");
         // ---
         $params = $temp->parameters;
         // ---
@@ -75,7 +75,7 @@ function add_lang_en_new($tempText)
 function add_lang_en_to_refs($text)
 {
     // ---
-    echo_debug("\n add_lang_en_to_refs:\n");
+    Logger::debug("\n add_lang_en_to_refs:\n");
     // ---
     $newText = $text;
     // ---

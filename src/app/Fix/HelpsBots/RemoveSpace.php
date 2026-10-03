@@ -2,7 +2,7 @@
 
 namespace WpRefs\RemoveSpace;
 
-use function WpRefs\TestBot\echo_debug;
+use App\Logger;
 
 if (!function_exists('str_ends_with')) {
     function str_ends_with($string, $endString)
@@ -35,7 +35,7 @@ function get_parts($newtext, $charters)
         $matches = explode("\r\n\r\n", $newtext);
     }
     // ---
-    echo_debug("count(matches)=" . count($matches) . "\n");
+    Logger::debug("count(matches)=" . count($matches) . "\n");
     // ---
     $newParts = [];
     // ---
@@ -46,7 +46,7 @@ function get_parts($newtext, $charters)
         }
     }
     // ---
-    echo_debug("count(new_parts)=" . count($newParts) . "\n");
+    Logger::debug("count(new_parts)=" . count($newParts) . "\n");
     // ---
     return $newParts;
 }
@@ -67,21 +67,21 @@ function remove_spaces_between_last_word_and_beginning_of_ref($newtext, $lang)
     foreach ($parts as $pair) {
         list($part, $charter) = $pair;
         // ---
-        echo_debug("charter=$charter\n");
+        Logger::debug("charter=$charter\n");
         // ---
         $regline = '/((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)/us';
         // ---
         preg_match_all($regline, $part, $lastRefMatches);
         $lastRef = $lastRefMatches[1];
         // ---
-        echo_debug("count(last_ref)=" . count($lastRef) . "\n");
+        Logger::debug("count(last_ref)=" . count($lastRef) . "\n");
         // ---
         if (!empty($lastRef)) {
             $refText = end($lastRef);
             $endPart = $refText . $charter;
             if (str_ends_with($part, $endPart)) {
                 // ---
-                echo_debug("endswith\n");
+                Logger::debug("endswith\n");
                 // ---
                 $firstPartCleanEnd = substr($part, 0, -strlen($endPart));
                 $firstPartCleanEnd = rtrim($firstPartCleanEnd);

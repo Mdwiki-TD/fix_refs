@@ -3,7 +3,7 @@
 namespace WpRefs\EsBots\es_months;
 
 
-use function WpRefs\TestBot\echo_debug;
+use App\Logger;
 use function WpRefs\Parse\Citations\getCitationsOld;
 use function WpRefs\WikiParse\getTemplates;
 use function WpRefs\Bots\MonthNewValue\make_date_new_val_es;
@@ -27,7 +27,7 @@ function fix_es_months_in_texts($tempText)
         // ---
         $tempOld = $temp->getOriginalText();
         // ---
-        // echo_debug("temp_old:($tempOld)\n");
+        // Logger::debug("temp_old:($tempOld)\n");
         // ---
         $params = $temp->getParameters();
         // ---
@@ -52,7 +52,7 @@ function fix_es_months_in_texts($tempText)
 function fix_es_months_in_refs($text)
 {
     // ---
-    echo_debug("\n fix_es_months_in_refs:\n");
+    Logger::debug("\n fix_es_months_in_refs:\n");
     // ---
     $newText = $text;
     // ---
@@ -62,14 +62,14 @@ function fix_es_months_in_refs($text)
         // ---
         $citeTemp = $citation->getContent();
         // ---
-        // echo_debug("\n cite_temp: $citeTemp\n");
+        // Logger::debug("\n cite_temp: $citeTemp\n");
         // ---
         // if $citeTemp startwith {{ and ends with }}
         // if (start_end($citeTemp) || defined("DEBUG") || True) {
         // ---
         $newTemp = fix_es_months_in_texts($citeTemp);
         // ---
-        // if ($newTemp != $citeTemp) echo_debug("new_temp != cite_temp\n");
+        // if ($newTemp != $citeTemp) Logger::debug("new_temp != cite_temp\n");
         // ---
         $newText = str_replace($citeTemp, $newTemp, $newText);
         // }

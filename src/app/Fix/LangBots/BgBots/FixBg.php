@@ -2,9 +2,7 @@
 
 namespace WpRefs\BG;
 
-
 use App\Logger;
-use function WpRefs\TestBot\echo_debug;
 
 function bg_section($text, $sourcetitle, $mdwikiRevid)
 {

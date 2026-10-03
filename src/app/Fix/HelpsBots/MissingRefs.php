@@ -2,10 +2,7 @@
 
 namespace WpRefs\MissingRefs;
 
-
-
 use App\Logger;
-use function WpRefs\TestBot\echo_debug;
 use function WpRefs\Parse\Reg_Citations\get_short_citations;
 use function WpRefs\Parse\Reg_Citations\get_full_refs;
 use function WpRefs\MdCat\get_url_curl;
@@ -108,7 +105,7 @@ function refs_expend($shortRefs, $text, $alltext)
         // ---
         $rr = $refs[$name] ?? false;
         if ($rr) {
-            echo_debug("refs_expend: $name");
+            Logger::debug("refs_expend: $name");
             // ---
             $text = str_replace($refe, $rr, $text);
         }
@@ -137,7 +134,7 @@ function fix_missing_refs($text, $sourcetitle, $mdwikiRevid)
 {
     $emptyShort = find_empty_short($text);
     // ---
-    echo_debug("empty refs: " . count($emptyShort));
+    Logger::debug("empty refs: " . count($emptyShort));
     // ---
     if (empty($emptyShort)) return $text;
     // ---

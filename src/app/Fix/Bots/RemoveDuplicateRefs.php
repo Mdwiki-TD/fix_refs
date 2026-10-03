@@ -7,7 +7,7 @@ namespace WpRefs\DelDuplicateRefs;
 use function WpRefs\Bots\AttrsUtils\get_attrs;
 use function WpRefs\Bots\RefsUtils\remove_start_end_quotes;
 use function WpRefs\Parse\Citations\getCitationsOld;
-use function WpRefs\TestBot\echo_debug;
+use App\Logger;
 
 function fix_refs_names(string $text): string
 {
@@ -81,8 +81,8 @@ function remove_Duplicate_refs_With_attrs(string $text): string
             $citeAttrs = "name='$name'";
         }
         // ---
-        // echo_debug("\n cite_text: (($citeFulltext))");
-        echo_debug("\n cite_attrs: (($citeAttrs))");
+        // Logger::debug("\n cite_text: (($citeFulltext))");
+        Logger::debug("\n cite_attrs: (($citeAttrs))");
         // ---
         $citeNewtext = "<ref $citeAttrs />";
         // ---
