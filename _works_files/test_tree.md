@@ -17,7 +17,7 @@ tests/
 │   │   │   ├── MvDotsBeforeTest.php
 │   │   │   ├── RemoveSpace2Test.php
 │   │   │   └── RemoveSpaceTest.php
-│   │   ├── infoboxes/
+│   │   ├── Infoboxes/
 │   │   │   ├── infobox2Test.php
 │   │   │   └── infoboxTest.php
 │   │   ├── LangBots/
@@ -45,12 +45,11 @@ tests/
 │   │   │   ├── CategoryTest.php
 │   │   │   └── CitationsRegTest.php
 │   │   ├── WikiParse/
-│   │   │   └── src/
-│   │   │       └── DataModel/
+│   │   │   └── DataModel/
 │   │   ├── FixpageTest.php
 │   │   ├── IndexTest.php
 │   │   └── MdCatTest.php
-│   └── wikibots/
+│   └── Wikibots/
 └── bootstrap.php
 
 ```
