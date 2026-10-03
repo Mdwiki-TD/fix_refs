@@ -1,6 +1,6 @@
 <?php
 
-namespace App\MdCat;
+namespace App\Fix\MdCat;
 
 use App\Logger;
 

@@ -1,7 +1,7 @@
 <?php
 
 use Tests\MyFunctionTest;
-use function App\MissingRefs\fix_missing_refs;
+use function App\Fix\HelpsBots\MissingRefs\fix_missing_refs;
 
 class missingRefsTest extends MyFunctionTest
 {

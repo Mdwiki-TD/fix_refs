@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Parse\Citations;
+namespace App\Fix\Parse\Citations;
 
 
 

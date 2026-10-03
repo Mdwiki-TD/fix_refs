@@ -1,6 +1,6 @@
 <?php
 
-namespace App\BG;
+namespace App\Fix\LangBots\BgBots\FixBg;
 
 use App\Logger;
 

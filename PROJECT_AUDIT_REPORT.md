@@ -68,8 +68,8 @@ All modules within `src/` share these patterns:
 | Weakness                                              | Occurrences | Files Affected                                                                                      |
 | ----------------------------------------------------- | ----------- | --------------------------------------------------------------------------------------------------- |
 | Duplicate `str_starts_with`/`str_ends_with` polyfills | 2           | `refs_utils.php`, `remove_space.php`                                                                |
-| Duplicate `start_end()` function                      | 2           | `fix_pt_months.php`, `es_months.php`                                                                |
-| Commented-out code in production                      | 6+          | `app/Fix/index.php`, `text_post.php`, `en_lang_param.php`, `es_months.php`, `fix_pt_months.php` |
+| Duplicate `start_end()` function                      | 2           | `fix_pt_months.php`, `EsMonths.php`                                                                |
+| Commented-out code in production                      | 6+          | `app/Fix/index.php`, `text_post.php`, `en_lang_param.php`, `EsMonths.php`, `fix_pt_months.php` |
 | Debug output controlled by `$_GET['test']`            | 4           | `src/index.php`, `src/test.php`, `src/work.php`, `debug_helper.php`                                     |
 | No input validation on `$lang`                        | 3           | `work.php`, `wikitext.php`, `missing_refs.php`                                                      |
 

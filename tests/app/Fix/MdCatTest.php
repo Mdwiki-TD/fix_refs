@@ -2,7 +2,7 @@
 
 use Tests\MyFunctionTest;
 
-use function App\MdCat\add_Translated_from_MDWiki;
+use function App\Fix\MdCat\add_Translated_from_MDWiki;
 
 class mdCatTest extends MyFunctionTest
 {

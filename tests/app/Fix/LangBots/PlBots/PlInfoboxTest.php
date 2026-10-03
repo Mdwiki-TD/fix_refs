@@ -2,8 +2,8 @@
 
 use Tests\MyFunctionTest;
 
-use function App\PL\FixPlInfobox\add_missing_params_to_choroba_infobox;
-use function App\PL\FixPlInfobox\pl_fixes;
+use function App\Fix\LangBots\PlBots\FixPlInfobox\add_missing_params_to_choroba_infobox;
+use function App\Fix\LangBots\PlBots\FixPlInfobox\pl_fixes;
 
 class plInfoboxTest extends MyFunctionTest
 {

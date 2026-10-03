@@ -1,9 +1,9 @@
 <?php
 
 use Tests\MyFunctionTest;
-use function App\EsBots\es_months\fix_es_months_in_refs;
-use function App\ES\fix_es;
-use function App\ES\fix_temps;
+use function App\Fix\LangBots\EsBots\EsMonths\fix_es_months_in_refs;
+use function App\Fix\LangBots\EsBots\ES\fix_es;
+use function App\Fix\LangBots\EsBots\ES\fix_temps;
 
 function fix_temps_wrap($text)
 {

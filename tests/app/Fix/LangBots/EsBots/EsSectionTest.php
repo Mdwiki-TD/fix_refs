@@ -1,7 +1,7 @@
 <?php
 
 use Tests\MyFunctionTest;
-use function App\EsBots\Section\es_section;
+use function App\Fix\LangBots\EsBots\Section\es_section;
 
 class esSectionTest extends MyFunctionTest
 {

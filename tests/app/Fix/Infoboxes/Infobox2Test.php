@@ -1,8 +1,8 @@
 <?php
 
 use Tests\MyFunctionTest;
-use function App\Infobox2\make_tempse;
-use function App\Infobox2\expend_new;
+use function App\Fix\Infoboxes\Infobox2\make_tempse;
+use function App\Fix\Infoboxes\Infobox2\expend_new;
 
 class infobox2Test extends MyFunctionTest
 {

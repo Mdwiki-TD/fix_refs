@@ -1,6 +1,6 @@
 <?php
 
-namespace App\EsBots\Section;
+namespace App\Fix\LangBots\EsBots\Section;
 
 
 function es_section($sourcetitle, $text, $mdwikiRevid)

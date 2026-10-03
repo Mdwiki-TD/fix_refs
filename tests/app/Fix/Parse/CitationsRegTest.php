@@ -4,10 +4,10 @@
 
 use Tests\MyFunctionTest;
 
-use function App\Parse\Reg_Citations\get_name;
-use function App\Parse\Reg_Citations\get_regex_citations;
-use function App\Parse\Reg_Citations\get_full_refs;
-use function App\Parse\Reg_Citations\get_short_citations;
+use function App\Fix\Parse\Reg_Citations\get_name;
+use function App\Fix\Parse\Reg_Citations\get_regex_citations;
+use function App\Fix\Parse\Reg_Citations\get_full_refs;
+use function App\Fix\Parse\Reg_Citations\get_short_citations;
 
 class CitationsRegTest extends MyFunctionTest
 {

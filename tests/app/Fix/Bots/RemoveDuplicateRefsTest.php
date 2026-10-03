@@ -2,8 +2,8 @@
 
 use Tests\MyFunctionTest;
 
-use function App\DelDuplicateRefs\remove_Duplicate_refs_With_attrs;
-use function App\DelDuplicateRefs\fix_refs_names;
+use function App\Fix\Bots\RemoveDuplicateRefs\remove_Duplicate_refs_With_attrs;
+use function App\Fix\Bots\RemoveDuplicateRefs\fix_refs_names;
 
 
 class removeDuplicateRefsTest extends MyFunctionTest

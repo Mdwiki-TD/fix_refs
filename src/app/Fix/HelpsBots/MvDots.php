@@ -1,6 +1,6 @@
 <?php
 
-namespace App\MovesDots;
+namespace App\Fix\HelpsBots\MvDots;
 
 
 

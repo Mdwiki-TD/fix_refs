@@ -1,10 +1,10 @@
 <?php
 
-namespace App\EsBots\es_months;
+namespace App\Fix\LangBots\EsBots\EsMonths;
 
 
 use App\Logger;
-use function App\Parse\Citations\getCitationsOld;
+use function App\Fix\Parse\Citations\getCitationsOld;
 use App\Fix\WikiParse\ParserTemplates;
 use function App\Fix\Bots\MonthNewValue\make_date_new_val_es;
 

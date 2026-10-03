@@ -87,8 +87,8 @@ app/Fix/
 └── LangBots/                  # Language-specific processors
     ├── EsBots/                # Spanish
     │   ├── es.php              # Main fix_es() + template translation tables
-    │   ├── es_months.php       # Month name localization
-    │   ├── es_refs.php         # Reference restructuring (mv_es_refs)
+    │   ├── EsMonths.php       # Month name localization
+    │   ├── EsRefs.php         # Reference restructuring (mv_es_refs)
     │   └── section.php         # Translation attribution template
     ├── PtBots/                # Portuguese
     │   └── fix_pt_months.php   # Month localization + spacing
@@ -193,7 +193,7 @@ The modular file structure aids navigation, but the growing `if` chain in `fix_p
 
 6. **No Composer autoloading for all files** - Despite PSR-4 configuration in `composer.json`, `bootstrap.php` manually globs and includes files, bypassing the autoloader.
 
-7. **Duplicate `start_end()` function** - Defined identically in both `fix_pt_months.php` and `es_months.php`.
+7. **Duplicate `start_end()` function** - Defined identically in both `fix_pt_months.php` and `EsMonths.php`.
 
 ## Critical Issues
 
@@ -207,7 +207,7 @@ The modular file structure aids navigation, but the growing `if` chain in `fix_p
 
 ### Bugs
 
-4. **`start_end()` function collision** - Both `fix_pt_months.php` (namespace `App\PT\FixPtMonth`) and `es_months.php` (namespace `App\EsBots\es_months`) define `start_end()` in their respective namespaces. While namespacing prevents a fatal error, the duplication is a maintenance risk.
+4. **`start_end()` function collision** - Both `fix_pt_months.php` (namespace `App\Fix\LangBots\PtBots\FixPtMonths`) and `EsMonths.php` (namespace `App\Fix\LangBots\EsBots\EsMonths`) define `start_end()` in their respective namespaces. While namespacing prevents a fatal error, the duplication is a maintenance risk.
 
 ### Performance
 

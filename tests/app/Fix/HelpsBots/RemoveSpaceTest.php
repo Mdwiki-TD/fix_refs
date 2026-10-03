@@ -2,8 +2,8 @@
 
 
 use Tests\MyFunctionTest;
-use function App\RemoveSpace\remove_spaces_between_last_word_and_beginning_of_ref;
-use function App\RemoveSpace\remove_spaces_between_ref_and_punctuation;
+use function App\Fix\HelpsBots\RemoveSpace\remove_spaces_between_last_word_and_beginning_of_ref;
+use function App\Fix\HelpsBots\RemoveSpace\remove_spaces_between_ref_and_punctuation;
 
 class removeSpaceTest extends MyFunctionTest
 {

@@ -3,7 +3,7 @@
 
 
 use Tests\MyFunctionTest;
-use function App\Parse\Category\get_categories_reg;
+use function App\Fix\Parse\Category\get_categories_reg;
 
 class CategoryTest extends MyFunctionTest
 {

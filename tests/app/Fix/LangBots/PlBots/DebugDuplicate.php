@@ -5,7 +5,7 @@ namespace Tests;
 // Debug test to see what's happening with duplicate parameters
 
 use Tests\MyFunctionTest;
-use function App\PL\FixPlInfobox\add_missing_params_to_choroba_infobox;
+use function App\Fix\LangBots\PlBots\FixPlInfobox\add_missing_params_to_choroba_infobox;
 use App\Fix\WikiParse\ParserTemplates;
 
 class DebugDuplicate extends MyFunctionTest

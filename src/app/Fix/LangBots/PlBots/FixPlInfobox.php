@@ -1,6 +1,6 @@
 <?php
 
-namespace App\PL\FixPlInfobox;
+namespace App\Fix\LangBots\PlBots\FixPlInfobox;
 
 
 use App\Fix\WikiParse\ParserTemplates;

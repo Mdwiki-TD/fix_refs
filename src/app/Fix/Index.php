@@ -3,22 +3,22 @@
 namespace App\Fix\Index;
 
 use App\Logger;
-use function App\Infobox\Expend_Infobox;
-use function App\PT\FixPtMonth\pt_fixes;
-use function App\PL\FixPlInfobox\pl_fixes;
-use function App\BG\bg_fixes;
-use function App\SW\sw_fixes;
-use function App\ES\fix_es;
-use function App\EsBots\Section\es_section;
-use function App\DelDuplicateRefs\remove_Duplicate_refs_With_attrs;
-use function App\MovesDots\move_dots_after_refs;
-use function App\EnLangParam\add_lang_en_to_refs;
-use function App\MdCat\add_Translated_from_MDWiki;
+use function App\Fix\Infoboxes\Infobox\Expend_Infobox;
+use function App\Fix\LangBots\PtBots\FixPtMonths\pt_fixes;
+use function App\Fix\LangBots\PlBots\FixPlInfobox\pl_fixes;
+use function App\Fix\LangBots\BgBots\FixBg\bg_fixes;
+use function App\Fix\LangBots\SwBot\sw_fixes;
+use function App\Fix\LangBots\EsBots\ES\fix_es;
+use function App\Fix\LangBots\EsBots\Section\es_section;
+use function App\Fix\Bots\RemoveDuplicateRefs\remove_Duplicate_refs_With_attrs;
+use function App\Fix\HelpsBots\MvDots\move_dots_after_refs;
+use function App\Fix\HelpsBots\EnLangParam\add_lang_en_to_refs;
+use function App\Fix\MdCat\add_Translated_from_MDWiki;
 use function App\Fix\Bots\Mini\mini_fixes;
 use function App\Fix\Bots\Mini\mini_fixes_after_fixing;
-use function App\RemoveSpace\remove_spaces_between_last_word_and_beginning_of_ref;
-use function App\RemoveSpace\remove_spaces_between_ref_and_punctuation;
-use function App\MissingRefs\fix_missing_refs;
+use function App\Fix\HelpsBots\RemoveSpace\remove_spaces_between_last_word_and_beginning_of_ref;
+use function App\Fix\HelpsBots\RemoveSpace\remove_spaces_between_ref_and_punctuation;
+use function App\Fix\HelpsBots\MissingRefs\fix_missing_refs;
 use function App\Fix\Bots\Redirect\page_is_redirect;
 
 function fix_page($text, $title, $moveDots, $infobox, $addEnLang, $lang, $sourcetitle, $mdwikiRevid)

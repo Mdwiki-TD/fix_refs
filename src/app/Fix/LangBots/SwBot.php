@@ -1,6 +1,6 @@
 <?php
 
-namespace App\SW;
+namespace App\Fix\LangBots\SwBot;
 
 
 function sw_fixes($text)

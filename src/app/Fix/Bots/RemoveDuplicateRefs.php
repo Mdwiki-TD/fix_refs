@@ -1,12 +1,12 @@
 <?php
 
-namespace App\DelDuplicateRefs;
+namespace App\Fix\Bots\RemoveDuplicateRefs;
 
 
 
 use function App\Fix\Bots\AttrsUtils\get_attrs;
 use function App\Fix\Bots\RefsUtils\remove_start_end_quotes;
-use function App\Parse\Citations\getCitationsOld;
+use function App\Fix\Parse\Citations\getCitationsOld;
 use App\Logger;
 
 function fix_refs_names(string $text): string

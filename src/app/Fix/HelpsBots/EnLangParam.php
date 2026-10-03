@@ -1,9 +1,9 @@
 <?php
 
-namespace App\EnLangParam;
+namespace App\Fix\HelpsBots\EnLangParam;
 
 use App\Logger;
-use function App\Parse\Citations\getCitationsOld;
+use function App\Fix\Parse\Citations\getCitationsOld;
 use App\Fix\WikiParse\ParserTemplates;
 
 function add_lang_en($text)

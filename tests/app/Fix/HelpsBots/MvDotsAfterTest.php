@@ -3,7 +3,7 @@
 
 
 use Tests\MyFunctionTest;
-use function App\MovesDots\move_dots_after_refs;
+use function App\Fix\HelpsBots\MvDots\move_dots_after_refs;
 
 class mvDotsAfterTest extends MyFunctionTest
 {

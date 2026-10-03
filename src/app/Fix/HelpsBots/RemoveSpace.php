@@ -1,6 +1,6 @@
 <?php
 
-namespace App\RemoveSpace;
+namespace App\Fix\HelpsBots\RemoveSpace;
 
 use App\Logger;
 

@@ -3,7 +3,7 @@
 
 
 use Tests\MyFunctionTest;
-use function App\ExpendRefs\refs_expend_work;
+use function App\Fix\Bots\ExpendRefs\refs_expend_work;
 
 class expendRefsTest extends MyFunctionTest
 {

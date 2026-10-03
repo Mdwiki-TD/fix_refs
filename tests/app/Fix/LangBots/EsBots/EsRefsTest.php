@@ -2,7 +2,7 @@
 // es_refsTest.php
 
 use Tests\MyFunctionTest;
-use function App\EsBots\es_refs\mv_es_refs;
+use function App\Fix\LangBots\EsBots\EsRefs\mv_es_refs;
 
 class esRefsTest extends MyFunctionTest
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Parse\Category;
+namespace App\Fix\Parse\Category;
 
 
 function get_categories_reg(string $text): array
