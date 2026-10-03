@@ -1,8 +1,8 @@
 <?php
 
-namespace WpRefs\WikiConnect\ParseWiki\DataModel;
+namespace App\fix_src\WikiParse\src\DataModel;
 
-use WpRefs\WikiConnect\ParseWiki\DataModel\Parameters;
+use App\fix_src\WikiParse\src\DataModel\Parameters;
 
 
 /**

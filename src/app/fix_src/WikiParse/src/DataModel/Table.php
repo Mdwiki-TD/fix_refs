@@ -1,6 +1,6 @@
 <?php
 
-namespace WpRefs\WikiConnect\ParseWiki\DataModel;
+namespace App\fix_src\WikiParse\src\DataModel;
 
 /**
  * Class Table

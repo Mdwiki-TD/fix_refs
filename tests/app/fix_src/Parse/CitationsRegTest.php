@@ -4,10 +4,10 @@
 
 use FixRefs\Tests\MyFunctionTest;
 
-use function WpRefs\Parse\Reg_Citations\get_name;
-use function WpRefs\Parse\Reg_Citations\get_regex_citations;
-use function WpRefs\Parse\Reg_Citations\get_full_refs;
-use function WpRefs\Parse\Reg_Citations\get_short_citations;
+use App\fix_src\Parse\CitationsReg;
+
+
+
 
 class CitationsRegTest extends MyFunctionTest
 {
@@ -15,34 +15,34 @@ class CitationsRegTest extends MyFunctionTest
     // اختبارات إضافية للدوال المساعدة
     public function testGetNameWithDoubleQuotes()
     {
-        $this->assertEquals("test_name", get_name('name="test_name"'));
+        $this->assertEquals("test_name", CitationsReg::get_name('name="test_name"'));
     }
 
     public function testGetNameWithSingleQuotes()
     {
-        $this->assertEquals("test_name", get_name("name='test_name'"));
+        $this->assertEquals("test_name", CitationsReg::get_name("name='test_name'"));
     }
 
     public function testGetNameWithoutQuotes()
     {
-        $this->assertEquals("test_name", get_name("name=test_name"));
+        $this->assertEquals("test_name", CitationsReg::get_name("name=test_name"));
     }
 
     public function testGetNameWithSpaces()
     {
-        $this->assertEquals("test name", get_name("name = 'test name'"));
+        $this->assertEquals("test name", CitationsReg::get_name("name = 'test name'"));
     }
 
     public function testGetNameEmpty()
     {
-        $this->assertEquals("", get_name(""));
-        $this->assertEquals("", get_name("other_attr=value"));
+        $this->assertEquals("", CitationsReg::get_name(""));
+        $this->assertEquals("", CitationsReg::get_name("other_attr=value"));
     }
 
     public function testGetRegexCitationsWithMultipleRefs()
     {
         $text = '<ref name="ref1">Content 1</ref> Text <ref name="ref2">Content 2</ref>';
-        $citations = get_regex_citations($text);
+        $citations = CitationsReg::get_regex_citations($text);
 
         $this->assertCount(2, $citations);
         $this->assertEquals("ref1", $citations[0]["name"]);
@@ -53,14 +53,14 @@ class CitationsRegTest extends MyFunctionTest
     public function testGetRegexCitationsWithNoRefs()
     {
         $text = 'No references here';
-        $citations = get_regex_citations($text);
+        $citations = CitationsReg::get_regex_citations($text);
         $this->assertCount(0, $citations);
     }
 
     public function testGetFullRefs()
     {
         $text = '<ref name="ref1">Content 1</ref> <ref name="ref2">Content 2</ref>';
-        $fullRefs = get_full_refs($text);
+        $fullRefs = CitationsReg::get_full_refs($text);
 
         $this->assertCount(2, $fullRefs);
         $this->assertEquals('<ref name="ref1">Content 1</ref>', $fullRefs["ref1"]);
@@ -70,7 +70,7 @@ class CitationsRegTest extends MyFunctionTest
     public function testGetShortCitations()
     {
         $text = '<ref name="ref1"/> Text <ref name="ref2"/>';
-        $shortRefs = get_short_citations($text);
+        $shortRefs = CitationsReg::get_short_citations($text);
 
         $this->assertCount(2, $shortRefs);
         $this->assertEquals("ref1", $shortRefs[0]["name"]);

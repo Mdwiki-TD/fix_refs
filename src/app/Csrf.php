@@ -1,71 +1,67 @@
 <?php
 
-namespace WpRefs\csrf;
+namespace App;
 
 /**
  * CSRF Token Management for MDWiki Tools.
  *
- * Provides functions to generate and verify CSRF tokens for form protection.
- *
+ * Provides class methods to generate and verify CSRF tokens for form protection.
  */
-
-if (session_status() === PHP_SESSION_NONE) {
-	session_start();
-}
-const CSRF_SESSION_KEY = "csrf_tokens";
-
-/**
- * Verify the CSRF token submitted with a POST request.
- *
- * Checks if the submitted token exists in the session's token list.
- * Tokens are single-use and removed after successful verification.
- *
- * @return bool True if the token is valid, false otherwise
- */
-function verify_csrf_token(): bool
+class Csrf
 {
-	// Initialize empty token array if not set
-	if (!isset($_SESSION[CSRF_SESSION_KEY]) || !is_array($_SESSION[CSRF_SESSION_KEY])) {
-		$_SESSION[CSRF_SESSION_KEY] = [];
-		// Security: No tokens in session means form was not properly initialized
-		return false;
-	}
+    public const CSRF_SESSION_KEY = "csrf_tokens";
 
-	// Get the submitted token
-	$submittedToken = $_POST['csrf_token'] ?? null;
+    private static function initSession(): void
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+    }
 
-	// No token submitted - verification fails
-	if (!$submittedToken) {
-		return false;
-	}
+    /**
+     * Verify the CSRF token submitted with a POST request.
+     *
+     * @return bool True if the token is valid, false otherwise
+     */
+    public static function verify_csrf_token(): bool
+    {
+        self::initSession();
 
-	// Check if token exists in the valid tokens list
-	if (in_array($submittedToken, $_SESSION[CSRF_SESSION_KEY], true)) {
-		// Valid token - remove it (single use)
-		$_SESSION[CSRF_SESSION_KEY] = array_values(
-			array_diff($_SESSION[CSRF_SESSION_KEY], [$submittedToken])
-		);
-		return true;
-	}
+        if (!isset($_SESSION[self::CSRF_SESSION_KEY]) || !is_array($_SESSION[self::CSRF_SESSION_KEY])) {
+            $_SESSION[self::CSRF_SESSION_KEY] = [];
+            return false;
+        }
 
-	// Invalid or reused token
-	return false;
-}
+        $submittedToken = $_POST['csrf_token'] ?? null;
 
-/**
- * Generate a new CSRF token for form protection.
- *
- * Creates a cryptographically secure random token and stores it
- * in the session for later verification. Each token is single-use.
- *
- * @return string The generated 64-character hex token
- */
-function generate_csrf_token(): string
-{
-	$token = bin2hex(random_bytes(32));
-	if (!isset($_SESSION[CSRF_SESSION_KEY])) {
-		$_SESSION[CSRF_SESSION_KEY] = [];
-	}
-	$_SESSION[CSRF_SESSION_KEY][] = $token;
-	return $token;
+        if (!$submittedToken) {
+            return false;
+        }
+
+        if (in_array($submittedToken, $_SESSION[self::CSRF_SESSION_KEY], true)) {
+            $_SESSION[self::CSRF_SESSION_KEY] = array_values(
+                array_diff($_SESSION[self::CSRF_SESSION_KEY], [$submittedToken])
+            );
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Generate a new CSRF token for form protection.
+     *
+     * @return string The generated 64-character hex token
+     */
+    public static function generate_csrf_token(): string
+    {
+        self::initSession();
+
+        $token = bin2hex(random_bytes(32));
+        if (!isset($_SESSION[self::CSRF_SESSION_KEY])) {
+            $_SESSION[self::CSRF_SESSION_KEY] = [];
+        }
+        $_SESSION[self::CSRF_SESSION_KEY][] = $token;
+        return $token;
+    }
 }

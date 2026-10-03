@@ -3,7 +3,7 @@
 
 
 use FixRefs\Tests\MyFunctionTest;
-use function WpRefs\Bots\TxtLib2\extract_templates_and_params;
+use App\fix_src\bots\Txtlib2;
 
 class txtlib2Test extends MyFunctionTest
 {
@@ -16,7 +16,7 @@ class txtlib2Test extends MyFunctionTest
     {
         $this->textInput = file_get_contents(__DIR__ . "/fixtures/txtlib2/input.txt");
         $this->jsonData = json_decode(file_get_contents(__DIR__ . "/fixtures/txtlib2/expected.json"), true);
-        $this->tempData = extract_templates_and_params($this->textInput);
+        $this->tempData = Txtlib2::extract_templates_and_params($this->textInput);
     }
 
     public function testInputTextNotEmpty(): void

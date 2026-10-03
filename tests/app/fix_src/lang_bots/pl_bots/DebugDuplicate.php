@@ -5,8 +5,8 @@ namespace FixRefs\Tests;
 // Debug test to see what's happening with duplicate parameters
 
 use FixRefs\Tests\MyFunctionTest;
-use function WpRefs\PL\FixPlInfobox\add_missing_params_to_choroba_infobox;
-use function WikiParse\Template\getTemplates;
+use App\fix_src\lang_bots\pl_bots\FixPlInfobox;
+use App\fix_src\WikiParse\Template;
 
 class DebugDuplicate extends MyFunctionTest
 {
@@ -26,14 +26,14 @@ class DebugDuplicate extends MyFunctionTest
 TXT;
 
         // Verify initial template structure
-        $templates = getTemplates($input);
+        $templates = Template::getTemplates($input);
         $this->assertNotEmpty($templates, "Failed to parse templates from input text.");
 
         $initialParams = $templates[0]->getParameters();
         $this->assertArrayHasKey('ICD10', $initialParams, "Initial input missing expected parameter 'ICD10'.");
 
         // Process the infobox
-        $result = add_missing_params_to_choroba_infobox($input);
+        $result = FixPlInfobox::add_missing_params_to_choroba_infobox($input);
 
         // Assert that ICD10 parameter is not duplicated
         $count = preg_match_all('/\|ICD10\s*=/', $result, $matches);

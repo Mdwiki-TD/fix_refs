@@ -1,6 +1,6 @@
 <?php
 
-namespace WpRefs\WikiConnect\ParseWiki;
+namespace App\fix_src\WikiParse\src;
 
 /**
  * Class ParserCategories

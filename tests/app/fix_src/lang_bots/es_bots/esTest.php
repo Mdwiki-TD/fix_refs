@@ -1,15 +1,15 @@
 <?php
 
 use FixRefs\Tests\MyFunctionTest;
-use function WpRefs\EsBots\es_months\fix_es_months_in_refs;
-use function WpRefs\ES\fix_es;
-use function WpRefs\ES\fix_temps;
+use App\fix_src\lang_bots\es_bots\EsMonths;
+use App\fix_src\lang_bots\es_bots\Es;
+
 
 function fix_temps_wrap($text)
 {
     // ---
-    $result = fix_temps($text);
-    $result = fix_es_months_in_refs($result);
+    $result = Es::fix_temps($text);
+    $result = EsMonths::fix_es_months_in_refs($result);
     $result = preg_replace("/\s*=\s*/", "=", $result);
     // ---
     return $result;
@@ -61,7 +61,7 @@ class esTest extends MyFunctionTest
         $textInput   = file_get_contents(__DIR__ . "/fixtures/3/input.txt");
         $expected  = file_get_contents(__DIR__ . "/fixtures/3/expected.txt");
         // --
-        $result = fix_temps($textInput);
+        $result = Es::fix_temps($textInput);
         // --
         $this->assertEquals($expected, $result);
     }
@@ -71,7 +71,7 @@ class esTest extends MyFunctionTest
         $textInput   = file_get_contents(__DIR__ . "/fixtures/2/input.txt");
         $expected  = file_get_contents(__DIR__ . "/fixtures/2/expected.txt");
         // --
-        $result = fix_es($textInput);
+        $result = Es::fix_es($textInput);
         // --
         $fixedFile = __DIR__ . "/fixtures/2/output.txt";
         file_put_contents($fixedFile, $result);

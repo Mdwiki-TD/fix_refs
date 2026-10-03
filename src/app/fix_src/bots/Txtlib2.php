@@ -1,32 +1,25 @@
 <?php
 
-namespace WpRefs\Bots\TxtLib2;
+namespace App\fix_src\bots;
 
-use function WikiParse\Template\getTemplate;
-use function WikiParse\Template\getTemplates;
+use App\fix_src\WikiParse\Template;
 
-
-function extract_templates_and_params($text)
+class Txtlib2
 {
-    // ---
-    $temps = [];
-    $tempsIn = getTemplates($text);
-    // ---
-    foreach ($tempsIn as $temp) {
-        // ---
-        $name = $temp->getStripName();
-        // ---
-        $textTemplate = $temp->getOriginalText();
-        // ---
-        $params = $temp->getParameters();
-        // ---
-        $temps[] = [
-            "name" => $name,
-            "item" => $textTemplate,
-            "params" => $params,
-        ];
-        // ---
+    public static function extract_templates_and_params($text)
+    {
+        $temps = [];
+        $tempsIn = Template::getTemplates($text);
+        foreach ($tempsIn as $temp) {
+            $name = $temp->getStripName();
+            $textTemplate = $temp->getOriginalText();
+            $params = $temp->getParameters();
+            $temps[] = [
+                "name" => $name,
+                "item" => $textTemplate,
+                "params" => $params,
+            ];
+        }
+        return $temps;
     }
-    // ---
-    return $temps;
 }

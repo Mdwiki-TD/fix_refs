@@ -1,8 +1,8 @@
 <?php
 
-namespace WpRefs\WikiConnect\ParseWiki;
+namespace App\fix_src\WikiParse\src;
 
-use WpRefs\WikiConnect\ParseWiki\DataModel\ExternalLink;
+use App\fix_src\WikiParse\src\DataModel\ExternalLink;
 
 /**
  * Class ParserExternalLinks

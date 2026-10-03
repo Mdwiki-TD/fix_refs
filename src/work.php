@@ -2,7 +2,7 @@
 
 namespace WpRefs\FixPage;
 
-use function WpRefs\Run\fixPgeWithSetting;
+use App\Run;
 
 /**
  * WARNING / DEPENDENCY NOTICE:
@@ -29,7 +29,7 @@ function fix_page_with_setting(
     ?bool $expand = null,
     ?bool $addEnLang = null
 ): string {
-    return fixPgeWithSetting(
+    return Run::fixPgeWithSetting(
         $sourcetitle,
         $title,
         $text,

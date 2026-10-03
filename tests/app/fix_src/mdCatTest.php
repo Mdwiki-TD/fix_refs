@@ -2,7 +2,7 @@
 
 use FixRefs\Tests\MyFunctionTest;
 
-use function WpRefs\MdCat\add_Translated_from_MDWiki;
+use App\fix_src\MdCat;
 
 class mdCatTest extends MyFunctionTest
 {
@@ -10,7 +10,7 @@ class mdCatTest extends MyFunctionTest
     {
         $text = "[[Kategorija:Translated from MDWiki]]";
 
-        $result = add_Translated_from_MDWiki($text, "hr");
+        $result = MdCat::add_Translated_from_MDWiki($text, "hr");
 
         $this->assertEquals($text, $result);
     }
@@ -18,7 +18,7 @@ class mdCatTest extends MyFunctionTest
     public function testSkipLangsIt()
     {
         $text = "This is a sample text";
-        $result = add_Translated_from_MDWiki($text, "it");
+        $result = MdCat::add_Translated_from_MDWiki($text, "it");
         $this->assertEquals($text, $result);
     }
 
@@ -26,7 +26,7 @@ class mdCatTest extends MyFunctionTest
     public function testAppendsCategoryWhenConditionsMet()
     {
         $text = "This is a sample text";
-        $result = add_Translated_from_MDWiki($text, "fr");
+        $result = MdCat::add_Translated_from_MDWiki($text, "fr");
 
         $expected = "This is a sample text\n[[Catégorie:Traduit de MDWiki]]\n";
         $this->assertEquals($expected, $result);
@@ -36,7 +36,7 @@ class mdCatTest extends MyFunctionTest
     public function testDoesNotAppendWhenCategoryEmpty()
     {
         $text = "This is a sample text";
-        $result = add_Translated_from_MDWiki($text, "fr");
+        $result = MdCat::add_Translated_from_MDWiki($text, "fr");
         $expected = "This is a sample text\n[[Catégorie:Traduit de MDWiki]]\n";
         $this->assertEquals($expected, $result);
     }
@@ -47,7 +47,7 @@ class mdCatTest extends MyFunctionTest
         $category = "[[Category:Translated from MDWiki (de)]]";
         $text = "This is a sample text\n" . $category;
 
-        $result = add_Translated_from_MDWiki($text, "de");
+        $result = MdCat::add_Translated_from_MDWiki($text, "de");
 
         $this->assertEquals($text, $result);
     }
@@ -57,7 +57,7 @@ class mdCatTest extends MyFunctionTest
     {
         $text = "This is a sample text\n[[Category:Translated from MDWiki]]";
 
-        $result = add_Translated_from_MDWiki($text, "es");
+        $result = MdCat::add_Translated_from_MDWiki($text, "es");
 
         $this->assertEquals($text, $result);
     }
@@ -67,7 +67,7 @@ class mdCatTest extends MyFunctionTest
     {
         $text = "This is a sample text\n[[Category:Translated from MDWiki]]\n";
 
-        $result = add_Translated_from_MDWiki($text, "ja");
+        $result = MdCat::add_Translated_from_MDWiki($text, "ja");
 
         $this->assertEquals($text, $result);
     }
@@ -77,7 +77,7 @@ class mdCatTest extends MyFunctionTest
     {
         $text = "This is a sample text\n\n";
 
-        $result = add_Translated_from_MDWiki($text, "ru");
+        $result = MdCat::add_Translated_from_MDWiki($text, "ru");
 
         $expected = "This is a sample text\n\n\n[[Категория:Статьи, переведённые с MDWiki]]\n";
         $this->assertEquals($expected, $result);
@@ -91,15 +91,15 @@ class mdCatTest extends MyFunctionTest
         foreach ($langs as $lang => $cat) {
             $textNoCat = "This is a sample text\n\n";
             $expected = "{$textNoCat}\n[[{$cat}]]\n";
-            $result = add_Translated_from_MDWiki($textNoCat, $lang);
+            $result = MdCat::add_Translated_from_MDWiki($textNoCat, $lang);
             $this->assertEqualCompare($expected, $textNoCat, $result);
             // ---
             $textWithCat = "This is a sample text\n\n[[{$cat}]]\n";
-            $result = add_Translated_from_MDWiki($textWithCat, $lang);
+            $result = MdCat::add_Translated_from_MDWiki($textWithCat, $lang);
             $this->assertEquals($textWithCat, $result);
             // ---
             $textWithCat2 = "This is a sample text\n\n[[category:Translated_from_MDWiki]]\n";
-            $result = add_Translated_from_MDWiki($textWithCat2, $lang);
+            $result = MdCat::add_Translated_from_MDWiki($textWithCat2, $lang);
             $this->assertEquals($textWithCat2, $result);
             // ---
         }

@@ -6,8 +6,8 @@ namespace FixRefs\Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use FixRefs\Tests\MyFunctionTest;
-use function WpRefs\PL\FixPlInfobox\add_missing_params_to_choroba_infobox;
-use function WpRefs\PL\FixPlInfobox\pl_fixes;
+use App\fix_src\lang_bots\pl_bots\FixPlInfobox;
+
 
 class ManualTest extends MyFunctionTest
 {
@@ -101,8 +101,8 @@ TXT
     ): void {
         // Execute target function dynamically based on provider setting
         $result = ($targetFunction === 'pl_fixes')
-            ? pl_fixes($input)
-            : add_missing_params_to_choroba_infobox($input);
+            ? FixPlInfobox::pl_fixes($input)
+            : FixPlInfobox::add_missing_params_to_choroba_infobox($input);
 
         if ($expectUnchanged) {
             $this->assertSame(

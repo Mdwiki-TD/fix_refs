@@ -1,23 +1,26 @@
 <?php
 
-namespace WikiParse\Template;
+namespace App\fix_src\WikiParse;
 
-use WpRefs\WikiConnect\ParseWiki\ParserTemplate;
-use WpRefs\WikiConnect\ParseWiki\ParserTemplates;
+use App\fix_src\WikiParse\src\ParserTemplate;
+use App\fix_src\WikiParse\src\ParserTemplates;
 
-function getTemplate($text)
+class Template
 {
-    $parser = new ParserTemplate($text);
-    $temp = $parser->getTemplate();
-    return $temp;
-}
-
-function getTemplates($text)
-{
-    if (empty($text)) {
-        return [];
+    public static function getTemplate($text)
+    {
+        $parser = new ParserTemplate($text);
+        $temp = $parser->getTemplate();
+        return $temp;
     }
-    $parser = new ParserTemplates($text);
-    $temps = $parser->getTemplates();
-    return $temps;
+
+    public static function getTemplates($text)
+    {
+        if (empty($text)) {
+            return [];
+        }
+        $parser = new ParserTemplates($text);
+        $temps = $parser->getTemplates();
+        return $temps;
+    }
 }

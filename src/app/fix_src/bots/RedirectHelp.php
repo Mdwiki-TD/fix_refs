@@ -1,14 +1,14 @@
 <?php
 
-namespace WpRefs\Bots\Redirect;
+namespace App\fix_src\bots;
 
-function page_is_redirect($title, $text)
+class RedirectHelp
 {
-    // #пренасочване
-    // ---
-    if (preg_match('/^#(пренасочване|redirect)/', $text)) {
-        return true;
+    public static function page_is_redirect($title, $text)
+    {
+        if (preg_match('/^#(пренасочване|redirect)/i', $text)) {
+            return true;
+        }
+        return false;
     }
-    // ---
-    return false;
 }

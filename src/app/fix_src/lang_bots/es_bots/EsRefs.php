@@ -1,150 +1,111 @@
 <?php
 
-namespace WpRefs\EsBots\es_refs;
+namespace App\fix_src\lang_bots\es_bots;
 
-use function WikiParse\Template\getTemplates;
-use function WpRefs\Parse\Reg_Citations\get_short_citations;
-use function WpRefs\Parse\Citations\getCitationsOld;
+use App\fix_src\Parse\Citations;
+use App\fix_src\Parse\CitationsReg;
+use App\fix_src\WikiParse\Template;
 
-function get_refs(string $text): array
+class EsRefs
 {
-    // ---
-    $newText = $text;
-    // ---
-    $refs = [];
-    // ---
-    $citations = getCitationsOld($text);
-    // ---
-    $newText = $text;
-    // ---
-    $numb = 0;
-    // ---
-    foreach ($citations as $key => $citation) {
-        // ---
-        $citeText = $citation->getOriginalText();
-        // ---
-        $citeContents = $citation->getContent();
-        // ---
-        $citeAttrs = $citation->getAttributes();
-        $citeAttrs = $citeAttrs ? trim($citeAttrs) : "";
-        // ---
-        if (empty($citeAttrs)) {
-            $numb += 1;
-            $name = "autogen_" . $numb;
-            $citeAttrs = "name='$name'";
+    public static function get_refs(string $text): array
+    {
+        $newText = $text;
+        $refs = [];
+        $citations = Citations::getCitationsOld($text);
+        $newText = $text;
+        $numb = 0;
+
+        foreach ($citations as $key => $citation) {
+            $citeText = $citation->getOriginalText();
+            $citeContents = $citation->getContent();
+            $citeAttrs = $citation->getAttributes();
+            $citeAttrs = $citeAttrs ? trim($citeAttrs) : "";
+
+            if (empty($citeAttrs)) {
+                $numb += 1;
+                $name = "autogen_" . $numb;
+                $citeAttrs = "name='$name'";
+            }
+
+            $refs[$citeAttrs] = $citeContents;
+            $citeNewtext = "<ref $citeAttrs />";
+            $newText = str_replace($citeText, $citeNewtext, $newText);
         }
-        // ---
-        $refs[$citeAttrs] = $citeContents;
-        // ---
-        // echo_test("\n$citeAttrs\n");
-        // ---
-        $citeNewtext = "<ref $citeAttrs />";
-        // ---
-        $newText = str_replace($citeText, $citeNewtext, $newText);
-    }
-    // ---
-    return [
-        "refs" => $refs,
-        "new_text" => $newText,
-    ];
-}
 
-function check_short_refs($line)
-{
-    // ---
-    $shorts = get_short_citations($line);
-    // ---
-    foreach ($shorts as $short) {
-        $line = str_replace($short["tag"], "", $line);
-    }
-    // ---
-    // remove \n+
-    $line = preg_replace("/\n+/u", "\n", $line);
-    // ---
-    return $line;
-};
-
-function make_line(array $refs): string
-{
-    $line = "\n";
-
-    foreach ($refs as $name => $ref) {
-        $la = '<ref ' . trim($name) . '>' . $ref . '</ref>' . "\n";
-        $line .= $la;
+        return [
+            "refs" => $refs,
+            "new_text" => $newText,
+        ];
     }
 
-    $line = trim($line);
-
-    return $line;
-}
-
-function add_line_to_temp($line, $text)
-{
-    // ---
-    $tempsIn = getTemplates($text);
-    // ---
-    // echo_test("lenth temps_in:" . count($tempsIn) . "\n");
-    // ---
-    $newText = $text;
-    // ---
-    $tempAlreadyIn = false;
-    // ---
-    foreach ($tempsIn as $temp) {
-        // ---
-        $name = $temp->getStripName();
-        // ---
-        // echo_test("\n$name\n");
-        // ---
-        $oldTextTemplate = $temp->getOriginalText();
-        // ---
-        if (!in_array(strtolower($name), ["reflist", "listaref"])) {
-            continue;
-        };
-        // ---
-        // echo_test("\n$name\n");
-        // ---
-        $refnParam = $temp->getParameter("refs");
-        // ---
-        if ($refnParam) {
-            $refnParam = check_short_refs($refnParam);
-            // ---
-            $line = trim($refnParam) . "\n" . trim($line);
-        };
-        // ---
-        $temp->setParameter("refs", "\n" . trim($line) . "\n");
-        // ---
-        $tempAlreadyIn = true;
-        // ---
-        $newTextStr = $temp->toString();
-        // ---
-        $newText = str_replace($oldTextTemplate, $newTextStr, $newText);
-        // ---
-        break;
-    };
-    // ---
-    if (!$tempAlreadyIn) {
-        $sectionRef = "\n== Referencias ==\n{{listaref|refs=\n$line\n}}";
-        $newText .= $sectionRef;
+    public static function check_short_refs($line)
+    {
+        $shorts = CitationsReg::get_short_citations($line);
+        foreach ($shorts as $short) {
+            $line = str_replace($short["tag"], "", $line);
+        }
+        $line = preg_replace("/\n+/u", "\n", $line);
+        return $line;
     }
-    // ---
-    return $newText;
-}
 
-function mv_es_refs(string $text): string
-{
-    // ---
-    if (empty($text)) {
-        // echo_test("text is empty");
-        return $text;
+    public static function make_line(array $refs): string
+    {
+        $line = "\n";
+        foreach ($refs as $name => $ref) {
+            $la = '<ref ' . trim($name) . '>' . $ref . '</ref>' . "\n";
+            $line .= $la;
+        }
+        $line = trim($line);
+        return $line;
     }
-    // ---
-    $refs = get_refs($text);
-    // ---
-    $newLines = make_line($refs['refs']);
-    // ---
-    $newText = $refs['new_text'];
-    // ---
-    $newText = add_line_to_temp($newLines, $newText);
-    // ---
-    return $newText;
+
+    public static function add_line_to_temp($line, $text)
+    {
+        $tempsIn = Template::getTemplates($text);
+        $newText = $text;
+        $tempAlreadyIn = false;
+
+        foreach ($tempsIn as $temp) {
+            $name = $temp->getStripName();
+            $oldTextTemplate = $temp->getOriginalText();
+
+            if (!in_array(strtolower($name), ["reflist", "listaref"])) {
+                continue;
+            }
+
+            $refnParam = $temp->getParameter("refs");
+            if ($refnParam) {
+                $refnParam = self::check_short_refs($refnParam);
+                $line = trim($refnParam) . "\n" . trim($line);
+            }
+
+            $temp->setParameter("refs", "\n" . trim($line) . "\n");
+            $tempAlreadyIn = true;
+            $newTextStr = $temp->toString();
+            $newText = str_replace($oldTextTemplate, $newTextStr, $newText);
+            break;
+        }
+
+        if (!$tempAlreadyIn) {
+            $sectionRef = "\n== Referencias ==\n{{listaref|refs=\n$line\n}}";
+            $newText .= $sectionRef;
+        }
+
+        return $newText;
+    }
+
+    public static function mv_es_refs(string $text): string
+    {
+        if (empty($text)) {
+            return $text;
+        }
+
+        $refs = self::get_refs($text);
+        $newLines = self::make_line($refs['refs']);
+        $newText = $refs['new_text'];
+        $newText = self::add_line_to_temp($newLines, $newText);
+
+        return $newText;
+    }
 }

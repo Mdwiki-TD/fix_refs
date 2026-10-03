@@ -1,14 +1,14 @@
 <?php
 
 use FixRefs\Tests\MyFunctionTest;
-use function WpRefs\WprefText\fix_page;
+use App\fix_src\Index;
 
 class indexTest extends MyFunctionTest
 {
 
     private function fix_page_wrap(string $text, string $lang, $moveDots, $infobox, $addEnLang)
     {
-        return fix_page($text, "title", $moveDots, $infobox, $addEnLang, $lang, 'SomeTitle', 0);
+        return Index::fix_page($text, "title", $moveDots, $infobox, $addEnLang, $lang, 'SomeTitle', 0);
     }
 
     // skip it

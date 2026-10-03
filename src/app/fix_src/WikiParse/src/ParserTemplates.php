@@ -1,9 +1,9 @@
 <?php
 
-namespace WpRefs\WikiConnect\ParseWiki;
+namespace App\fix_src\WikiParse\src;
 
-use WpRefs\WikiConnect\ParseWiki\DataModel\Template;
-use WpRefs\WikiConnect\ParseWiki\ParserTemplate;
+use App\fix_src\WikiParse\src\DataModel\Template;
+use App\fix_src\WikiParse\src\ParserTemplate;
 
 /**
  * Class ParserTemplates
