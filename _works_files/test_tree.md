@@ -1,18 +1,8 @@
 ```
 tests/
 ├── app/
-│   ├── fix_src/
+│   ├── Fix/
 │   │   ├── bots/
-│   │   │   ├── fixtures/
-│   │   │   │   ├── del_dup/
-│   │   │   │   │   ├── expected.txt
-│   │   │   │   │   └── input.txt
-│   │   │   │   ├── expend/
-│   │   │   │   │   ├── expected.txt
-│   │   │   │   │   └── input.txt
-│   │   │   │   └── txtlib2/
-│   │   │   │       ├── expected.json
-│   │   │   │       └── input.txt
 │   │   │   ├── attrsUtilsTest.php
 │   │   │   ├── expendRefsTest.php
 │   │   │   ├── ExtendedMiniFixesBotTest.php
@@ -20,66 +10,20 @@ tests/
 │   │   │   ├── refsUtilsTest.php
 │   │   │   ├── removeDuplicateRefsTest.php
 │   │   │   └── txtlib2Test.php
-│   │   ├── fixtures/
-│   │   │   └── indexTest/
-│   │   │       ├── 1/
-│   │   │       │   ├── expected.txt
-│   │   │       │   ├── input.txt
-│   │   │       │   └── output.txt
-│   │   │       └── 2/
-│   │   │           ├── expected.txt
-│   │   │           ├── input.txt
-│   │   │           └── output.txt
 │   │   ├── helps_bots/
-│   │   │   ├── fixtures/
-│   │   │   │   └── remove_space_texts/
-│   │   │   │       ├── 1/
-│   │   │   │       │   ├── expected.txt
-│   │   │   │       │   ├── input.txt
-│   │   │   │       │   └── output.txt
-│   │   │   │       ├── 2/
-│   │   │   │       │   ├── expected.txt
-│   │   │   │       │   ├── input.txt
-│   │   │   │       │   └── output.txt
-│   │   │   │       └── 3/
-│   │   │   │           ├── expected.txt
-│   │   │   │           ├── input.txt
-│   │   │   │           └── output.txt
 │   │   │   ├── enLangParamTest.php
 │   │   │   ├── missingRefsTest.php
 │   │   │   ├── mvDotsAfterTest.php
 │   │   │   ├── mvDotsBeforeTest.php
-│   │   │   ├── removeSpace2PerformanceTest.php
 │   │   │   ├── removeSpace2Test.php
 │   │   │   └── removeSpaceTest.php
 │   │   ├── infoboxes/
-│   │   │   ├── fixtures/
-│   │   │   │   ├── 1/
-│   │   │   │   │   ├── expected.txt
-│   │   │   │   │   ├── input.txt
-│   │   │   │   │   └── output.txt
-│   │   │   │   └── infobox2_tempse/
-│   │   │   │       ├── expected.json
-│   │   │   │       ├── input.txt
-│   │   │   │       └── output.json
 │   │   │   ├── infobox2Test.php
 │   │   │   └── infoboxTest.php
 │   │   ├── lang_bots/
 │   │   │   ├── bg_bots/
 │   │   │   │   └── fixBgTest.php
 │   │   │   ├── es_bots/
-│   │   │   │   ├── fixtures/
-│   │   │   │   │   ├── 1/
-│   │   │   │   │   │   ├── expected.txt
-│   │   │   │   │   │   ├── input.txt
-│   │   │   │   │   │   └── output.txt
-│   │   │   │   │   ├── 2/
-│   │   │   │   │   │   ├── expected.txt
-│   │   │   │   │   │   ├── input.txt
-│   │   │   │   │   │   └── output.txt
-│   │   │   │   │   └── 3/
-│   │   │   │   │       ├── expected.txt
-│   │   │   │   │       └── input.txt
 │   │   │   │   ├── esMonthsNewValueTest.php
 │   │   │   │   ├── esMonthsTest.php
 │   │   │   │   ├── esRefsTest.php
@@ -107,7 +51,6 @@ tests/
 │   │   ├── indexTest.php
 │   │   └── mdCatTest.php
 │   └── wikibots/
-├── bootstrap.php
-└── fix.py
+└── bootstrap.php
 
 ```

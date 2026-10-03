@@ -12,7 +12,10 @@ skip_list = [
     "load_env.php",
     "example.env",
     "*.html",
-    # "*.php",
+    "fixtures",
+    "resources",
+    "demo",
+    "*.py",
 ]
 
 paths = [

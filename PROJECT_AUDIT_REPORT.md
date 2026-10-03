@@ -24,7 +24,7 @@ Fix Refs is a PHP library that parses and fixes `<ref>` tags and citation templa
 | License              | GPL-3.0-or-later                   |
 | Deployment Target    | Wikimedia Toolforge                |
 
-The architecture follows a pipeline pattern: `fix_page()` in `src/app/fix_src/index.php` chains 11 transformation stages, each calling focused functions from `bots/`, `helps_bots/`, and `lang_bots/` modules. A separate `WikiParse` submodule provides OOP-based wikitext parsing with recursive template extraction.
+The architecture follows a pipeline pattern: `fix_page()` in `src/app/Fix/index.php` chains 11 transformation stages, each calling focused functions from `bots/`, `helps_bots/`, and `lang_bots/` modules. A separate `WikiParse` submodule provides OOP-based wikitext parsing with recursive template extraction.
 
 ---
 
@@ -69,7 +69,7 @@ All modules within `src/` share these patterns:
 | ----------------------------------------------------- | ----------- | --------------------------------------------------------------------------------------------------- |
 | Duplicate `str_starts_with`/`str_ends_with` polyfills | 2           | `refs_utils.php`, `remove_space.php`                                                                |
 | Duplicate `start_end()` function                      | 2           | `fix_pt_months.php`, `es_months.php`                                                                |
-| Commented-out code in production                      | 6+          | `app/fix_src/index.php`, `text_post.php`, `en_lang_param.php`, `es_months.php`, `fix_pt_months.php` |
+| Commented-out code in production                      | 6+          | `app/Fix/index.php`, `text_post.php`, `en_lang_param.php`, `es_months.php`, `fix_pt_months.php` |
 | Debug output controlled by `$_GET['test']`            | 4           | `src/index.php`, `src/test.php`, `src/work.php`, `debug_helper.php`                                     |
 | No input validation on `$lang`                        | 3           | `work.php`, `wikitext.php`, `missing_refs.php`                                                      |
 
@@ -130,7 +130,7 @@ CSRF verification is commented out. Any external site can submit POST requests t
 
 ### HIGH -- Debug Mode Exposed to Users
 
-**Files:** `src/index.php:5`, `src/test.php:3`, `src/work.php:5`, `src/app/fix_src/debug_helper.php:16-22`
+**Files:** `src/index.php:5`, `src/test.php:3`, `src/work.php:5`, `src/app/Fix/debug_helper.php:16-22`
 
 ```php
 if (isset($_GET['test']) || (($_SERVER['SERVER_NAME'] ?? '') === 'localhost')) {
@@ -145,7 +145,7 @@ Any user can append `?test=1` to enable full error display, leaking PHP stack tr
 
 ### MEDIUM -- Hardcoded Server Paths
 
-**File:** `src/app/fix_src/helps_bots/missing_refs.php`, lines 70-72
+**File:** `src/app/Fix/helps_bots/missing_refs.php`, lines 70-72
 
 ```php
 $path = ($server == "localhost")
@@ -167,7 +167,7 @@ The `$lang` parameter from user input is inserted directly into API URLs (`https
 
 ### MEDIUM -- Repeated Full-Text Parsing
 
-**File:** `src/app/fix_src/index.php` (pipeline)
+**File:** `src/app/Fix/index.php` (pipeline)
 
 During a single `fix_page()` call, the following functions each independently parse all citations from the full text:
 
@@ -225,7 +225,7 @@ Functions like `add_Translated_from_MDWiki()`, `bg_section()`, and `es_section()
 | --- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------ |
 | 1   | Fix `$new_text` -> `$newtext` variable name bug                                                          | `src/text_post.php:50,53`                                                       | 5 min  |
 | 2   | Uncomment and enable `verify_csrf_token()`                                                               | `src/text_post.php:39`                                                          | 5 min  |
-| 3   | Gate `display_errors` behind an environment variable (e.g., `FIX_REFS_DEBUG`) instead of `$_GET['test']` | `src/index.php`, `src/test.php`, `src/work.php`, `src/app/fix_src/debug_helper.php` | 30 min |
+| 3   | Gate `display_errors` behind an environment variable (e.g., `FIX_REFS_DEBUG`) instead of `$_GET['test']` | `src/index.php`, `src/test.php`, `src/work.php`, `src/app/Fix/debug_helper.php` | 30 min |
 | 4   | Remove all commented-out code from production files                                                      | Multiple                                                                        | 30 min |
 | 5   | Add input length limit (e.g., 1MB) to `text_post.php`                                                    | `src/text_post.php`                                                             | 15 min |
 
@@ -237,7 +237,7 @@ Functions like `add_Translated_from_MDWiki()`, `bg_section()`, and `es_section()
 | 2   | Consolidate duplicate `str_starts_with`/`str_ends_with` into a single `polyfills.php`                                        | Removes code duplication                 |
 | 3   | Add `$lang` whitelist validation in `work.php` (`in_array($lang, ['es','pt','pl','bg','sw','hy','ar','zh','hi','ru','hr'])`) | Prevents invalid input propagation       |
 | 4   | Extract User-Agent string to a constant in `wikitext.php`                                                                    | DRY principle                            |
-| 5   | Add PHPStan analysis for `src/` (currently only covers `src/app/fix_src/`)                                                   | Catches bugs in web layer                |
+| 5   | Add PHPStan analysis for `src/` (currently only covers `src/app/Fix/`)                                                   | Catches bugs in web layer                |
 | 6   | Validate API responses in `from_api()` before accessing nested keys                                                          | Prevents null access on API errors       |
 | 7   | Replace `$_SERVER['SERVER_NAME']` checks with `getenv('FIX_REFS_ENV')`                                                       | Removes server info leak                 |
 
@@ -248,7 +248,7 @@ Functions like `add_Translated_from_MDWiki()`, `bg_section()`, and `es_section()
 | 1   | **Extract `LanguageFixerInterface`** with per-language implementations. Replace the `if` chain in `fix_page()` with a registry that loads the appropriate fixer based on `$lang`. | Eliminates the growing `if` chain, enables adding languages without modifying core code |
 | 2   | **Deprecate `CitationOld`** in favor of `WikiParse/src/ParserCitations`. Migrate all bot functions to use the OOP parser.                                                         | Eliminates dual parsing systems                                                         |
 | 3   | **Parse citations once** at the start of `fix_page()` and pass the result to all bot functions.                                                                                   | Eliminates 5+ redundant full-text regex passes                                          |
-| 4   | **Extract `WikiParse` as a standalone Composer package.** It has no dependencies on the rest of app/fix_src and could be reused.                                                  | Promotes reuse, simplifies testing                                                      |
+| 4   | **Extract `WikiParse` as a standalone Composer package.** It has no dependencies on the rest of app/Fix and could be reused.                                                  | Promotes reuse, simplifies testing                                                      |
 | 5   | **Replace `echo_test()`/`echo_debug()`** with PSR-3 logger injection.                                                                                                             | Proper logging, configurable output                                                     |
 | 6   | **Extract `ESData` static arrays** into JSON configuration files.                                                                                                                 | Removes global state, enables non-PHP tooling                                           |
 
@@ -275,7 +275,7 @@ Functions like `add_Translated_from_MDWiki()`, `bg_section()`, and `es_section()
 | **Web Endpoint Tests** | Add tests for `index.php` and `text_post.php` using PHPUnit's HTTP client or a test server |
 | **Mutation Testing**   | Add Infection PHP to verify test quality                                                   |
 | **Code Style**         | Add PHP-CS-Fixer with a consistent ruleset (PSR-12)                                        |
-| **Static Analysis**    | Extend PHPStan to cover `src/` (not just `src/app/fix_src/`) and raise to level 6          |
+| **Static Analysis**    | Extend PHPStan to cover `src/` (not just `src/app/Fix/`) and raise to level 6          |
 | **Dependency Audit**   | Add `composer audit` to CI for dev dependency vulnerability scanning                       |
 | **Caching**            | Add in-memory cache (static array) for repeated Wikipedia API calls in the same request    |
 
