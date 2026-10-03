@@ -4,20 +4,6 @@ namespace App\Fix\HelpsBots\RemoveSpace;
 
 use App\Logger;
 
-if (!function_exists('str_ends_with')) {
-    function str_ends_with($string, $endString)
-    {
-        $len = strlen($endString);
-        return substr($string, -$len) === $endString;
-    }
-}
-if (!function_exists('str_starts_with')) {
-    function str_starts_with($text, $start)
-    {
-        return strpos($text, $start) === 0;
-    }
-}
-
 function match_it($text, $charters)
 {
     $pattern = '/(<\/ref>|\/>)\s*([' . preg_quote($charters, '/') . ']\s*)$/u';

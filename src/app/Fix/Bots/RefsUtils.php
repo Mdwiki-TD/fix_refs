@@ -2,20 +2,6 @@
 
 namespace App\Fix\Bots\RefsUtils;
 
-if (!function_exists('str_ends_with')) {
-    function str_ends_with($string, $endString)
-    {
-        $len = strlen($endString);
-        return substr($string, -$len) === $endString;
-    }
-}
-if (!function_exists('str_starts_with')) {
-    function str_starts_with($text, $start)
-    {
-        return strpos($text, $start) === 0;
-    }
-}
-
 function rm_str_from_start_and_end(string $text, string $find): string
 {
 
