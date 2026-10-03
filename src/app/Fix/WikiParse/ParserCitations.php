@@ -1,16 +1,16 @@
 <?php
 
-namespace WpRefs\WikiParse;
+namespace App\WikiParse;
 
-use WpRefs\WikiParse\DataModel\Tag;
-use WpRefs\WikiParse\ParserTags;
+use App\WikiParse\DataModel\Tag;
+use App\WikiParse\ParserTags;
 
 /**
  * Class ParserCitations
  *
  * Parses text to extract citations from wikitext.
  *
- * @package WpRefs\WikiParse
+ * @package App\WikiParse
  */
 class ParserCitations
 {

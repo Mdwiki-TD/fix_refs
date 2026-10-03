@@ -1,6 +1,6 @@
 <?php
 
-namespace WpRefs\BG;
+namespace App\BG;
 
 use App\Logger;
 

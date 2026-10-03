@@ -1,8 +1,8 @@
 <?php
 
-use WpRefs\Tests\MyFunctionTest;
+use Tests\MyFunctionTest;
 
-use function WpRefs\MdCat\add_Translated_from_MDWiki;
+use function App\MdCat\add_Translated_from_MDWiki;
 
 class mdCatTest extends MyFunctionTest
 {

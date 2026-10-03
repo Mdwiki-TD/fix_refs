@@ -1,7 +1,7 @@
 <?php
 
-use WpRefs\Tests\MyFunctionTest;
-use function WpRefs\WprefText\fix_page;
+use Tests\MyFunctionTest;
+use function App\WprefText\fix_page;
 
 class FixpageTest extends MyFunctionTest
 {

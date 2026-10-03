@@ -1,8 +1,8 @@
 <?php
 
 
-use WpRefs\Tests\MyFunctionTest;
-use function WpRefs\RemoveSpace\remove_spaces_between_ref_and_punctuation;
+use Tests\MyFunctionTest;
+use function App\RemoveSpace\remove_spaces_between_ref_and_punctuation;
 
 class removeSpace2ExtraTest extends MyFunctionTest
 {

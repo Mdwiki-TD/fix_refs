@@ -1,6 +1,6 @@
 <?php
 
-namespace WpRefs\MovesDots;
+namespace App\MovesDots;
 
 
 

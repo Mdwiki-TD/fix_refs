@@ -1,6 +1,6 @@
 <?php
 
-namespace WpRefs\Settings;
+namespace App\Settings;
 
 use App\Logger;
 

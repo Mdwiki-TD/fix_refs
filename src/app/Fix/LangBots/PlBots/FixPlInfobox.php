@@ -1,9 +1,9 @@
 <?php
 
-namespace WpRefs\PL\FixPlInfobox;
+namespace App\PL\FixPlInfobox;
 
 
-use WpRefs\WikiParse\ParserTemplates;
+use App\WikiParse\ParserTemplates;
 use App\Logger;
 
 function add_missing_params_to_choroba_infobox($text)

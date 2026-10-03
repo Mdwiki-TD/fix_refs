@@ -65,7 +65,7 @@ fix_refs_repo/
 │   ├── text_post.php             # POST handler for API-style text processing
 │   ├── test.php                  # Test form UI for manual testing
 │   ├── csrf.php                  # CSRF token generation and verification
-│   ├── app/Fix/                  # Core library (PSR-4: WpRefs\)
+│   ├── app/Fix/                  # Core library (PSR-4: App\)
 │   │   ├── index.php             # fix_page() - main processing pipeline
 │   │   ├── bootstrap.php     # Autoloader via glob includes
 │   │   ├── debug_helper.php          # Debug/test output helpers
@@ -395,7 +395,7 @@ The library can be used programmatically:
 ```php
 require_once 'src/app/Fix/bootstrap.php';
 
-use function WpRefs\FixPage\fix_page_with_setting;
+use function App\FixPage\fix_page_with_setting;
 
 $text = "... your wikitext here ...";
 $result = fix_page_with_setting(

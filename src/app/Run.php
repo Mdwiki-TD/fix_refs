@@ -1,9 +1,9 @@
 <?php
 
-namespace WpRefs\Run;
+namespace App\Run;
 
-use function WpRefs\Settings\loadSettings;
-use function WpRefs\WprefText\fix_page;
+use function App\Settings\loadSettings;
+use function App\WprefText\fix_page;
 
 function fixPageNoSetting(
     string $text,

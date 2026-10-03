@@ -1,6 +1,6 @@
 <?php
 
-namespace WpRefs\WikiParse\DataModel;
+namespace App\WikiParse\DataModel;
 
 /**
  * Class ExternalLink

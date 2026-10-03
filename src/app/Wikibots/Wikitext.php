@@ -1,6 +1,6 @@
 <?php
 
-namespace WpRefs\WikiText;
+namespace App\WikiText;
 
 function from_api($title, $lang)
 {

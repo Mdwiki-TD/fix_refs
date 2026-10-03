@@ -1,6 +1,6 @@
 <?php
 
-namespace WpRefs\SW;
+namespace App\SW;
 
 
 function sw_fixes($text)

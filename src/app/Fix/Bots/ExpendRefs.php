@@ -1,9 +1,9 @@
 <?php
 
-namespace WpRefs\ExpendRefs;
+namespace App\ExpendRefs;
 
-use function WpRefs\Parse\Reg_Citations\get_full_refs;
-use function WpRefs\Parse\Reg_Citations\get_short_citations;
+use function App\Parse\Reg_Citations\get_full_refs;
+use function App\Parse\Reg_Citations\get_short_citations;
 
 function refs_expend_work($first, $alltext = "")
 {

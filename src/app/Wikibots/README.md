@@ -39,13 +39,13 @@ wikibots/
 
 ### Namespace
 
-`WpRefs\WikiText`
+`App\WikiText`
 
 ## Architecture & Code Quality Review
 
 ### Code Organization
 
-Single-file module with three functions following a clear fallback pattern. The namespace `WpRefs\WikiText` is well-chosen and descriptive.
+Single-file module with three functions following a clear fallback pattern. The namespace `App\WikiText` is well-chosen and descriptive.
 
 ### Design Patterns
 
@@ -135,7 +135,7 @@ Simple, focused, and easy to understand. Limited scope keeps complexity low.
 ```php
 require_once __DIR__ . '/../app/Fix/bootstrap.php';
 
-use function WpRefs\WikiText\get_wikipedia_text;
+use function App\WikiText\get_wikipedia_text;
 
 // Fetch English Wikipedia article
 $text = get_wikipedia_text('Rhesus disease', 'en');

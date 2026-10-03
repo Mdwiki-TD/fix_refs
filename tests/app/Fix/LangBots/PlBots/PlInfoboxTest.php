@@ -1,9 +1,9 @@
 <?php
 
-use WpRefs\Tests\MyFunctionTest;
+use Tests\MyFunctionTest;
 
-use function WpRefs\PL\FixPlInfobox\add_missing_params_to_choroba_infobox;
-use function WpRefs\PL\FixPlInfobox\pl_fixes;
+use function App\PL\FixPlInfobox\add_missing_params_to_choroba_infobox;
+use function App\PL\FixPlInfobox\pl_fixes;
 
 class plInfoboxTest extends MyFunctionTest
 {

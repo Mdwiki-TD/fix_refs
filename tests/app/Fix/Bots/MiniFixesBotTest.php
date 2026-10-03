@@ -2,12 +2,12 @@
 
 
 
-use WpRefs\Tests\MyFunctionTest;
-use function WpRefs\Bots\Mini\remove_space_before_ref_tags;
-use function WpRefs\Bots\Mini\fix_sections_titles;
-use function WpRefs\Bots\Mini\refs_tags_spaces;
-use function WpRefs\Bots\Mini\fix_preffix;
-use function WpRefs\Bots\Mini\remove_template_rtt_links;
+use Tests\MyFunctionTest;
+use function App\Bots\Mini\remove_space_before_ref_tags;
+use function App\Bots\Mini\fix_sections_titles;
+use function App\Bots\Mini\refs_tags_spaces;
+use function App\Bots\Mini\fix_preffix;
+use function App\Bots\Mini\remove_template_rtt_links;
 
 class miniFixesBotTest extends MyFunctionTest
 {

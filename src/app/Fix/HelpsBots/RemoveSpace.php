@@ -1,6 +1,6 @@
 <?php
 
-namespace WpRefs\RemoveSpace;
+namespace App\RemoveSpace;
 
 use App\Logger;
 

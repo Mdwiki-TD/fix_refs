@@ -1,7 +1,7 @@
 <?php
 
-namespace WpRefs\Bots\TxtLib2;
-use WpRefs\WikiParse\ParserTemplates;
+namespace App\Bots\TxtLib2;
+use App\WikiParse\ParserTemplates;
 
 
 function extract_templates_and_params($text)

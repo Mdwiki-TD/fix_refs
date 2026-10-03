@@ -1,9 +1,9 @@
 <?php
 
-use function WpRefs\WikiText\get_wikipedia_text;
-use function WpRefs\csrf\generate_csrf_token;
-use function WpRefs\csrf\verify_csrf_token;
-use function WpRefs\Run\fixPgeWithSetting;
+use function App\WikiText\get_wikipedia_text;
+use function App\csrf\generate_csrf_token;
+use function App\csrf\verify_csrf_token;
+use function App\Run\fixPgeWithSetting;
 
 $headerPath = __DIR__ . '/../header.php';
 include_once __DIR__ . '/bootstrap.php';

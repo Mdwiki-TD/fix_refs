@@ -1,15 +1,15 @@
 <?php
 
-namespace WpRefs\WikiParse\DataModel;
+namespace App\WikiParse\DataModel;
 
-use WpRefs\WikiParse\DataModel\Attribute;
+use App\WikiParse\DataModel\Attribute;
 
 /**
  * Class Tag
  *
  * Represents a tag in a wikitext document.
  *
- * @package WpRefs\WikiParse\DataModel
+ * @package App\WikiParse\DataModel
  */
 class Tag
 {

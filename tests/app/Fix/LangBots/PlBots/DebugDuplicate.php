@@ -1,12 +1,12 @@
 <?php
 
-namespace WpRefs\Tests;
+namespace Tests;
 
 // Debug test to see what's happening with duplicate parameters
 
-use WpRefs\Tests\MyFunctionTest;
-use function WpRefs\PL\FixPlInfobox\add_missing_params_to_choroba_infobox;
-use WpRefs\WikiParse\ParserTemplates;
+use Tests\MyFunctionTest;
+use function App\PL\FixPlInfobox\add_missing_params_to_choroba_infobox;
+use App\WikiParse\ParserTemplates;
 
 class DebugDuplicate extends MyFunctionTest
 {

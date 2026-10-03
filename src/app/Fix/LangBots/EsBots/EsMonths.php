@@ -1,12 +1,12 @@
 <?php
 
-namespace WpRefs\EsBots\es_months;
+namespace App\EsBots\es_months;
 
 
 use App\Logger;
-use function WpRefs\Parse\Citations\getCitationsOld;
-use WpRefs\WikiParse\ParserTemplates;
-use function WpRefs\Bots\MonthNewValue\make_date_new_val_es;
+use function App\Parse\Citations\getCitationsOld;
+use App\WikiParse\ParserTemplates;
+use function App\Bots\MonthNewValue\make_date_new_val_es;
 
 
 function start_end($citeTemp)

@@ -1,6 +1,6 @@
 <?php
 
-namespace WpRefs\csrf;
+namespace App\csrf;
 
 /**
  * CSRF Token Management for MDWiki Tools.

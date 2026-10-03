@@ -1,6 +1,6 @@
 <?php
 
-namespace WpRefs\EsBots\Section;
+namespace App\EsBots\Section;
 
 
 function es_section($sourcetitle, $text, $mdwikiRevid)

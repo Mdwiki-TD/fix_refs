@@ -1,9 +1,9 @@
 <?php
 
-namespace WpRefs\Infobox2;
+namespace App\Infobox2;
 
-use function WpRefs\Bots\TxtLib2\extract_templates_and_params;
-use WpRefs\WikiParse\ParserTemplate;
+use function App\Bots\TxtLib2\extract_templates_and_params;
+use App\WikiParse\ParserTemplate;
 
 function do_comments($text)
 {

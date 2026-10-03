@@ -1,6 +1,6 @@
 # Fix Src - Core Reference Fixing Library
 
-The core PHP library for parsing and fixing MediaWiki references. This is the main processing engine used by the Fix Refs project, autoloaded under the `WpRefs\` namespace via PSR-4.
+The core PHP library for parsing and fixing MediaWiki references. This is the main processing engine used by the Fix Refs project, autoloaded under the `App\` namespace via PSR-4.
 
 ## Project Overview
 
@@ -207,7 +207,7 @@ The modular file structure aids navigation, but the growing `if` chain in `fix_p
 
 ### Bugs
 
-4. **`start_end()` function collision** - Both `fix_pt_months.php` (namespace `WpRefs\PT\FixPtMonth`) and `es_months.php` (namespace `WpRefs\EsBots\es_months`) define `start_end()` in their respective namespaces. While namespacing prevents a fatal error, the duplication is a maintenance risk.
+4. **`start_end()` function collision** - Both `fix_pt_months.php` (namespace `App\PT\FixPtMonth`) and `es_months.php` (namespace `App\EsBots\es_months`) define `start_end()` in their respective namespaces. While namespacing prevents a fatal error, the duplication is a maintenance risk.
 
 ### Performance
 
@@ -287,7 +287,7 @@ The modular file structure aids navigation, but the growing `if` chain in `fix_p
 require_once __DIR__ . '/bootstrap.php';
 
 // Process wikitext
-use function WpRefs\WprefText\fix_page;
+use function App\WprefText\fix_page;
 
 $result = fix_page(
     $text,          // Raw wikitext

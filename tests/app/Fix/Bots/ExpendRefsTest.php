@@ -2,8 +2,8 @@
 
 
 
-use WpRefs\Tests\MyFunctionTest;
-use function WpRefs\ExpendRefs\refs_expend_work;
+use Tests\MyFunctionTest;
+use function App\ExpendRefs\refs_expend_work;
 
 class expendRefsTest extends MyFunctionTest
 {

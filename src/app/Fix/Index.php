@@ -1,25 +1,25 @@
 <?php
 
-namespace WpRefs\WprefText;
+namespace App\WprefText;
 
 use App\Logger;
-use function WpRefs\Infobox\Expend_Infobox;
-use function WpRefs\PT\FixPtMonth\pt_fixes;
-use function WpRefs\PL\FixPlInfobox\pl_fixes;
-use function WpRefs\BG\bg_fixes;
-use function WpRefs\SW\sw_fixes;
-use function WpRefs\ES\fix_es;
-use function WpRefs\EsBots\Section\es_section;
-use function WpRefs\DelDuplicateRefs\remove_Duplicate_refs_With_attrs;
-use function WpRefs\MovesDots\move_dots_after_refs;
-use function WpRefs\EnLangParam\add_lang_en_to_refs;
-use function WpRefs\MdCat\add_Translated_from_MDWiki;
-use function WpRefs\Bots\Mini\mini_fixes;
-use function WpRefs\Bots\Mini\mini_fixes_after_fixing;
-use function WpRefs\RemoveSpace\remove_spaces_between_last_word_and_beginning_of_ref;
-use function WpRefs\RemoveSpace\remove_spaces_between_ref_and_punctuation;
-use function WpRefs\MissingRefs\fix_missing_refs;
-use function WpRefs\Bots\Redirect\page_is_redirect;
+use function App\Infobox\Expend_Infobox;
+use function App\PT\FixPtMonth\pt_fixes;
+use function App\PL\FixPlInfobox\pl_fixes;
+use function App\BG\bg_fixes;
+use function App\SW\sw_fixes;
+use function App\ES\fix_es;
+use function App\EsBots\Section\es_section;
+use function App\DelDuplicateRefs\remove_Duplicate_refs_With_attrs;
+use function App\MovesDots\move_dots_after_refs;
+use function App\EnLangParam\add_lang_en_to_refs;
+use function App\MdCat\add_Translated_from_MDWiki;
+use function App\Bots\Mini\mini_fixes;
+use function App\Bots\Mini\mini_fixes_after_fixing;
+use function App\RemoveSpace\remove_spaces_between_last_word_and_beginning_of_ref;
+use function App\RemoveSpace\remove_spaces_between_ref_and_punctuation;
+use function App\MissingRefs\fix_missing_refs;
+use function App\Bots\Redirect\page_is_redirect;
 
 function fix_page($text, $title, $moveDots, $infobox, $addEnLang, $lang, $sourcetitle, $mdwikiRevid)
 {

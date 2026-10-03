@@ -1,8 +1,8 @@
 <?php
 
-namespace WpRefs\WikiParse\DataModel;
+namespace App\WikiParse\DataModel;
 
-use WpRefs\WikiParse\DataModel\Parameters;
+use App\WikiParse\DataModel\Parameters;
 
 
 /**
@@ -10,7 +10,7 @@ use WpRefs\WikiParse\DataModel\Parameters;
  *
  * Represents a template in a wikitext document.
  *
- * @package WpRefs\WikiParse\DataModel
+ * @package App\WikiParse\DataModel
  */
 class Template
 {

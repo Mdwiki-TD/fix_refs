@@ -1,13 +1,13 @@
 <?php
 
-namespace WpRefs\WikiParse\DataModel;
+namespace App\WikiParse\DataModel;
 
 /**
  * Class InternalLink
  *
  * Represents an internal link with optional display text.
  *
- * @package WpRefs\WikiParse\DataModel
+ * @package App\WikiParse\DataModel
  */
 class InternalLink
 {

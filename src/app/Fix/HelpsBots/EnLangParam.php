@@ -1,10 +1,10 @@
 <?php
 
-namespace WpRefs\EnLangParam;
+namespace App\EnLangParam;
 
 use App\Logger;
-use function WpRefs\Parse\Citations\getCitationsOld;
-use WpRefs\WikiParse\ParserTemplates;
+use function App\Parse\Citations\getCitationsOld;
+use App\WikiParse\ParserTemplates;
 
 function add_lang_en($text)
 {

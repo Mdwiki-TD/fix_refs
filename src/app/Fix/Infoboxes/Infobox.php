@@ -1,10 +1,10 @@
 <?php
 
-namespace WpRefs\Infobox;
+namespace App\Infobox;
 
 
-use function WpRefs\Infobox2\make_tempse;
-use function WpRefs\Infobox2\expend_new;
+use function App\Infobox2\make_tempse;
+use function App\Infobox2\expend_new;
 
 function find_max_value_key($dictionary)
 {

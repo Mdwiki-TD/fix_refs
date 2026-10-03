@@ -2,9 +2,9 @@
 
 
 
-use WpRefs\Tests\MyFunctionTest;
-use function WpRefs\Bots\AttrsUtils\parseAttributes;
-use function WpRefs\Bots\AttrsUtils\get_attrs;
+use Tests\MyFunctionTest;
+use function App\Bots\AttrsUtils\parseAttributes;
+use function App\Bots\AttrsUtils\get_attrs;
 
 class attrsUtilsTest extends MyFunctionTest
 {

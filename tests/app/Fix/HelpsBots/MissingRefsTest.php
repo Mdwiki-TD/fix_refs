@@ -1,7 +1,7 @@
 <?php
 
-use WpRefs\Tests\MyFunctionTest;
-use function WpRefs\MissingRefs\fix_missing_refs;
+use Tests\MyFunctionTest;
+use function App\MissingRefs\fix_missing_refs;
 
 class missingRefsTest extends MyFunctionTest
 {

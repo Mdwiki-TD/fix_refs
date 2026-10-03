@@ -1,8 +1,8 @@
 <?php
 // es_refsTest.php
 
-use WpRefs\Tests\MyFunctionTest;
-use function WpRefs\EsBots\es_refs\mv_es_refs;
+use Tests\MyFunctionTest;
+use function App\EsBots\es_refs\mv_es_refs;
 
 class esRefsTest extends MyFunctionTest
 {

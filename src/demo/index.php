@@ -1,6 +1,6 @@
 <?php
 
-use function WpRefs\csrf\generate_csrf_token;
+use function App\csrf\generate_csrf_token;
 
 include_once __DIR__ . '/../bootstrap.php';
 $headerPath = __DIR__ . '/../header.php';

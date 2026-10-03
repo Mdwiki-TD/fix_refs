@@ -1,11 +1,11 @@
 <?php
 
-namespace WpRefs\MissingRefs;
+namespace App\MissingRefs;
 
 use App\Logger;
-use function WpRefs\Parse\Reg_Citations\get_short_citations;
-use function WpRefs\Parse\Reg_Citations\get_full_refs;
-use function WpRefs\MdCat\get_url_curl;
+use function App\Parse\Reg_Citations\get_short_citations;
+use function App\Parse\Reg_Citations\get_full_refs;
+use function App\MdCat\get_url_curl;
 
 function get_full_text_url($sourcetitle, $mdwikiRevid)
 {

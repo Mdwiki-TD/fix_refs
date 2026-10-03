@@ -1,6 +1,6 @@
 <?php
 
-namespace WpRefs\Bots\Mini;
+namespace App\Bots\Mini;
 
 function fix_sections_titles($text, $lang)
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace WpRefs\EsBots\es_refs;
+namespace App\EsBots\es_refs;
 
-use WpRefs\WikiParse\ParserTemplates;
-use function WpRefs\Parse\Reg_Citations\get_short_citations;
-use function WpRefs\Parse\Citations\getCitationsOld;
+use App\WikiParse\ParserTemplates;
+use function App\Parse\Reg_Citations\get_short_citations;
+use function App\Parse\Citations\getCitationsOld;
 
 function get_refs(string $text): array
 {

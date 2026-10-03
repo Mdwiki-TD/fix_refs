@@ -2,14 +2,12 @@
 
 namespace WpRefs\FixPage;
 
-use function WpRefs\Run\fixPgeWithSetting;
-
 /**
  * WARNING / DEPENDENCY NOTICE:
  *
  * The function `\WpRefs\FixPage\fix_page_with_setting`
  * defined or modified here are referenced and used in:
- * https://github.com/Mdwiki-TD/publish/blob/main/src/su/text_edit.php
+ * https://github.com/Mdwiki-TD/publish/blob/main/src/app/text_edit.php
  *  - ```if (function_exists('\WpRefs\FixPage\fix_page_with_setting')) { ... }```
  * https://github.com/Mdwiki-TD/mdwiki.toolforge.org/blob/main/src/public_html/fixwikirefs/include.php
  *  - ```use function WpRefs\FixPage\fix_page_with_setting;```
@@ -29,7 +27,7 @@ function fix_page_with_setting(
     ?bool $expand = null,
     ?bool $addEnLang = null
 ): string {
-    return fixPgeWithSetting(
+    return \App\Run\fixPgeWithSetting(
         $sourcetitle,
         $title,
         $text,

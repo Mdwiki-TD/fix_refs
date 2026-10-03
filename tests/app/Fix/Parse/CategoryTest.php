@@ -2,8 +2,8 @@
 
 
 
-use WpRefs\Tests\MyFunctionTest;
-use function WpRefs\Parse\Category\get_categories_reg;
+use Tests\MyFunctionTest;
+use function App\Parse\Category\get_categories_reg;
 
 class CategoryTest extends MyFunctionTest
 {

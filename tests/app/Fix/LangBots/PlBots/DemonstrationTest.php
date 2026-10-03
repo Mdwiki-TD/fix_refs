@@ -1,10 +1,10 @@
 <?php
 
-namespace WpRefs\Tests;
+namespace Tests;
 
 // Demonstration of Polish Choroba Infobox Parameter Addition Feature
-use WpRefs\Tests\MyFunctionTest;
-use function WpRefs\WprefText\fix_page;
+use Tests\MyFunctionTest;
+use function App\WprefText\fix_page;
 
 class DemonstrationTest extends MyFunctionTest
 {

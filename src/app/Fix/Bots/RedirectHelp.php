@@ -1,6 +1,6 @@
 <?php
 
-namespace WpRefs\Bots\Redirect;
+namespace App\Bots\Redirect;
 
 function page_is_redirect($title, $text)
 {

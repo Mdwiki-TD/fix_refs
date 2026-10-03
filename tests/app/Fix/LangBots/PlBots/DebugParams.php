@@ -1,11 +1,11 @@
 <?php
 
-namespace WpRefs\Tests;
+namespace Tests;
 
 // Debug test to see what parameters are in the template
 
-use WpRefs\Tests\MyFunctionTest;
-use WpRefs\WikiParse\ParserTemplates;
+use Tests\MyFunctionTest;
+use App\WikiParse\ParserTemplates;
 
 class DebugParams extends MyFunctionTest
 {

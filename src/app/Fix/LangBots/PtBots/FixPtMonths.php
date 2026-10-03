@@ -1,11 +1,11 @@
 <?php
 
-namespace WpRefs\PT\FixPtMonth;
+namespace App\PT\FixPtMonth;
 
 use App\Logger;
-use function WpRefs\Parse\Citations\getCitationsOld;
-use WpRefs\WikiParse\ParserTemplates;
-use function WpRefs\Bots\MonthNewValue\make_date_new_val_pt;
+use function App\Parse\Citations\getCitationsOld;
+use App\WikiParse\ParserTemplates;
+use function App\Bots\MonthNewValue\make_date_new_val_pt;
 
 
 function start_end($citeTemp)

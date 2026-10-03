@@ -1,7 +1,7 @@
 <?php
 
-use function WpRefs\Run\fixPgeWithSetting;
-use function WpRefs\csrf\verify_csrf_token;
+use function App\Run\fixPgeWithSetting;
+use function App\csrf\verify_csrf_token;
 
 include_once __DIR__ . '/../bootstrap.php';
 
