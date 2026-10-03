@@ -3,7 +3,7 @@
 namespace App\Fix\LangBots\EsBots;
 
 use App\Logger;
-use App\Fix\WikiParse\Template;
+use App\Fix\WikiParse\ParserTemplates;
 
 class ESData
 {
@@ -160,7 +160,7 @@ class Es
     public static function fix_temps($text)
     {
         ESData::init();
-        $tempsIn = Template::getTemplates($text);
+        $tempsIn = (new ParserTemplates($text))->getTemplates();
         $newText = $text;
         foreach ($tempsIn as $temp) {
             $name = $temp->getStripName();

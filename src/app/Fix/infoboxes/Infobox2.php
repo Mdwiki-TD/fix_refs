@@ -3,7 +3,7 @@
 namespace App\Fix\Infoboxes;
 
 use App\Fix\Bots\Txtlib2;
-use App\Fix\WikiParse\src\ParserTemplate;
+use App\Fix\WikiParse\ParserTemplate;
 
 class Infobox2
 {

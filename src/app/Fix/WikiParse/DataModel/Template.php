@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Fix\WikiParse\src\DataModel;
+namespace App\Fix\WikiParse\DataModel;
 
-use App\Fix\WikiParse\src\DataModel\Parameters;
+use App\Fix\WikiParse\DataModel\Parameters;
 
 
 /**

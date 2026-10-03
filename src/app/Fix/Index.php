@@ -2,6 +2,7 @@
 
 namespace App\Fix;
 
+use App\Logger;
 use App\Fix\Bots\MiniFixesBot;
 use App\Fix\Bots\RedirectHelp;
 use App\Fix\Bots\RemoveDuplicateRefs;

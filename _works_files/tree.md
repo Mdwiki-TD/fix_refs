@@ -54,10 +54,10 @@ src/
 │   │   │   │   ├── ParserTags.php
 │   │   │   │   ├── ParserTemplate.php
 │   │   │   │   └── ParserTemplates.php
-│   │   │   ├── include_it.php
+│   │   │   ├── bootstrap.php
 │   │   │   └── Template.php
 │   │   ├── DebugHelper.php
-│   │   ├── include_files.php
+│   │   ├── bootstrap.php
 │   │   ├── Index.php
 │   │   ├── MdCat.php
 │   │   └── README.md
@@ -68,7 +68,7 @@ src/
 │   ├── Csrf.php
 │   ├── Run.php
 │   └── Settings.php
-├── include.php
+├── bootstrap.php
 ├── index.php
 └── work.php
 

@@ -3,7 +3,7 @@
 use App\Run;
 use App\Csrf;
 
-include_once __DIR__ . '/../include.php';
+include_once __DIR__ . '/../bootstrap.php';
 
 $fields = ['lang', 'title', 'text', 'revid', 'sourcetitle'];
 

@@ -2,14 +2,14 @@
 
 namespace App\Fix\Bots;
 
-use App\Fix\WikiParse\Template;
+use App\Fix\WikiParse\ParserTemplates;
 
 class Txtlib2
 {
     public static function extract_templates_and_params($text)
     {
         $temps = [];
-        $tempsIn = Template::getTemplates($text);
+        $tempsIn = (new ParserTemplates($text))->getTemplates();
         foreach ($tempsIn as $temp) {
             $name = $temp->getStripName();
             $textTemplate = $temp->getOriginalText();

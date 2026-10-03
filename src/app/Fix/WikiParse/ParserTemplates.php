@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Fix\WikiParse\src;
+namespace App\Fix\WikiParse;
 
-use App\Fix\WikiParse\src\DataModel\Template;
-use App\Fix\WikiParse\src\ParserTemplate;
+use App\Fix\WikiParse\DataModel\Template;
+use App\Fix\WikiParse\ParserTemplate;
 
 /**
  * Class ParserTemplates

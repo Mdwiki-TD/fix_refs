@@ -5,7 +5,7 @@ namespace WpRefs\Tests;
 // Debug test to see what parameters are in the template
 
 use WpRefs\Tests\MyFunctionTest;
-use App\Fix\WikiParse\Template;
+use App\Fix\WikiParse\ParserTemplates;
 
 class DebugParams extends MyFunctionTest
 {
@@ -24,7 +24,7 @@ class DebugParams extends MyFunctionTest
 }}
 TXT;
 
-        $templates = Template::getTemplates($input);
+        $templates = (new ParserTemplates($input))->getTemplates();
 
         // Verify that template parsing succeeded
         $this->assertNotEmpty($templates, "Failed to parse templates from input text.");

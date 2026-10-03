@@ -5,7 +5,7 @@ namespace App\Fix\LangBots\PtBots;
 use App\Fix\Bots\MonthsNewValue;
 use App\Logger;
 use App\Fix\Parse\Citations;
-use App\Fix\WikiParse\Template;
+use App\Fix\WikiParse\ParserTemplates;
 
 class FixPtMonths
 {
@@ -28,7 +28,7 @@ class FixPtMonths
     {
         $newText = $tempText;
         $tempText = trim($tempText);
-        $temps = Template::getTemplates($tempText);
+        $temps = (new ParserTemplates($tempText))->getTemplates();
         foreach ($temps as $temp) {
             $tempOld = $temp->getOriginalText();
             $params = $temp->getParameters();

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Fix\WikiParse\src;
+namespace App\Fix\WikiParse;
 
 /**
  * Class ParserCategories

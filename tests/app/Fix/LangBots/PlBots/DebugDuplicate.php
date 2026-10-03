@@ -6,7 +6,7 @@ namespace WpRefs\Tests;
 
 use WpRefs\Tests\MyFunctionTest;
 use App\Fix\LangBots\PlBots\FixPlInfobox;
-use App\Fix\WikiParse\Template;
+use App\Fix\WikiParse\ParserTemplates;
 
 class DebugDuplicate extends MyFunctionTest
 {
@@ -26,7 +26,7 @@ class DebugDuplicate extends MyFunctionTest
 TXT;
 
         // Verify initial template structure
-        $templates = Template::getTemplates($input);
+        $templates = (new ParserTemplates($input))->getTemplates();
         $this->assertNotEmpty($templates, "Failed to parse templates from input text.");
 
         $initialParams = $templates[0]->getParameters();

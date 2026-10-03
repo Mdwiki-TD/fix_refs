@@ -2,6 +2,8 @@
 
 namespace App\Fix;
 
+use App\Logger;
+
 class MdCat
 {
     public static function get_url_curl(string $url): string

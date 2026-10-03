@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Fix\WikiParse\src;
+namespace App\Fix\WikiParse;
 
-use App\Fix\WikiParse\src\DataModel\Tag;
+use App\Fix\WikiParse\DataModel\Tag;
 
 /**
  * Class ParserTags

@@ -4,7 +4,7 @@ namespace App\Fix\LangBots\EsBots;
 
 use App\Fix\Parse\Citations;
 use App\Fix\Parse\CitationsReg;
-use App\Fix\WikiParse\Template;
+use App\Fix\WikiParse\ParserTemplates;
 
 class EsRefs
 {
@@ -62,7 +62,7 @@ class EsRefs
 
     public static function add_line_to_temp($line, $text)
     {
-        $tempsIn = Template::getTemplates($text);
+        $tempsIn = (new ParserTemplates($text))->getTemplates();
         $newText = $text;
         $tempAlreadyIn = false;
 

@@ -3,7 +3,7 @@
 namespace App\Fix\LangBots\PlBots;
 
 use App\Logger;
-use App\Fix\WikiParse\Template;
+use App\Fix\WikiParse\ParserTemplates;
 
 class FixPlInfobox
 {
@@ -11,7 +11,7 @@ class FixPlInfobox
     {
         Logger::debug("\n add_missing_params_to_choroba_infobox:\n");
         $newText = $text;
-        $temps = Template::getTemplates($text);
+        $temps = (new ParserTemplates($text))->getTemplates();
         $paramsToAdd = [
             "nazwa naukowa" => "",
             "ICD11" => "",

@@ -13,8 +13,8 @@ error_reporting(E_ALL);
 // use WpRefs\Tests\MyFunctionTest;
 // Load the Composer autoloader
 require __DIR__ . '/../vendor/autoload.php';
-// Load include.php file
-require __DIR__ . '/../src/include.php';
+// Load bootstrap.php file
+require __DIR__ . '/../src/bootstrap.php';
 
 
 class MyFunctionTest extends TestCase

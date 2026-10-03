@@ -75,7 +75,7 @@ All modules within `src/` share these patterns:
 
 ### Common Technical Debt
 
-1. **Glob-based autoloading** -- `include_files.php` manually globs directories to include PHP files, bypassing the PSR-4 autoloader configured in `composer.json`. This is fragile (file load order matters) and adds startup overhead.
+1. **Glob-based autoloading** -- `bootstrap.php` manually globs directories to include PHP files, bypassing the PSR-4 autoloader configured in `composer.json`. This is fragile (file load order matters) and adds startup overhead.
 
 2. **Two parsing systems** -- `Parse/Citations.php` (class `CitationOld`, regex-based) and `WikiParse/src/ParserCitations.php` (OOP, uses `ParserTags`) serve the same purpose. Most bot functions still use the older `getCitationsOld()`.
 
@@ -233,7 +233,7 @@ Functions like `add_Translated_from_MDWiki()`, `bg_section()`, and `es_section()
 
 | #   | Improvement                                                                                                                  | Impact                                   |
 | --- | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
-| 1   | Replace glob-based `include_files.php` with Composer PSR-4 autoloading                                                       | Eliminates fragile load-order dependency |
+| 1   | Replace glob-based `bootstrap.php` with Composer PSR-4 autoloading                                                       | Eliminates fragile load-order dependency |
 | 2   | Consolidate duplicate `str_starts_with`/`str_ends_with` into a single `polyfills.php`                                        | Removes code duplication                 |
 | 3   | Add `$lang` whitelist validation in `work.php` (`in_array($lang, ['es','pt','pl','bg','sw','hy','ar','zh','hi','ru','hr'])`) | Prevents invalid input propagation       |
 | 4   | Extract User-Agent string to a constant in `wikitext.php`                                                                    | DRY principle                            |
