@@ -10,7 +10,7 @@ use App\Fix\WikiParse\DataModel\Parameters;
  *
  * Represents a template in a wikitext document.
  *
- * @package WpRefs\WikiConnect\ParseWiki\DataModel
+ * @package App\WikiParse\DataModel
  */
 class Template
 {

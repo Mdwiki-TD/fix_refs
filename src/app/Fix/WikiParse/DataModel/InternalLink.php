@@ -7,7 +7,7 @@ namespace App\Fix\WikiParse\DataModel;
  *
  * Represents an internal link with optional display text.
  *
- * @package WpRefs\WikiConnect\ParseWiki\DataModel
+ * @package App\WikiParse\DataModel
  */
 class InternalLink
 {

@@ -9,7 +9,7 @@ use App\Fix\WikiParse\DataModel\Attribute;
  *
  * Represents a tag in a wikitext document.
  *
- * @package WpRefs\WikiConnect\ParseWiki\DataModel
+ * @package App\WikiParse\DataModel
  */
 class Tag
 {

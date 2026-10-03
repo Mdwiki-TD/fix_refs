@@ -6,7 +6,7 @@ use App\Fix\WikiParse\DataModel\ExternalLink;
 
 /**
  * Class ParserExternalLinks
- * @package WpRefs\WikiConnect\ParseWiki
+ * @package App\WikiParse
  */
 class ParserExternalLinks
 {

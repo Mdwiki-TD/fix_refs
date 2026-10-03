@@ -4,7 +4,7 @@ namespace App\Fix\WikiParse;
 
 /**
  * Class ParserCategories
- * @package WpRefs\WikiConnect\ParseWiki
+ * @package App\WikiParse
  */
 class ParserCategories
 {

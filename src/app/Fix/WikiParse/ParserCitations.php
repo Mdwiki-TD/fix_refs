@@ -10,7 +10,7 @@ use App\Fix\WikiParse\ParserTags;
  *
  * Parses text to extract citations from wikitext.
  *
- * @package WpRefs\WikiConnect\ParseWiki
+ * @package App\WikiParse
  */
 class ParserCitations
 {

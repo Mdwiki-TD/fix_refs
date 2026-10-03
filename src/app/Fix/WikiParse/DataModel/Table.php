@@ -5,7 +5,7 @@ namespace App\Fix\WikiParse\DataModel;
 /**
  * Class Table
  *
- * @package WpRefs\WikiConnect\ParseWiki\DataModel
+ * @package App\WikiParse\DataModel
  */
 class Table
 {

@@ -7,7 +7,7 @@ namespace App\Fix\WikiParse\DataModel;
  *
  * Represents template parameters in a wikitext document.
  *
- * @package WpRefs\WikiConnect\ParseWiki\DataModel
+ * @package App\WikiParse\DataModel
  */
 class Parameters
 {

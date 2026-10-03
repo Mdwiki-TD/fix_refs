@@ -8,7 +8,7 @@ use App\Fix\WikiParse\DataModel\Template;
  * Class ParserTemplate
  * Parses a template text into its components: name and parameters.
  *
- * @package WpRefs\WikiConnect\ParseWiki
+ * @package App\WikiParse
  */
 class ParserTemplate
 {

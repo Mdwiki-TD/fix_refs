@@ -10,7 +10,7 @@ use App\Fix\WikiParse\ParserTemplate;
  *
  * Parse a text and extract all Templates.
  *
- * @package WpRefs\WikiConnect\ParseWiki
+ * @package App\WikiParse
  */
 class ParserTemplates
 {

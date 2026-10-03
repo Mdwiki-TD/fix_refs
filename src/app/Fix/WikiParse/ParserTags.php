@@ -9,7 +9,7 @@ use App\Fix\WikiParse\DataModel\Tag;
  *
  * Parses text to extract tags from wikitext.
  *
- * @package WpRefs\WikiConnect\ParseWiki
+ * @package App\WikiParse
  */
 class ParserTags
 {
