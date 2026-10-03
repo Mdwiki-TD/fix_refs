@@ -2,7 +2,7 @@
 
 use WpRefs\Tests\MyFunctionTest;
 
-use App\fix_src\MdCat;
+use App\Fix\MdCat;
 
 class mdCatTest extends MyFunctionTest
 {

@@ -3,7 +3,7 @@
 
 
 use WpRefs\Tests\MyFunctionTest;
-use App\fix_src\bots\AttrsUtils;
+use App\Fix\bots\AttrsUtils;
 
 
 class attrsUtilsTest extends MyFunctionTest

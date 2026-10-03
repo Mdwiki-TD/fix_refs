@@ -2,7 +2,7 @@
 
 use WpRefs\Tests\MyFunctionTest;
 
-use App\fix_src\lang_bots\pl_bots\FixPlInfobox;
+use App\Fix\lang_bots\pl_bots\FixPlInfobox;
 
 
 class plInfoboxTest extends MyFunctionTest

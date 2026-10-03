@@ -3,7 +3,7 @@
 
 
 use WpRefs\Tests\MyFunctionTest;
-use App\fix_src\Parse\Category;
+use App\Fix\Parse\Category;
 
 class CategoryTest extends MyFunctionTest
 {

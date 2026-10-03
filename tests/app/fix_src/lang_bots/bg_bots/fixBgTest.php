@@ -1,7 +1,7 @@
 <?php
 
 use WpRefs\Tests\MyFunctionTest;
-use App\fix_src\lang_bots\bg_bots\FixBg;
+use App\Fix\lang_bots\bg_bots\FixBg;
 
 
 class fixBgTest extends MyFunctionTest

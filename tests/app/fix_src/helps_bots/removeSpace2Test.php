@@ -2,7 +2,7 @@
 
 
 use WpRefs\Tests\MyFunctionTest;
-use App\fix_src\helps_bots\RemoveSpace;
+use App\Fix\helps_bots\RemoveSpace;
 
 class removeSpace2ExtraTest extends MyFunctionTest
 {

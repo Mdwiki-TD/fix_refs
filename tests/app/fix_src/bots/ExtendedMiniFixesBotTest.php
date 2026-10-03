@@ -4,7 +4,7 @@ namespace WpRefs\Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use WpRefs\Tests\MyFunctionTest;
-use App\fix_src\bots\MiniFixesBot;
+use App\Fix\bots\MiniFixesBot;
 
 class ExtendedMiniFixesBotTest extends MyFunctionTest
 {

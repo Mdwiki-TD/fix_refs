@@ -1,7 +1,7 @@
 ```
 tests/
 ├── app/
-│   ├── fix_src/
+│   ├── Fix/
 │   │   ├── bots/
 │   │   │   ├── fixtures/
 │   │   │   │   ├── del_dup/

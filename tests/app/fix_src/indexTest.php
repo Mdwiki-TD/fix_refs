@@ -1,7 +1,7 @@
 <?php
 
 use WpRefs\Tests\MyFunctionTest;
-use App\fix_src\Index;
+use App\Fix\Index;
 
 class indexTest extends MyFunctionTest
 {

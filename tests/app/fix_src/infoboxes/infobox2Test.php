@@ -1,7 +1,7 @@
 <?php
 
 use WpRefs\Tests\MyFunctionTest;
-use App\fix_src\infoboxes\Infobox2;
+use App\Fix\infoboxes\Infobox2;
 
 
 class infobox2Test extends MyFunctionTest

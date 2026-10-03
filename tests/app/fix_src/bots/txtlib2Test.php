@@ -3,7 +3,7 @@
 
 
 use WpRefs\Tests\MyFunctionTest;
-use App\fix_src\bots\Txtlib2;
+use App\Fix\bots\Txtlib2;
 
 class txtlib2Test extends MyFunctionTest
 {

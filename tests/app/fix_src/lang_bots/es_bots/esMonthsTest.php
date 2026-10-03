@@ -2,8 +2,8 @@
 
 use WpRefs\Tests\MyFunctionTest;
 
-use App\fix_src\bots\MonthsNewValue;
-use App\fix_src\lang_bots\es_bots\EsMonths;
+use App\Fix\bots\MonthsNewValue;
+use App\Fix\lang_bots\es_bots\EsMonths;
 
 class esMonthsTest extends MyFunctionTest
 {

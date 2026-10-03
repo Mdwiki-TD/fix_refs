@@ -4,7 +4,7 @@
 
 use WpRefs\Tests\MyFunctionTest;
 
-use App\fix_src\Parse\CitationsReg;
+use App\Fix\Parse\CitationsReg;
 
 
 

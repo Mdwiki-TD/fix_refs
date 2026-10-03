@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\fix_src\DebugHelper;
+use App\Fix\DebugHelper;
 
 class Settings
 {

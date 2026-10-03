@@ -6,7 +6,7 @@ namespace WpRefs\Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use WpRefs\Tests\MyFunctionTest;
-use App\fix_src\lang_bots\pl_bots\FixPlInfobox;
+use App\Fix\lang_bots\pl_bots\FixPlInfobox;
 
 
 class ManualTest extends MyFunctionTest

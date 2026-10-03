@@ -3,7 +3,7 @@
 
 
 use WpRefs\Tests\MyFunctionTest;
-use App\fix_src\helps_bots\EnLangParam;
+use App\Fix\helps_bots\EnLangParam;
 
 class enLangParamTest extends MyFunctionTest
 {

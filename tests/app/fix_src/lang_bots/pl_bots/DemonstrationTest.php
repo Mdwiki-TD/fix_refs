@@ -4,7 +4,7 @@ namespace WpRefs\Tests;
 
 // Demonstration of Polish Choroba Infobox Parameter Addition Feature
 use WpRefs\Tests\MyFunctionTest;
-use App\fix_src\Index;
+use App\Fix\Index;
 
 class DemonstrationTest extends MyFunctionTest
 {

@@ -5,7 +5,7 @@ namespace WpRefs\Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use WpRefs\Tests\MyFunctionTest;
-use App\fix_src\Index;
+use App\Fix\Index;
 
 class ComprehensiveTest extends MyFunctionTest
 {

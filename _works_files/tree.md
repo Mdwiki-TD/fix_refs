@@ -1,7 +1,7 @@
 ```
 src/
 ├── app/
-│   ├── fix_src/
+│   ├── Fix/
 │   │   ├── bots/
 │   │   │   ├── attrs_utils.php
 │   │   │   ├── expend_refs.php

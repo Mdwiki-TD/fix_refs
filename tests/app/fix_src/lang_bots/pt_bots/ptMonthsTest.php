@@ -2,7 +2,7 @@
 
 use WpRefs\Tests\MyFunctionTest;
 
-use App\fix_src\lang_bots\pt_bots\FixPtMonths;
+use App\Fix\lang_bots\pt_bots\FixPtMonths;
 
 
 

@@ -34,13 +34,13 @@ Each entry contains:
 
 Mapping of Wikipedia language editions to their localized "Translated from MDWiki" category names. Used when the Wikidata API (`Q107014860` sitelinks) is unavailable.
 
-Loaded by: `src/app/fix_src/md_cat.php` -> `load_from_local_file()`
+Loaded by: `src/app/Fix/md_cat.php` -> `load_from_local_file()`
 
 ### `revisions/`
 
 Directory containing cached wikitext files from MDWiki revisions. Each subdirectory is named by revision ID and contains a `wikitext.txt` file.
 
-Used by: `src/app/fix_src/helps_bots/missing_refs.php` -> `get_full_text()` for expanding short references when the source wikitext is not available via HTTP.
+Used by: `src/app/Fix/helps_bots/missing_refs.php` -> `get_full_text()` for expanding short references when the source wikitext is not available via HTTP.
 
 ## Usage
 
