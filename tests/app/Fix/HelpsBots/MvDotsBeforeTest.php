@@ -2,7 +2,7 @@
 
 
 
-use WpRefs\Tests\MyFunctionTest;
+use Tests\MyFunctionTest;
 use App\Fix\HelpsBots\MvDots;
 
 class mvDotsBeforeTest extends MyFunctionTest

@@ -1,6 +1,6 @@
 <?php
 
-use WpRefs\Tests\MyFunctionTest;
+use Tests\MyFunctionTest;
 use App\Fix\LangBots\EsBots\EsMonths;
 use App\Fix\LangBots\EsBots\Es;
 

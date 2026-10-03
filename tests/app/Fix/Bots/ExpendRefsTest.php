@@ -2,7 +2,7 @@
 
 
 
-use WpRefs\Tests\MyFunctionTest;
+use Tests\MyFunctionTest;
 use App\Fix\Bots\ExpendRefs;
 
 class expendRefsTest extends MyFunctionTest

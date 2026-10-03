@@ -1,6 +1,6 @@
 <?php
 
-use WpRefs\Tests\MyFunctionTest;
+use Tests\MyFunctionTest;
 use App\Fix\HelpsBots\MissingRefs;
 
 class missingRefsTest extends MyFunctionTest

@@ -1,10 +1,10 @@
 <?php
 
-namespace WpRefs\Tests;
+namespace Tests;
 // Comprehensive test to verify Polish language fixes work correctly
 
 use PHPUnit\Framework\Attributes\DataProvider;
-use WpRefs\Tests\MyFunctionTest;
+use Tests\MyFunctionTest;
 use App\Fix\Index;
 
 class ComprehensiveTest extends MyFunctionTest

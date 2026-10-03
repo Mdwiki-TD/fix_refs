@@ -1,9 +1,9 @@
 <?php
 
-namespace WpRefs\Tests;
+namespace Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
-use WpRefs\Tests\MyFunctionTest;
+use Tests\MyFunctionTest;
 use App\Fix\Bots\MiniFixesBot;
 
 class ExtendedMiniFixesBotTest extends MyFunctionTest

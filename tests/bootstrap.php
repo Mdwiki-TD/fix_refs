@@ -1,6 +1,6 @@
 <?php
 
-namespace WpRefs\Tests;
+namespace Tests;
 
 use PHPUnit\Framework\TestCase;
 
@@ -10,7 +10,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// use WpRefs\Tests\MyFunctionTest;
+// use Tests\MyFunctionTest;
 // Load the Composer autoloader
 require __DIR__ . '/../vendor/autoload.php';
 // Load bootstrap.php file
