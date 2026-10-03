@@ -2,7 +2,7 @@
 tests/
 ├── app/
 │   ├── Fix/
-│   │   ├── Bots/
+│   │   ├── bots/
 │   │   │   ├── fixtures/
 │   │   │   │   ├── del_dup/
 │   │   │   │   │   ├── expected.txt
@@ -30,29 +30,34 @@ tests/
 │   │   │           ├── expected.txt
 │   │   │           ├── input.txt
 │   │   │           └── output.txt
-│   │   ├── HelpsBots/
+│   │   ├── helps_bots/
 │   │   │   ├── fixtures/
 │   │   │   │   └── remove_space_texts/
 │   │   │   │       ├── 1/
 │   │   │   │       │   ├── expected.txt
-│   │   │   │       │   ├── input.txt
-│   │   │   │       │   └── output.txt
+│   │   │   │       │   └── input.txt
 │   │   │   │       ├── 2/
 │   │   │   │       │   ├── expected.txt
-│   │   │   │       │   ├── input.txt
-│   │   │   │       │   └── output.txt
+│   │   │   │       │   └── input.txt
 │   │   │   │       └── 3/
 │   │   │   │           ├── expected.txt
-│   │   │   │           ├── input.txt
-│   │   │   │           └── output.txt
+│   │   │   │           └── input.txt
 │   │   │   ├── enLangParamTest.php
 │   │   │   ├── missingRefsTest.php
 │   │   │   ├── mvDotsAfterTest.php
 │   │   │   ├── mvDotsBeforeTest.php
-│   │   │   ├── removeSpace2PerformanceTest.php
 │   │   │   ├── removeSpace2Test.php
 │   │   │   └── removeSpaceTest.php
-│   │   ├── Infoboxes/
+│   │   ├── HelpsBots/
+│   │   │   └── fixtures/
+│   │   │       └── remove_space_texts/
+│   │   │           ├── 1/
+│   │   │           │   └── output.txt
+│   │   │           ├── 2/
+│   │   │           │   └── output.txt
+│   │   │           └── 3/
+│   │   │               └── output.txt
+│   │   ├── infoboxes/
 │   │   │   ├── fixtures/
 │   │   │   │   ├── 1/
 │   │   │   │   │   ├── expected.txt
@@ -64,19 +69,17 @@ tests/
 │   │   │   │       └── output.json
 │   │   │   ├── infobox2Test.php
 │   │   │   └── infoboxTest.php
-│   │   ├── LangBots/
-│   │   │   ├── BgBots/
+│   │   ├── lang_bots/
+│   │   │   ├── bg_bots/
 │   │   │   │   └── fixBgTest.php
-│   │   │   ├── EsBots/
+│   │   │   ├── es_bots/
 │   │   │   │   ├── fixtures/
 │   │   │   │   │   ├── 1/
 │   │   │   │   │   │   ├── expected.txt
-│   │   │   │   │   │   ├── input.txt
-│   │   │   │   │   │   └── output.txt
+│   │   │   │   │   │   └── input.txt
 │   │   │   │   │   ├── 2/
 │   │   │   │   │   │   ├── expected.txt
-│   │   │   │   │   │   ├── input.txt
-│   │   │   │   │   │   └── output.txt
+│   │   │   │   │   │   └── input.txt
 │   │   │   │   │   └── 3/
 │   │   │   │   │       ├── expected.txt
 │   │   │   │   │       └── input.txt
@@ -85,7 +88,7 @@ tests/
 │   │   │   │   ├── esRefsTest.php
 │   │   │   │   ├── esSectionTest.php
 │   │   │   │   └── esTest.php
-│   │   │   ├── PlBots/
+│   │   │   ├── pl_bots/
 │   │   │   │   ├── ComprehensiveTest.php
 │   │   │   │   ├── DebugDuplicate.php
 │   │   │   │   ├── DebugParams.php
@@ -93,10 +96,17 @@ tests/
 │   │   │   │   ├── IntegrationTest.php
 │   │   │   │   ├── ManualTest.php
 │   │   │   │   └── plInfoboxTest.php
-│   │   │   ├── PtBots/
+│   │   │   ├── pt_bots/
 │   │   │   │   ├── ptMonthsNewValueTest.php
 │   │   │   │   └── ptMonthsTest.php
 │   │   │   └── swTest.php
+│   │   ├── LangBots/
+│   │   │   └── EsBots/
+│   │   │       └── fixtures/
+│   │   │           ├── 1/
+│   │   │           │   └── output.txt
+│   │   │           └── 2/
+│   │   │               └── output.txt
 │   │   ├── Parse/
 │   │   │   ├── CategoryTest.php
 │   │   │   └── CitationsRegTest.php
