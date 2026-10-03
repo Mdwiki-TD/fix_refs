@@ -2,78 +2,174 @@
 
 namespace App;
 
+use RuntimeException;
+
 /**
- * CSRF Token Management for MDWiki Tools.
+ * CSRF (Cross-Site Request Forgery) Protection Manager
  *
- * Provides class methods to generate and verify CSRF tokens for form protection.
+ * This class provides a robust object-oriented solution for CSRF protection
+ * using single-use, cryptographically secure tokens.
+ *
+ * @package	TDWIKI\Security
+ * @subpackage CSRF
+ * @author	 Translation Dashboard Team
+ * @version	2.0.0
+ * @license	GPL-3.0-or-later
+ *
+ * @see https://owasp.org/www-community/attacks/csrf
+ * @see https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html
  */
+
 class Csrf
 {
-	public const CSRF_SESSION_KEY = "csrf_tokens";
+	/**
+	 * Session key used to store active CSRF tokens.
+	 */
+	private const CSRF_SESSION_KEY = 'csrf_tokens';
 
-	private static function initSession(): void
+	/**
+	 * Maximum number of tokens stored simultaneously per session.
+	 */
+	private const MAX_TOKENS = 50;
+
+	/**
+	 * Token length in bytes (32 bytes = 64 hexadecimal characters).
+	 */
+	private const TOKEN_LENGTH_BYTES = 32;
+
+	/**
+	 * Ensure the PHP session is active before performing operations.
+	 *
+	 * @throws RuntimeException If no session is active.
+	 */
+	private static function ensureSessionActive(): void
 	{
-		if (session_status() === PHP_SESSION_NONE) {
-			session_start();
+		if (session_status() !== PHP_SESSION_ACTIVE) {
+			throw new RuntimeException('CSRFManager requires an active PHP session. Call session_start() first.');
 		}
 	}
+
 	/**
-	 * Generate a new CSRF token for form protection.
+	 * Generate a new CSRF token and store it in the session
 	 *
 	 * Creates a cryptographically secure random token and stores it
-	 * in the session for later verification. Each token is single-use.
+	 * in the session for later validation. Each token is single-use.
 	 *
-	 * @return string The generated 64-character hex token
+	 * Token Characteristics:
+	 * - 64 hexadecimal characters (32 random bytes)
+	 * - Generated using cryptographically secure random_bytes()
+	 * - Unique per generation call
+	 * - Stored in session for server-side validation
+	 *
+	 * @return string The generated hexadecimal token string.
+	 * @throws RuntimeException If random byte generation fails or session is inactive.
 	 */
 	public static function generateToken(): string
 	{
-		self::initSession();
+		self::ensureSessionActive();
 
-		$token = bin2hex(random_bytes(32));
-		if (!isset($_SESSION[self::CSRF_SESSION_KEY])) {
+		try {
+			// Generate 32 random bytes and convert to 64 hex characters
+			$token = bin2hex(random_bytes(self::TOKEN_LENGTH_BYTES));
+		} catch (\Exception $e) {
+			throw new RuntimeException('Failed to generate CSRF token: ' . $e->getMessage(), 0, $e);
+		}
+
+		// Initialize token array if needed
+		if (!isset($_SESSION[self::CSRF_SESSION_KEY]) || !is_array($_SESSION[self::CSRF_SESSION_KEY])) {
 			$_SESSION[self::CSRF_SESSION_KEY] = [];
 		}
+
+		// Store the token for validation
 		$_SESSION[self::CSRF_SESSION_KEY][] = $token;
+
+		// Maintain token limit to avoid session bloating
+		if (count($_SESSION[self::CSRF_SESSION_KEY]) > self::MAX_TOKENS) {
+			$_SESSION[self::CSRF_SESSION_KEY] = array_slice($_SESSION[self::CSRF_SESSION_KEY], -self::MAX_TOKENS);
+		}
+
 		return $token;
 	}
 
 	/**
-	 * Verify the CSRF token submitted with a POST request.
+	 * Verify a submitted CSRF token against stored tokens.
 	 *
-	 * Checks if the submitted token exists in the session's token list.
-	 * Tokens are single-use and removed after successful verification.
+	 * This function validates that:
+	 * 1. A session exists with stored tokens
+	 * 2. A token was submitted in the POST request
+	 * 3. The submitted token matches one of the stored tokens
+	 * 4. The token is consumed (removed) after successful validation
 	 *
-	 * @return bool True if the token is valid, false otherwise
+	 * Security Considerations:
+	 * - Tokens are single-use; they are removed after validation
+	 * - Empty or missing token lists are treated as validation failures
+	 * - This prevents session fixation attacks from bypassing CSRF
+	 *
+	 * @return bool True if valid and consumed; false otherwise.
 	 */
-	public static function verifyToken(): bool
+	public static function verifyToken(?string $submittedToken = null): bool
 	{
-		self::initSession();
+		self::ensureSessionActive();
 
-		// Initialize empty token array if not set
+		// Initialize token array if it doesn't exist
 		if (!isset($_SESSION[self::CSRF_SESSION_KEY]) || !is_array($_SESSION[self::CSRF_SESSION_KEY])) {
 			$_SESSION[self::CSRF_SESSION_KEY] = [];
-			// Security: No tokens in session means form was not properly initialized
+			// SECURITY FIX: Return false when no tokens exist
+			// This prevents bypassing CSRF by clearing the session
+			error_log('CSRF: No tokens found in session storage.');
 			return false;
 		}
 
-		// Get the submitted token
-		$submittedToken = $_POST['csrf_token'] ?? null;
+		// Auto-extract from POST request if not explicitly provided
+		$submittedToken = $submittedToken ?? ($_POST['csrf_token'] ?? null);
 
-		// No token submitted - verification fails
-		if (!$submittedToken) {
+		// Reject if no token was submitted
+		if (!$submittedToken || !is_string($submittedToken)) {
+			error_log('CSRF: Missing or invalid token payload in request.');
 			return false;
 		}
 
-		// Check if token exists in the valid tokens list
-		if (in_array($submittedToken, $_SESSION[self::CSRF_SESSION_KEY], true)) {
-			// Valid token - remove it (single use)
-			$_SESSION[self::CSRF_SESSION_KEY] = array_values(
-				array_diff($_SESSION[self::CSRF_SESSION_KEY], [$submittedToken])
-			);
-			return true;
+		foreach ($_SESSION[self::CSRF_SESSION_KEY] as $key => $token) {
+			if (hash_equals($token, $submittedToken)) {
+				// Consume token (single-use pattern)
+				// Token is valid - remove it to prevent reuse
+				unset($_SESSION[self::CSRF_SESSION_KEY][$key]);
+
+				// Re-index the array to prevent gaps
+				$_SESSION[self::CSRF_SESSION_KEY] = array_values($_SESSION[self::CSRF_SESSION_KEY]);
+
+				return true;
+			}
 		}
 
-		// Invalid or reused token
+		// Token not found or already used
+		error_log('CSRF: Invalid or previously consumed token submitted.');
 		return false;
+	}
+
+	/**
+	 * Get the current count of active CSRF tokens stored in session.
+	 *
+	 * @return int Number of active tokens.
+	 */
+	public function getTokenCount(): int
+	{
+		$this->ensureSessionActive();
+
+		return count($_SESSION[self::CSRF_SESSION_KEY] ?? []);
+	}
+
+	/**
+	 * Clear all active CSRF tokens from session storage.
+	 *
+	 * Useful during logout or session invalidation.
+	 *
+	 * @return void
+	 */
+	public function clearTokens(): void
+	{
+		$this->ensureSessionActive();
+
+		$_SESSION[self::CSRF_SESSION_KEY] = [];
 	}
 }
