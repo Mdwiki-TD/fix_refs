@@ -1,6 +1,6 @@
 <?php
 
-namespace WpRefs\MovesDots;
+namespace App\Fix\HelpsBots\MvDots;
 
 
 
@@ -29,21 +29,21 @@ function move_dots_before_refs(string $text, string $lang): string
 
 function move_dots_after_refs($newtext, $lang)
 {
-    // ---
+
     // Logger::debug("move_dots_after_refs\n");
-    // ---
+
     $dot = "\.,。।";
-    // ---
+
     if ($lang === "hy") {
         $dot = "\.,。։।:";
     }
-    // ---
+
     $regline = "((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)";
-    // ---
+
     $pattern = "/([" . $dot . "]+)\s*" . $regline . "/mu";
     $replacement = "$2$1";
-    // ---
+
     $newtext = preg_replace($pattern, $replacement, $newtext);
-    // ---
+
     return $newtext;
 }

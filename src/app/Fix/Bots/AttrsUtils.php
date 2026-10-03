@@ -1,6 +1,6 @@
 <?php
 
-namespace WpRefs\Bots\AttrsUtils;
+namespace App\Fix\Bots\AttrsUtils;
 
 function parseAttributes($text): array
 {
@@ -42,8 +42,8 @@ function get_attrs($text)
             $attrs[$attrName] = $attrValue;
         }
     }
-    // ---
+
     // var_export($attrs);
-    // ---
+
     return $attrs;
 }

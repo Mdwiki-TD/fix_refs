@@ -1,13 +1,13 @@
 <?php
 
-namespace WpRefs\Tests;
+namespace Tests;
 
 // Simple manual test for Polish infobox functionality
 
 use PHPUnit\Framework\Attributes\DataProvider;
-use WpRefs\Tests\MyFunctionTest;
-use function WpRefs\PL\FixPlInfobox\add_missing_params_to_choroba_infobox;
-use function WpRefs\PL\FixPlInfobox\pl_fixes;
+use Tests\MyFunctionTest;
+use function App\Fix\LangBots\PlBots\FixPlInfobox\add_missing_params_to_choroba_infobox;
+use function App\Fix\LangBots\PlBots\FixPlInfobox\pl_fixes;
 
 class ManualTest extends MyFunctionTest
 {

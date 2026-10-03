@@ -1,9 +1,9 @@
 <?php
 
-namespace WpRefs\Infobox2;
+namespace App\Fix\Infoboxes\Infobox2;
 
-use function WpRefs\Bots\TxtLib2\extract_templates_and_params;
-use WpRefs\WikiParse\ParserTemplate;
+use function App\Fix\Bots\TxtLib2\extract_templates_and_params;
+use App\Fix\WikiParse\ParserTemplate;
 
 function do_comments($text)
 {
@@ -19,19 +19,19 @@ function do_comments($text)
 }
 function expend_new($mainTemp)
 {
-    // ---
+
     $mainTemp = trim($mainTemp);
-    // ---
+
     $parser = new ParserTemplate($mainTemp);
-    // ---
+
     $temp = $parser->getTemplate();
-    // ---
+
     $newTemp = $temp->toString($newLine = true, $ljust = 17);
-    // ---
+
     $newTemp = do_comments($newTemp);
-    // ---
+
     $newTemp = trim($newTemp);
-    // ---
+
     return $newTemp;
 }
 
@@ -52,11 +52,11 @@ function make_tempse($section_0)
         if (count($params) > 4 && strpos($section_0, ">$template") === false) {
             $tempseBy_u[$u] = $temp;
             $tempse[$u] = strlen($template);
-            // ---
+
             // print_s($namestrip);
         }
     }
-    // ---
+
     return [
         "tempse_by_u" => $tempseBy_u,
         "tempse" => $tempse,

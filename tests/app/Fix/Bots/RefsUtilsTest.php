@@ -2,10 +2,10 @@
 
 
 
-use WpRefs\Tests\MyFunctionTest;
+use Tests\MyFunctionTest;
 
-use function WpRefs\Bots\RefsUtils\rm_str_from_start_and_end;
-use function WpRefs\Bots\RefsUtils\remove_start_end_quotes;
+use function App\Fix\Bots\RefsUtils\rm_str_from_start_and_end;
+use function App\Fix\Bots\RefsUtils\remove_start_end_quotes;
 
 
 class refsUtilsTest extends MyFunctionTest

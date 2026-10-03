@@ -2,8 +2,8 @@
 
 
 
-use WpRefs\Tests\MyFunctionTest;
-use function WpRefs\EnLangParam\add_lang_en_to_refs;
+use Tests\MyFunctionTest;
+use function App\Fix\HelpsBots\EnLangParam\add_lang_en_to_refs;
 
 class enLangParamTest extends MyFunctionTest
 {

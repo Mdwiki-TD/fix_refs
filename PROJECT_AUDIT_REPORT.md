@@ -58,7 +58,7 @@ The system is already deployed and running on Wikimedia Toolforge, processing re
 
 All modules within `src/` share these patterns:
 
--   **Function-based API** -- Public interfaces are namespaced functions, not classes. Example: `WpRefs\WprefText\fix_page()`.
+-   **Function-based API** -- Public interfaces are namespaced functions, not classes. Example: `App\Fix\Index \fix_page()`.
 -   **String-in / string-out transforms** -- Every bot function takes a wikitext string and returns a modified wikitext string.
 -   **cURL with User-Agent** -- All HTTP requests use the same User-Agent string (`WikiProjectMed Translation Dashboard/1.0`) and 5-second timeouts.
 -   **Regex-heavy processing** -- Core logic relies on `preg_replace`, `preg_match_all`, and `str_replace` rather than AST manipulation.
@@ -121,7 +121,7 @@ The result variable is `$newtext` (no underscore) but the comparison and output 
 **File:** `src/text_post.php`, line 39
 
 ```php
-// if (verify_csrf_token()) {
+// if (verifyToken()) {
 ```
 
 CSRF verification is commented out. Any external site can submit POST requests to `text_post.php` on behalf of an authenticated user. While the endpoint currently returns `text/plain` (limiting XSS via response), it can be used to trigger arbitrary wikitext processing and potentially abuse the Wikipedia API through the server.
@@ -224,7 +224,7 @@ Functions like `add_Translated_from_MDWiki()`, `bg_section()`, and `es_section()
 | #   | Fix                                                                                                      | File                                                                            | Effort |
 | --- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------ |
 | 1   | Fix `$new_text` -> `$newtext` variable name bug                                                          | `src/text_post.php:50,53`                                                       | 5 min  |
-| 2   | Uncomment and enable `verify_csrf_token()`                                                               | `src/text_post.php:39`                                                          | 5 min  |
+| 2   | Uncomment and enable `verifyToken()`                                                               | `src/text_post.php:39`                                                          | 5 min  |
 | 3   | Gate `display_errors` behind an environment variable (e.g., `FIX_REFS_DEBUG`) instead of `$_GET['test']` | `src/index.php`, `src/test.php`, `src/work.php`, `src/app/Fix/debug_helper.php` | 30 min |
 | 4   | Remove all commented-out code from production files                                                      | Multiple                                                                        | 30 min |
 | 5   | Add input length limit (e.g., 1MB) to `text_post.php`                                                    | `src/text_post.php`                                                             | 15 min |

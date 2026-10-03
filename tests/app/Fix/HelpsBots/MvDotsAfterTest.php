@@ -2,8 +2,8 @@
 
 
 
-use WpRefs\Tests\MyFunctionTest;
-use function WpRefs\MovesDots\move_dots_after_refs;
+use Tests\MyFunctionTest;
+use function App\Fix\HelpsBots\MvDots\move_dots_after_refs;
 
 class mvDotsAfterTest extends MyFunctionTest
 {
@@ -229,34 +229,34 @@ class mvDotsAfterTest extends MyFunctionTest
     public function testMoveDotsAfterHy()
     {
         $input = 'Հետծննդյան հոգեբանական խանգարումը հանդիպում է 1000 ծննդաբերությունից 1-2-ի մոտ։ <ref name="Os2018" /><ref name="Li2018" /> Տարբեր [[Մշակույթ|մշակույթներում]] և [[Դասակարգային կառուցվածք|սոցիալական դասերում]] գները նման են թվում։ <ref name="Luc2021" /> Ավելի հաճախ այն հանդիպում է հայտնի կամ նոր սկսվող երկբևեռ խանգարման համատեքստում, որը հայտնի է որպես հետծննդյան երկբևեռ խանգարում : <ref name="Luc2021" /> Այս վիճակը նկարագրվել է դեռևս մ.թ.ա. 400 թվականից [[Հիպոկրատ|Հիպոկրատի]] կողմից ։ <ref name="Os2018" />\r\n\r\n== test ==';
-        // ---
+
         $expected = 'Հետծննդյան հոգեբանական խանգարումը հանդիպում է 1000 ծննդաբերությունից 1-2-ի մոտ<ref name="Os2018" /><ref name="Li2018" />։ Տարբեր [[Մշակույթ|մշակույթներում]] և [[Դասակարգային կառուցվածք|սոցիալական դասերում]] գները նման են թվում<ref name="Luc2021" />։ Ավելի հաճախ այն հանդիպում է հայտնի կամ նոր սկսվող երկբևեռ խանգարման համատեքստում, որը հայտնի է որպես հետծննդյան երկբևեռ խանգարում <ref name="Luc2021" />: Այս վիճակը նկարագրվել է դեռևս մ.թ.ա. 400 թվականից [[Հիպոկրատ|Հիպոկրատի]] կողմից <ref name="Os2018" />։\r\n\r\n== test ==';
-        // ---
+
         $this->assertEqualCompare($expected, $input, move_dots_after_refs($input, 'hy'));
     }
     public function testPart1()
     {
         $input = '[[Category:Translated from MDWiki]] ռետինոիդներ. <ref name="NORD2006" /><ref name="Gli2017" />';
-        // ---
+
         $expected = '[[Category:Translated from MDWiki]] ռետինոիդներ<ref name="NORD2006" /><ref name="Gli2017" />.';
-        // ---
+
         $this->assertEqualCompare($expected, $input, move_dots_after_refs($input, 'hy'));
     }
     public function testPart2()
     {
         $input = '[[Category:Translated from MDWiki]] ռետինոիդներ, <ref name="NORD2006" /><ref name="Gli2017" />';
-        // ---
+
         $expected = '[[Category:Translated from MDWiki]] ռետինոիդներ<ref name="NORD2006" /><ref name="Gli2017" />,';
-        // ---
+
         $this->assertEqualCompare($expected, $input, move_dots_after_refs($input, 'hy'));
     }
 
     public function testPart5()
     {
         $input = 'text part 1 <ref name="NIH2016" />։ text part 2: <ref name="AFP2013">{{Cite journal|last=Iser|first=D|last2=Ryan|first2=M|title=Fatty liver disease—a practical guide for GPs.|journal=Australian Family Physician|date=July 2013|volume=42|issue=7|pages=444–7|pmid=23826593}}</ref><ref name="NIH2016" /> some text [[links|label]] other [[text]] <small>text</small> <ref name="Ant2019" /><ref name="NIH2016" />։ hello!! [[2020|hi]] և [[Հեպատիտ C|հեպատիտ C-ն]] : <ref name="NIH2016" /> random texts: <ref name="NIH2016" /> last part <ref name="NIH2016" />։';
-        // ---
+
         $expected = 'text part 1 <ref name="NIH2016" />։ text part 2<ref name="AFP2013">{{Cite journal|last=Iser|first=D|last2=Ryan|first2=M|title=Fatty liver disease—a practical guide for GPs.|journal=Australian Family Physician|date=July 2013|volume=42|issue=7|pages=444–7|pmid=23826593}}</ref><ref name="NIH2016" />: some text [[links|label]] other [[text]] <small>text</small> <ref name="Ant2019" /><ref name="NIH2016" />։ hello!! [[2020|hi]] և [[Հեպատիտ C|հեպատիտ C-ն]] <ref name="NIH2016" />: random texts<ref name="NIH2016" />: last part <ref name="NIH2016" />։';
-        // ---
+
         $this->assertEqualCompare($expected, $input, move_dots_after_refs($input, 'hy'));
     }
 }

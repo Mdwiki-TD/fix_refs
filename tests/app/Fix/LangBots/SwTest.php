@@ -1,7 +1,7 @@
 <?php
 
-use WpRefs\Tests\MyFunctionTest;
-use function WpRefs\SW\sw_fixes;
+use Tests\MyFunctionTest;
+use function App\Fix\LangBots\SwBot\sw_fixes;
 
 
 class swTest extends MyFunctionTest

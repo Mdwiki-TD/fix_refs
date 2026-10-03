@@ -1,12 +1,12 @@
 <?php
 
-namespace WpRefs\WikiParse;
+namespace App\Fix\WikiParse;
 
-use WpRefs\WikiParse\DataModel\ExternalLink;
+use App\Fix\WikiParse\DataModel\ExternalLink;
 
 /**
  * Class ParserExternalLinks
- * @package WpRefs\WikiParse
+ * @package App\Fix\WikiParse
  */
 class ParserExternalLinks
 {

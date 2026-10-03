@@ -1,10 +1,10 @@
 <?php
 
-use WpRefs\Tests\MyFunctionTest;
+use Tests\MyFunctionTest;
 
-use function WpRefs\PT\FixPtMonth\rm_ref_spaces;
-use function WpRefs\PT\FixPtMonth\fix_pt_months_in_texts;
-use function WpRefs\PT\FixPtMonth\fix_pt_months_in_refs;
+use function App\Fix\LangBots\PtBots\FixPtMonths\rm_ref_spaces;
+use function App\Fix\LangBots\PtBots\FixPtMonths\fix_pt_months_in_texts;
+use function App\Fix\LangBots\PtBots\FixPtMonths\fix_pt_months_in_refs;
 
 class ptMonthsTest extends MyFunctionTest
 {

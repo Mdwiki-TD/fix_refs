@@ -1,11 +1,11 @@
 <?php
 
-namespace WpRefs\WikiParse\DataModel;
+namespace App\Fix\WikiParse\DataModel;
 
 /**
  * Class Table
  *
- * @package WpRefs\WikiParse\DataModel
+ * @package App\Fix\WikiParse\DataModel
  */
 class Table
 {

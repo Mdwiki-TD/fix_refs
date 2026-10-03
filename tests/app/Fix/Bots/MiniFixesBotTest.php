@@ -2,12 +2,12 @@
 
 
 
-use WpRefs\Tests\MyFunctionTest;
-use function WpRefs\Bots\Mini\remove_space_before_ref_tags;
-use function WpRefs\Bots\Mini\fix_sections_titles;
-use function WpRefs\Bots\Mini\refs_tags_spaces;
-use function WpRefs\Bots\Mini\fix_preffix;
-use function WpRefs\Bots\Mini\remove_template_rtt_links;
+use Tests\MyFunctionTest;
+use function App\Fix\Bots\MiniFixesBot\remove_space_before_ref_tags;
+use function App\Fix\Bots\MiniFixesBot\fix_sections_titles;
+use function App\Fix\Bots\MiniFixesBot\refs_tags_spaces;
+use function App\Fix\Bots\MiniFixesBot\fix_preffix;
+use function App\Fix\Bots\MiniFixesBot\remove_template_rtt_links;
 
 class miniFixesBotTest extends MyFunctionTest
 {
@@ -28,9 +28,9 @@ class miniFixesBotTest extends MyFunctionTest
         foreach ($texts as $tab) {
             $text = $tab['old'];
             $new  = $tab['new'];
-            // ---
+
             $newText = fix_sections_titles($text, "ru");
-            // ---
+
             $this->assertEqualCompare($new, $text, $newText);
         }
     }
@@ -51,9 +51,9 @@ class miniFixesBotTest extends MyFunctionTest
         foreach ($texts as $tab) {
             $text = $tab['old'];
             $new  = $tab['new'];
-            // ---
+
             $newText = fix_sections_titles($text, "hr");
-            // ---
+
             $this->assertEqualCompare($new, $text, $newText);
         }
     }
@@ -61,9 +61,9 @@ class miniFixesBotTest extends MyFunctionTest
     {
         $text = "== Marejeleo 1 ==\n\n====Marejeleo====\n\n=== Marejeleo ===";
         $new  = "== Marejeleo 1 ==\n\n==== Marejeo ====\n\n=== Marejeo ===";
-        // ---
+
         $newText = fix_sections_titles($text, "sw");
-        // ---
+
         $this->assertEqualCompare($new, $text, $newText);
     }
 

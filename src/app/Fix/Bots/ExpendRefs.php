@@ -1,9 +1,9 @@
 <?php
 
-namespace WpRefs\ExpendRefs;
+namespace App\Fix\Bots\ExpendRefs;
 
-use function WpRefs\Parse\Reg_Citations\get_full_refs;
-use function WpRefs\Parse\Reg_Citations\get_short_citations;
+use function App\Fix\Parse\Reg_Citations\get_full_refs;
+use function App\Fix\Parse\Reg_Citations\get_short_citations;
 
 function refs_expend_work($first, $alltext = "")
 {
@@ -19,7 +19,7 @@ function refs_expend_work($first, $alltext = "")
     foreach ($shortRefs as $cite) {
         $name = $cite["name"];
         $refe = $cite["tag"];
-        // ---
+
         $rr = $refs[$name] ?? false;
         if ($rr) {
             $first = str_replace($refe, $rr, $first);

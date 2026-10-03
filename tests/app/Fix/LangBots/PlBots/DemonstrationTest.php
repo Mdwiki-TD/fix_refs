@@ -1,10 +1,10 @@
 <?php
 
-namespace WpRefs\Tests;
+namespace Tests;
 
 // Demonstration of Polish Choroba Infobox Parameter Addition Feature
-use WpRefs\Tests\MyFunctionTest;
-use function WpRefs\WprefText\fix_page;
+use Tests\MyFunctionTest;
+use App\Fix\Index;
 
 class DemonstrationTest extends MyFunctionTest
 {
@@ -45,7 +45,7 @@ Leczenie astmy obejmuje stosowanie leków wziewnych.
 ARTICLE;
 
         // Process the article through fix_page function for Polish language
-        $processedArticle = fix_page(
+        $processedArticle = Index::fix_page(
             $originalArticle,
             "Astma oskrzelowa", // title
             false,               // move_dots

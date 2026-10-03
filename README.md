@@ -65,7 +65,7 @@ fix_refs_repo/
 │   ├── text_post.php             # POST handler for API-style text processing
 │   ├── test.php                  # Test form UI for manual testing
 │   ├── csrf.php                  # CSRF token generation and verification
-│   ├── app/Fix/                  # Core library (PSR-4: WpRefs\)
+│   ├── app/Fix/                  # Core library (PSR-4: App\)
 │   │   ├── index.php             # fix_page() - main processing pipeline
 │   │   ├── bootstrap.php     # Autoloader via glob includes
 │   │   ├── debug_helper.php          # Debug/test output helpers
@@ -242,7 +242,7 @@ The project follows a modular architecture with clear separation between parsing
 
 1. **Variable name mismatch in text_post.php (BUG)** - Line 50 uses `$new_text` but the result is stored in `$newtext` (no underscore). This causes the comparison to always fail and the output to always say "no changes" even when changes exist. **Severity: High - functional bug.**
 
-2. **Commented-out CSRF verification** - In `text_post.php` line 39, the CSRF check is commented out (`// if (verify_csrf_token())`). POST requests are processed without CSRF validation. **Severity: Medium.**
+2. **Commented-out CSRF verification** - In `text_post.php` line 39, the CSRF check is commented out (`// if (verifyToken())`). POST requests are processed without CSRF validation. **Severity: Medium.**
 
 3. **No XSS protection on text output** - `text_post.php` line 62-64 outputs `$final_text` as `text/plain` without escaping. While the Content-Type header mitigates browser rendering, the variable `$new_text` (which is undefined) could leak error details in debug mode.
 
@@ -395,7 +395,7 @@ The library can be used programmatically:
 ```php
 require_once 'src/app/Fix/bootstrap.php';
 
-use function WpRefs\FixPage\fix_page_with_setting;
+use function App\FixPage\fix_page_with_setting;
 
 $text = "... your wikitext here ...";
 $result = fix_page_with_setting(

@@ -1,8 +1,8 @@
 <?php
 
-use WpRefs\Tests\MyFunctionTest;
+use Tests\MyFunctionTest;
 
-use function WpRefs\MdCat\add_Translated_from_MDWiki;
+use function App\Fix\MdCat\add_Translated_from_MDWiki;
 
 class mdCatTest extends MyFunctionTest
 {
@@ -93,15 +93,15 @@ class mdCatTest extends MyFunctionTest
             $expected = "{$textNoCat}\n[[{$cat}]]\n";
             $result = add_Translated_from_MDWiki($textNoCat, $lang);
             $this->assertEqualCompare($expected, $textNoCat, $result);
-            // ---
+
             $textWithCat = "This is a sample text\n\n[[{$cat}]]\n";
             $result = add_Translated_from_MDWiki($textWithCat, $lang);
             $this->assertEquals($textWithCat, $result);
-            // ---
+
             $textWithCat2 = "This is a sample text\n\n[[category:Translated_from_MDWiki]]\n";
             $result = add_Translated_from_MDWiki($textWithCat2, $lang);
             $this->assertEquals($textWithCat2, $result);
-            // ---
+
         }
     }
 }

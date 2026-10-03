@@ -1,8 +1,8 @@
 <?php
 
-use WpRefs\Tests\MyFunctionTest;
-use function WpRefs\BG\bg_fixes;
-use function WpRefs\BG\bg_section;
+use Tests\MyFunctionTest;
+use function App\Fix\LangBots\BgBots\FixBg\bg_fixes;
+use function App\Fix\LangBots\BgBots\FixBg\bg_section;
 
 class fixBgTest extends MyFunctionTest
 {

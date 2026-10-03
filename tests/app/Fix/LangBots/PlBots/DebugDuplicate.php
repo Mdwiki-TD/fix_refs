@@ -1,12 +1,12 @@
 <?php
 
-namespace WpRefs\Tests;
+namespace Tests;
 
 // Debug test to see what's happening with duplicate parameters
 
-use WpRefs\Tests\MyFunctionTest;
-use function WpRefs\PL\FixPlInfobox\add_missing_params_to_choroba_infobox;
-use function WpRefs\WikiParse\getTemplates;
+use Tests\MyFunctionTest;
+use function App\Fix\LangBots\PlBots\FixPlInfobox\add_missing_params_to_choroba_infobox;
+use App\Fix\WikiParse\ParserTemplates;
 
 class DebugDuplicate extends MyFunctionTest
 {
@@ -26,7 +26,7 @@ class DebugDuplicate extends MyFunctionTest
 TXT;
 
         // Verify initial template structure
-        $templates = getTemplates($input);
+        $templates = (new ParserTemplates($input))->getTemplates();
         $this->assertNotEmpty($templates, "Failed to parse templates from input text.");
 
         $initialParams = $templates[0]->getParameters();

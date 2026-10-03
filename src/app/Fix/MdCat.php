@@ -1,6 +1,6 @@
 <?php
 
-namespace WpRefs\MdCat;
+namespace App\Fix\MdCat;
 
 use App\Logger;
 
@@ -70,35 +70,34 @@ function get_cats()
 
 function Get_MdWiki_Category($lang)
 {
-    // ---
+
     // https://it.wikipedia.org/w/index.php?title=Categoria:Translated_from_MDWiki&action=edit&redlink=1
     $skipLangs = [
         "it"
     ];
-    // ---
+
     if (in_array($lang, $skipLangs)) {
         return "";
     }
-    // ---
+
     $cats = get_cats();
-    // ---
+
     $cat = $cats[$lang . "wiki"]["title"] ?? "Category:Translated from MDWiki";
-    // ---
+
     return $cat;
 }
 
 function add_Translated_from_MDWiki($text, $lang)
 {
-    // ---
     if (preg_match("/:\s*Translated[ _]from[ _]MDWiki\s*\]\]/iu", $text)) {
         return $text;
-    };
-    // ---
+    }
+
     $cat = Get_MdWiki_Category($lang);
-    // ---
+
     if (!empty($cat) && strpos($text, $cat) === false) {
         $text .= "\n[[$cat]]\n";
     }
-    // ---
+
     return $text;
 }

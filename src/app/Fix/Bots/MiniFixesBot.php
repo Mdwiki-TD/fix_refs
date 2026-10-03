@@ -1,6 +1,6 @@
 <?php
 
-namespace WpRefs\Bots\Mini;
+namespace App\Fix\Bots\MiniFixesBot;
 
 function fix_sections_titles($text, $lang)
 {
@@ -48,13 +48,13 @@ function fix_sections_titles($text, $lang)
 
 function remove_space_before_ref_tags($text, $lang)
 {
-    // ---
+
     $forLangs = ["sw", "bn", "ar"];
-    // ---
+
     // if (in_array($lang, $forLangs)) {
     $text = preg_replace("/\s*(\.|,|。|।)\s*<ref/iu", "$1<ref", $text);
     // }
-    // ---
+
     return $text;
 }
 
@@ -72,21 +72,21 @@ function refs_tags_spaces($text)
     // </ref><ref name=... | </ref><ref>
     $text = str_replace("</ref> <ref", "</ref><ref", $text);
 
-    // ---
+
     $text = str_replace("> <ref", "><ref", $text);
-    // ---
+
     return $text;
 }
 
 function fix_preffix($text, $lang)
 {
     // [[:en:X-сцепленное_рецессивное_наследование|Х-сцепленным рецессивным]], [[:ru:Спинальная_мышечная_атрофия|аутосомно-доминантным]]
-    // ---
+
     // replace [[:{en}: by [[
     $text = preg_replace('/\[\[:en:/u', "[[", $text);
     // replace [[:{lang}: by [[
     $text = preg_replace('/\[\[:' . preg_quote($lang, '/') . ':/ui', "[[", $text);
-    // ---
+
     return $text;
 }
 
@@ -95,31 +95,31 @@ function remove_template_rtt_links($text)
     // Remove wiki links to Template:RTT like [[Template:RTT|සැකිල්ල:RTT]]
     // Use [^\[\]]+ to match the second part (anything except square brackets)
     $text = preg_replace('/\[\[Template:RTT\|[^\[\]]+\]\]/u', '', $text);
-    // ---
+
     return $text;
 }
 
 function mini_fixes_after_fixing($text, $lang)
 {
-    // ---
+
     // remove empty lines
     $text = preg_replace('/^\s*\n/mu', "\n", $text);
-    // ---
+
     $text = fix_preffix($text, $lang);
-    // ---
+
     return $text;
 }
 
 function mini_fixes($text, $lang)
 {
-    // ---
+
     $text = refs_tags_spaces($text);
-    // ---
+
     $text = fix_sections_titles($text, $lang);
-    // ---
+
     $text = remove_space_before_ref_tags($text, $lang);
-    // ---
+
     $text = remove_template_rtt_links($text);
-    // ---
+
     return $text;
 }

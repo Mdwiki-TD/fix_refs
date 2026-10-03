@@ -1,10 +1,10 @@
 <?php
 
-namespace WpRefs\WikiParse;
+namespace App\Fix\WikiParse;
 
 /**
  * Class ParserCategories
- * @package WpRefs\WikiParse
+ * @package App\Fix\WikiParse
  */
 class ParserCategories
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace WpRefs\Tests;
+namespace Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
-use WpRefs\Tests\MyFunctionTest;
-use function WpRefs\Bots\Mini\fix_sections_titles;
+use Tests\MyFunctionTest;
+use function App\Fix\Bots\MiniFixesBot\fix_sections_titles;
 
 class ExtendedMiniFixesBotTest extends MyFunctionTest
 {

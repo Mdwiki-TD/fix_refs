@@ -1,12 +1,12 @@
 <?php
 
-namespace WpRefs\Tests;
+namespace Tests;
 
 // Integration test for Polish language fixes in main workflow
 
 use PHPUnit\Framework\Attributes\DataProvider;
-use WpRefs\Tests\MyFunctionTest;
-use function WpRefs\WprefText\fix_page;
+use Tests\MyFunctionTest;
+use App\Fix\Index;
 
 class IntegrationTest extends MyFunctionTest
 {
@@ -131,7 +131,7 @@ TXT
         array $shouldNotContain,
         array $maxParameterCounts
     ): void {
-        $result = fix_page($input, $title, false, $expandInfobox, false, $lang, "", "");
+        $result = Index::fix_page($input, $title, false, $expandInfobox, false, $lang, "", "");
 
         // Assert expected parameters are present
         foreach ($expectedParams as $param) {

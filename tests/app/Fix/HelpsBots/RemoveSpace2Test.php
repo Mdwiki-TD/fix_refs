@@ -1,8 +1,8 @@
 <?php
 
 
-use WpRefs\Tests\MyFunctionTest;
-use function WpRefs\RemoveSpace\remove_spaces_between_ref_and_punctuation;
+use Tests\MyFunctionTest;
+use function App\Fix\HelpsBots\RemoveSpace\remove_spaces_between_ref_and_punctuation;
 
 class removeSpace2ExtraTest extends MyFunctionTest
 {
@@ -69,7 +69,7 @@ class removeSpace2Test extends removeSpace2ExtraTest
     public function testRemoveSpaceEnd1()
     {
         $input = 'Բուժումը ներառում է [[Թերապիա (բուժում)|օժանդակ միջոցառումներ]], ինչպիսիք են գանգի պաշտպանիչ սարքը և ատամնաբուժական խնամքը <ref name="NORD2004" /> : Ոսկրային որոշակի անոմալիաներ շտկելու համար կարող է իրականացվել վիրահատություն <ref name="GARD2016" /> : Կյանքի տևողությունը, ընդհանուր առմամբ, նորմալ է<ref name="Yo2002">{{Cite book|last=Young|first=Ian D.|title=Genetics for Orthopedic Surgeons: The Molecular Genetic Basis of Orthopedic Disorders|date=2002|publisher=Remedica|isbn=9781901346428|page=92|url=https://books.google.com/books?id=QyVsI5b2zJoC&pg=PT52|language=en|url-status=live|archive-url=https://web.archive.org/web/20161103235838/https://books.google.ca/books?id=QyVsI5b2zJoC&pg=PT52|archive-date=2016-11-03}}</ref>։';
-        // ---
+
         $expected = 'Բուժումը ներառում է [[Թերապիա (բուժում)|օժանդակ միջոցառումներ]], ինչպիսիք են գանգի պաշտպանիչ սարքը և ատամնաբուժական խնամքը <ref name="NORD2004" />: Ոսկրային որոշակի անոմալիաներ շտկելու համար կարող է իրականացվել վիրահատություն <ref name="GARD2016" />: Կյանքի տևողությունը, ընդհանուր առմամբ, նորմալ է<ref name="Yo2002">{{Cite book|last=Young|first=Ian D.|title=Genetics for Orthopedic Surgeons: The Molecular Genetic Basis of Orthopedic Disorders|date=2002|publisher=Remedica|isbn=9781901346428|page=92|url=https://books.google.com/books?id=QyVsI5b2zJoC&pg=PT52|language=en|url-status=live|archive-url=https://web.archive.org/web/20161103235838/https://books.google.ca/books?id=QyVsI5b2zJoC&pg=PT52|archive-date=2016-11-03}}</ref>։';
         $this->assertEqualCompare($expected, $input, remove_spaces_between_ref_and_punctuation($input, 'hy'));
     }

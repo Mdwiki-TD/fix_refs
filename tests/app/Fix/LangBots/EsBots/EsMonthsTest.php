@@ -1,10 +1,10 @@
 <?php
 
-use WpRefs\Tests\MyFunctionTest;
+use Tests\MyFunctionTest;
 
-use function WpRefs\Bots\MonthNewValue\make_date_new_val_es;
-use function WpRefs\EsBots\es_months\fix_es_months_in_texts;
-use function WpRefs\EsBots\es_months\fix_es_months_in_refs;
+use function App\Fix\Bots\MonthsNewValue\make_date_new_val_es;
+use function App\Fix\LangBots\EsBots\EsMonths\fix_es_months_in_texts;
+use function App\Fix\LangBots\EsBots\EsMonths\fix_es_months_in_refs;
 
 class esMonthsTest extends MyFunctionTest
 {

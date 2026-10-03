@@ -1,11 +1,11 @@
 <?php
 
-namespace WpRefs\Tests;
+namespace Tests;
 // Comprehensive test to verify Polish language fixes work correctly
 
 use PHPUnit\Framework\Attributes\DataProvider;
-use WpRefs\Tests\MyFunctionTest;
-use function WpRefs\WprefText\fix_page;
+use Tests\MyFunctionTest;
+use App\Fix\Index;
 
 class ComprehensiveTest extends MyFunctionTest
 {
@@ -107,7 +107,7 @@ TXT,
         array $shouldNotAdd,
         array $notDuplicated
     ): void {
-        $result = fix_page($input, "Test Article", false, true, false, $lang, "", "");
+        $result = Index::fix_page($input, "Test Article", false, true, false, $lang, "", "");
 
         // Verify that expected parameters are present
         foreach ($expectedParams as $param) {
