@@ -10,4 +10,4 @@ include_once __DIR__ . '/app/Settings.php';
 include_once __DIR__ . '/app/Csrf.php';
 include_once __DIR__ . '/app/Run.php';
 include_once __DIR__ . '/app/Wikibots/Wikitext.php';
-include_once __DIR__ . '/app/fix_src/include_files.php';
+include_once __DIR__ . '/app/Fix/include_files.php';

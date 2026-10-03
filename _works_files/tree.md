@@ -1,42 +1,41 @@
 ```
 src/
 ├── app/
-│   ├── fix_src/
+│   ├── Fix/
 │   │   ├── bots/
-│   │   │   ├── attrs_utils.php
-│   │   │   ├── expend_refs.php
-│   │   │   ├── mini_fixes_bot.php
-│   │   │   ├── months_new_value.php
-│   │   │   ├── redirect_help.php
-│   │   │   ├── refs_utils.php
-│   │   │   ├── remove_duplicate_refs.php
-│   │   │   └── txtlib2.php
+│   │   │   ├── AttrsUtils.php
+│   │   │   ├── ExpendRefs.php
+│   │   │   ├── MiniFixesBot.php
+│   │   │   ├── MonthsNewValue.php
+│   │   │   ├── RedirectHelp.php
+│   │   │   ├── RefsUtils.php
+│   │   │   ├── RemoveDuplicateRefs.php
+│   │   │   └── Txtlib2.php
 │   │   ├── helps_bots/
-│   │   │   ├── en_lang_param.php
-│   │   │   ├── missing_refs.php
-│   │   │   ├── mv_dots.php
-│   │   │   ├── remove_space.php
-│   │   │   └── remove_space.py
+│   │   │   ├── EnLangParam.php
+│   │   │   ├── MissingRefs.php
+│   │   │   ├── MvDots.php
+│   │   │   └── RemoveSpace.php
 │   │   ├── infoboxes/
-│   │   │   ├── infobox.php
-│   │   │   └── infobox2.php
+│   │   │   ├── Infobox.php
+│   │   │   └── Infobox2.php
 │   │   ├── lang_bots/
 │   │   │   ├── bg_bots/
-│   │   │   │   └── fix_bg.php
+│   │   │   │   └── FixBg.php
 │   │   │   ├── es_bots/
-│   │   │   │   ├── es.php
-│   │   │   │   ├── es_months.php
-│   │   │   │   ├── es_refs.php
+│   │   │   │   ├── Es.php
+│   │   │   │   ├── EsMonths.php
+│   │   │   │   ├── EsRefs.php
 │   │   │   │   └── section.php
 │   │   │   ├── pl_bots/
-│   │   │   │   └── fix_pl_infobox.php
+│   │   │   │   └── FixPlInfobox.php
 │   │   │   ├── pt_bots/
-│   │   │   │   └── fix_pt_months.php
-│   │   │   └── sw_bot.php
+│   │   │   │   └── FixPtMonths.php
+│   │   │   └── SwBot.php
 │   │   ├── Parse/
 │   │   │   ├── Category.php
 │   │   │   ├── Citations.php
-│   │   │   └── Citations_reg.php
+│   │   │   └── CitationsReg.php
 │   │   ├── WikiParse/
 │   │   │   ├── src/
 │   │   │   │   ├── DataModel/
@@ -57,32 +56,15 @@ src/
 │   │   │   │   └── ParserTemplates.php
 │   │   │   ├── include_it.php
 │   │   │   └── Template.php
-│   │   ├── debug_helper.php
+│   │   ├── DebugHelper.php
 │   │   ├── include_files.php
-│   │   ├── index.php
-│   │   ├── md_cat.php
-│   │   └── README.md
-│   ├── resources/
-│   │   ├── revisions/
-│   │   │   ├── 1469242/
-│   │   │   │   └── wikitext.txt
-│   │   │   └── 1503213/
-│   │   │       └── wikitext.txt
-│   │   ├── language_settings.json
-│   │   ├── mdwiki_categories.json
-│   │   └── README.md
-│   ├── wikibots/
-│   │   ├── README.md
-│   │   └── wikitext.php
-│   ├── csrf.php
-│   ├── run.php
+│   │   ├── Index.php
+│   │   ├── MdCat.php
+│   ├── Wikibots/
+│   │   └── Wikitext.php
+│   ├── autoload.php
+│   ├── Csrf.php
+│   ├── Run.php
 │   └── Settings.php
-├── demo/
-│   ├── index.php
-│   ├── test.wikitext
-│   └── test_post.php
-├── include.php
-├── index.php
-└── work.php
 
 ```

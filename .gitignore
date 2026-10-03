@@ -9,8 +9,8 @@
 /TestsX
 /vendor
 /WikiParsetests
-app/fix_src/helps_bots/input.txt
-app/fix_src/helps_bots/output.txt
+app/Fix/helps_bots/input.txt
+app/Fix/helps_bots/output.txt
 composer.lock
 src/resources/revisions/1503213/wikitext.txt
 tests/**/output.json

@@ -24,7 +24,7 @@ vendor/bin/phpstan analyse
 
 ## Architecture
 
-The codebase follows a modular architecture with the `fix_page()` function in `app/fix_src/index.php` as the main orchestrator. Processing flows through these stages:
+The codebase follows a modular architecture with the `fix_page()` function in `app/Fix/index.php` as the main orchestrator. Processing flows through these stages:
 
 1. **Redirect check** - Skip processing if page is a redirect
 2. **Language-specific preprocessing** - Polish (`pl_fixes`)
@@ -40,16 +40,16 @@ The codebase follows a modular architecture with the `fix_page()` function in `a
 
 ### Key Directories
 
--   `app/fix_src/WikiParse/` - Parser for MediaWiki syntax (templates, citations, links, tables)
--   `app/fix_src/bots/` - Core text transformation functions
--   `app/fix_src/lang_bots/` - Language-specific bots (`es_bots/`, `pt_bots/`, `pl_bots/`, `bg_bots/`)
--   `app/fix_src/helps_bots/` - Helper utilities for refs, dots, language params
--   `app/fix_src/infoboxes/` - Infobox expansion logic
+-   `app/Fix/WikiParse/` - Parser for MediaWiki syntax (templates, citations, links, tables)
+-   `app/Fix/bots/` - Core text transformation functions
+-   `app/Fix/lang_bots/` - Language-specific bots (`es_bots/`, `pt_bots/`, `pl_bots/`, `bg_bots/`)
+-   `app/Fix/helps_bots/` - Helper utilities for refs, dots, language params
+-   `app/Fix/infoboxes/` - Infobox expansion logic
 -   `tests/` - PHPUnit tests organized by module
 
 ### Namespaces
 
--   `WpRefs\` - Main namespace for app/fix_src/ (PSR-4 autoloaded)
+-   `WpRefs\` - Main namespace for app/Fix/ (PSR-4 autoloaded)
 -   `WikiConnect\ParseWiki\` - WikiParse module namespace
 -   `WpRefs\Tests\` - Test namespace
 

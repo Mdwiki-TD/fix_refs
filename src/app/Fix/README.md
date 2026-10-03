@@ -4,7 +4,7 @@ The core PHP library for parsing and fixing MediaWiki references. This is the ma
 
 ## Project Overview
 
-`app/fix_src` contains the complete pipeline for transforming wikitext references. It provides a wikitext parser (`WikiParse`), a set of text transformation bots, language-specific processors, and helper utilities. The main entry point is the `fix_page()` function in `index.php`.
+`app/Fix` contains the complete pipeline for transforming wikitext references. It provides a wikitext parser (`WikiParse`), a set of text transformation bots, language-specific processors, and helper utilities. The main entry point is the `fix_page()` function in `index.php`.
 
 ### Main Features
 
@@ -30,7 +30,7 @@ No runtime dependencies. Uses only PHP built-in functions (`preg_*`, `str_*`, `c
 ## Project Structure
 
 ```
-app/fix_src/
+app/Fix/
 ├── index.php                   # fix_page() - main processing pipeline
 ├── include_files.php           # Autoloader (glob-based file includes)
 ├── test_bot.php                # Debug output helpers (echo_test, echo_debug)

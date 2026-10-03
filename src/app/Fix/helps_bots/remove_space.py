@@ -86,7 +86,7 @@ def assert_equal_compare(expected: str, input_text: str, result: str):
 
 
 # --- الملفات
-base_path = Path(__file__).parent.parent.parent / "tests/app/fix_src/helps_bots/fixtures/remove_space_texts"
+base_path = Path(__file__).parent.parent.parent / "tests/app/Fix/helps_bots/fixtures/remove_space_texts"
 
 for i in tqdm([1, 2, 3]):
     base_path_sub = base_path / str(i)
