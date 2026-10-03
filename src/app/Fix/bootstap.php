@@ -1,6 +1,4 @@
 <?php
-include_once __DIR__ . '/DebugHelper.php';
-
 # WikiParse
 
 foreach (glob(__DIR__ . "/WikiParse/DataModel/*.php") as $filename) {
