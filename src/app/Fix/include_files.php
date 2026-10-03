@@ -7,7 +7,7 @@ $folders = [
     "HelpsBots",
     "Infoboxes",
     "Parse",
-    "bots",
+    "Bots",
     "LangBots",
 ];
 

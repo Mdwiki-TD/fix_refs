@@ -166,4 +166,4 @@ if (empty($text)) {
 
 ### API Rate Limits
 
-The Wikimedia API has a rate limit of approximately 200 requests/second for well-behaved bots. This module does not implement rate limiting, so when processing many articles, consider adding delays between calls.
+The Wikimedia API has a rate limit of approximately 200 requests/second for well-behaved Bots. This module does not implement rate limiting, so when processing many articles, consider adding delays between calls.

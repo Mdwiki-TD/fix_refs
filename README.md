@@ -94,7 +94,7 @@ fix_refs_repo/
 │   │   │   ├── Citations.php     # CitationOld parser (regex-based)
 │   │   │   ├── Citations_reg.php # Short/full ref extraction by name
 │   │   │   └── Category.php      # Category regex parser
-│   │   ├── bots/                 # Core text transformation functions
+│   │   ├── Bots/                 # Core text transformation functions
 │   │   │   ├── mini_fixes_bot.php        # Spacing, section titles, prefix cleanup
 │   │   │   ├── remove_duplicate_refs.php # Duplicate ref detection/removal
 │   │   │   ├── expend_refs.php           # Short ref expansion
@@ -144,7 +144,7 @@ fix_refs_repo/
 1. **Web Layer** (`src/index.php`, `src/text_post.php`, `src/test.php`) - HTML forms and POST handlers
 2. **Orchestration Layer** (`src/work.php`) - Settings loading, environment detection, entry points
 3. **Pipeline Layer** (`src/app/Fix/index.php`) - Sequential processing pipeline in `fix_page()`
-4. **Bot Layer** (`src/app/Fix/bots/`, `src/app/Fix/HelpsBots/`) - Individual text transformations
+4. **Bot Layer** (`src/app/Fix/Bots/`, `src/app/Fix/HelpsBots/`) - Individual text transformations
 5. **Language Layer** (`src/app/Fix/LangBots/`) - Language-specific transformations
 6. **Parser Layer** (`src/app/Fix/WikiParse/`, `src/app/Fix/Parse/`) - Wikitext parsing
 7. **Data Layer** (`src/app/Fix/WikiParse/src/DataModel/`) - Value objects and models
@@ -159,7 +159,7 @@ The project follows a modular architecture with clear separation between parsing
 ### Design Patterns
 
 -   **Pipeline Pattern** - `fix_page()` chains transformations sequentially
--   **Strategy Pattern** - Language-specific bots are selected based on `$lang` parameter
+-   **Strategy Pattern** - Language-specific Bots are selected based on `$lang` parameter
 -   **Data Model / Value Object** - `Template`, `Tag`, `Parameters` encapsulate parsed structures
 -   **Facade** - `WikiParse/Template.php` provides simple `getTemplates()` entry point
 -   **Static Registry** - `ESData` class holds translation mappings as static properties

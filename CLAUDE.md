@@ -41,8 +41,8 @@ The codebase follows a modular architecture with the `fix_page()` function in `a
 ### Key Directories
 
 -   `app/Fix/WikiParse/` - Parser for MediaWiki syntax (templates, citations, links, tables)
--   `app/Fix/bots/` - Core text transformation functions
--   `app/Fix/LangBots/` - Language-specific bots (`EsBots/`, `PtBots/`, `PlBots/`, `BgBots/`)
+-   `app/Fix/Bots/` - Core text transformation functions
+-   `app/Fix/LangBots/` - Language-specific Bots (`EsBots/`, `PtBots/`, `PlBots/`, `BgBots/`)
 -   `app/Fix/HelpsBots/` - Helper utilities for refs, dots, language params
 -   `app/Fix/Infoboxes/` - Infobox expansion logic
 -   `tests/` - PHPUnit tests organized by module

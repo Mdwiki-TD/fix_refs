@@ -4,7 +4,7 @@ The core PHP library for parsing and fixing MediaWiki references. This is the ma
 
 ## Project Overview
 
-`app/Fix` contains the complete pipeline for transforming wikitext references. It provides a wikitext parser (`WikiParse`), a set of text transformation bots, language-specific processors, and helper utilities. The main entry point is the `fix_page()` function in `index.php`.
+`app/Fix` contains the complete pipeline for transforming wikitext references. It provides a wikitext parser (`WikiParse`), a set of text transformation Bots, language-specific processors, and helper utilities. The main entry point is the `fix_page()` function in `index.php`.
 
 ### Main Features
 
@@ -62,7 +62,7 @@ app/Fix/
 │   ├── Citations_reg.php       # get_full_refs(), get_short_citations()
 │   └── Category.php            # get_categories_reg()
 │
-├── bots/                       # Core text transformation functions
+├── Bots/                       # Core text transformation functions
 │   ├── mini_fixes_bot.php      # Spacing, section titles, prefix cleanup
 │   ├── remove_duplicate_refs.php # Duplicate ref detection/removal
 │   ├── expend_refs.php         # Short ref expansion
@@ -127,7 +127,7 @@ Output wikitext
 | Pattern               | Usage                                                             |
 | --------------------- | ----------------------------------------------------------------- |
 | **Pipeline**          | `fix_page()` chains transformations sequentially                  |
-| **Strategy**          | Language bots selected by `$lang` parameter                       |
+| **Strategy**          | Language Bots selected by `$lang` parameter                       |
 | **Value Object**      | `Template`, `Tag`, `Parameters` are immutable-style data carriers |
 | **Facade**            | `WikiParse/Template.php` provides `getTemplates()` entry point    |
 | **Recursive Descent** | `ParserTemplates` uses stack-based recursive parsing              |
@@ -137,7 +137,7 @@ Output wikitext
 
 **Strengths:**
 
--   Clear separation between parsing (WikiParse, Parse) and transformation (bots, HelpsBots, LangBots)
+-   Clear separation between parsing (WikiParse, Parse) and transformation (Bots, HelpsBots, LangBots)
 -   Each language has its own directory/file, enabling independent changes
 -   Data models in `WikiParse/src/DataModel/` are clean value objects with proper encapsulation
 
@@ -145,7 +145,7 @@ Output wikitext
 
 -   Two parallel parsing systems exist (`Parse/Citations.php` with `CitationOld` and `WikiParse/src/ParserCitations.php`)
 -   `include_files.php` uses glob includes instead of relying on Composer PSR-4 autoloading
--   The `bots/tests/` directory contains manual test scripts that shouldn't be in the library source
+-   The `Bots/tests/` directory contains manual test scripts that shouldn't be in the library source
 
 ### SOLID Principles
 
@@ -249,7 +249,7 @@ The modular file structure aids navigation, but the growing `if` chain in `fix_p
 
 1. Consolidate `str_starts_with()`/`str_ends_with()` into a single file
 2. Remove all commented-out code from production files
-3. Remove `bots/tests/` directory (move to `tests/` if needed)
+3. Remove `Bots/tests/` directory (move to `tests/` if needed)
 4. Add `preg_quote($title, '/')` consistently in all regex patterns using `$title`
 
 ### Medium-term
