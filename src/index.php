@@ -1,6 +1,6 @@
 <?php
 
-use function App\Wikibots\WikiText\get_wikipedia_text;
+use App\Wikibots\Wikitext;
 use App\Csrf;
 use App\Run;
 
@@ -45,7 +45,7 @@ HTML;
 function make_result($lang, $title, $sourcetitle, $mdwikiRevid)
 {
 
-    $text = get_wikipedia_text($title, $lang);
+    $text = Wikitext::get_wikipedia_text($title, $lang);
 
     if (empty($text)) {
         return <<<HTML
