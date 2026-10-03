@@ -27,9 +27,9 @@ class miniFixesBotTest extends MyFunctionTest
         foreach ($texts as $tab) {
             $text = $tab['old'];
             $new  = $tab['new'];
-            // ---
+
             $newText = MiniFixesBot::fix_sections_titles($text, "ru");
-            // ---
+
             $this->assertEqualCompare($new, $text, $newText);
         }
     }
@@ -50,9 +50,9 @@ class miniFixesBotTest extends MyFunctionTest
         foreach ($texts as $tab) {
             $text = $tab['old'];
             $new  = $tab['new'];
-            // ---
+
             $newText = MiniFixesBot::fix_sections_titles($text, "hr");
-            // ---
+
             $this->assertEqualCompare($new, $text, $newText);
         }
     }
@@ -60,9 +60,9 @@ class miniFixesBotTest extends MyFunctionTest
     {
         $text = "== Marejeleo 1 ==\n\n====Marejeleo====\n\n=== Marejeleo ===";
         $new  = "== Marejeleo 1 ==\n\n==== Marejeo ====\n\n=== Marejeo ===";
-        // ---
+
         $newText = MiniFixesBot::fix_sections_titles($text, "sw");
-        // ---
+
         $this->assertEqualCompare($new, $text, $newText);
     }
 

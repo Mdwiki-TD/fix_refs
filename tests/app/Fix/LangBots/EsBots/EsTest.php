@@ -7,11 +7,11 @@ use App\Fix\LangBots\EsBots\Es;
 
 function fix_temps_wrap($text)
 {
-    // ---
+
     $result = Es::fix_temps($text);
     $result = EsMonths::fix_es_months_in_refs($result);
     $result = preg_replace("/\s*=\s*/", "=", $result);
-    // ---
+
     return $result;
 }
 
