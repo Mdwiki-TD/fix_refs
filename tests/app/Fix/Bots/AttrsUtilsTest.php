@@ -3,8 +3,8 @@
 
 
 use Tests\MyFunctionTest;
-use function App\Bots\AttrsUtils\parseAttributes;
-use function App\Bots\AttrsUtils\get_attrs;
+use function App\Fix\Bots\AttrsUtils\parseAttributes;
+use function App\Fix\Bots\AttrsUtils\get_attrs;
 
 class attrsUtilsTest extends MyFunctionTest
 {

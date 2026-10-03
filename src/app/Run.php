@@ -3,7 +3,7 @@
 namespace App\Run;
 
 use function App\Settings\loadSettings;
-use function App\WprefText\fix_page;
+use function App\Fix\WprefText\fix_page;
 
 function fixPageNoSetting(
     string $text,

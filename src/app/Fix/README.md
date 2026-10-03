@@ -287,7 +287,7 @@ The modular file structure aids navigation, but the growing `if` chain in `fix_p
 require_once __DIR__ . '/bootstrap.php';
 
 // Process wikitext
-use function App\WprefText\fix_page;
+use function App\Fix\WprefText\fix_page;
 
 $result = fix_page(
     $text,          // Raw wikitext

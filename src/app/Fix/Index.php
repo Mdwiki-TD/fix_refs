@@ -1,6 +1,6 @@
 <?php
 
-namespace App\WprefText;
+namespace App\Fix\WprefText;
 
 use App\Logger;
 use function App\Infobox\Expend_Infobox;
@@ -14,12 +14,12 @@ use function App\DelDuplicateRefs\remove_Duplicate_refs_With_attrs;
 use function App\MovesDots\move_dots_after_refs;
 use function App\EnLangParam\add_lang_en_to_refs;
 use function App\MdCat\add_Translated_from_MDWiki;
-use function App\Bots\Mini\mini_fixes;
-use function App\Bots\Mini\mini_fixes_after_fixing;
+use function App\Fix\Bots\Mini\mini_fixes;
+use function App\Fix\Bots\Mini\mini_fixes_after_fixing;
 use function App\RemoveSpace\remove_spaces_between_last_word_and_beginning_of_ref;
 use function App\RemoveSpace\remove_spaces_between_ref_and_punctuation;
 use function App\MissingRefs\fix_missing_refs;
-use function App\Bots\Redirect\page_is_redirect;
+use function App\Fix\Bots\Redirect\page_is_redirect;
 
 function fix_page($text, $title, $moveDots, $infobox, $addEnLang, $lang, $sourcetitle, $mdwikiRevid)
 {

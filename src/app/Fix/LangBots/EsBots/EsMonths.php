@@ -6,7 +6,7 @@ namespace App\EsBots\es_months;
 use App\Logger;
 use function App\Parse\Citations\getCitationsOld;
 use App\Fix\WikiParse\ParserTemplates;
-use function App\Bots\MonthNewValue\make_date_new_val_es;
+use function App\Fix\Bots\MonthNewValue\make_date_new_val_es;
 
 
 function start_end($citeTemp)

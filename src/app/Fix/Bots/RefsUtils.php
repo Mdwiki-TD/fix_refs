@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Bots\RefsUtils;
+namespace App\Fix\Bots\RefsUtils;
 
 if (!function_exists('str_ends_with')) {
     function str_ends_with($string, $endString)

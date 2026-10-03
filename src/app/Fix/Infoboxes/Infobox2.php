@@ -2,7 +2,7 @@
 
 namespace App\Infobox2;
 
-use function App\Bots\TxtLib2\extract_templates_and_params;
+use function App\Fix\Bots\TxtLib2\extract_templates_and_params;
 use App\Fix\WikiParse\ParserTemplate;
 
 function do_comments($text)

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Bots\MonthNewValue;
+namespace App\Fix\Bots\MonthNewValue;
 
 function new_date($val, $lang = 'pt')
 {

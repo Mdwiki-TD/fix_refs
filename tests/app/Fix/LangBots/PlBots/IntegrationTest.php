@@ -6,7 +6,7 @@ namespace Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\MyFunctionTest;
-use function App\WprefText\fix_page;
+use function App\Fix\WprefText\fix_page;
 
 class IntegrationTest extends MyFunctionTest
 {

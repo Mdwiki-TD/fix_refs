@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Bots\TxtLib2;
+namespace App\Fix\Bots\TxtLib2;
 use App\Fix\WikiParse\ParserTemplates;
 
 

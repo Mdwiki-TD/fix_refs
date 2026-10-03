@@ -2,7 +2,7 @@
 
 use Tests\MyFunctionTest;
 
-use function App\Bots\MonthNewValue\make_date_new_val_es;
+use function App\Fix\Bots\MonthNewValue\make_date_new_val_es;
 use function App\EsBots\es_months\fix_es_months_in_texts;
 use function App\EsBots\es_months\fix_es_months_in_refs;
 

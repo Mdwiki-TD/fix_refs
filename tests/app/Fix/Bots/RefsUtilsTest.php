@@ -4,8 +4,8 @@
 
 use Tests\MyFunctionTest;
 
-use function App\Bots\RefsUtils\rm_str_from_start_and_end;
-use function App\Bots\RefsUtils\remove_start_end_quotes;
+use function App\Fix\Bots\RefsUtils\rm_str_from_start_and_end;
+use function App\Fix\Bots\RefsUtils\remove_start_end_quotes;
 
 
 class refsUtilsTest extends MyFunctionTest

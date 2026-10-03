@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Bots\AttrsUtils;
+namespace App\Fix\Bots\AttrsUtils;
 
 function parseAttributes($text): array
 {

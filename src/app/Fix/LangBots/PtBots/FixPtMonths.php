@@ -5,7 +5,7 @@ namespace App\PT\FixPtMonth;
 use App\Logger;
 use function App\Parse\Citations\getCitationsOld;
 use App\Fix\WikiParse\ParserTemplates;
-use function App\Bots\MonthNewValue\make_date_new_val_pt;
+use function App\Fix\Bots\MonthNewValue\make_date_new_val_pt;
 
 
 function start_end($citeTemp)

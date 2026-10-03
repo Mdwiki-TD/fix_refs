@@ -4,8 +4,8 @@ namespace App\DelDuplicateRefs;
 
 
 
-use function App\Bots\AttrsUtils\get_attrs;
-use function App\Bots\RefsUtils\remove_start_end_quotes;
+use function App\Fix\Bots\AttrsUtils\get_attrs;
+use function App\Fix\Bots\RefsUtils\remove_start_end_quotes;
 use function App\Parse\Citations\getCitationsOld;
 use App\Logger;
 
