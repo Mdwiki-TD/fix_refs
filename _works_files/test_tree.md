@@ -18,8 +18,8 @@ tests/
 │   │   │   ├── RemoveSpace2Test.php
 │   │   │   └── RemoveSpaceTest.php
 │   │   ├── Infoboxes/
-│   │   │   ├── infobox2Test.php
-│   │   │   └── infoboxTest.php
+│   │   │   ├── Infobox2Test.php
+│   │   │   └── InfoboxTest.php
 │   │   ├── LangBots/
 │   │   │   ├── BgBots/
 │   │   │   │   └── FixBgTest.php
