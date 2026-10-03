@@ -2,7 +2,7 @@
 src/
 ├── app/
 │   ├── Fix/
-│   │   ├── bots/
+│   │   ├── Bots/
 │   │   │   ├── AttrsUtils.php
 │   │   │   ├── ExpendRefs.php
 │   │   │   ├── MiniFixesBot.php
@@ -11,25 +11,25 @@ src/
 │   │   │   ├── RefsUtils.php
 │   │   │   ├── RemoveDuplicateRefs.php
 │   │   │   └── Txtlib2.php
-│   │   ├── helps_bots/
+│   │   ├── HelpsBots/
 │   │   │   ├── EnLangParam.php
 │   │   │   ├── MissingRefs.php
 │   │   │   ├── MvDots.php
 │   │   │   └── RemoveSpace.php
-│   │   ├── infoboxes/
+│   │   ├── Infoboxes/
 │   │   │   ├── Infobox.php
 │   │   │   └── Infobox2.php
-│   │   ├── lang_bots/
-│   │   │   ├── bg_bots/
+│   │   ├── LangBots/
+│   │   │   ├── BgBots/
 │   │   │   │   └── FixBg.php
-│   │   │   ├── es_bots/
+│   │   │   ├── EsBots/
 │   │   │   │   ├── Es.php
 │   │   │   │   ├── EsMonths.php
 │   │   │   │   ├── EsRefs.php
 │   │   │   │   └── Section.php
-│   │   │   ├── pl_bots/
+│   │   │   ├── PlBots/
 │   │   │   │   └── FixPlInfobox.php
-│   │   │   ├── pt_bots/
+│   │   │   ├── PtBots/
 │   │   │   │   └── FixPtMonths.php
 │   │   │   └── SwBot.php
 │   │   ├── Parse/
@@ -37,27 +37,24 @@ src/
 │   │   │   ├── Citations.php
 │   │   │   └── CitationsReg.php
 │   │   ├── WikiParse/
-│   │   │   ├── src/
-│   │   │   │   ├── DataModel/
-│   │   │   │   │   ├── Attribute.php
-│   │   │   │   │   ├── Citation.php
-│   │   │   │   │   ├── ExternalLink.php
-│   │   │   │   │   ├── InternalLink.php
-│   │   │   │   │   ├── Parameters.php
-│   │   │   │   │   ├── Table.php
-│   │   │   │   │   ├── Tag.php
-│   │   │   │   │   └── Template.php
-│   │   │   │   ├── ParserCategories.php
-│   │   │   │   ├── ParserCitations.php
-│   │   │   │   ├── ParserExternalLinks.php
-│   │   │   │   ├── ParserInternalLinks.php
-│   │   │   │   ├── ParserTags.php
-│   │   │   │   ├── ParserTemplate.php
-│   │   │   │   └── ParserTemplates.php
-│   │   │   ├── include_it.php
-│   │   │   └── Template.php
+│   │   │   ├── DataModel/
+│   │   │   │   ├── Attribute.php
+│   │   │   │   ├── Citation.php
+│   │   │   │   ├── ExternalLink.php
+│   │   │   │   ├── InternalLink.php
+│   │   │   │   ├── Parameters.php
+│   │   │   │   ├── Table.php
+│   │   │   │   ├── Tag.php
+│   │   │   │   └── Template.php
+│   │   │   ├── ParserCategories.php
+│   │   │   ├── ParserCitations.php
+│   │   │   ├── ParserExternalLinks.php
+│   │   │   ├── ParserInternalLinks.php
+│   │   │   ├── ParserTags.php
+│   │   │   ├── ParserTemplate.php
+│   │   │   └── ParserTemplates.php
+│   │   ├── bootstap.php
 │   │   ├── DebugHelper.php
-│   │   ├── include_files.php
 │   │   ├── Index.php
 │   │   ├── MdCat.php
 │   │   └── README.md
@@ -68,7 +65,7 @@ src/
 │   ├── Csrf.php
 │   ├── Run.php
 │   └── Settings.php
-├── include.php
+├── bootstap.php
 ├── index.php
 └── work.php
 

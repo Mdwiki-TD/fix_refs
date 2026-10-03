@@ -2,7 +2,7 @@
 
 namespace WpRefs\MdCat;
 
-use function WpRefs\TestBot\echo_test;
+use App\Logger;
 
 
 
@@ -24,7 +24,7 @@ function get_url_curl(string $url): string
 
     $output = curl_exec($ch);
     if ($output === false) {
-        echo_test("<br>cURL Error: " . curl_error($ch) . "<br>$url");
+        Logger::debug("<br>cURL Error: " . curl_error($ch) . "<br>$url");
     }
 
     curl_close($ch);

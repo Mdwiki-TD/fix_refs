@@ -40,7 +40,7 @@ Loaded by: `src/app/Fix/md_cat.php` -> `load_from_local_file()`
 
 Directory containing cached wikitext files from MDWiki revisions. Each subdirectory is named by revision ID and contains a `wikitext.txt` file.
 
-Used by: `src/app/Fix/helps_bots/missing_refs.php` -> `get_full_text()` for expanding short references when the source wikitext is not available via HTTP.
+Used by: `src/app/Fix/HelpsBots/missing_refs.php` -> `get_full_text()` for expanding short references when the source wikitext is not available via HTTP.
 
 ## Usage
 

@@ -24,7 +24,7 @@ Fix Refs is a PHP library that parses and fixes `<ref>` tags and citation templa
 | License              | GPL-3.0-or-later                   |
 | Deployment Target    | Wikimedia Toolforge                |
 
-The architecture follows a pipeline pattern: `fix_page()` in `src/app/Fix/index.php` chains 11 transformation stages, each calling focused functions from `bots/`, `helps_bots/`, and `lang_bots/` modules. A separate `WikiParse` submodule provides OOP-based wikitext parsing with recursive template extraction.
+The architecture follows a pipeline pattern: `fix_page()` in `src/app/Fix/index.php` chains 11 transformation stages, each calling focused functions from `Bots/`, `HelpsBots/`, and `LangBots/` modules. A separate `WikiParse` submodule provides OOP-based wikitext parsing with recursive template extraction.
 
 ---
 
@@ -36,7 +36,7 @@ The codebase is functional and purpose-built. Core transformation logic is corre
 
 ### Maintainability: 6/10
 
-Language-specific bots are well-isolated in separate files/directories, making per-language changes safe. The main risk is the growing `if` chain in `fix_page()` -- adding a new language requires modifying this function directly. No abstraction layer (interface, strategy pattern) exists for language-specific processing.
+Language-specific Bots are well-isolated in separate files/directories, making per-language changes safe. The main risk is the growing `if` chain in `fix_page()` -- adding a new language requires modifying this function directly. No abstraction layer (interface, strategy pattern) exists for language-specific processing.
 
 ### Scalability: 7/10
 
@@ -75,7 +75,7 @@ All modules within `src/` share these patterns:
 
 ### Common Technical Debt
 
-1. **Glob-based autoloading** -- `include_files.php` manually globs directories to include PHP files, bypassing the PSR-4 autoloader configured in `composer.json`. This is fragile (file load order matters) and adds startup overhead.
+1. **Glob-based autoloading** -- `bootstap.php` manually globs directories to include PHP files, bypassing the PSR-4 autoloader configured in `composer.json`. This is fragile (file load order matters) and adds startup overhead.
 
 2. **Two parsing systems** -- `Parse/Citations.php` (class `CitationOld`, regex-based) and `WikiParse/src/ParserCitations.php` (OOP, uses `ParserTags`) serve the same purpose. Most bot functions still use the older `getCitationsOld()`.
 
@@ -145,7 +145,7 @@ Any user can append `?test=1` to enable full error display, leaking PHP stack tr
 
 ### MEDIUM -- Hardcoded Server Paths
 
-**File:** `src/app/Fix/helps_bots/missing_refs.php`, lines 70-72
+**File:** `src/app/Fix/HelpsBots/missing_refs.php`, lines 70-72
 
 ```php
 $path = ($server == "localhost")
@@ -233,7 +233,7 @@ Functions like `add_Translated_from_MDWiki()`, `bg_section()`, and `es_section()
 
 | #   | Improvement                                                                                                                  | Impact                                   |
 | --- | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
-| 1   | Replace glob-based `include_files.php` with Composer PSR-4 autoloading                                                       | Eliminates fragile load-order dependency |
+| 1   | Replace glob-based `bootstap.php` with Composer PSR-4 autoloading                                                       | Eliminates fragile load-order dependency |
 | 2   | Consolidate duplicate `str_starts_with`/`str_ends_with` into a single `polyfills.php`                                        | Removes code duplication                 |
 | 3   | Add `$lang` whitelist validation in `work.php` (`in_array($lang, ['es','pt','pl','bg','sw','hy','ar','zh','hi','ru','hr'])`) | Prevents invalid input propagation       |
 | 4   | Extract User-Agent string to a constant in `wikitext.php`                                                                    | DRY principle                            |

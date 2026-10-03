@@ -67,7 +67,7 @@ fix_refs_repo/
 │   ├── csrf.php                  # CSRF token generation and verification
 │   ├── app/Fix/                  # Core library (PSR-4: WpRefs\)
 │   │   ├── index.php             # fix_page() - main processing pipeline
-│   │   ├── include_files.php     # Autoloader via glob includes
+│   │   ├── bootstap.php     # Autoloader via glob includes
 │   │   ├── debug_helper.php          # Debug/test output helpers
 │   │   ├── md_cat.php            # MDWiki category management (Wikidata integration)
 │   │   ├── WikiParse/            # MediaWiki wikitext parser module
@@ -94,7 +94,7 @@ fix_refs_repo/
 │   │   │   ├── Citations.php     # CitationOld parser (regex-based)
 │   │   │   ├── Citations_reg.php # Short/full ref extraction by name
 │   │   │   └── Category.php      # Category regex parser
-│   │   ├── bots/                 # Core text transformation functions
+│   │   ├── Bots/                 # Core text transformation functions
 │   │   │   ├── mini_fixes_bot.php        # Spacing, section titles, prefix cleanup
 │   │   │   ├── remove_duplicate_refs.php # Duplicate ref detection/removal
 │   │   │   ├── expend_refs.php           # Short ref expansion
@@ -103,19 +103,19 @@ fix_refs_repo/
 │   │   │   ├── months_new_value.php      # Month name translation (PT/ES)
 │   │   │   ├── redirect_help.php         # Redirect page detection
 │   │   │   └── txtlib2.php               # Template extraction helper
-│   │   ├── helps_bots/           # Helper utilities
+│   │   ├── HelpsBots/           # Helper utilities
 │   │   │   ├── mv_dots.php       # Punctuation-after-reference movement
 │   │   │   ├── en_lang_param.php # |language=en injection
 │   │   │   ├── missing_refs.php  # Missing ref recovery from source
 │   │   │   └── remove_space.php  # Reference-punctuation spacing
-│   │   ├── infoboxes/            # Infobox expansion
+│   │   ├── Infoboxes/            # Infobox expansion
 │   │   │   ├── infobox.php       # Main infobox expansion logic
 │   │   │   └── infobox2.php      # Template formatting helpers
-│   │   └── lang_bots/            # Language-specific processing
-│   │       ├── es_bots/          # Spanish: template translation, months, refs, sections
-│   │       ├── pt_bots/          # Portuguese: month localization
-│   │       ├── pl_bots/          # Polish: infobox parameter completion
-│   │       ├── bg_bots/          # Bulgarian: translation attribution
+│   │   └── LangBots/            # Language-specific processing
+│   │       ├── EsBots/          # Spanish: template translation, months, refs, sections
+│   │       ├── PtBots/          # Portuguese: month localization
+│   │       ├── PlBots/          # Polish: infobox parameter completion
+│   │       ├── BgBots/          # Bulgarian: translation attribution
 │   │       └── sw_bot.php        # Swahili: section title fix
 │   ├── wikibots/                 # Wikipedia API utilities
 │   │   └── wikitext.php          # Fetch wikitext via Action API / REST API
@@ -127,12 +127,12 @@ fix_refs_repo/
 │   ├── bootstrap.php             # Test bootstrap with MyFunctionTest base class
 │   ├── Bots/                     # Bot function tests
 │   ├── Parse/                    # Parser tests
-│   ├── es_bots/                  # Spanish bot tests
-│   ├── pt_bots/                  # Portuguese bot tests
-│   ├── pl_bots/                  # Polish bot tests
-│   ├── bg_bots/                  # Bulgarian bot tests
-│   ├── helps_bots/               # Helper bot tests
-│   └── infoboxes/                # Infobox tests
+│   ├── EsBots/                  # Spanish bot tests
+│   ├── PtBots/                  # Portuguese bot tests
+│   ├── PlBots/                  # Polish bot tests
+│   ├── BgBots/                  # Bulgarian bot tests
+│   ├── HelpsBots/               # Helper bot tests
+│   └── Infoboxes/                # Infobox tests
 ├── composer.json                 # Composer configuration
 ├── phpunit.xml                   # PHPUnit configuration
 ├── phpstan.neon                  # PHPStan configuration
@@ -144,8 +144,8 @@ fix_refs_repo/
 1. **Web Layer** (`src/index.php`, `src/text_post.php`, `src/test.php`) - HTML forms and POST handlers
 2. **Orchestration Layer** (`src/work.php`) - Settings loading, environment detection, entry points
 3. **Pipeline Layer** (`src/app/Fix/index.php`) - Sequential processing pipeline in `fix_page()`
-4. **Bot Layer** (`src/app/Fix/bots/`, `src/app/Fix/helps_bots/`) - Individual text transformations
-5. **Language Layer** (`src/app/Fix/lang_bots/`) - Language-specific transformations
+4. **Bot Layer** (`src/app/Fix/Bots/`, `src/app/Fix/HelpsBots/`) - Individual text transformations
+5. **Language Layer** (`src/app/Fix/LangBots/`) - Language-specific transformations
 6. **Parser Layer** (`src/app/Fix/WikiParse/`, `src/app/Fix/Parse/`) - Wikitext parsing
 7. **Data Layer** (`src/app/Fix/WikiParse/src/DataModel/`) - Value objects and models
 8. **API Layer** (`src/wikibots/`) - Wikipedia/Wikidata API communication
@@ -159,7 +159,7 @@ The project follows a modular architecture with clear separation between parsing
 ### Design Patterns
 
 -   **Pipeline Pattern** - `fix_page()` chains transformations sequentially
--   **Strategy Pattern** - Language-specific bots are selected based on `$lang` parameter
+-   **Strategy Pattern** - Language-specific Bots are selected based on `$lang` parameter
 -   **Data Model / Value Object** - `Template`, `Tag`, `Parameters` encapsulate parsed structures
 -   **Facade** - `WikiParse/Template.php` provides simple `getTemplates()` entry point
 -   **Static Registry** - `ESData` class holds translation mappings as static properties
@@ -178,7 +178,7 @@ The project follows a modular architecture with clear separation between parsing
 
 -   **Good**: Each language bot is in its own file/directory, making language-specific changes isolated
 -   **Good**: The WikiParse module is well-structured with proper data models
--   **Concern**: The `include_files.php` uses glob-based includes rather than Composer autoloading for all files
+-   **Concern**: The `bootstap.php` uses glob-based includes rather than Composer autoloading for all files
 -   **Concern**: The `fix_page()` function has a growing list of language-specific `if` blocks
 
 ### Readability
@@ -198,7 +198,7 @@ The project follows a modular architecture with clear separation between parsing
 
 -   Minimal dependencies (only dev tools) reduces supply chain risk
 -   No runtime Composer dependencies means zero autoload overhead for the library itself
--   The glob-based include system in `include_files.php` bypasses Composer autoloading
+-   The glob-based include system in `bootstap.php` bypasses Composer autoloading
 
 ## Strengths
 
@@ -220,7 +220,7 @@ The project follows a modular architecture with clear separation between parsing
 
 ## Weaknesses
 
-1. **Glob-based autoloading** - `include_files.php` uses `glob()` to include all PHP files rather than relying on Composer PSR-4 autoloading. This is fragile and slower.
+1. **Glob-based autoloading** - `bootstap.php` uses `glob()` to include all PHP files rather than relying on Composer PSR-4 autoloading. This is fragile and slower.
 
 2. **Mixed parsing approaches** - Two parallel parsing systems (`Parse/Citations.php` with `CitationOld` class and `WikiParse/src/ParserCitations.php`) create confusion about which to use.
 
@@ -274,7 +274,7 @@ The project follows a modular architecture with clear separation between parsing
 
 ### Outdated Patterns
 
--   `include_files.php` should be replaced with Composer autoloading
+-   `bootstap.php` should be replaced with Composer autoloading
 -   `CitationOld` class should be deprecated in favor of `ParserCitations`
 -   The `$_SERVER['SERVER_NAME']` check for environment detection should use environment variables
 
@@ -393,7 +393,7 @@ vendor/bin/phpstan analyse
 The library can be used programmatically:
 
 ```php
-require_once 'src/app/Fix/include_files.php';
+require_once 'src/app/Fix/bootstap.php';
 
 use function WpRefs\FixPage\fix_page_with_setting;
 

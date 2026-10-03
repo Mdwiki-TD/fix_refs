@@ -3,7 +3,7 @@
 use function WpRefs\Run\fixPgeWithSetting;
 use function WpRefs\csrf\verify_csrf_token;
 
-include_once __DIR__ . '/../include.php';
+include_once __DIR__ . '/../bootstap.php';
 
 $fields = ['lang', 'title', 'text', 'revid', 'sourcetitle'];
 

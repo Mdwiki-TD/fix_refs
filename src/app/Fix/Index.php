@@ -2,7 +2,7 @@
 
 namespace WpRefs\WprefText;
 
-use function WpRefs\TestBot\echo_test;
+use App\Logger;
 use function WpRefs\Infobox\Expend_Infobox;
 use function WpRefs\PT\FixPtMonth\pt_fixes;
 use function WpRefs\PL\FixPlInfobox\pl_fixes;
@@ -37,7 +37,7 @@ function fix_page($text, $title, $moveDots, $infobox, $addEnLang, $lang, $source
     // print_s("fix page: $title, move_dots:$moveDots, expend_infobox:$infobox");
     // ---
     if ($infobox || $lang === "es") {
-        echo_test("Expend_Infobox\n");
+        Logger::debug("Expend_Infobox\n");
         $text = Expend_Infobox($text, $title, "");
     }
     // ---
@@ -52,12 +52,12 @@ function fix_page($text, $title, $moveDots, $infobox, $addEnLang, $lang, $source
     $text = remove_Duplicate_refs_With_attrs($text);
     // ---
     if ($moveDots) {
-        echo_test("move_dots\n");
+        Logger::debug("move_dots\n");
         $text = move_dots_after_refs($text, $lang);
     }
     // ---
     if ($addEnLang) {
-        echo_test("add_en_lang\n");
+        Logger::debug("add_en_lang\n");
         $text = add_lang_en_to_refs($text);
     }
     // ---

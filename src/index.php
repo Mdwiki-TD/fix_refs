@@ -6,7 +6,7 @@ use function WpRefs\csrf\verify_csrf_token;
 use function WpRefs\Run\fixPgeWithSetting;
 
 $headerPath = __DIR__ . '/../header.php';
-include_once __DIR__ . '/include.php';
+include_once __DIR__ . '/bootstap.php';
 
 if (!file_exists($headerPath)) {
     // "I:/MD_TOOLS/MDWIKI_MAIN_REPO/src/public_html/header.php"

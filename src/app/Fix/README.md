@@ -4,7 +4,7 @@ The core PHP library for parsing and fixing MediaWiki references. This is the ma
 
 ## Project Overview
 
-`app/Fix` contains the complete pipeline for transforming wikitext references. It provides a wikitext parser (`WikiParse`), a set of text transformation bots, language-specific processors, and helper utilities. The main entry point is the `fix_page()` function in `index.php`.
+`app/Fix` contains the complete pipeline for transforming wikitext references. It provides a wikitext parser (`WikiParse`), a set of text transformation Bots, language-specific processors, and helper utilities. The main entry point is the `fix_page()` function in `index.php`.
 
 ### Main Features
 
@@ -32,7 +32,7 @@ No runtime dependencies. Uses only PHP built-in functions (`preg_*`, `str_*`, `c
 ```
 app/Fix/
 ├── index.php                   # fix_page() - main processing pipeline
-├── include_files.php           # Autoloader (glob-based file includes)
+├── bootstap.php           # Autoloader (glob-based file includes)
 ├── test_bot.php                # Debug output helpers (echo_test, echo_debug)
 ├── md_cat.php                  # MDWiki category via Wikidata API
 │
@@ -62,7 +62,7 @@ app/Fix/
 │   ├── Citations_reg.php       # get_full_refs(), get_short_citations()
 │   └── Category.php            # get_categories_reg()
 │
-├── bots/                       # Core text transformation functions
+├── Bots/                       # Core text transformation functions
 │   ├── mini_fixes_bot.php      # Spacing, section titles, prefix cleanup
 │   ├── remove_duplicate_refs.php # Duplicate ref detection/removal
 │   ├── expend_refs.php         # Short ref expansion
@@ -74,27 +74,27 @@ app/Fix/
 │   └── tests/                  # Manual test scripts
 │       └── fix_sections.php    # Section title fix test
 │
-├── helps_bots/                 # Helper utilities
+├── HelpsBots/                 # Helper utilities
 │   ├── mv_dots.php             # Punctuation movement after references
 │   ├── en_lang_param.php       # |language=en injection
 │   ├── missing_refs.php        # Missing ref recovery from MDWiki source
 │   └── remove_space.php        # Reference-punctuation spacing
 │
-├── infoboxes/                  # Infobox expansion
+├── Infoboxes/                  # Infobox expansion
 │   ├── infobox.php             # Main Expend_Infobox() logic
 │   └── infobox2.php            # Template formatting helpers
 │
-└── lang_bots/                  # Language-specific processors
-    ├── es_bots/                # Spanish
+└── LangBots/                  # Language-specific processors
+    ├── EsBots/                # Spanish
     │   ├── es.php              # Main fix_es() + template translation tables
     │   ├── es_months.php       # Month name localization
     │   ├── es_refs.php         # Reference restructuring (mv_es_refs)
     │   └── section.php         # Translation attribution template
-    ├── pt_bots/                # Portuguese
+    ├── PtBots/                # Portuguese
     │   └── fix_pt_months.php   # Month localization + spacing
-    ├── pl_bots/                # Polish
+    ├── PlBots/                # Polish
     │   └── fix_pl_infobox.php  # Choroba infobox parameter completion
-    ├── bg_bots/                # Bulgarian
+    ├── BgBots/                # Bulgarian
     │   └── fix_bg.php          # Превод от template + category
     └── sw_bot.php              # Swahili section title fix
 ```
@@ -127,7 +127,7 @@ Output wikitext
 | Pattern               | Usage                                                             |
 | --------------------- | ----------------------------------------------------------------- |
 | **Pipeline**          | `fix_page()` chains transformations sequentially                  |
-| **Strategy**          | Language bots selected by `$lang` parameter                       |
+| **Strategy**          | Language Bots selected by `$lang` parameter                       |
 | **Value Object**      | `Template`, `Tag`, `Parameters` are immutable-style data carriers |
 | **Facade**            | `WikiParse/Template.php` provides `getTemplates()` entry point    |
 | **Recursive Descent** | `ParserTemplates` uses stack-based recursive parsing              |
@@ -137,15 +137,15 @@ Output wikitext
 
 **Strengths:**
 
--   Clear separation between parsing (WikiParse, Parse) and transformation (bots, helps_bots, lang_bots)
+-   Clear separation between parsing (WikiParse, Parse) and transformation (Bots, HelpsBots, LangBots)
 -   Each language has its own directory/file, enabling independent changes
 -   Data models in `WikiParse/src/DataModel/` are clean value objects with proper encapsulation
 
 **Concerns:**
 
 -   Two parallel parsing systems exist (`Parse/Citations.php` with `CitationOld` and `WikiParse/src/ParserCitations.php`)
--   `include_files.php` uses glob includes instead of relying on Composer PSR-4 autoloading
--   The `bots/tests/` directory contains manual test scripts that shouldn't be in the library source
+-   `bootstap.php` uses glob includes instead of relying on Composer PSR-4 autoloading
+-   The `Bots/tests/` directory contains manual test scripts that shouldn't be in the library source
 
 ### SOLID Principles
 
@@ -191,7 +191,7 @@ The modular file structure aids navigation, but the growing `if` chain in `fix_p
         : "/data/project/mdwikicx/public_html";
     ```
 
-6. **No Composer autoloading for all files** - Despite PSR-4 configuration in `composer.json`, `include_files.php` manually globs and includes files, bypassing the autoloader.
+6. **No Composer autoloading for all files** - Despite PSR-4 configuration in `composer.json`, `bootstap.php` manually globs and includes files, bypassing the autoloader.
 
 7. **Duplicate `start_end()` function** - Defined identically in both `fix_pt_months.php` and `es_months.php`.
 
@@ -249,12 +249,12 @@ The modular file structure aids navigation, but the growing `if` chain in `fix_p
 
 1. Consolidate `str_starts_with()`/`str_ends_with()` into a single file
 2. Remove all commented-out code from production files
-3. Remove `bots/tests/` directory (move to `tests/` if needed)
+3. Remove `Bots/tests/` directory (move to `tests/` if needed)
 4. Add `preg_quote($title, '/')` consistently in all regex patterns using `$title`
 
 ### Medium-term
 
-1. Replace `include_files.php` glob system with Composer PSR-4 autoloading
+1. Replace `bootstap.php` glob system with Composer PSR-4 autoloading
 2. Add a `LanguageFixerInterface` with per-language implementations
 3. Parse citations once in `fix_page()` and pass the result to all bot functions
 4. Replace `$_SERVER['SERVER_NAME']` checks with environment variables
@@ -284,7 +284,7 @@ The modular file structure aids navigation, but the growing `if` chain in `fix_p
 
 ```php
 // Include the library
-require_once __DIR__ . '/include_files.php';
+require_once __DIR__ . '/bootstap.php';
 
 // Process wikitext
 use function WpRefs\WprefText\fix_page;
