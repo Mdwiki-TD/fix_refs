@@ -2,7 +2,7 @@
 
 
 
-use FixRefs\Tests\MyFunctionTest;
+use WpRefs\Tests\MyFunctionTest;
 
 use function WpRefs\Parse\Reg_Citations\get_name;
 use function WpRefs\Parse\Reg_Citations\get_regex_citations;

@@ -1,6 +1,6 @@
 <?php
 
-use FixRefs\Tests\MyFunctionTest;
+use WpRefs\Tests\MyFunctionTest;
 
 use function WpRefs\PT\FixPtMonth\rm_ref_spaces;
 use function WpRefs\PT\FixPtMonth\fix_pt_months_in_texts;

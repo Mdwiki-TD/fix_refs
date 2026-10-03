@@ -1,6 +1,6 @@
 <?php
 
-use FixRefs\Tests\MyFunctionTest;
+use WpRefs\Tests\MyFunctionTest;
 use function WpRefs\MissingRefs\fix_missing_refs;
 
 class missingRefsTest extends MyFunctionTest

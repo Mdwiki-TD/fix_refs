@@ -1,10 +1,10 @@
 <?php
 
-namespace FixRefs\Tests;
+namespace WpRefs\Tests;
 
 // Debug test to see what parameters are in the template
 
-use FixRefs\Tests\MyFunctionTest;
+use WpRefs\Tests\MyFunctionTest;
 use function WikiParse\Template\getTemplates;
 
 class DebugParams extends MyFunctionTest

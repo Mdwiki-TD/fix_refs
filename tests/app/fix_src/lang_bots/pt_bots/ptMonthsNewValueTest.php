@@ -2,7 +2,7 @@
 
 
 
-use FixRefs\Tests\MyFunctionTest;
+use WpRefs\Tests\MyFunctionTest;
 use function WpRefs\Bots\MonthNewValue\make_date_new_val_pt;
 
 class ptMonthsNewValueTest extends MyFunctionTest

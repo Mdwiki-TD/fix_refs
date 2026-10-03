@@ -1,6 +1,6 @@
 <?php
 
-use FixRefs\Tests\MyFunctionTest;
+use WpRefs\Tests\MyFunctionTest;
 
 use function WpRefs\DelDuplicateRefs\remove_Duplicate_refs_With_attrs;
 use function WpRefs\DelDuplicateRefs\fix_refs_names;

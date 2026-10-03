@@ -2,7 +2,7 @@
 
 
 
-use FixRefs\Tests\MyFunctionTest;
+use WpRefs\Tests\MyFunctionTest;
 use function WpRefs\ExpendRefs\refs_expend_work;
 
 class expendRefsTest extends MyFunctionTest

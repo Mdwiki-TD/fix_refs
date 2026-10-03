@@ -1,6 +1,6 @@
 <?php
 
-use FixRefs\Tests\MyFunctionTest;
+use WpRefs\Tests\MyFunctionTest;
 
 use function WpRefs\MdCat\add_Translated_from_MDWiki;
 

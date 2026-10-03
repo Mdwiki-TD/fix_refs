@@ -1,6 +1,6 @@
 <?php
 
-use FixRefs\Tests\MyFunctionTest;
+use WpRefs\Tests\MyFunctionTest;
 use function WpRefs\EsBots\es_months\fix_es_months_in_refs;
 use function WpRefs\ES\fix_es;
 use function WpRefs\ES\fix_temps;

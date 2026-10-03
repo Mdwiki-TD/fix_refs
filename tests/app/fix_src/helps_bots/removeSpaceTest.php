@@ -1,7 +1,7 @@
 <?php
 
 
-use FixRefs\Tests\MyFunctionTest;
+use WpRefs\Tests\MyFunctionTest;
 use function WpRefs\RemoveSpace\remove_spaces_between_last_word_and_beginning_of_ref;
 use function WpRefs\RemoveSpace\remove_spaces_between_ref_and_punctuation;
 

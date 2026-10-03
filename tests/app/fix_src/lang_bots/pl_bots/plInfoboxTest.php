@@ -1,6 +1,6 @@
 <?php
 
-use FixRefs\Tests\MyFunctionTest;
+use WpRefs\Tests\MyFunctionTest;
 
 use function WpRefs\PL\FixPlInfobox\add_missing_params_to_choroba_infobox;
 use function WpRefs\PL\FixPlInfobox\pl_fixes;

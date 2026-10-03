@@ -2,7 +2,7 @@
 
 
 
-use FixRefs\Tests\MyFunctionTest;
+use WpRefs\Tests\MyFunctionTest;
 use function WpRefs\Bots\AttrsUtils\parseAttributes;
 use function WpRefs\Bots\AttrsUtils\get_attrs;
 

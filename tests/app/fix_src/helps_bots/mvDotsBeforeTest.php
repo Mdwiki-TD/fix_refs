@@ -2,7 +2,7 @@
 
 
 
-use FixRefs\Tests\MyFunctionTest;
+use WpRefs\Tests\MyFunctionTest;
 use function WpRefs\MovesDots\move_dots_before_refs;
 
 class mvDotsBeforeTest extends MyFunctionTest
