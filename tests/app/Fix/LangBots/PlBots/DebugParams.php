@@ -5,7 +5,7 @@ namespace Tests;
 // Debug test to see what parameters are in the template
 
 use Tests\MyFunctionTest;
-use App\WikiParse\ParserTemplates;
+use App\Fix\WikiParse\ParserTemplates;
 
 class DebugParams extends MyFunctionTest
 {

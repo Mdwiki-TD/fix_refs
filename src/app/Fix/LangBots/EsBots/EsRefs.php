@@ -2,7 +2,7 @@
 
 namespace App\EsBots\es_refs;
 
-use App\WikiParse\ParserTemplates;
+use App\Fix\WikiParse\ParserTemplates;
 use function App\Parse\Reg_Citations\get_short_citations;
 use function App\Parse\Citations\getCitationsOld;
 

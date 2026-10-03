@@ -3,7 +3,7 @@
 namespace App\PL\FixPlInfobox;
 
 
-use App\WikiParse\ParserTemplates;
+use App\Fix\WikiParse\ParserTemplates;
 use App\Logger;
 
 function add_missing_params_to_choroba_infobox($text)

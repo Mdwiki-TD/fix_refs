@@ -1,15 +1,15 @@
 <?php
 
-namespace App\WikiParse;
+namespace App\Fix\WikiParse;
 
-use App\WikiParse\DataModel\Tag;
+use App\Fix\WikiParse\DataModel\Tag;
 
 /**
  * Class ParserTags
  *
  * Parses text to extract tags from wikitext.
  *
- * @package App\WikiParse
+ * @package App\Fix\WikiParse
  */
 class ParserTags
 {

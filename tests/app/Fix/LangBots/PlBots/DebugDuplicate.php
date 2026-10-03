@@ -6,7 +6,7 @@ namespace Tests;
 
 use Tests\MyFunctionTest;
 use function App\PL\FixPlInfobox\add_missing_params_to_choroba_infobox;
-use App\WikiParse\ParserTemplates;
+use App\Fix\WikiParse\ParserTemplates;
 
 class DebugDuplicate extends MyFunctionTest
 {

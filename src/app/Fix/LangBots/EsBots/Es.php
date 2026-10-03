@@ -5,7 +5,7 @@ namespace App\ES;
 
 use function App\EsBots\es_months\fix_es_months_in_refs;
 use function App\EsBots\es_refs\mv_es_refs;
-use App\WikiParse\ParserTemplates;
+use App\Fix\WikiParse\ParserTemplates;
 use App\Logger;
 // ---
 

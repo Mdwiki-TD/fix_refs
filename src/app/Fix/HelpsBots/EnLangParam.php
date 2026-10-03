@@ -4,7 +4,7 @@ namespace App\EnLangParam;
 
 use App\Logger;
 use function App\Parse\Citations\getCitationsOld;
-use App\WikiParse\ParserTemplates;
+use App\Fix\WikiParse\ParserTemplates;
 
 function add_lang_en($text)
 {

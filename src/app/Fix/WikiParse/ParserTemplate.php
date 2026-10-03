@@ -1,14 +1,14 @@
 <?php
 
-namespace App\WikiParse;
+namespace App\Fix\WikiParse;
 
-use App\WikiParse\DataModel\Template;
+use App\Fix\WikiParse\DataModel\Template;
 
 /**
  * Class ParserTemplate
  * Parses a template text into its components: name and parameters.
  *
- * @package App\WikiParse
+ * @package App\Fix\WikiParse
  */
 class ParserTemplate
 {
