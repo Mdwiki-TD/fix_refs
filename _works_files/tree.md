@@ -11,25 +11,25 @@ src/
 │   │   │   ├── RefsUtils.php
 │   │   │   ├── RemoveDuplicateRefs.php
 │   │   │   └── Txtlib2.php
-│   │   ├── helps_bots/
+│   │   ├── HelpsBots/
 │   │   │   ├── EnLangParam.php
 │   │   │   ├── MissingRefs.php
 │   │   │   ├── MvDots.php
 │   │   │   └── RemoveSpace.php
-│   │   ├── infoboxes/
+│   │   ├── Infoboxes/
 │   │   │   ├── Infobox.php
 │   │   │   └── Infobox2.php
-│   │   ├── lang_bots/
-│   │   │   ├── bg_bots/
+│   │   ├── LangBots/
+│   │   │   ├── BgBots/
 │   │   │   │   └── FixBg.php
-│   │   │   ├── es_bots/
+│   │   │   ├── EsBots/
 │   │   │   │   ├── Es.php
 │   │   │   │   ├── EsMonths.php
 │   │   │   │   ├── EsRefs.php
 │   │   │   │   └── Section.php
-│   │   │   ├── pl_bots/
+│   │   │   ├── PlBots/
 │   │   │   │   └── FixPlInfobox.php
-│   │   │   ├── pt_bots/
+│   │   │   ├── PtBots/
 │   │   │   │   └── FixPtMonths.php
 │   │   │   └── SwBot.php
 │   │   ├── Parse/

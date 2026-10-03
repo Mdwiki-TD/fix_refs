@@ -74,27 +74,27 @@ app/Fix/
 │   └── tests/                  # Manual test scripts
 │       └── fix_sections.php    # Section title fix test
 │
-├── helps_bots/                 # Helper utilities
+├── HelpsBots/                 # Helper utilities
 │   ├── mv_dots.php             # Punctuation movement after references
 │   ├── en_lang_param.php       # |language=en injection
 │   ├── missing_refs.php        # Missing ref recovery from MDWiki source
 │   └── remove_space.php        # Reference-punctuation spacing
 │
-├── infoboxes/                  # Infobox expansion
+├── Infoboxes/                  # Infobox expansion
 │   ├── infobox.php             # Main Expend_Infobox() logic
 │   └── infobox2.php            # Template formatting helpers
 │
-└── lang_bots/                  # Language-specific processors
-    ├── es_bots/                # Spanish
+└── LangBots/                  # Language-specific processors
+    ├── EsBots/                # Spanish
     │   ├── es.php              # Main fix_es() + template translation tables
     │   ├── es_months.php       # Month name localization
     │   ├── es_refs.php         # Reference restructuring (mv_es_refs)
     │   └── section.php         # Translation attribution template
-    ├── pt_bots/                # Portuguese
+    ├── PtBots/                # Portuguese
     │   └── fix_pt_months.php   # Month localization + spacing
-    ├── pl_bots/                # Polish
+    ├── PlBots/                # Polish
     │   └── fix_pl_infobox.php  # Choroba infobox parameter completion
-    ├── bg_bots/                # Bulgarian
+    ├── BgBots/                # Bulgarian
     │   └── fix_bg.php          # Превод от template + category
     └── sw_bot.php              # Swahili section title fix
 ```
@@ -137,7 +137,7 @@ Output wikitext
 
 **Strengths:**
 
--   Clear separation between parsing (WikiParse, Parse) and transformation (bots, helps_bots, lang_bots)
+-   Clear separation between parsing (WikiParse, Parse) and transformation (bots, HelpsBots, LangBots)
 -   Each language has its own directory/file, enabling independent changes
 -   Data models in `WikiParse/src/DataModel/` are clean value objects with proper encapsulation
 

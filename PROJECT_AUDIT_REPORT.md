@@ -24,7 +24,7 @@ Fix Refs is a PHP library that parses and fixes `<ref>` tags and citation templa
 | License              | GPL-3.0-or-later                   |
 | Deployment Target    | Wikimedia Toolforge                |
 
-The architecture follows a pipeline pattern: `fix_page()` in `src/app/Fix/index.php` chains 11 transformation stages, each calling focused functions from `bots/`, `helps_bots/`, and `lang_bots/` modules. A separate `WikiParse` submodule provides OOP-based wikitext parsing with recursive template extraction.
+The architecture follows a pipeline pattern: `fix_page()` in `src/app/Fix/index.php` chains 11 transformation stages, each calling focused functions from `bots/`, `HelpsBots/`, and `LangBots/` modules. A separate `WikiParse` submodule provides OOP-based wikitext parsing with recursive template extraction.
 
 ---
 
@@ -145,7 +145,7 @@ Any user can append `?test=1` to enable full error display, leaking PHP stack tr
 
 ### MEDIUM -- Hardcoded Server Paths
 
-**File:** `src/app/Fix/helps_bots/missing_refs.php`, lines 70-72
+**File:** `src/app/Fix/HelpsBots/missing_refs.php`, lines 70-72
 
 ```php
 $path = ($server == "localhost")

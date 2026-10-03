@@ -10,26 +10,26 @@ tests/
 │   │   │   ├── refsUtilsTest.php
 │   │   │   ├── removeDuplicateRefsTest.php
 │   │   │   └── txtlib2Test.php
-│   │   ├── helps_bots/
+│   │   ├── HelpsBots/
 │   │   │   ├── enLangParamTest.php
 │   │   │   ├── missingRefsTest.php
 │   │   │   ├── mvDotsAfterTest.php
 │   │   │   ├── mvDotsBeforeTest.php
 │   │   │   ├── removeSpace2Test.php
 │   │   │   └── removeSpaceTest.php
-│   │   ├── infoboxes/
+│   │   ├── Infoboxes/
 │   │   │   ├── infobox2Test.php
 │   │   │   └── infoboxTest.php
-│   │   ├── lang_bots/
-│   │   │   ├── bg_bots/
+│   │   ├── LangBots/
+│   │   │   ├── BgBots/
 │   │   │   │   └── fixBgTest.php
-│   │   │   ├── es_bots/
+│   │   │   ├── EsBots/
 │   │   │   │   ├── esMonthsNewValueTest.php
 │   │   │   │   ├── esMonthsTest.php
 │   │   │   │   ├── esRefsTest.php
 │   │   │   │   ├── esSectionTest.php
 │   │   │   │   └── esTest.php
-│   │   │   ├── pl_bots/
+│   │   │   ├── PlBots/
 │   │   │   │   ├── ComprehensiveTest.php
 │   │   │   │   ├── DebugDuplicate.php
 │   │   │   │   ├── DebugParams.php
@@ -37,7 +37,7 @@ tests/
 │   │   │   │   ├── IntegrationTest.php
 │   │   │   │   ├── ManualTest.php
 │   │   │   │   └── plInfoboxTest.php
-│   │   │   ├── pt_bots/
+│   │   │   ├── PtBots/
 │   │   │   │   ├── ptMonthsNewValueTest.php
 │   │   │   │   └── ptMonthsTest.php
 │   │   │   └── swTest.php

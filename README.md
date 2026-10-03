@@ -103,19 +103,19 @@ fix_refs_repo/
 │   │   │   ├── months_new_value.php      # Month name translation (PT/ES)
 │   │   │   ├── redirect_help.php         # Redirect page detection
 │   │   │   └── txtlib2.php               # Template extraction helper
-│   │   ├── helps_bots/           # Helper utilities
+│   │   ├── HelpsBots/           # Helper utilities
 │   │   │   ├── mv_dots.php       # Punctuation-after-reference movement
 │   │   │   ├── en_lang_param.php # |language=en injection
 │   │   │   ├── missing_refs.php  # Missing ref recovery from source
 │   │   │   └── remove_space.php  # Reference-punctuation spacing
-│   │   ├── infoboxes/            # Infobox expansion
+│   │   ├── Infoboxes/            # Infobox expansion
 │   │   │   ├── infobox.php       # Main infobox expansion logic
 │   │   │   └── infobox2.php      # Template formatting helpers
-│   │   └── lang_bots/            # Language-specific processing
-│   │       ├── es_bots/          # Spanish: template translation, months, refs, sections
-│   │       ├── pt_bots/          # Portuguese: month localization
-│   │       ├── pl_bots/          # Polish: infobox parameter completion
-│   │       ├── bg_bots/          # Bulgarian: translation attribution
+│   │   └── LangBots/            # Language-specific processing
+│   │       ├── EsBots/          # Spanish: template translation, months, refs, sections
+│   │       ├── PtBots/          # Portuguese: month localization
+│   │       ├── PlBots/          # Polish: infobox parameter completion
+│   │       ├── BgBots/          # Bulgarian: translation attribution
 │   │       └── sw_bot.php        # Swahili: section title fix
 │   ├── wikibots/                 # Wikipedia API utilities
 │   │   └── wikitext.php          # Fetch wikitext via Action API / REST API
@@ -127,12 +127,12 @@ fix_refs_repo/
 │   ├── bootstrap.php             # Test bootstrap with MyFunctionTest base class
 │   ├── Bots/                     # Bot function tests
 │   ├── Parse/                    # Parser tests
-│   ├── es_bots/                  # Spanish bot tests
-│   ├── pt_bots/                  # Portuguese bot tests
-│   ├── pl_bots/                  # Polish bot tests
-│   ├── bg_bots/                  # Bulgarian bot tests
-│   ├── helps_bots/               # Helper bot tests
-│   └── infoboxes/                # Infobox tests
+│   ├── EsBots/                  # Spanish bot tests
+│   ├── PtBots/                  # Portuguese bot tests
+│   ├── PlBots/                  # Polish bot tests
+│   ├── BgBots/                  # Bulgarian bot tests
+│   ├── HelpsBots/               # Helper bot tests
+│   └── Infoboxes/                # Infobox tests
 ├── composer.json                 # Composer configuration
 ├── phpunit.xml                   # PHPUnit configuration
 ├── phpstan.neon                  # PHPStan configuration
@@ -144,8 +144,8 @@ fix_refs_repo/
 1. **Web Layer** (`src/index.php`, `src/text_post.php`, `src/test.php`) - HTML forms and POST handlers
 2. **Orchestration Layer** (`src/work.php`) - Settings loading, environment detection, entry points
 3. **Pipeline Layer** (`src/app/Fix/index.php`) - Sequential processing pipeline in `fix_page()`
-4. **Bot Layer** (`src/app/Fix/bots/`, `src/app/Fix/helps_bots/`) - Individual text transformations
-5. **Language Layer** (`src/app/Fix/lang_bots/`) - Language-specific transformations
+4. **Bot Layer** (`src/app/Fix/bots/`, `src/app/Fix/HelpsBots/`) - Individual text transformations
+5. **Language Layer** (`src/app/Fix/LangBots/`) - Language-specific transformations
 6. **Parser Layer** (`src/app/Fix/WikiParse/`, `src/app/Fix/Parse/`) - Wikitext parsing
 7. **Data Layer** (`src/app/Fix/WikiParse/src/DataModel/`) - Value objects and models
 8. **API Layer** (`src/wikibots/`) - Wikipedia/Wikidata API communication
