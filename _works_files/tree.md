@@ -26,7 +26,7 @@ src/
 │   │   │   │   ├── Es.php
 │   │   │   │   ├── EsMonths.php
 │   │   │   │   ├── EsRefs.php
-│   │   │   │   └── section.php
+│   │   │   │   └── Section.php
 │   │   │   ├── pl_bots/
 │   │   │   │   └── FixPlInfobox.php
 │   │   │   ├── pt_bots/
@@ -60,11 +60,16 @@ src/
 │   │   ├── include_files.php
 │   │   ├── Index.php
 │   │   ├── MdCat.php
+│   │   └── README.md
 │   ├── Wikibots/
+│   │   ├── README.md
 │   │   └── Wikitext.php
 │   ├── autoload.php
 │   ├── Csrf.php
 │   ├── Run.php
 │   └── Settings.php
+├── include.php
+├── index.php
+└── work.php
 
 ```

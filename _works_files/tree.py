@@ -13,6 +13,8 @@ skip_list = [
     "example.env",
     "*.html",
     "fixtures",
+    "resources",
+    "demo",
     "*.py",
 ]
 
