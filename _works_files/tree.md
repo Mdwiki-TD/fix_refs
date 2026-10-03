@@ -2,7 +2,7 @@
 src/
 ├── app/
 │   ├── Fix/
-│   │   ├── bots/
+│   │   ├── Bots/
 │   │   │   ├── AttrsUtils.php
 │   │   │   ├── ExpendRefs.php
 │   │   │   ├── MiniFixesBot.php
@@ -15,7 +15,6 @@ src/
 │   │   │   ├── EnLangParam.php
 │   │   │   ├── MissingRefs.php
 │   │   │   ├── MvDots.php
-│   │   │   ├── remove_space.py
 │   │   │   └── RemoveSpace.php
 │   │   ├── infoboxes/
 │   │   │   ├── Infobox.php
@@ -62,15 +61,6 @@ src/
 │   │   ├── Index.php
 │   │   ├── MdCat.php
 │   │   └── README.md
-│   ├── resources/
-│   │   ├── revisions/
-│   │   │   ├── 1469242/
-│   │   │   │   └── wikitext.txt
-│   │   │   └── 1503213/
-│   │   │       └── wikitext.txt
-│   │   ├── language_settings.json
-│   │   ├── mdwiki_categories.json
-│   │   └── README.md
 │   ├── Wikibots/
 │   │   ├── README.md
 │   │   └── Wikitext.php
@@ -78,10 +68,6 @@ src/
 │   ├── Csrf.php
 │   ├── Run.php
 │   └── Settings.php
-├── demo/
-│   ├── index.php
-│   ├── test.wikitext
-│   └── test_post.php
 ├── include.php
 ├── index.php
 └── work.php
