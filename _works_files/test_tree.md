@@ -21,28 +21,26 @@ tests/
 │   │   │   ├── infobox2Test.php
 │   │   │   └── infoboxTest.php
 │   │   ├── LangBots/
+│   │   │   ├── bg_bots/
+│   │   │   │   └── fixBgTest.php
 │   │   │   ├── EsBots/
-│   │   │   └── lang_bots/
-│   │   │       ├── bg_bots/
-│   │   │       │   └── fixBgTest.php
-│   │   │       ├── es_bots/
-│   │   │       │   ├── esMonthsNewValueTest.php
-│   │   │       │   ├── esMonthsTest.php
-│   │   │       │   ├── esRefsTest.php
-│   │   │       │   ├── esSectionTest.php
-│   │   │       │   └── esTest.php
-│   │   │       ├── pl_bots/
-│   │   │       │   ├── ComprehensiveTest.php
-│   │   │       │   ├── DebugDuplicate.php
-│   │   │       │   ├── DebugParams.php
-│   │   │       │   ├── DemonstrationTest.php
-│   │   │       │   ├── IntegrationTest.php
-│   │   │       │   ├── ManualTest.php
-│   │   │       │   └── plInfoboxTest.php
-│   │   │       ├── pt_bots/
-│   │   │       │   ├── ptMonthsNewValueTest.php
-│   │   │       │   └── ptMonthsTest.php
-│   │   │       └── swTest.php
+│   │   │   │   ├── EsMonthsNewValueTest.php
+│   │   │   │   ├── EsMonthsTest.php
+│   │   │   │   ├── EsRefsTest.php
+│   │   │   │   ├── EsSectionTest.php
+│   │   │   │   └── EsTest.php
+│   │   │   ├── pl_bots/
+│   │   │   │   ├── ComprehensiveTest.php
+│   │   │   │   ├── DebugDuplicate.php
+│   │   │   │   ├── DebugParams.php
+│   │   │   │   ├── DemonstrationTest.php
+│   │   │   │   ├── IntegrationTest.php
+│   │   │   │   ├── ManualTest.php
+│   │   │   │   └── plInfoboxTest.php
+│   │   │   ├── pt_bots/
+│   │   │   │   ├── ptMonthsNewValueTest.php
+│   │   │   │   └── ptMonthsTest.php
+│   │   │   └── SwTest.php
 │   │   ├── Parse/
 │   │   │   ├── CategoryTest.php
 │   │   │   └── CitationsRegTest.php
