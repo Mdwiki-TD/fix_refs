@@ -18,8 +18,8 @@ tests/
 │   │   │   ├── RemoveSpace2Test.php
 │   │   │   └── RemoveSpaceTest.php
 │   │   ├── Infoboxes/
-│   │   │   ├── infobox2Test.php
-│   │   │   └── infoboxTest.php
+│   │   │   ├── Infobox2Test.php
+│   │   │   └── InfoboxTest.php
 │   │   ├── LangBots/
 │   │   │   ├── BgBots/
 │   │   │   │   └── FixBgTest.php
@@ -49,7 +49,7 @@ tests/
 │   │   ├── FixpageTest.php
 │   │   ├── IndexTest.php
 │   │   └── MdCatTest.php
-│   └── wikibots/
+│   └── Wikibots/
 └── bootstrap.php
 
 ```
