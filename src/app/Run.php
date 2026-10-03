@@ -20,7 +20,7 @@ class Run
             : [];
 
         $moveDots = isset($langDefault['move_dots']) && (int)$langDefault['move_dots'] === 1;
-        $expand = true;
+        $expand = true; // (isset($langDefault['expend']) && (int)$langDefault['expend'] === 1);
 
         $addEnLang = isset($langDefault['add_en_lang']) && (int)$langDefault['add_en_lang'] === 1;
 

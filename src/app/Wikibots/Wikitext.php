@@ -4,74 +4,83 @@ namespace App\Wikibots;
 
 class Wikitext
 {
-    public static function from_api($title, $lang)
-    {
-        $usrAgent = 'WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)';
-        $url = "https://{$lang}.wikipedia.org/w/api.php";
-        $data = [
-            'action' => 'query',
-            'format' => 'json',
-            'prop' => 'revisions',
-            'rvslots' => '*',
-            'rvprop' => 'content',
-            'titles' => $title,
-        ];
+	public static function from_api($title, $lang)
+	{
+		$usrAgent = 'WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)';
+		$url = "https://{$lang}.wikipedia.org/w/api.php";
+		$data = [
+			'action' => 'query',
+			'format' => 'json',
+			'prop' => 'revisions',
+			'rvslots' => '*',
+			'rvprop' => 'content',
+			'titles' => $title,
+		];
 
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_USERAGENT, $usrAgent);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data, '', '&', PHP_QUERY_RFC3986));
-        $response = curl_exec($ch);
-        curl_close($ch);
+		// echo $url . '?' . http_build_query($data, '', '&', PHP_QUERY_RFC3986) . "<br>";
 
-        $json = json_decode($response, true);
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_USERAGENT, $usrAgent);
+		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data, '', '&', PHP_QUERY_RFC3986));
+		$response = curl_exec($ch);
+		curl_close($ch);
 
-        $pages = $json['query']['pages'] ?? [];
-        foreach ($pages as $page) {
-            $text = $page['revisions'][0]['slots']['main']['*'] ?? '';
-            if (!empty($text)) {
-                return $text;
-            }
-        }
+		$json = json_decode($response, true);
 
-        return '';
-    }
+		$pages = $json['query']['pages'] ?? [];
 
-    public static function from_rest($title, $lang)
-    {
-        $usrAgent = 'WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)';
+		foreach ($pages as $page) {
+			$text = $page['revisions'][0]['slots']['main']['*'] ?? '';
+			if (!empty($text)) {
+				return $text;
+			}
+		}
 
-        $title = str_replace("/", "%2F", $title);
+		return '';
+	}
 
-        $url = "https://{$lang}.wikipedia.org/w/rest.php/v1/page/{$title}";
+	public static function from_rest($title, $lang)
+	{
+		$usrAgent = 'WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)';
 
-        $ch = curl_init();
+		$title = str_replace("/", "%2F", $title);
 
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_USERAGENT, $usrAgent);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+		$url = "https://{$lang}.wikipedia.org/w/rest.php/v1/page/{$title}";
 
-        $output = curl_exec($ch);
-        curl_close($ch);
+		$ch = curl_init();
 
-        $json = json_decode($output, true);
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_USERAGENT, $usrAgent);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 5);
 
-        if (isset($json['source'])) {
-            return $json['source'];
-        }
-        return '';
-    }
+		$output = curl_exec($ch);
+		curl_close($ch);
 
-    public static function get_wikipedia_text($title, $lang)
-    {
-        $text = "";
-        $text = self::from_api($title, $lang);
-        if (empty($text)) {
-            $text = self::from_rest($title, $lang);
-        }
-        return $text;
-    }
+		$json = json_decode($output, true);
+		// var_export(json_encode($json, JSON_PRETTY_PRINT));
+
+		if (isset($json['source'])) {
+			return $json['source'];
+		}
+		return '';
+	}
+
+	public static function get_wikipedia_text($title, $lang)
+	{
+		// replace / with "%2F"
+
+		$text = "";
+
+		$text = self::from_api($title, $lang);
+
+		if (empty($text)) {
+			$text = self::from_rest($title, $lang);
+		}
+
+		return $text;
+	}
 }
