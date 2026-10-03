@@ -2,7 +2,7 @@
 src/
 ├── app/
 │   ├── Fix/
-│   │   ├── bots/
+│   │   ├── Bots/
 │   │   │   ├── AttrsUtils.php
 │   │   │   ├── ExpendRefs.php
 │   │   │   ├── MiniFixesBot.php
@@ -16,7 +16,7 @@ src/
 │   │   │   ├── MissingRefs.php
 │   │   │   ├── MvDots.php
 │   │   │   └── RemoveSpace.php
-│   │   ├── Infoboxes/
+│   │   ├── infoboxes/
 │   │   │   ├── Infobox.php
 │   │   │   └── Infobox2.php
 │   │   ├── LangBots/
