@@ -21,7 +21,7 @@ tests/
 │   │   │   ├── infobox2Test.php
 │   │   │   └── infoboxTest.php
 │   │   ├── LangBots/
-│   │   │   ├── bg_bots/
+│   │   │   ├── BgBots/
 │   │   │   │   └── fixBgTest.php
 │   │   │   ├── EsBots/
 │   │   │   │   ├── EsMonthsNewValueTest.php
@@ -29,7 +29,7 @@ tests/
 │   │   │   │   ├── EsRefsTest.php
 │   │   │   │   ├── EsSectionTest.php
 │   │   │   │   └── EsTest.php
-│   │   │   ├── pl_bots/
+│   │   │   ├── PlBots/
 │   │   │   │   ├── ComprehensiveTest.php
 │   │   │   │   ├── DebugDuplicate.php
 │   │   │   │   ├── DebugParams.php
@@ -37,7 +37,7 @@ tests/
 │   │   │   │   ├── IntegrationTest.php
 │   │   │   │   ├── ManualTest.php
 │   │   │   │   └── plInfoboxTest.php
-│   │   │   ├── pt_bots/
+│   │   │   ├── PtBots/
 │   │   │   │   ├── ptMonthsNewValueTest.php
 │   │   │   │   └── ptMonthsTest.php
 │   │   │   └── SwTest.php
