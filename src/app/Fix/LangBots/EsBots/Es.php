@@ -6,7 +6,7 @@ namespace WpRefs\ES;
 use function WpRefs\EsBots\es_months\fix_es_months_in_refs;
 use function WpRefs\EsBots\es_refs\mv_es_refs;
 use function WpRefs\WikiParse\getTemplates;
-use function WpRefs\TestBot\echo_test;
+use App\Logger;
 // ---
 
 class ESData
@@ -149,7 +149,7 @@ foreach ($paramsEsUp as $new => $list) {
 function work_one_temp($temp, $name)
 {
     // ---
-    // echo_test("\n$name\n");
+    // Logger::debug("\n$name\n");
     // ---
     $tempName2 = isset(ESData::$refsTemps[$name]) ? ESData::$refsTemps[$name] : $name;
     // ---
@@ -173,7 +173,7 @@ function fix_temps($text)
     // ---
     $tempsIn = getTemplates($text);
     // ---
-    // echo_test("lenth temps_in:" . count($tempsIn) . "\n");
+    // Logger::debug("lenth temps_in:" . count($tempsIn) . "\n");
     // ---
     $newText = $text;
     // ---
@@ -181,12 +181,12 @@ function fix_temps($text)
         // ---
         $name = $temp->getStripName();
         // ---
-        // echo_test("* name: $name\n");
+        // Logger::debug("* name: $name\n");
         // ---
         $oldTextTemplate = $temp->getOriginalText();
         // ---
         if (!array_key_exists($name, ESData::$refsTemps) && !in_array($name, ESData::$refsTemps)) {
-            // echo_test("not found: $name\n");
+            // Logger::debug("not found: $name\n");
             continue;
         }
         // ---
@@ -208,7 +208,7 @@ function fix_es($text, $title = "")
 
     // Check if the text has fewer than 10 lines
     if (substr_count($text, "\n") < 10 && $title != "test!") {
-        echo_test("less than 10 lines\n");
+        Logger::debug("less than 10 lines\n");
         // return $text;
     }
 

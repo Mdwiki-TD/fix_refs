@@ -4,7 +4,7 @@ namespace WpRefs\MissingRefs;
 
 
 
-use function WpRefs\TestBot\echo_test;
+use App\Logger;
 use function WpRefs\TestBot\echo_debug;
 use function WpRefs\Parse\Reg_Citations\get_short_citations;
 use function WpRefs\Parse\Reg_Citations\get_full_refs;
@@ -20,21 +20,21 @@ function get_full_text_url($sourcetitle, $mdwikiRevid)
     if (empty($mdwikiRevid) || $mdwikiRevid == 0) {
         $jsonFile = "$serverPath/revisions_new1/json_data.json";
         $data = json_decode(get_url_curl($jsonFile), true) ?? [];
-        echo_test("url" . $jsonFile);
-        echo_test("count of data: " . count($data));
+        Logger::debug("url" . $jsonFile);
+        Logger::debug("count of data: " . count($data));
         $mdwikiRevid = $data[str_replace(" ", "_", $sourcetitle)] ?? "";
     }
 
     if (empty($mdwikiRevid)) {
-        echo_test("empty mdwiki_revid");
+        Logger::debug("empty mdwiki_revid");
         return "";
     }
 
     $fullUrl = "$serverPath/revisions_new1/$mdwikiRevid/wikitext.txt";
-    echo_test("url" . $fullUrl);
+    Logger::debug("url" . $fullUrl);
     $text = get_url_curl($fullUrl);
     if (!$text) {
-        echo_test("Failed to fetch URL: $fullUrl");
+        Logger::debug("Failed to fetch URL: $fullUrl");
         return "";
     }
 
@@ -48,8 +48,8 @@ function find_mdwiki_revid($sourcetitle, $jsonFile)
     }
     $content = file_get_contents($jsonFile);
     $data = json_decode($content, true) ?? [];
-    echo_test("url" . $jsonFile);
-    echo_test("count of data: " . count($data));
+    Logger::debug("url" . $jsonFile);
+    Logger::debug("count of data: " . count($data));
     $mdwikiRevid = $data[$sourcetitle] ?? "";
     return $mdwikiRevid;
 }
@@ -73,7 +73,7 @@ function get_full_text($sourcetitle, $mdwikiRevid)
     // ---
     if (empty($mdwikiRevid)) {
         // ---
-        echo_test("empty mdwiki_revid, sourcetitle:($sourcetitle)");
+        Logger::debug("empty mdwiki_revid, sourcetitle:($sourcetitle)");
         // ---
         return "";
     }
@@ -84,14 +84,14 @@ function get_full_text($sourcetitle, $mdwikiRevid)
         $file = dirname(__DIR__, 2) . "/resources/revisions/$mdwikiRevid/wikitext.txt";
     }
     // ---
-    echo_test($file);
+    Logger::debug($file);
     // ---
     if (!file_exists($file)) {
-        echo_test("file not found: $file");
+        Logger::debug("file not found: $file");
         return "";
     };
     // ---
-    echo_test("url" . $file);
+    Logger::debug("url" . $file);
     // ---
     $text = file_get_contents($file) ?: "";
     // ---

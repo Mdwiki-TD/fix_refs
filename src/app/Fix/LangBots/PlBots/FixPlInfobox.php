@@ -4,12 +4,12 @@ namespace WpRefs\PL\FixPlInfobox;
 
 
 use function WpRefs\WikiParse\getTemplates;
-use function WpRefs\TestBot\echo_test;
+use App\Logger;
 
 function add_missing_params_to_choroba_infobox($text)
 {
     // ---
-    echo_test("\n add_missing_params_to_choroba_infobox:\n");
+    Logger::debug("\n add_missing_params_to_choroba_infobox:\n");
     // ---
     $newText = $text;
     // ---
@@ -42,7 +42,7 @@ function add_missing_params_to_choroba_infobox($text)
         // Check if template name matches "Choroba infobox" (case-insensitive)
         if (strtolower($name) === "choroba infobox") {
             // ---
-            echo_test("Found Choroba infobox template\n");
+            Logger::debug("Found Choroba infobox template\n");
             // ---
             $tempOld = $temp->getOriginalText();
             $params = $temp->getParameters();

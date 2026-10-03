@@ -44,7 +44,7 @@ function remove_start_end_quotes(string $text): string
     $text = rm_str_from_start_and_end($text, '"');
     $text = rm_str_from_start_and_end($text, "'");
     // ---
-    // echo_test("\n$text\n");
+    // Logger::debug("\n$text\n");
     // ---
     $quote = strpos($text, '"') === false ? '"' : "'";
     // ---

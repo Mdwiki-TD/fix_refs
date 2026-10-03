@@ -3,7 +3,6 @@
 namespace WpRefs\EsBots\es_months;
 
 
-use function WpRefs\TestBot\echo_test;
 use function WpRefs\TestBot\echo_debug;
 use function WpRefs\Parse\Citations\getCitationsOld;
 use function WpRefs\WikiParse\getTemplates;

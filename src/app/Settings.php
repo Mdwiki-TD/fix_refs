@@ -2,7 +2,7 @@
 
 namespace WpRefs\Settings;
 
-use function WpRefs\TestBot\echo_test;
+use App\Logger;
 
 function get_curl(string $url): string
 {
@@ -18,7 +18,7 @@ function get_curl(string $url): string
 
     $output = curl_exec($ch);
     if ($output === false) {
-        echo_test("<br>cURL Error: " . curl_error($ch) . "<br>$url");
+        Logger::debug("<br>cURL Error: " . curl_error($ch) . "<br>$url");
         $output = '';
     }
 

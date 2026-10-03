@@ -30,7 +30,7 @@ function move_dots_before_refs(string $text, string $lang): string
 function move_dots_after_refs($newtext, $lang)
 {
     // ---
-    // echo_test("move_dots_after_refs\n");
+    // Logger::debug("move_dots_after_refs\n");
     // ---
     $dot = "\.,。।";
     // ---

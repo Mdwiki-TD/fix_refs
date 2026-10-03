@@ -36,7 +36,7 @@ function get_refs(string $text): array
         // ---
         $refs[$citeAttrs] = $citeContents;
         // ---
-        // echo_test("\n$citeAttrs\n");
+        // Logger::debug("\n$citeAttrs\n");
         // ---
         $citeNewtext = "<ref $citeAttrs />";
         // ---
@@ -83,7 +83,7 @@ function add_line_to_temp($line, $text)
     // ---
     $tempsIn = getTemplates($text);
     // ---
-    // echo_test("lenth temps_in:" . count($tempsIn) . "\n");
+    // Logger::debug("lenth temps_in:" . count($tempsIn) . "\n");
     // ---
     $newText = $text;
     // ---
@@ -93,7 +93,7 @@ function add_line_to_temp($line, $text)
         // ---
         $name = $temp->getStripName();
         // ---
-        // echo_test("\n$name\n");
+        // Logger::debug("\n$name\n");
         // ---
         $oldTextTemplate = $temp->getOriginalText();
         // ---
@@ -101,7 +101,7 @@ function add_line_to_temp($line, $text)
             continue;
         };
         // ---
-        // echo_test("\n$name\n");
+        // Logger::debug("\n$name\n");
         // ---
         $refnParam = $temp->getParameter("refs");
         // ---
@@ -134,7 +134,7 @@ function mv_es_refs(string $text): string
 {
     // ---
     if (empty($text)) {
-        // echo_test("text is empty");
+        // Logger::debug("text is empty");
         return $text;
     }
     // ---

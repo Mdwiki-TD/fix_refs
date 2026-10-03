@@ -7,6 +7,7 @@ if (!empty($_GET['test'] ?? $_POST['test'] ?? '') || ($_SERVER['SERVER_NAME'] ??
 }
 
 include_once __DIR__ . '/app/Settings.php';
+include_once __DIR__ . '/app/Logger.php';
 include_once __DIR__ . '/app/Csrf.php';
 include_once __DIR__ . '/app/Run.php';
 include_once __DIR__ . '/app/Wikibots/Wikitext.php';

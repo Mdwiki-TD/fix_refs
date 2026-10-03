@@ -3,7 +3,7 @@
 namespace WpRefs\PT\FixPtMonth;
 
 
-use function WpRefs\TestBot\echo_test;
+use App\Logger;
 use function WpRefs\TestBot\echo_debug;
 use function WpRefs\Parse\Citations\getCitationsOld;
 use function WpRefs\WikiParse\getTemplates;
