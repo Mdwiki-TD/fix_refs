@@ -67,7 +67,7 @@ fix_refs_repo/
 │   ├── csrf.php                  # CSRF token generation and verification
 │   ├── app/Fix/                  # Core library (PSR-4: WpRefs\)
 │   │   ├── index.php             # fix_page() - main processing pipeline
-│   │   ├── include_files.php     # Autoloader via glob includes
+│   │   ├── bootstap.php     # Autoloader via glob includes
 │   │   ├── debug_helper.php          # Debug/test output helpers
 │   │   ├── md_cat.php            # MDWiki category management (Wikidata integration)
 │   │   ├── WikiParse/            # MediaWiki wikitext parser module
@@ -178,7 +178,7 @@ The project follows a modular architecture with clear separation between parsing
 
 -   **Good**: Each language bot is in its own file/directory, making language-specific changes isolated
 -   **Good**: The WikiParse module is well-structured with proper data models
--   **Concern**: The `include_files.php` uses glob-based includes rather than Composer autoloading for all files
+-   **Concern**: The `bootstap.php` uses glob-based includes rather than Composer autoloading for all files
 -   **Concern**: The `fix_page()` function has a growing list of language-specific `if` blocks
 
 ### Readability
@@ -198,7 +198,7 @@ The project follows a modular architecture with clear separation between parsing
 
 -   Minimal dependencies (only dev tools) reduces supply chain risk
 -   No runtime Composer dependencies means zero autoload overhead for the library itself
--   The glob-based include system in `include_files.php` bypasses Composer autoloading
+-   The glob-based include system in `bootstap.php` bypasses Composer autoloading
 
 ## Strengths
 
@@ -220,7 +220,7 @@ The project follows a modular architecture with clear separation between parsing
 
 ## Weaknesses
 
-1. **Glob-based autoloading** - `include_files.php` uses `glob()` to include all PHP files rather than relying on Composer PSR-4 autoloading. This is fragile and slower.
+1. **Glob-based autoloading** - `bootstap.php` uses `glob()` to include all PHP files rather than relying on Composer PSR-4 autoloading. This is fragile and slower.
 
 2. **Mixed parsing approaches** - Two parallel parsing systems (`Parse/Citations.php` with `CitationOld` class and `WikiParse/src/ParserCitations.php`) create confusion about which to use.
 
@@ -274,7 +274,7 @@ The project follows a modular architecture with clear separation between parsing
 
 ### Outdated Patterns
 
--   `include_files.php` should be replaced with Composer autoloading
+-   `bootstap.php` should be replaced with Composer autoloading
 -   `CitationOld` class should be deprecated in favor of `ParserCitations`
 -   The `$_SERVER['SERVER_NAME']` check for environment detection should use environment variables
 
@@ -393,7 +393,7 @@ vendor/bin/phpstan analyse
 The library can be used programmatically:
 
 ```php
-require_once 'src/app/Fix/include_files.php';
+require_once 'src/app/Fix/bootstap.php';
 
 use function WpRefs\FixPage\fix_page_with_setting;
 

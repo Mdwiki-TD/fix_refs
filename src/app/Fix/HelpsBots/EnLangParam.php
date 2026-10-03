@@ -4,7 +4,7 @@ namespace WpRefs\EnLangParam;
 
 use function WpRefs\TestBot\echo_debug;
 use function WpRefs\Parse\Citations\getCitationsOld;
-use function WikiParse\Template\getTemplates;
+use function WpRefs\WikiParse\getTemplates;
 
 function add_lang_en($text)
 {

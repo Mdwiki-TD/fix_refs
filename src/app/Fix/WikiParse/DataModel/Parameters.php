@@ -1,13 +1,13 @@
 <?php
 
-namespace WpRefs\WikiConnect\ParseWiki\DataModel;
+namespace WpRefs\WikiParse\DataModel;
 
 /**
  * Class Parameters
  *
  * Represents template parameters in a wikitext document.
  *
- * @package WpRefs\WikiConnect\ParseWiki\DataModel
+ * @package WpRefs\WikiParse\DataModel
  */
 class Parameters
 {

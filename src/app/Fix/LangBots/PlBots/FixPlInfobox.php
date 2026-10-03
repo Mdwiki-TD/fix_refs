@@ -3,7 +3,7 @@
 namespace WpRefs\PL\FixPlInfobox;
 
 
-use function WikiParse\Template\getTemplates;
+use function WpRefs\WikiParse\getTemplates;
 use function WpRefs\TestBot\echo_test;
 
 function add_missing_params_to_choroba_infobox($text)

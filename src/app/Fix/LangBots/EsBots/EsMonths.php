@@ -6,7 +6,7 @@ namespace WpRefs\EsBots\es_months;
 use function WpRefs\TestBot\echo_test;
 use function WpRefs\TestBot\echo_debug;
 use function WpRefs\Parse\Citations\getCitationsOld;
-use function WikiParse\Template\getTemplates;
+use function WpRefs\WikiParse\getTemplates;
 use function WpRefs\Bots\MonthNewValue\make_date_new_val_es;
 
 

@@ -3,7 +3,7 @@
 namespace WpRefs\Infobox2;
 
 use function WpRefs\Bots\TxtLib2\extract_templates_and_params;
-use WpRefs\WikiConnect\ParseWiki\ParserTemplate;
+use WpRefs\WikiParse\ParserTemplate;
 
 function do_comments($text)
 {

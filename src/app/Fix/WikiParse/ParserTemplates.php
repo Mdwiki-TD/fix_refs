@@ -1,16 +1,16 @@
 <?php
 
-namespace WpRefs\WikiConnect\ParseWiki;
+namespace WpRefs\WikiParse;
 
-use WpRefs\WikiConnect\ParseWiki\DataModel\Template;
-use WpRefs\WikiConnect\ParseWiki\ParserTemplate;
+use WpRefs\WikiParse\DataModel\Template;
+use WpRefs\WikiParse\ParserTemplate;
 
 /**
  * Class ParserTemplates
  *
  * Parse a text and extract all Templates.
  *
- * @package WpRefs\WikiConnect\ParseWiki
+ * @package WpRefs\WikiParse
  */
 class ParserTemplates
 {
@@ -123,4 +123,14 @@ class ParserTemplates
         }
         return $outtemplates;
     }
+}
+
+function getTemplates($text)
+{
+    if (empty($text)) {
+        return [];
+    }
+    $parser = new ParserTemplates($text);
+    $temps = $parser->getTemplates();
+    return $temps;
 }

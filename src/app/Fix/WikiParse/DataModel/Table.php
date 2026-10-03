@@ -1,11 +1,11 @@
 <?php
 
-namespace WpRefs\WikiConnect\ParseWiki\DataModel;
+namespace WpRefs\WikiParse\DataModel;
 
 /**
  * Class Table
  *
- * @package WpRefs\WikiConnect\ParseWiki\DataModel
+ * @package WpRefs\WikiParse\DataModel
  */
 class Table
 {

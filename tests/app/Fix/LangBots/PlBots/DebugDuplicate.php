@@ -6,7 +6,7 @@ namespace WpRefs\Tests;
 
 use WpRefs\Tests\MyFunctionTest;
 use function WpRefs\PL\FixPlInfobox\add_missing_params_to_choroba_infobox;
-use function WikiParse\Template\getTemplates;
+use function WpRefs\WikiParse\getTemplates;
 
 class DebugDuplicate extends MyFunctionTest
 {

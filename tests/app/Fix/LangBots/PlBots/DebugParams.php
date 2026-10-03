@@ -5,7 +5,7 @@ namespace WpRefs\Tests;
 // Debug test to see what parameters are in the template
 
 use WpRefs\Tests\MyFunctionTest;
-use function WikiParse\Template\getTemplates;
+use function WpRefs\WikiParse\getTemplates;
 
 class DebugParams extends MyFunctionTest
 {

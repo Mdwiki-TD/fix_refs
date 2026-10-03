@@ -37,27 +37,24 @@ src/
 │   │   │   ├── Citations.php
 │   │   │   └── CitationsReg.php
 │   │   ├── WikiParse/
-│   │   │   ├── src/
-│   │   │   │   ├── DataModel/
-│   │   │   │   │   ├── Attribute.php
-│   │   │   │   │   ├── Citation.php
-│   │   │   │   │   ├── ExternalLink.php
-│   │   │   │   │   ├── InternalLink.php
-│   │   │   │   │   ├── Parameters.php
-│   │   │   │   │   ├── Table.php
-│   │   │   │   │   ├── Tag.php
-│   │   │   │   │   └── Template.php
-│   │   │   │   ├── ParserCategories.php
-│   │   │   │   ├── ParserCitations.php
-│   │   │   │   ├── ParserExternalLinks.php
-│   │   │   │   ├── ParserInternalLinks.php
-│   │   │   │   ├── ParserTags.php
-│   │   │   │   ├── ParserTemplate.php
-│   │   │   │   └── ParserTemplates.php
-│   │   │   ├── include_it.php
-│   │   │   └── Template.php
+│   │   │   ├── DataModel/
+│   │   │   │   ├── Attribute.php
+│   │   │   │   ├── Citation.php
+│   │   │   │   ├── ExternalLink.php
+│   │   │   │   ├── InternalLink.php
+│   │   │   │   ├── Parameters.php
+│   │   │   │   ├── Table.php
+│   │   │   │   ├── Tag.php
+│   │   │   │   └── Template.php
+│   │   │   ├── ParserCategories.php
+│   │   │   ├── ParserCitations.php
+│   │   │   ├── ParserExternalLinks.php
+│   │   │   ├── ParserInternalLinks.php
+│   │   │   ├── ParserTags.php
+│   │   │   ├── ParserTemplate.php
+│   │   │   └── ParserTemplates.php
+│   │   ├── bootstap.php
 │   │   ├── DebugHelper.php
-│   │   ├── include_files.php
 │   │   ├── Index.php
 │   │   ├── MdCat.php
 │   │   └── README.md
@@ -68,7 +65,7 @@ src/
 │   ├── Csrf.php
 │   ├── Run.php
 │   └── Settings.php
-├── include.php
+├── bootstap.php
 ├── index.php
 └── work.php
 

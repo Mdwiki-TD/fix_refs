@@ -1,19 +1,12 @@
 <?php
 include_once __DIR__ . '/DebugHelper.php';
 
-include_once __DIR__ . '/WikiParse/include_it.php';
 # WikiParse
 
 foreach (glob(__DIR__ . "/WikiParse/DataModel/*.php") as $filename) {
     include_once $filename;
 }
 foreach (glob(__DIR__ . "/WikiParse/*.php") as $filename) {
-    include_once $filename;
-}
-foreach (glob(__DIR__ . "WikiParse/*.php") as $filename) {
-    if ($filename == __FILE__) {
-        continue;
-    }
     include_once $filename;
 }
 
