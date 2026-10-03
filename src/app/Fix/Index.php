@@ -10,8 +10,7 @@ use function App\Fix\Bots\RemoveDuplicateRefs\remove_Duplicate_refs_With_attrs;
 use function App\Fix\HelpsBots\EnLangParam\add_lang_en_to_refs;
 use function App\Fix\HelpsBots\MissingRefs\fix_missing_refs;
 use function App\Fix\HelpsBots\MvDots\move_dots_after_refs;
-use function App\Fix\HelpsBots\RemoveSpace\remove_spaces_between_last_word_and_beginning_of_ref;
-use function App\Fix\HelpsBots\RemoveSpace\remove_spaces_between_ref_and_punctuation;
+use App\Fix\HelpsBots\RemoveSpace;
 use function App\Fix\Infoboxes\Infobox\Expend_Infobox;
 use function App\Fix\LangBots\BgBots\FixBg\bg_fixes;
 use function App\Fix\LangBots\EsBots\ES\fix_es;
@@ -80,8 +79,8 @@ class Index
         };
 
         if ($lang === "hy") {
-            $text = remove_spaces_between_last_word_and_beginning_of_ref($text, "hy");
-            $text = remove_spaces_between_ref_and_punctuation($text);
+            $text = RemoveSpace::remove_spaces_between_last_word_and_beginning_of_ref($text, "hy");
+            $text = RemoveSpace::remove_spaces_between_ref_and_punctuation($text);
         }
 
         if ($lang !== "bg") {
