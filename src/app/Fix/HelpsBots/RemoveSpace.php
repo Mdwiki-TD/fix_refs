@@ -6,23 +6,6 @@ use App\Logger;
 
 class RemoveSpace
 {
-    public static function str_ends_with($string, $endString)
-    {
-        if (function_exists('str_ends_with')) {
-            return \str_ends_with($string, $endString);
-        }
-        $len = strlen($endString);
-        return substr($string, -$len) === $endString;
-    }
-
-    public static function str_starts_with($text, $start)
-    {
-        if (function_exists('str_starts_with')) {
-            return \str_starts_with($text, $start);
-        }
-        return strpos($text, $start) === 0;
-    }
-
     public static function match_it($text, $charters)
     {
         $pattern = '/(<\/ref>|\/>)\s*([' . preg_quote($charters, '/') . ']\s*)$/u';
@@ -68,7 +51,7 @@ class RemoveSpace
             if (!empty($lastRef)) {
                 $refText = end($lastRef);
                 $endPart = $refText . $charter;
-                if (self::str_ends_with($part, $endPart)) {
+                if (str_ends_with($part, $endPart)) {
                     Logger::debug("endswith\n");
                     $firstPartCleanEnd = substr($part, 0, -strlen($endPart));
                     $firstPartCleanEnd = rtrim($firstPartCleanEnd);

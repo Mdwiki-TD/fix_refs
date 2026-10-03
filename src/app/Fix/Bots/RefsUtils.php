@@ -4,22 +4,6 @@ namespace App\Fix\Bots;
 
 class RefsUtils
 {
-    public static function str_ends_with($string, $endString)
-    {
-        if (function_exists('str_ends_with')) {
-            return \str_ends_with($string, $endString);
-        }
-        $len = strlen($endString);
-        return substr($string, -$len) === $endString;
-    }
-
-    public static function str_starts_with($text, $start)
-    {
-        if (function_exists('str_starts_with')) {
-            return \str_starts_with($text, $start);
-        }
-        return strpos($text, $start) === 0;
-    }
 
     public static function rm_str_from_start_and_end(string $text, string $find): string
     {
@@ -27,7 +11,7 @@ class RefsUtils
             return $text;
         }
         $text = trim($text);
-        if (self::str_starts_with($text, $find) && self::str_ends_with($text, $find)) {
+        if (str_starts_with($text, $find) && str_ends_with($text, $find)) {
             $text = substr($text, strlen($find), -strlen($find));
         }
         return trim($text);
