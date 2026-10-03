@@ -2,7 +2,7 @@
 
 namespace App\Fix\HelpsBots;
 
-use App\Fix\DebugHelper;
+use App\Logger;
 
 class RemoveSpace
 {
@@ -38,7 +38,7 @@ class RemoveSpace
         if (count($matches) == 1) {
             $matches = explode("\r\n\r\n", $newtext);
         }
-        DebugHelper::debug("count(matches)=" . count($matches) . "\n");
+        Logger::debug("count(matches)=" . count($matches) . "\n");
         $newParts = [];
         foreach ($matches as $p) {
             $chart = self::match_it($p, $charters);
@@ -46,7 +46,7 @@ class RemoveSpace
                 $newParts[] = [$p, $chart];
             }
         }
-        DebugHelper::debug("count(new_parts)=" . count($newParts) . "\n");
+        Logger::debug("count(new_parts)=" . count($newParts) . "\n");
         return $newParts;
     }
 
@@ -60,16 +60,16 @@ class RemoveSpace
         $parts = self::get_parts($newtext, $dots);
         foreach ($parts as $pair) {
             list($part, $charter) = $pair;
-            DebugHelper::debug("charter=$charter\n");
+            Logger::debug("charter=$charter\n");
             $regline = '/((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)/us';
             preg_match_all($regline, $part, $lastRefMatches);
             $lastRef = $lastRefMatches[1];
-            DebugHelper::debug("count(last_ref)=" . count($lastRef) . "\n");
+            Logger::debug("count(last_ref)=" . count($lastRef) . "\n");
             if (!empty($lastRef)) {
                 $refText = end($lastRef);
                 $endPart = $refText . $charter;
                 if (self::str_ends_with($part, $endPart)) {
-                    DebugHelper::debug("endswith\n");
+                    Logger::debug("endswith\n");
                     $firstPartCleanEnd = substr($part, 0, -strlen($endPart));
                     $firstPartCleanEnd = rtrim($firstPartCleanEnd);
                     $newPart = $firstPartCleanEnd . trim($refText) . $charter;

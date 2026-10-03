@@ -2,7 +2,7 @@
 
 namespace App\Fix\LangBots\EsBots;
 
-use App\Fix\DebugHelper;
+use App\Logger;
 use App\Fix\WikiParse\Template;
 
 class ESData
@@ -181,7 +181,7 @@ class Es
         }
 
         if (substr_count($text, "\n") < 10 && $title != "test!") {
-            DebugHelper::debug("less than 10 lines\n");
+            Logger::debug("less than 10 lines\n");
         }
 
         if (strpos($text, "<references />") !== false) {

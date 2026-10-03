@@ -2,7 +2,7 @@
 
 namespace App\Fix\HelpsBots;
 
-use App\Fix\DebugHelper;
+use App\Logger;
 use App\Fix\MdCat;
 use App\Fix\Parse\CitationsReg;
 
@@ -18,21 +18,21 @@ class MissingRefs
         if (empty($mdwikiRevid) || $mdwikiRevid == 0) {
             $jsonFile = "$serverPath/revisions_new1/json_data.json";
             $data = json_decode(MdCat::get_url_curl($jsonFile), true) ?? [];
-            DebugHelper::debug("url" . $jsonFile);
-            DebugHelper::debug("count of data: " . count($data));
+            Logger::debug("url" . $jsonFile);
+            Logger::debug("count of data: " . count($data));
             $mdwikiRevid = $data[str_replace(" ", "_", $sourcetitle)] ?? "";
         }
 
         if (empty($mdwikiRevid)) {
-            DebugHelper::debug("empty mdwiki_revid");
+            Logger::debug("empty mdwiki_revid");
             return "";
         }
 
         $fullUrl = "$serverPath/revisions_new1/$mdwikiRevid/wikitext.txt";
-        DebugHelper::debug("url" . $fullUrl);
+        Logger::debug("url" . $fullUrl);
         $text = MdCat::get_url_curl($fullUrl);
         if (!$text) {
-            DebugHelper::debug("Failed to fetch URL: $fullUrl");
+            Logger::debug("Failed to fetch URL: $fullUrl");
             return "";
         }
 
@@ -46,8 +46,8 @@ class MissingRefs
         }
         $content = file_get_contents($jsonFile);
         $data = json_decode($content, true) ?? [];
-        DebugHelper::debug("url" . $jsonFile);
-        DebugHelper::debug("count of data: " . count($data));
+        Logger::debug("url" . $jsonFile);
+        Logger::debug("count of data: " . count($data));
         $mdwikiRevid = $data[$sourcetitle] ?? "";
         return $mdwikiRevid;
     }
@@ -65,19 +65,19 @@ class MissingRefs
             $mdwikiRevid = self::find_mdwiki_revid($sourcetitle, $jsonFile);
         }
         if (empty($mdwikiRevid)) {
-            DebugHelper::debug("empty mdwiki_revid, sourcetitle:($sourcetitle)");
+            Logger::debug("empty mdwiki_revid, sourcetitle:($sourcetitle)");
             return "";
         }
         $file = "$revisionsDir/$mdwikiRevid/wikitext.txt";
         if (!file_exists($file)) {
             $file = dirname(__DIR__, 2) . "/resources/revisions/$mdwikiRevid/wikitext.txt";
         }
-        DebugHelper::debug($file);
+        Logger::debug($file);
         if (!file_exists($file)) {
-            DebugHelper::debug("file not found: $file");
+            Logger::debug("file not found: $file");
             return "";
         }
-        DebugHelper::debug("url" . $file);
+        Logger::debug("url" . $file);
         $text = file_get_contents($file) ?: "";
         return $text;
     }
@@ -91,7 +91,7 @@ class MissingRefs
             $refe = $cite["tag"];
             $rr = $refs[$name] ?? false;
             if ($rr) {
-                DebugHelper::debug("refs_expend: $name");
+                Logger::debug("refs_expend: $name");
                 $text = str_replace($refe, $rr, $text);
             }
         }
@@ -116,7 +116,7 @@ class MissingRefs
     public static function fix_missing_refs($text, $sourcetitle, $mdwikiRevid)
     {
         $emptyShort = self::find_empty_short($text);
-        DebugHelper::debug("empty refs: " . count($emptyShort));
+        Logger::debug("empty refs: " . count($emptyShort));
         if (empty($emptyShort)) return $text;
         $fullText = self::get_full_text($sourcetitle, $mdwikiRevid);
         if (empty($fullText)) return $text;

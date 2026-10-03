@@ -5,7 +5,7 @@ use App\Csrf;
 use App\Run;
 
 $headerPath = __DIR__ . '/../header.php';
-include_once __DIR__ . '/include.php';
+include_once __DIR__ . '/bootstrap.php';
 
 if (!file_exists($headerPath)) {
     $headerPath = dirname(dirname(dirname(dirname(__DIR__)))) . '/MDWIKI_MAIN_REPO/src/public_html/header.php';

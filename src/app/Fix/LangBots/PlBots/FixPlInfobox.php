@@ -2,14 +2,14 @@
 
 namespace App\Fix\LangBots\PlBots;
 
-use App\Fix\DebugHelper;
+use App\Logger;
 use App\Fix\WikiParse\Template;
 
 class FixPlInfobox
 {
     public static function add_missing_params_to_choroba_infobox($text)
     {
-        DebugHelper::debug("\n add_missing_params_to_choroba_infobox:\n");
+        Logger::debug("\n add_missing_params_to_choroba_infobox:\n");
         $newText = $text;
         $temps = Template::getTemplates($text);
         $paramsToAdd = [
@@ -33,7 +33,7 @@ class FixPlInfobox
         foreach ($temps as $temp) {
             $name = $temp->getStripName();
             if (strtolower($name) === "choroba infobox") {
-                DebugHelper::debug("Found Choroba infobox template\n");
+                Logger::debug("Found Choroba infobox template\n");
                 $tempOld = $temp->getOriginalText();
                 $params = $temp->getParameters();
                 foreach ($paramsToAdd as $paramName => $paramValue) {

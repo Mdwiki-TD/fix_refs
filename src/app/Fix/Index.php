@@ -32,7 +32,7 @@ class Index
         }
 
         if ($infobox || $lang === "es") {
-            DebugHelper::debug("Expend_Infobox\n");
+            Logger::debug("Expend_Infobox\n");
             $text = Infobox::Expend_Infobox($text, $title, "");
         }
 
@@ -41,12 +41,12 @@ class Index
         $text = RemoveDuplicateRefs::remove_Duplicate_refs_With_attrs($text);
 
         if ($moveDots) {
-            DebugHelper::debug("move_dots\n");
+            Logger::debug("move_dots\n");
             $text = MvDots::move_dots_after_refs($text, $lang);
         }
 
         if ($addEnLang) {
-            DebugHelper::debug("add_en_lang\n");
+            Logger::debug("add_en_lang\n");
             $text = EnLangParam::add_lang_en_to_refs($text);
         }
 

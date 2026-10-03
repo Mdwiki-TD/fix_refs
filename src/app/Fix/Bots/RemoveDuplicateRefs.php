@@ -2,7 +2,7 @@
 
 namespace App\Fix\Bots;
 
-use App\Fix\DebugHelper;
+use App\Logger;
 use App\Fix\Parse\Citations;
 
 class RemoveDuplicateRefs
@@ -62,7 +62,7 @@ class RemoveDuplicateRefs
                 $citeAttrs = "name='$name'";
             }
 
-            DebugHelper::debug("\n cite_attrs: (($citeAttrs))");
+            Logger::debug("\n cite_attrs: (($citeAttrs))");
             $citeNewtext = "<ref $citeAttrs />";
 
             if (isset($refs[$citeAttrs])) {

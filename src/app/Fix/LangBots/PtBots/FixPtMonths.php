@@ -3,7 +3,7 @@
 namespace App\Fix\LangBots\PtBots;
 
 use App\Fix\Bots\MonthsNewValue;
-use App\Fix\DebugHelper;
+use App\Logger;
 use App\Fix\Parse\Citations;
 use App\Fix\WikiParse\Template;
 
@@ -46,7 +46,7 @@ class FixPtMonths
 
     public static function fix_pt_months_in_refs($text)
     {
-        DebugHelper::debug("\n fix_pt_months_in_refs:\n");
+        Logger::debug("\n fix_pt_months_in_refs:\n");
         $newText = $text;
         $citations = Citations::getCitationsOld($text);
         foreach ($citations as $key => $citation) {

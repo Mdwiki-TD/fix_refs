@@ -2,7 +2,7 @@
 
 namespace App\Fix\HelpsBots;
 
-use App\Fix\DebugHelper;
+use App\Logger;
 use App\Fix\Parse\Citations;
 use App\Fix\WikiParse\Template;
 
@@ -53,7 +53,7 @@ class EnLangParam
 
     public static function add_lang_en_to_refs($text)
     {
-        DebugHelper::debug("\n add_lang_en_to_refs:\n");
+        Logger::debug("\n add_lang_en_to_refs:\n");
         $newText = $text;
         $citations = Citations::getCitationsOld($text);
         foreach ($citations as $key => $citation) {

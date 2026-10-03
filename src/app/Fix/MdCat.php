@@ -19,7 +19,7 @@ class MdCat
 
         $output = curl_exec($ch);
         if ($output === false) {
-            DebugHelper::debug("<br>cURL Error: " . curl_error($ch) . "<br>$url");
+            Logger::debug("<br>cURL Error: " . curl_error($ch) . "<br>$url");
         }
 
         curl_close($ch);

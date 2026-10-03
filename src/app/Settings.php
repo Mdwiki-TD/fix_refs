@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Fix\DebugHelper;
+use App\Logger;
 
 class Settings
 {
@@ -20,7 +20,7 @@ class Settings
 
         $output = curl_exec($ch);
         if ($output === false) {
-            DebugHelper::debug("<br>cURL Error: " . curl_error($ch) . "<br>$url");
+            Logger::debug("<br>cURL Error: " . curl_error($ch) . "<br>$url");
             $output = '';
         }
 
