@@ -16,7 +16,7 @@ src/
 │   │   │   ├── MissingRefs.php
 │   │   │   ├── MvDots.php
 │   │   │   └── RemoveSpace.php
-│   │   ├── infoboxes/
+│   │   ├── Infoboxes/
 │   │   │   ├── Infobox.php
 │   │   │   └── Infobox2.php
 │   │   ├── LangBots/
