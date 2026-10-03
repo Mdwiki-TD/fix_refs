@@ -3,8 +3,8 @@
 namespace App\Fix\HelpsBots\MissingRefs;
 
 use App\Logger;
-use function App\Fix\Parse\Reg_Citations\get_short_citations;
-use function App\Fix\Parse\Reg_Citations\get_full_refs;
+use function App\Fix\Parse\CitationsReg\get_short_citations;
+use function App\Fix\Parse\CitationsReg\get_full_refs;
 use function App\Fix\MdCat\get_url_curl;
 
 function get_full_text_url($sourcetitle, $mdwikiRevid)

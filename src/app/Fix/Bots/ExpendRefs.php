@@ -2,8 +2,8 @@
 
 namespace App\Fix\Bots\ExpendRefs;
 
-use function App\Fix\Parse\Reg_Citations\get_full_refs;
-use function App\Fix\Parse\Reg_Citations\get_short_citations;
+use function App\Fix\Parse\CitationsReg\get_full_refs;
+use function App\Fix\Parse\CitationsReg\get_short_citations;
 
 function refs_expend_work($first, $alltext = "")
 {

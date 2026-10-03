@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Fix\Parse\Reg_Citations;
+namespace App\Fix\Parse\CitationsReg;
 
 /**
  * Get the name attribute from citation options.

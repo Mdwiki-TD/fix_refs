@@ -3,7 +3,7 @@
 namespace App\Fix\LangBots\EsBots\EsRefs;
 
 use App\Fix\WikiParse\ParserTemplates;
-use function App\Fix\Parse\Reg_Citations\get_short_citations;
+use function App\Fix\Parse\CitationsReg\get_short_citations;
 use function App\Fix\Parse\Citations\getCitationsOld;
 
 function get_refs(string $text): array
