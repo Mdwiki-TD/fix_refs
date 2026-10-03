@@ -5,7 +5,7 @@ namespace Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\MyFunctionTest;
-use function App\Fix\WprefText\fix_page;
+use function App\Fix\Index\fix_page;
 
 class ComprehensiveTest extends MyFunctionTest
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Fix\WprefText;
+namespace App\Fix\Index;
 
 use App\Logger;
 use function App\Infobox\Expend_Infobox;
