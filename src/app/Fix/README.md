@@ -32,7 +32,7 @@ No runtime dependencies. Uses only PHP built-in functions (`preg_*`, `str_*`, `c
 ```
 app/Fix/
 ├── index.php                   # fix_page() - main processing pipeline
-├── bootstap.php           # Autoloader (glob-based file includes)
+├── bootstrap.php           # Autoloader (glob-based file includes)
 ├── test_bot.php                # Debug output helpers (echo_test, echo_debug)
 ├── md_cat.php                  # MDWiki category via Wikidata API
 │
@@ -144,7 +144,7 @@ Output wikitext
 **Concerns:**
 
 -   Two parallel parsing systems exist (`Parse/Citations.php` with `CitationOld` and `WikiParse/src/ParserCitations.php`)
--   `bootstap.php` uses glob includes instead of relying on Composer PSR-4 autoloading
+-   `bootstrap.php` uses glob includes instead of relying on Composer PSR-4 autoloading
 -   The `Bots/tests/` directory contains manual test scripts that shouldn't be in the library source
 
 ### SOLID Principles
@@ -191,7 +191,7 @@ The modular file structure aids navigation, but the growing `if` chain in `fix_p
         : "/data/project/mdwikicx/public_html";
     ```
 
-6. **No Composer autoloading for all files** - Despite PSR-4 configuration in `composer.json`, `bootstap.php` manually globs and includes files, bypassing the autoloader.
+6. **No Composer autoloading for all files** - Despite PSR-4 configuration in `composer.json`, `bootstrap.php` manually globs and includes files, bypassing the autoloader.
 
 7. **Duplicate `start_end()` function** - Defined identically in both `fix_pt_months.php` and `es_months.php`.
 
@@ -254,7 +254,7 @@ The modular file structure aids navigation, but the growing `if` chain in `fix_p
 
 ### Medium-term
 
-1. Replace `bootstap.php` glob system with Composer PSR-4 autoloading
+1. Replace `bootstrap.php` glob system with Composer PSR-4 autoloading
 2. Add a `LanguageFixerInterface` with per-language implementations
 3. Parse citations once in `fix_page()` and pass the result to all bot functions
 4. Replace `$_SERVER['SERVER_NAME']` checks with environment variables
@@ -284,7 +284,7 @@ The modular file structure aids navigation, but the growing `if` chain in `fix_p
 
 ```php
 // Include the library
-require_once __DIR__ . '/bootstap.php';
+require_once __DIR__ . '/bootstrap.php';
 
 // Process wikitext
 use function WpRefs\WprefText\fix_page;

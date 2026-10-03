@@ -133,7 +133,7 @@ Simple, focused, and easy to understand. Limited scope keeps complexity low.
 ### Basic Usage
 
 ```php
-require_once __DIR__ . '/../app/Fix/bootstap.php';
+require_once __DIR__ . '/../app/Fix/bootstrap.php';
 
 use function WpRefs\WikiText\get_wikipedia_text;
 

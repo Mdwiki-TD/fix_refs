@@ -2,7 +2,7 @@
 
 use function WpRefs\csrf\generate_csrf_token;
 
-include_once __DIR__ . '/../bootstap.php';
+include_once __DIR__ . '/../bootstrap.php';
 $headerPath = __DIR__ . '/../header.php';
 
 if (!file_exists($headerPath)) {
