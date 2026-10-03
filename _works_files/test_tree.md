@@ -11,18 +11,18 @@ tests/
 │   │   │   ├── RemoveDuplicateRefsTest.php
 │   │   │   └── Txtlib2Test.php
 │   │   ├── HelpsBots/
-│   │   │   ├── enLangParamTest.php
-│   │   │   ├── missingRefsTest.php
-│   │   │   ├── mvDotsAfterTest.php
-│   │   │   ├── mvDotsBeforeTest.php
-│   │   │   ├── removeSpace2Test.php
-│   │   │   └── removeSpaceTest.php
+│   │   │   ├── EnLangParamTest.php
+│   │   │   ├── MissingRefsTest.php
+│   │   │   ├── MvDotsAfterTest.php
+│   │   │   ├── MvDotsBeforeTest.php
+│   │   │   ├── RemoveSpace2Test.php
+│   │   │   └── RemoveSpaceTest.php
 │   │   ├── infoboxes/
 │   │   │   ├── infobox2Test.php
 │   │   │   └── infoboxTest.php
 │   │   ├── LangBots/
 │   │   │   ├── BgBots/
-│   │   │   │   └── fixBgTest.php
+│   │   │   │   └── FixBgTest.php
 │   │   │   ├── EsBots/
 │   │   │   │   ├── EsMonthsNewValueTest.php
 │   │   │   │   ├── EsMonthsTest.php
@@ -36,10 +36,10 @@ tests/
 │   │   │   │   ├── DemonstrationTest.php
 │   │   │   │   ├── IntegrationTest.php
 │   │   │   │   ├── ManualTest.php
-│   │   │   │   └── plInfoboxTest.php
+│   │   │   │   └── PlInfoboxTest.php
 │   │   │   ├── PtBots/
-│   │   │   │   ├── ptMonthsNewValueTest.php
-│   │   │   │   └── ptMonthsTest.php
+│   │   │   │   ├── PtMonthsNewValueTest.php
+│   │   │   │   └── PtMonthsTest.php
 │   │   │   └── SwTest.php
 │   │   ├── Parse/
 │   │   │   ├── CategoryTest.php
