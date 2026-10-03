@@ -2,7 +2,7 @@
 tests/
 ├── app/
 │   ├── Fix/
-│   │   ├── bots/
+│   │   ├── Bots/
 │   │   │   ├── fixtures/
 │   │   │   │   ├── del_dup/
 │   │   │   │   │   ├── expected.txt
@@ -30,7 +30,7 @@ tests/
 │   │   │           ├── expected.txt
 │   │   │           ├── input.txt
 │   │   │           └── output.txt
-│   │   ├── helps_bots/
+│   │   ├── HelpsBots/
 │   │   │   ├── fixtures/
 │   │   │   │   └── remove_space_texts/
 │   │   │   │       ├── 1/
@@ -52,7 +52,7 @@ tests/
 │   │   │   ├── removeSpace2PerformanceTest.php
 │   │   │   ├── removeSpace2Test.php
 │   │   │   └── removeSpaceTest.php
-│   │   ├── infoboxes/
+│   │   ├── Infoboxes/
 │   │   │   ├── fixtures/
 │   │   │   │   ├── 1/
 │   │   │   │   │   ├── expected.txt
@@ -64,10 +64,10 @@ tests/
 │   │   │   │       └── output.json
 │   │   │   ├── infobox2Test.php
 │   │   │   └── infoboxTest.php
-│   │   ├── lang_bots/
-│   │   │   ├── bg_bots/
+│   │   ├── LangBots/
+│   │   │   ├── BgBots/
 │   │   │   │   └── fixBgTest.php
-│   │   │   ├── es_bots/
+│   │   │   ├── EsBots/
 │   │   │   │   ├── fixtures/
 │   │   │   │   │   ├── 1/
 │   │   │   │   │   │   ├── expected.txt
@@ -85,7 +85,7 @@ tests/
 │   │   │   │   ├── esRefsTest.php
 │   │   │   │   ├── esSectionTest.php
 │   │   │   │   └── esTest.php
-│   │   │   ├── pl_bots/
+│   │   │   ├── PlBots/
 │   │   │   │   ├── ComprehensiveTest.php
 │   │   │   │   ├── DebugDuplicate.php
 │   │   │   │   ├── DebugParams.php
@@ -93,7 +93,7 @@ tests/
 │   │   │   │   ├── IntegrationTest.php
 │   │   │   │   ├── ManualTest.php
 │   │   │   │   └── plInfoboxTest.php
-│   │   │   ├── pt_bots/
+│   │   │   ├── PtBots/
 │   │   │   │   ├── ptMonthsNewValueTest.php
 │   │   │   │   └── ptMonthsTest.php
 │   │   │   └── swTest.php

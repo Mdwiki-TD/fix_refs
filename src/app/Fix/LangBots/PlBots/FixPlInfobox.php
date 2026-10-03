@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Fix\lang_bots\pl_bots;
+namespace App\Fix\LangBots\PlBots;
 
 use App\Fix\DebugHelper;
 use App\Fix\WikiParse\Template;

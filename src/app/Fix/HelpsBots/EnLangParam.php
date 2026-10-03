@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Fix\helps_bots;
+namespace App\Fix\HelpsBots;
 
 use App\Fix\DebugHelper;
 use App\Fix\Parse\Citations;

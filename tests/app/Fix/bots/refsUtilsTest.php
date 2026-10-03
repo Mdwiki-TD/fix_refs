@@ -4,7 +4,7 @@
 
 use WpRefs\Tests\MyFunctionTest;
 
-use App\Fix\bots\RefsUtils;
+use App\Fix\Bots\RefsUtils;
 
 
 

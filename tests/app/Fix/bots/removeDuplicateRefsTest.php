@@ -2,7 +2,7 @@
 
 use WpRefs\Tests\MyFunctionTest;
 
-use App\Fix\bots\RemoveDuplicateRefs;
+use App\Fix\Bots\RemoveDuplicateRefs;
 
 
 

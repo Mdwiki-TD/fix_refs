@@ -5,7 +5,7 @@ namespace WpRefs\Tests;
 // Debug test to see what's happening with duplicate parameters
 
 use WpRefs\Tests\MyFunctionTest;
-use App\Fix\lang_bots\pl_bots\FixPlInfobox;
+use App\Fix\LangBots\PlBots\FixPlInfobox;
 use App\Fix\WikiParse\Template;
 
 class DebugDuplicate extends MyFunctionTest

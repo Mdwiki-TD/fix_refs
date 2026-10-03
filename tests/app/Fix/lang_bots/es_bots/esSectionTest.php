@@ -1,7 +1,7 @@
 <?php
 
 use WpRefs\Tests\MyFunctionTest;
-use App\Fix\lang_bots\es_bots\Section;
+use App\Fix\LangBots\EsBots\Section;
 
 class esSectionTest extends MyFunctionTest
 {

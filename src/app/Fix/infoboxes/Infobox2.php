@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Fix\infoboxes;
+namespace App\Fix\Infoboxes;
 
-use App\Fix\bots\Txtlib2;
+use App\Fix\Bots\Txtlib2;
 use App\Fix\WikiParse\src\ParserTemplate;
 
 class Infobox2

@@ -3,7 +3,7 @@
 
 
 use WpRefs\Tests\MyFunctionTest;
-use App\Fix\bots\MonthsNewValue;
+use App\Fix\Bots\MonthsNewValue;
 
 class esMonthsNewValueTest extends MyFunctionTest
 {

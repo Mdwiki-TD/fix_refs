@@ -1,8 +1,8 @@
 <?php
 
 use WpRefs\Tests\MyFunctionTest;
-use App\Fix\lang_bots\es_bots\EsMonths;
-use App\Fix\lang_bots\es_bots\Es;
+use App\Fix\LangBots\EsBots\EsMonths;
+use App\Fix\LangBots\EsBots\Es;
 
 
 function fix_temps_wrap($text)

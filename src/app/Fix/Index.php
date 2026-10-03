@@ -2,20 +2,20 @@
 
 namespace App\Fix;
 
-use App\Fix\bots\MiniFixesBot;
-use App\Fix\bots\RedirectHelp;
-use App\Fix\bots\RemoveDuplicateRefs;
-use App\Fix\helps_bots\EnLangParam;
-use App\Fix\helps_bots\MissingRefs;
-use App\Fix\helps_bots\MvDots;
-use App\Fix\helps_bots\RemoveSpace;
-use App\Fix\infoboxes\Infobox;
-use App\Fix\lang_bots\bg_bots\FixBg;
-use App\Fix\lang_bots\es_bots\Es;
-use App\Fix\lang_bots\es_bots\Section;
-use App\Fix\lang_bots\pl_bots\FixPlInfobox;
-use App\Fix\lang_bots\pt_bots\FixPtMonths;
-use App\Fix\lang_bots\SwBot;
+use App\Fix\Bots\MiniFixesBot;
+use App\Fix\Bots\RedirectHelp;
+use App\Fix\Bots\RemoveDuplicateRefs;
+use App\Fix\HelpsBots\EnLangParam;
+use App\Fix\HelpsBots\MissingRefs;
+use App\Fix\HelpsBots\MvDots;
+use App\Fix\HelpsBots\RemoveSpace;
+use App\Fix\Infoboxes\Infobox;
+use App\Fix\LangBots\BgBots\FixBg;
+use App\Fix\LangBots\EsBots\Es;
+use App\Fix\LangBots\EsBots\Section;
+use App\Fix\LangBots\PlBots\FixPlInfobox;
+use App\Fix\LangBots\PtBots\FixPtMonths;
+use App\Fix\LangBots\SwBot;
 
 class Index
 {

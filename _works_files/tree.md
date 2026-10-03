@@ -2,7 +2,7 @@
 src/
 ├── app/
 │   ├── Fix/
-│   │   ├── bots/
+│   │   ├── Bots/
 │   │   │   ├── attrs_utils.php
 │   │   │   ├── expend_refs.php
 │   │   │   ├── mini_fixes_bot.php
@@ -11,26 +11,26 @@ src/
 │   │   │   ├── refs_utils.php
 │   │   │   ├── remove_duplicate_refs.php
 │   │   │   └── txtlib2.php
-│   │   ├── helps_bots/
+│   │   ├── HelpsBots/
 │   │   │   ├── en_lang_param.php
 │   │   │   ├── missing_refs.php
 │   │   │   ├── mv_dots.php
 │   │   │   ├── remove_space.php
 │   │   │   └── remove_space.py
-│   │   ├── infoboxes/
+│   │   ├── Infoboxes/
 │   │   │   ├── infobox.php
 │   │   │   └── infobox2.php
-│   │   ├── lang_bots/
-│   │   │   ├── bg_bots/
+│   │   ├── LangBots/
+│   │   │   ├── BgBots/
 │   │   │   │   └── fix_bg.php
-│   │   │   ├── es_bots/
+│   │   │   ├── EsBots/
 │   │   │   │   ├── es.php
 │   │   │   │   ├── es_months.php
 │   │   │   │   ├── es_refs.php
 │   │   │   │   └── section.php
-│   │   │   ├── pl_bots/
+│   │   │   ├── PlBots/
 │   │   │   │   └── fix_pl_infobox.php
-│   │   │   ├── pt_bots/
+│   │   │   ├── PtBots/
 │   │   │   │   └── fix_pt_months.php
 │   │   │   └── sw_bot.php
 │   │   ├── Parse/

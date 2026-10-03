@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Fix\lang_bots;
+namespace App\Fix\LangBots;
 
 class SwBot
 {

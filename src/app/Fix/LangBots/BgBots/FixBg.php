@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Fix\lang_bots\bg_bots;
+namespace App\Fix\LangBots\BgBots;
 
 class FixBg
 {

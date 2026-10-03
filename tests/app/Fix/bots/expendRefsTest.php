@@ -3,7 +3,7 @@
 
 
 use WpRefs\Tests\MyFunctionTest;
-use App\Fix\bots\ExpendRefs;
+use App\Fix\Bots\ExpendRefs;
 
 class expendRefsTest extends MyFunctionTest
 {

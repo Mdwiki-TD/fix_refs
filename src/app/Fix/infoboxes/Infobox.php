@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Fix\infoboxes;
+namespace App\Fix\Infoboxes;
 
 class Infobox
 {

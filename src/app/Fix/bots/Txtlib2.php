@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Fix\bots;
+namespace App\Fix\Bots;
 
 use App\Fix\WikiParse\Template;
 

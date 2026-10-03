@@ -3,7 +3,7 @@
 
 
 use WpRefs\Tests\MyFunctionTest;
-use App\Fix\bots\MiniFixesBot;
+use App\Fix\Bots\MiniFixesBot;
 
 
 
