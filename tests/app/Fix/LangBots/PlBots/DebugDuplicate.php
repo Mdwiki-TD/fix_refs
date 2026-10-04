@@ -5,7 +5,7 @@ namespace Tests;
 // Debug test to see what's happening with duplicate parameters
 
 use Tests\MyFunctionTest;
-use function App\Fix\LangBots\PlBots\FixPlInfobox\add_missing_params_to_choroba_infobox;
+use App\Fix\LangBots\PlBots\FixPlInfobox;
 use App\Fix\WikiParse\ParserTemplates;
 
 class DebugDuplicate extends MyFunctionTest
@@ -33,7 +33,7 @@ TXT;
         $this->assertArrayHasKey('ICD10', $initialParams, "Initial input missing expected parameter 'ICD10'.");
 
         // Process the infobox
-        $result = add_missing_params_to_choroba_infobox($input);
+        $result = FixPlInfobox::add_missing_params_to_choroba_infobox($input);
 
         // Assert that ICD10 parameter is not duplicated
         $count = preg_match_all('/\|ICD10\s*=/', $result, $matches);

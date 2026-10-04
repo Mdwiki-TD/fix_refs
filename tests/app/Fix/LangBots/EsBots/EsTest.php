@@ -1,15 +1,15 @@
 <?php
 
 use Tests\MyFunctionTest;
-use function App\Fix\LangBots\EsBots\EsMonths\fix_es_months_in_refs;
-use function App\Fix\LangBots\EsBots\ES\fix_es;
-use function App\Fix\LangBots\EsBots\ES\fix_temps;
+use App\Fix\LangBots\EsBots\EsMonths;
+use App\Fix\LangBots\EsBots\Es;
+
 
 function fix_temps_wrap($text)
 {
 
-    $result = fix_temps($text);
-    $result = fix_es_months_in_refs($result);
+    $result = Es::fix_temps($text);
+    $result = EsMonths::fix_es_months_in_refs($result);
     $result = preg_replace("/\s*=\s*/", "=", $result);
 
     return $result;
@@ -61,7 +61,7 @@ class esTest extends MyFunctionTest
         $textInput   = file_get_contents(__DIR__ . "/fixtures/3/input.txt");
         $expected  = file_get_contents(__DIR__ . "/fixtures/3/expected.txt");
         // --
-        $result = fix_temps($textInput);
+        $result = Es::fix_temps($textInput);
         // --
         $this->assertEquals($expected, $result);
     }
@@ -71,7 +71,7 @@ class esTest extends MyFunctionTest
         $textInput   = file_get_contents(__DIR__ . "/fixtures/2/input.txt");
         $expected  = file_get_contents(__DIR__ . "/fixtures/2/expected.txt");
         // --
-        $result = fix_es($textInput);
+        $result = Es::fix_es($textInput);
         // --
         $fixedFile = __DIR__ . "/fixtures/2/output.txt";
         file_put_contents($fixedFile, $result);
