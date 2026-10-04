@@ -4,7 +4,7 @@ namespace App;
 
 use App\Logger;
 
-class Settings
+class LanguageSettings
 {
     public static function get_curl(string $url): string
     {

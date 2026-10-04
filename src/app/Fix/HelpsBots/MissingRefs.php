@@ -3,7 +3,6 @@
 namespace App\Fix\HelpsBots;
 
 use App\Logger;
-use App\Fix\MdCat;
 use App\Fix\Parse\CitationsReg;
 
 class MissingRefs
@@ -40,6 +39,16 @@ class MissingRefs
         return $mdwikiRevid;
     }
 
+    private function resolve_mdwiki_revid(string $revisionsDir): string
+    {
+        if (empty($this->mdwikiRevid)) {
+            $jsonFile = "$revisionsDir/json_data.json";
+            $this->mdwikiRevid = $this->find_mdwiki_revid($jsonFile);
+        }
+
+        return (string)$this->mdwikiRevid;
+    }
+
     private function get_full_text(): string
     {
         $revisionsDir = getenv('REVISIONS_DIR') ?: ($_ENV['REVISIONS_DIR'] ?? null);
@@ -47,25 +56,27 @@ class MissingRefs
             $home = getenv('HOME') ?: ($_ENV['HOME'] ?? '');
             $revisionsDir = $home ? $home . '/public_html/revisions_new1' : dirname(__DIR__) . '/revisions_new1';
         }
-        $jsonFile = "$revisionsDir/json_data.json";
-        if (empty($this->mdwikiRevid)) {
-            $this->mdwikiRevid = $this->find_mdwiki_revid($jsonFile);
-        }
-        if (empty($this->mdwikiRevid)) {
+
+        $revid = $this->resolve_mdwiki_revid($revisionsDir);
+        if (empty($revid)) {
             Logger::debug("empty mdwiki_revid, sourcetitle:({$this->sourcetitle})");
             return "";
         }
-        $file = "$revisionsDir/{$this->mdwikiRevid}/wikitext.txt";
+
+        $file = "$revisionsDir/{$revid}/wikitext.txt";
         if (!file_exists($file)) {
             Logger::debug("wikitext file not found: $file");
-            $file = dirname(__DIR__, 2) . "/resources/revisions/{$this->mdwikiRevid}/wikitext.txt";
+            $file = dirname(__DIR__, 2) . "/resources/revisions/{$revid}/wikitext.txt";
         }
+
         Logger::debug($file);
         if (!file_exists($file)) {
             Logger::debug("file not found: $file");
             return "";
         }
+
         Logger::debug("url" . $file);
+
         return file_get_contents($file) ?: "";
     }
 
