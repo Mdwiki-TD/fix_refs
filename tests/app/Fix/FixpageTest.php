@@ -5,7 +5,8 @@ use App\Fix\Index;
 
 class FixpageTest extends MyFunctionTest
 {
-    private function fix_page_wrap(string $text, string $lang): string {
+    private function fix_page_wrap(string $text, string $lang): string
+    {
         return Index::fix_page($text, "", true, true, false, $lang, "", 0);
     }
 

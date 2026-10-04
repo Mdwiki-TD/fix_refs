@@ -6,7 +6,8 @@ use App\Fix\Index;
 class indexTest extends MyFunctionTest
 {
 
-    private function fix_page_wrap(string $text, string $lang, bool $moveDots, bool $infobox, bool $addEnLang): string {
+    private function fix_page_wrap(string $text, string $lang, bool $moveDots, bool $infobox, bool $addEnLang): string
+    {
         return Index::fix_page($text, "title", $moveDots, $infobox, $addEnLang, $lang, 'SomeTitle', 0);
     }
 

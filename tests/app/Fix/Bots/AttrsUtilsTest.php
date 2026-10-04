@@ -51,7 +51,7 @@ class attrsUtilsTest extends MyFunctionTest
 
     /**
      */
-    public function testParseAttributes()
+    public function testParseAttributes(): void
     {
         foreach ($this->data as $name => $tab) {
             $result = AttrsUtils::parseAttributes($tab[0]);

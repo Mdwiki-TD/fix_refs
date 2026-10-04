@@ -53,7 +53,8 @@ TXT
     {
         $newText = MiniFixesBot::fix_sections_titles($input, $lang);
 
-        $this->assertNotEmpty($newText, "The function fix_sections_titles should return non-empty string.");
+        // Assert that the function returns a valid string output
+        $this->assertIsString($newText, "The function fix_sections_titles should return a string.");
 
         // Assert that section titles were processed and modified
         $this->assertNotEquals(

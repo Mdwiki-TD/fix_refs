@@ -40,7 +40,7 @@ class expendRefsTest extends MyFunctionTest
     {
         $this->assertEquals($this->textExpected, $this->refsExpends, "Expend refs not working!");
     }
-
+    // اختبارات إضافية للدالة الرئيسية
     public function testRefsExpendWorkWithSimpleCase(): void
     {
         $input = '<ref name="ref1">Full content</ref> Text <ref name="ref1"/>';

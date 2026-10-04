@@ -61,6 +61,7 @@ class txtlib2Test extends MyFunctionTest
 
     public function testFirstTemplateParams(): void
     {
+        // Check that the extracted parameters match the ones in the JSON file
         $this->assertEquals(
             $this->jsonData[0]["params"],
             $this->tempData[0]["params"],
@@ -70,6 +71,7 @@ class txtlib2Test extends MyFunctionTest
 
     public function testSpecificParamValues(): void
     {
+        // Verify specific parameter values as an additional check
         $params = $this->tempData[0]["params"];
         $this->assertArrayHasKey("tradename", $params);
         $this->assertEquals("Jaypirca", $params["tradename"]);
@@ -83,6 +85,7 @@ class txtlib2Test extends MyFunctionTest
 
     public function testCountOfParams(): void
     {
+        // Verify that the number of extracted parameters matches the expected count
         $expectedCount = count($this->jsonData[0]["params"]);
         $actualCount = count($this->tempData[0]["params"]);
         $this->assertSame(

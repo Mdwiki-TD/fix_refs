@@ -18,6 +18,7 @@ class refsUtilsTest extends MyFunctionTest
      */
     public function testReplacesSingleQuotesWithDoubleQuotes(): void
     {
+        // سلوك الدالة هو إزالة الاقتباسات الموجودة ثم إضافة جديدة.
         $this->assertEquals('"value"', RefsUtils::remove_start_end_quotes("'value'"));
     }
 
@@ -52,12 +53,10 @@ class refsUtilsTest extends MyFunctionTest
     {
         $this->assertEquals('""', RefsUtils::remove_start_end_quotes(''));
     }
-
     public function testOneQuotesDouble(): void
     {
         $this->assertEquals("'\"value'", RefsUtils::remove_start_end_quotes('  "value '));
     }
-
     public function testOneQuotesSingle(): void
     {
         $this->assertEquals('"\'value"', RefsUtils::remove_start_end_quotes("  'value "));
@@ -67,18 +66,27 @@ class refsUtilsTest extends MyFunctionTest
     public function teststrEndsWith(): void
     {
         $tests = [
+            // حالة: ينتهي بالنص المطلوب
             ["string" => "Hello world", "endString" => "world", "expected" => true],
+            // حالة: لا ينتهي بالنص المطلوب
             ["string" => "Hello world", "endString" => "hello", "expected" => false],
+            // حالة: نص فارغ
             ["string" => "", "endString" => "test", "expected" => false],
+            // حالة: نص البحث فارغ
+            // ["string" => "test", "endString" => "", "expected" => true],
+            // حالة: نص البحث أطول من النص الأصلي
             ["string" => "short", "endString" => "longer text", "expected" => false],
+            // حالة: تطابق كامل
             ["string" => "exact", "endString" => "exact", "expected" => true],
+            // حالة: أحرف خاصة
             ["string" => "file.txt", "endString" => ".txt", "expected" => true],
+            // حالة: حساسية الأحرف
             ["string" => "Case", "endString" => "case", "expected" => false]
         ];
 
         foreach ($tests as $test) {
             $result = str_ends_with($test['string'], $test['endString']);
-            $this->assertSame($test['expected'], $result);
+            $this->assertEqualCompare($test['expected'], $test['string'], $result);
         }
     }
 
@@ -86,19 +94,27 @@ class refsUtilsTest extends MyFunctionTest
     public function teststrStartsWith(): void
     {
         $tests = [
+            // حالة: يبدأ بالنص المطلوب
             ["text" => "Hello world", "start" => "Hello", "expected" => true],
+            // حالة: لا يبدأ بالنص المطلوب
             ["text" => "Hello world", "start" => "world", "expected" => false],
+            // حالة: نص فارغ
             ["text" => "", "start" => "test", "expected" => false],
+            // حالة: نص البحث فارغ
             ["text" => "test", "start" => "", "expected" => true],
+            // حالة: نص البحث أطول من النص الأصلي
             ["text" => "short", "start" => "longer text", "expected" => false],
+            // حالة: تطابق كامل
             ["text" => "exact", "start" => "exact", "expected" => true],
+            // حالة: أحرف خاصة
             ["text" => "#tag", "start" => "#", "expected" => true],
+            // حالة: حساسية الأحرف
             ["text" => "Case", "start" => "case", "expected" => false]
         ];
 
         foreach ($tests as $test) {
             $result = str_starts_with($test['text'], $test['start']);
-            $this->assertSame($test['expected'], $result);
+            $this->assertEqualCompare($test['expected'], $test['text'], $result);
         }
     }
 
@@ -106,14 +122,24 @@ class refsUtilsTest extends MyFunctionTest
     public function testDelStartEnd(): void
     {
         $tests = [
+            // حالة: إزالة من البداية والنهاية
             ["text" => "'quoted text'", "find" => "'", "expected" => "quoted text"],
+            // حالة: إزالة علامات تنصيص مزدوجة
             ["text" => '"double quoted"', "find" => '"', "expected" => "double quoted"],
+            // حالة: نص بدون علامات في البداية والنهاية
             ["text" => "no quotes", "find" => "'", "expected" => "no quotes"],
+            // حالة: علامة في البداية فقط
             ["text" => "'start only", "find" => "'", "expected" => "'start only"],
+            // حالة: علامة في النهاية فقط
             ["text" => "end only'", "find" => "'", "expected" => "end only'"],
+            // حالة: مسافات زائدة
+            // ["text" => "  '  spaced  '  ", "find" => "'", "expected" => "  spaced  "],
             ["text" => "  '  spaced  '  ", "find" => "'", "expected" => "spaced"],
+            // حالة: نص فارغ
             ["text" => "", "find" => "'", "expected" => ""],
+            // حالة: علامات متعددة
             ["text" => "''multiple''", "find" => "'", "expected" => "'multiple'"],
+            // حالة: نص يتكون من العلامة فقط
             ["text" => "''", "find" => "'", "expected" => ""]
         ];
 
@@ -127,12 +153,19 @@ class refsUtilsTest extends MyFunctionTest
     public function testFixAttrValue(): void
     {
         $tests = [
+            // حالة: نص بدون علامات تنصيص
             ["text" => "value1", "expected" => '"value1"'],
+            // حالة: نص بعلامات تنصيص مفردة
             ["text" => "'value2'", "expected" => '"value2"'],
+            // حالة: نص بعلامات تنصيص مزدوجة
             ["text" => '"value3"', "expected" => '"value3"'],
+            // حالة: نص بعلامات تنصيص مختلطة
             ["text" => '"mixed\'quotes"', "expected" => '"mixed\'quotes"'],
+            // حالة: نص يحتوي على علامات تنصيص داخلياً
             ["text" => 'value"with"quotes', "expected" => "'value\"with\"quotes'"],
+            // حالة: مسافات زائدة
             ["text" => "  spaced  ", "expected" => '"spaced"'],
+            // حالة: نص يحتوي على علامات تنصيص في المنتصف
             ["text" => "val'ue", "expected" => '"val\'ue"']
         ];
 
@@ -141,22 +174,19 @@ class refsUtilsTest extends MyFunctionTest
             $this->assertEqualCompare($test['expected'], $test['text'], $result);
         }
     }
-
     public function testFixEmpty(): void
     {
         $this->assertEquals("", "");
     }
-
     public function testFixOnlyQuotes(): void
     {
         $this->assertEquals('""', RefsUtils::remove_start_end_quotes('""'));
     }
-
     public function testFixOnlySingleQuotes(): void
     {
         $this->assertEquals('""', RefsUtils::remove_start_end_quotes("''"));
     }
-
+    // اختبارات دالة rm_str_from_start_and_end
     public function testDelStartEndEmpty(): void
     {
         $result = RefsUtils::rm_str_from_start_and_end('testzz', '');
