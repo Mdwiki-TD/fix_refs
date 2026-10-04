@@ -11,13 +11,13 @@ use function App\Fix\HelpsBots\EnLangParam\add_lang_en_to_refs;
 use function App\Fix\HelpsBots\MissingRefs\fix_missing_refs;
 use function App\Fix\HelpsBots\MvDots\move_dots_after_refs;
 use App\Fix\HelpsBots\RemoveSpace;
-use function App\Fix\Infoboxes\Infobox\Expend_Infobox;
+use App\Fix\Infoboxes\Infobox;
 use function App\Fix\LangBots\BgBots\FixBg\bg_fixes;
 use function App\Fix\LangBots\EsBots\ES\fix_es;
 use function App\Fix\LangBots\EsBots\Section\es_section;
 use function App\Fix\LangBots\PlBots\FixPlInfobox\pl_fixes;
 use function App\Fix\LangBots\PtBots\FixPtMonths\pt_fixes;
-use function App\Fix\LangBots\SwBot\sw_fixes;
+use App\Fix\LangBots\SwBot;
 use function App\Fix\MdCat\add_Translated_from_MDWiki;
 
 class Index
@@ -38,7 +38,7 @@ class Index
 
         if ($infobox || $lang === "es") {
             Logger::debug("Expend_Infobox\n");
-            $text = Expend_Infobox($text, $title, "");
+            $text = Infobox::Expend_Infobox($text, $title, "");
         }
 
         // $text = remove_False_code($text);
@@ -75,8 +75,8 @@ class Index
         }
 
         if ($lang == 'sw') {
-            $text = sw_fixes($text);
-        };
+            $text = SwBot::sw_fixes($text);
+        }
 
         if ($lang === "hy") {
             $text = RemoveSpace::remove_spaces_between_last_word_and_beginning_of_ref($text, "hy");

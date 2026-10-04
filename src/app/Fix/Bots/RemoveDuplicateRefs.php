@@ -6,7 +6,7 @@ namespace App\Fix\Bots\RemoveDuplicateRefs;
 
 use function App\Fix\Bots\AttrsUtils\get_attrs;
 use function App\Fix\Bots\RefsUtils\remove_start_end_quotes;
-use function App\Fix\Parse\Citations\getCitationsOld;
+use App\Fix\Parse\Citations;
 use App\Logger;
 
 function fix_refs_names(string $text): string
@@ -14,7 +14,7 @@ function fix_refs_names(string $text): string
 
     $newText = $text;
 
-    $citations = getCitationsOld($text);
+    $citations = Citations::getCitationsOld($text);
 
     $newText = $text;
 
@@ -64,7 +64,7 @@ function remove_Duplicate_refs_With_attrs(string $text): string
 
     $refs = [];
 
-    $citations = getCitationsOld($newText);
+    $citations = Citations::getCitationsOld($newText);
 
     $numb = 0;
 

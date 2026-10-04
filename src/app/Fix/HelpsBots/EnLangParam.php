@@ -3,7 +3,7 @@
 namespace App\Fix\HelpsBots\EnLangParam;
 
 use App\Logger;
-use function App\Fix\Parse\Citations\getCitationsOld;
+use App\Fix\Parse\Citations;
 use App\Fix\WikiParse\ParserTemplates;
 
 function add_lang_en($text)
@@ -79,7 +79,7 @@ function add_lang_en_to_refs($text)
 
     $newText = $text;
 
-    $citations = getCitationsOld($text);
+    $citations = Citations::getCitationsOld($text);
 
     foreach ($citations as $key => $citation) {
 

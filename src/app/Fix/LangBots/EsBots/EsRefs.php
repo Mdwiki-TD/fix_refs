@@ -3,8 +3,8 @@
 namespace App\Fix\LangBots\EsBots\EsRefs;
 
 use App\Fix\WikiParse\ParserTemplates;
-use function App\Fix\Parse\CitationsReg\get_short_citations;
-use function App\Fix\Parse\Citations\getCitationsOld;
+use App\Fix\Parse\CitationsReg;
+use App\Fix\Parse\Citations;
 
 function get_refs(string $text): array
 {
@@ -13,7 +13,7 @@ function get_refs(string $text): array
 
     $refs = [];
 
-    $citations = getCitationsOld($text);
+    $citations = Citations::getCitationsOld($text);
 
     $newText = $text;
 
@@ -52,7 +52,7 @@ function get_refs(string $text): array
 function check_short_refs($line)
 {
 
-    $shorts = get_short_citations($line);
+    $shorts = CitationsReg::get_short_citations($line);
 
     foreach ($shorts as $short) {
         $line = str_replace($short["tag"], "", $line);

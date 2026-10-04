@@ -2,18 +2,17 @@
 
 namespace App\Fix\Bots\ExpendRefs;
 
-use function App\Fix\Parse\CitationsReg\get_full_refs;
-use function App\Fix\Parse\CitationsReg\get_short_citations;
+use App\Fix\Parse\CitationsReg;
 
 function refs_expend_work($first, $alltext = "")
 {
     if (empty($alltext)) {
         $alltext = $first;
     }
-    $refs = get_full_refs($alltext);
+    $refs = CitationsReg::get_full_refs($alltext);
     // echo  "get_full_refs:" . count($refs) . "<br>";
 
-    $shortRefs = get_short_citations($first);
+    $shortRefs = CitationsReg::get_short_citations($first);
     // echo  "short_refs:" . count($shortRefs) . "<br>";
 
     foreach ($shortRefs as $cite) {

@@ -1,8 +1,7 @@
 <?php
 
 use Tests\MyFunctionTest;
-use function App\Fix\Infoboxes\Infobox2\make_tempse;
-use function App\Fix\Infoboxes\Infobox2\expend_new;
+use App\Fix\Infoboxes\Infobox2;
 
 class infobox2Test extends MyFunctionTest
 {
@@ -12,7 +11,7 @@ class infobox2Test extends MyFunctionTest
         $expected  = file_get_contents(__DIR__ . "/fixtures/1/expected.txt");
         $output_file  = __DIR__ . "/fixtures/1/output.txt";
         // --
-        $result = expend_new($textInput);
+        $result = Infobox2::expend_new($textInput);
         // --
         $result = preg_replace("/\r\n/", "\n", $result);
         $expected = preg_replace("/\r\n/", "\n", $expected);
@@ -28,7 +27,7 @@ class infobox2Test extends MyFunctionTest
         // --
         $output_file  = __DIR__ . "/fixtures/infobox2_tempse/output.json";
         // --
-        $result = make_tempse($textInput);
+        $result = Infobox2::make_tempse($textInput);
         // --
         file_put_contents($output_file, json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
         // --

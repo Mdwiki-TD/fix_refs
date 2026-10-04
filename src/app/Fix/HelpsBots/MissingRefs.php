@@ -3,8 +3,7 @@
 namespace App\Fix\HelpsBots\MissingRefs;
 
 use App\Logger;
-use function App\Fix\Parse\CitationsReg\get_short_citations;
-use function App\Fix\Parse\CitationsReg\get_full_refs;
+use App\Fix\Parse\CitationsReg;
 use function App\Fix\MdCat\get_url_curl;
 
 function get_full_text_url($sourcetitle, $mdwikiRevid)
@@ -97,7 +96,7 @@ function get_full_text($sourcetitle, $mdwikiRevid)
 
 function refs_expend($shortRefs, $text, $alltext)
 {
-    $refs = get_full_refs($alltext);
+    $refs = CitationsReg::get_full_refs($alltext);
 
     foreach ($shortRefs as $cite) {
         $name = $cite["name"];
@@ -115,8 +114,8 @@ function refs_expend($shortRefs, $text, $alltext)
 
 function find_empty_short($text)
 {
-    $shorts = get_short_citations($text);
-    $fulls = get_full_refs($text);
+    $shorts = CitationsReg::get_short_citations($text);
+    $fulls = CitationsReg::get_full_refs($text);
     $emptyRefs = [];
     foreach ($shorts as $cite) {
         $name = $cite["name"];

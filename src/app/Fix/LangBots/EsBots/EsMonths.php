@@ -4,7 +4,7 @@ namespace App\Fix\LangBots\EsBots\EsMonths;
 
 
 use App\Logger;
-use function App\Fix\Parse\Citations\getCitationsOld;
+use App\Fix\Parse\Citations;
 use App\Fix\WikiParse\ParserTemplates;
 use function App\Fix\Bots\MonthsNewValue\make_date_new_val_es;
 
@@ -56,7 +56,7 @@ function fix_es_months_in_refs($text)
 
     $newText = $text;
 
-    $citations = getCitationsOld($text);
+    $citations = Citations::getCitationsOld($text);
 
     foreach ($citations as $key => $citation) {
 
