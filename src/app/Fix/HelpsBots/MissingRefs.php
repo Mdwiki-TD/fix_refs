@@ -15,7 +15,7 @@ class MissingRefs
             ? "http://localhost:9001"
             : "https://mdwikicx.toolforge.org";
 
-        if (empty($mdwikiRevid) || $mdwikiRevid == 0) {
+        if (empty($mdwikiRevid)) { //  || $mdwikiRevid == 0
             $jsonFile = "$serverPath/revisions_new1/json_data.json";
             /** @var array<string, mixed> $data */
             $data = json_decode(MdCat::get_url_curl($jsonFile), true) ?? [];
@@ -64,7 +64,7 @@ class MissingRefs
             $revisionsDir = $home ? $home . '/public_html/revisions_new1' : dirname(__DIR__) . '/revisions_new1';
         }
         $jsonFile = "$revisionsDir/json_data.json";
-        if (empty($mdwikiRevid) || $mdwikiRevid == 0) {
+        if (empty($mdwikiRevid)) { //  || $mdwikiRevid == 0
             $mdwikiRevid = self::find_mdwiki_revid($sourcetitle, $jsonFile);
         }
         if (empty($mdwikiRevid)) {
