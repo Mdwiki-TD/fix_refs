@@ -8,55 +8,64 @@ class refsUtilsTest extends MyFunctionTest
     /**
      * @description يضيف علامات اقتباس مزدوجة لنص عادي.
      */
-    public function testAddsDoubleQuotesToPlainString(): void {
+    public function testAddsDoubleQuotesToPlainString(): void
+    {
         $this->assertEquals('"value"', RefsUtils::remove_start_end_quotes('value'));
     }
 
     /**
      * @description يزيل علامات الاقتباس المفردة ويضيف مزدوجة.
      */
-    public function testReplacesSingleQuotesWithDoubleQuotes(): void {
+    public function testReplacesSingleQuotesWithDoubleQuotes(): void
+    {
         $this->assertEquals('"value"', RefsUtils::remove_start_end_quotes("'value'"));
     }
 
     /**
      * @description يزيل علامات الاقتباس المزدوجة ويضيف مزدوجة مرة أخرى.
      */
-    public function testReplacesDoubleQuotesWithDoubleQuotes(): void {
+    public function testReplacesDoubleQuotesWithDoubleQuotes(): void
+    {
         $this->assertEquals('"value"', RefsUtils::remove_start_end_quotes('"value"'));
     }
 
     /**
      * @description يحيط النص بعلامات اقتباس مفردة إذا كان يحتوي على علامات مزدوجة بالداخل.
      */
-    public function testWrapsWithSingleQuotesIfContainsDoubleQuotes(): void {
+    public function testWrapsWithSingleQuotesIfContainsDoubleQuotes(): void
+    {
         $this->assertEquals("'val\"ue'", RefsUtils::remove_start_end_quotes('val"ue'));
     }
 
     /**
      * @description يزيل المسافات الزائدة من البداية والنهاية.
      */
-    public function testTrimsWhitespace(): void {
+    public function testTrimsWhitespace(): void
+    {
         $this->assertEquals('"value"', RefsUtils::remove_start_end_quotes('  value  '));
     }
 
     /**
      * @description يتعامل مع نص فارغ.
      */
-    public function testHandlesEmptyString(): void {
+    public function testHandlesEmptyString(): void
+    {
         $this->assertEquals('""', RefsUtils::remove_start_end_quotes(''));
     }
 
-    public function testOneQuotesDouble(): void {
+    public function testOneQuotesDouble(): void
+    {
         $this->assertEquals("'\"value'", RefsUtils::remove_start_end_quotes('  "value '));
     }
 
-    public function testOneQuotesSingle(): void {
+    public function testOneQuotesSingle(): void
+    {
         $this->assertEquals('"\'value"', RefsUtils::remove_start_end_quotes("  'value "));
     }
 
     // اختبارات دالة str_ends_with
-    public function teststrEndsWith(): void {
+    public function teststrEndsWith(): void
+    {
         $tests = [
             ["string" => "Hello world", "endString" => "world", "expected" => true],
             ["string" => "Hello world", "endString" => "hello", "expected" => false],
@@ -74,7 +83,8 @@ class refsUtilsTest extends MyFunctionTest
     }
 
     // اختبارات دالة str_starts_with
-    public function teststrStartsWith(): void {
+    public function teststrStartsWith(): void
+    {
         $tests = [
             ["text" => "Hello world", "start" => "Hello", "expected" => true],
             ["text" => "Hello world", "start" => "world", "expected" => false],
@@ -93,7 +103,8 @@ class refsUtilsTest extends MyFunctionTest
     }
 
     // اختبارات دالة rm_str_from_start_and_end
-    public function testDelStartEnd(): void {
+    public function testDelStartEnd(): void
+    {
         $tests = [
             ["text" => "'quoted text'", "find" => "'", "expected" => "quoted text"],
             ["text" => '"double quoted"', "find" => '"', "expected" => "double quoted"],
@@ -113,7 +124,8 @@ class refsUtilsTest extends MyFunctionTest
     }
 
     // اختبارات دالة remove_start_end_quotes
-    public function testFixAttrValue(): void {
+    public function testFixAttrValue(): void
+    {
         $tests = [
             ["text" => "value1", "expected" => '"value1"'],
             ["text" => "'value2'", "expected" => '"value2"'],
@@ -130,19 +142,23 @@ class refsUtilsTest extends MyFunctionTest
         }
     }
 
-    public function testFixEmpty(): void {
+    public function testFixEmpty(): void
+    {
         $this->assertEquals("", "");
     }
 
-    public function testFixOnlyQuotes(): void {
+    public function testFixOnlyQuotes(): void
+    {
         $this->assertEquals('""', RefsUtils::remove_start_end_quotes('""'));
     }
 
-    public function testFixOnlySingleQuotes(): void {
+    public function testFixOnlySingleQuotes(): void
+    {
         $this->assertEquals('""', RefsUtils::remove_start_end_quotes("''"));
     }
 
-    public function testDelStartEndEmpty(): void {
+    public function testDelStartEndEmpty(): void
+    {
         $result = RefsUtils::rm_str_from_start_and_end('testzz', '');
         $this->assertEqualCompare('testzz', 'testzz', $result);
     }

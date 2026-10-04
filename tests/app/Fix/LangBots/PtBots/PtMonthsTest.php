@@ -8,7 +8,8 @@ use App\Fix\LangBots\PtBots\FixPtMonths;
 
 class ptMonthsTest extends MyFunctionTest
 {
-    public function testTempInWikiTexts(): void  {
+    public function testTempInWikiTexts(): void
+    {
         $input = 'test: <ref name="AHFS2016">{{Citar web|titulo=Charcoal, Activated|url=https://www.drugs.com/monograph/charcoal-activated.html|publicado=The American Society of Health-System Pharmacists|acessodata=8 December 2016|urlmorta=live|arquivourl=https://web.archive.org/web/20161221011707/https://www.drugs.com/monograph/charcoal-activated.html|arquivodata=21 December 2016}}</ref>
 <ref name="AHFS2016">{{Citar web|acessodata=8 December 2016|urlmorta=live|arquivourl=https://web.archive.org/web/20161221011707/https://www.drugs.com/monograph/charcoal-activated.html|arquivodata=21 December 2016}} xxxxxxxxxxxxxxxx {{Webarchive|url=https://web.archive.org/web/20161221011707/https://www.drugs.com/monograph/charcoal-activated.html|date=21 December 2016}}</ref>';
         $expected = 'test: <ref name="AHFS2016">{{Citar web|titulo=Charcoal, Activated|url=https://www.drugs.com/monograph/charcoal-activated.html|publicado=The American Society of Health-System Pharmacists|acessodata=8 de dezembro 2016|urlmorta=live|arquivourl=https://web.archive.org/web/20161221011707/https://www.drugs.com/monograph/charcoal-activated.html|arquivodata=21 de dezembro 2016}}</ref>
@@ -17,7 +18,8 @@ class ptMonthsTest extends MyFunctionTest
         $this->assertEqualCompare($expected, $input, $result);
     }
 
-    public function testTempInRef(): void  {
+    public function testTempInRef(): void
+    {
         // ("25 de dezembro 2016", MonthsNewValue::make_date_new_val_pt("25 December 2016")
         $input = '<ref name="test" group="notes">{{cite web|date=25  December 2016 |}}</ref>';
         $expected = '<ref name="test" group="notes">{{cite web|date=25 de dezembro 2016|}}</ref>';
@@ -25,45 +27,52 @@ class ptMonthsTest extends MyFunctionTest
         $this->assertEqualCompare($expected, $input, $result);
     }
 
-    public function testTempInTemplates(): void  {
+    public function testTempInTemplates(): void
+    {
         $input = '{{cite web|date=10 January, 2023|}}';
         $expected = '{{cite web|date=10 de janeiro 2023|}}';
         $result = FixPtMonths::fix_pt_months_in_texts($input);
         $this->assertEqualCompare($expected, $input, $result);
     }
 
-    public function testTempInTemplatesMore(): void  {
+    public function testTempInTemplatesMore(): void
+    {
         $input = '{{cite web|date=10 January, 2023|}} {{cite book|time = test|date = 10 de janeiro 2023 }}';
         $expected = '{{cite web|date=10 de janeiro 2023|}} {{cite book|time=test|date=10 de janeiro 2023}}';
         $result = FixPtMonths::fix_pt_months_in_texts($input);
         $this->assertEqualCompare($expected, $input, $result);
     }
 
-    public function testRemoveSpacesAfterDotBeforeRef(): void  {
+    public function testRemoveSpacesAfterDotBeforeRef(): void
+    {
         $input = "This is a sentence . <ref>Reference</ref>";
         $expected = "This is a sentence.<ref>Reference</ref>";
         $this->assertEqualCompare($expected, $input, FixPtMonths::rm_ref_spaces($input));
     }
 
-    public function testRemoveSpacesAfterCommaBeforeRef(): void  {
+    public function testRemoveSpacesAfterCommaBeforeRef(): void
+    {
         $input = "Hello , <ref>Ref</ref>";
         $expected = "Hello,<ref>Ref</ref>";
         $this->assertEqualCompare($expected, $input, FixPtMonths::rm_ref_spaces($input));
     }
 
-    public function testMultipleRefsTogether(): void  {
+    public function testMultipleRefsTogether(): void
+    {
         $input = "Sentence . <ref>First</ref> <ref>Second</ref>";
         $expected = "Sentence.<ref>First</ref> <ref>Second</ref>";
         $this->assertEqualCompare($expected, $input, FixPtMonths::rm_ref_spaces($input));
     }
 
-    public function testNoSpacesShouldRemainUnchanged(): void  {
+    public function testNoSpacesShouldRemainUnchanged(): void
+    {
         $input = "Correct.<ref>Already OK</ref>";
         $expected = "Correct.<ref>Already OK</ref>";
         $this->assertEqualCompare($expected, $input, FixPtMonths::rm_ref_spaces($input));
     }
 
-    public function testNoRefNoChange(): void  {
+    public function testNoRefNoChange(): void
+    {
         $input = "This is a sentence . Without ref.";
         $expected = $input; // يجب أن يبقى كما هو
         $this->assertEqualCompare($expected, $input, FixPtMonths::rm_ref_spaces($input));

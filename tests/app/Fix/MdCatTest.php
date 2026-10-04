@@ -6,7 +6,8 @@ use App\Fix\MdCat;
 
 class mdCatTest extends MyFunctionTest
 {
-    public function testEquals(): void {
+    public function testEquals(): void
+    {
         $text = "[[Kategorija:Translated from MDWiki]]";
 
         $result = MdCat::add_Translated_from_MDWiki($text, "hr");
@@ -14,14 +15,16 @@ class mdCatTest extends MyFunctionTest
         $this->assertEquals($text, $result);
     }
 
-    public function testSkipLangsIt(): void {
+    public function testSkipLangsIt(): void
+    {
         $text = "This is a sample text";
         $result = MdCat::add_Translated_from_MDWiki($text, "it");
         $this->assertEquals($text, $result);
     }
 
     // Test case: Appends category when conditions are met
-    public function testAppendsCategoryWhenConditionsMet(): void {
+    public function testAppendsCategoryWhenConditionsMet(): void
+    {
         $text = "This is a sample text";
         $result = MdCat::add_Translated_from_MDWiki($text, "fr");
 
@@ -30,7 +33,8 @@ class mdCatTest extends MyFunctionTest
     }
 
     // Test case: Doesn't append when category is empty
-    public function testDoesNotAppendWhenCategoryEmpty(): void {
+    public function testDoesNotAppendWhenCategoryEmpty(): void
+    {
         $text = "This is a sample text";
         $result = MdCat::add_Translated_from_MDWiki($text, "fr");
         $expected = "This is a sample text\n[[Catégorie:Traduit de MDWiki]]\n";
@@ -38,7 +42,8 @@ class mdCatTest extends MyFunctionTest
     }
 
     // Test case: Doesn't append when category already exists
-    public function testDoesNotAppendWhenCategoryExists(): void {
+    public function testDoesNotAppendWhenCategoryExists(): void
+    {
         $category = "[[Category:Translated from MDWiki (de)]]";
         $text = "This is a sample text\n" . $category;
 
@@ -48,7 +53,8 @@ class mdCatTest extends MyFunctionTest
     }
 
     // Test case: Doesn't append when fallback category exists
-    public function testDoesNotAppendWhenFallbackCategoryExists(): void {
+    public function testDoesNotAppendWhenFallbackCategoryExists(): void
+    {
         $text = "This is a sample text\n[[Category:Translated from MDWiki]]";
 
         $result = MdCat::add_Translated_from_MDWiki($text, "es");
@@ -57,7 +63,8 @@ class mdCatTest extends MyFunctionTest
     }
 
     // Test case: Appends when similar but different category exists
-    public function testAppendsWhenSimilarCategoryExists(): void {
+    public function testAppendsWhenSimilarCategoryExists(): void
+    {
         $text = "This is a sample text\n[[Category:Translated from MDWiki]]\n";
 
         $result = MdCat::add_Translated_from_MDWiki($text, "ja");
@@ -66,7 +73,8 @@ class mdCatTest extends MyFunctionTest
     }
 
     // Test case: Handles multiple newlines correctly
-    public function testHandlesMultipleNewlines(): void {
+    public function testHandlesMultipleNewlines(): void
+    {
         $text = "This is a sample text\n\n";
 
         $result = MdCat::add_Translated_from_MDWiki($text, "ru");
@@ -75,7 +83,8 @@ class mdCatTest extends MyFunctionTest
         $this->assertEquals($expected, $result);
     }
 
-    public function testLangs(): void {
+    public function testLangs(): void
+    {
         $langs = [
             "ur" => "زمرہ:ایم ڈی وکی سے ترجمہ شدہ",
         ];

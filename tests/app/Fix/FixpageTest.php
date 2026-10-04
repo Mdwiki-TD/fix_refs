@@ -9,7 +9,8 @@ class FixpageTest extends MyFunctionTest
         return Index::fix_page($text, "", true, true, false, $lang, "", 0);
     }
 
-    public function testPart1(): void {
+    public function testPart1(): void
+    {
         $input = '[[Category:Translated from MDWiki]] ռետինոիդներ։ <ref name="NORD2006" /><ref name="Gli2017" />';
 
         $expected = '[[Category:Translated from MDWiki]] ռետինոիդներ<ref name="NORD2006" /><ref name="Gli2017" />։';

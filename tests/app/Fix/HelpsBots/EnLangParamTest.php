@@ -8,43 +8,50 @@ use App\Fix\HelpsBots\EnLangParam;
 class enLangParamTest extends MyFunctionTest
 {
     // Tests for add_lang_en_to_refs function
-    public function testAddLangEnSimpleRef(): void {
+    public function testAddLangEnSimpleRef(): void
+    {
         $input = "<ref>{{Citar web|Some text}}</ref> {{temp|test=1}}";
         $expected = "<ref>{{Citar web|Some text|language=en}}</ref> {{temp|test=1}}";
         $this->assertEquals($expected, EnLangParam::add_lang_en_to_refs($input));
     }
 
-    public function testAddLangEnExistingLanguage(): void {
+    public function testAddLangEnExistingLanguage(): void
+    {
         $input = "<ref>{{Citar web|Text|language=fr}}</ref>";
         $expected = "<ref>{{Citar web|Text|language=fr}}</ref>";
         $this->assertEquals($expected, EnLangParam::add_lang_en_to_refs($input));
     }
 
-    public function testAddLangEnEmptyRef(): void {
+    public function testAddLangEnEmptyRef(): void
+    {
         $input = "<ref></ref>";
         $expected = "<ref></ref>";
         $this->assertEquals($expected, EnLangParam::add_lang_en_to_refs($input));
     }
 
-    public function testAddLangEnWithExistingParams(): void {
+    public function testAddLangEnWithExistingParams(): void
+    {
         $input = " {{temp|test=1}} <ref>{{Citar web|Text|author=John}}</ref>";
         $expected = " {{temp|test=1}} <ref>{{Citar web|Text|author=John|language=en}}</ref>";
         $this->assertEquals($expected, EnLangParam::add_lang_en_to_refs($input));
     }
 
-    public function testAddLangMalformedRef(): void {
+    public function testAddLangMalformedRef(): void
+    {
         $input = "<ref>{{Citar web|Text|language = }}</ref> {{temp|test=1}}";
         $expected = "<ref>{{Citar web|Text|language=en}}</ref> {{temp|test=1}}";
         $this->assertEquals($expected, EnLangParam::add_lang_en_to_refs($input));
     }
 
-    public function testAddLangEn(): void {
+    public function testAddLangEn(): void
+    {
         $input = "<ref>{{Citar web|Text|language=ar}}</ref>";
         $expected = "<ref>{{Citar web|Text|language=ar}}</ref>";
         $this->assertEquals($expected, EnLangParam::add_lang_en_to_refs($input));
     }
 
-    public function testAddLangEnNoChangeNeeded(): void {
+    public function testAddLangEnNoChangeNeeded(): void
+    {
         $input = " {{temp|test=1}} <ref>{{Citar web|Text|language=en}}</ref>";
         $expected = " {{temp|test=1}} <ref>{{Citar web|Text|language=en}}</ref>";
         $this->assertEquals($expected, EnLangParam::add_lang_en_to_refs($input));

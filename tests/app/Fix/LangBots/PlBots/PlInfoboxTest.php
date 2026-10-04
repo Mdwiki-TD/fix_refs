@@ -7,7 +7,8 @@ use App\Fix\LangBots\PlBots\FixPlInfobox;
 
 class plInfoboxTest extends MyFunctionTest
 {
-    public function testAddMissingParamsToChorobaInfobox(): void  {
+    public function testAddMissingParamsToChorobaInfobox(): void
+    {
         $input = <<<'TXT'
 {{Choroba infobox
 |nazwa polska = Astma oskrzelowa
@@ -41,7 +42,8 @@ TXT;
         $this->assertStringContainsString('Astma oskrzelowa', $result);
     }
 
-    public function testCaseInsensitiveTemplateName(): void  {
+    public function testCaseInsensitiveTemplateName(): void
+    {
         // Test with different case variations
         $inputs = [
             '{{choroba infobox|nazwa polska=Test}}',
@@ -57,7 +59,8 @@ TXT;
         }
     }
 
-    public function testDoesNotAddExistingParams(): void  {
+    public function testDoesNotAddExistingParams(): void
+    {
         $input = <<<'TXT'
 {{Choroba infobox
 |nazwa polska = Astma oskrzelowa
@@ -79,7 +82,8 @@ TXT;
         $this->assertStringContainsString('ICD11', $result);
     }
 
-    public function testIgnoresOtherTemplates(): void  {
+    public function testIgnoresOtherTemplates(): void
+    {
         $input = '{{Some other template|param=value}}';
         $result = FixPlInfobox::add_missing_params_to_choroba_infobox($input);
 
@@ -87,7 +91,8 @@ TXT;
         $this->assertEquals($input, $result);
     }
 
-    public function testPlFixesFunction(): void  {
+    public function testPlFixesFunction(): void
+    {
         $input = <<<'TXT'
 {{Choroba infobox
 |nazwa polska = Test
@@ -100,7 +105,8 @@ TXT;
         $this->assertStringContainsString('ICD10', $result);
     }
 
-    public function testMultipleChorobaTemplates(): void  {
+    public function testMultipleChorobaTemplates(): void
+    {
         $input = <<<'TXT'
 {{Choroba infobox
 |nazwa polska = Test1

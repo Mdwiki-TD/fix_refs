@@ -93,7 +93,8 @@ TXT;
 
 class infoboxTest extends MyFunctionTest
 {
-    public function testExpendNewFileText(): void {
+    public function testExpendNewFileText(): void
+    {
         // $textOutput  = file_get_contents(__DIR__ . "/fixtures/infobox_output.txt");
         // --
         $result = Infobox::Expend_Infobox(TEXTINPUT, "Penciclovir", "");

@@ -41,47 +41,55 @@ class expendRefsTest extends MyFunctionTest
         $this->assertEquals($this->textExpected, $this->refsExpends, "Expend refs not working!");
     }
 
-    public function testRefsExpendWorkWithSimpleCase(): void {
+    public function testRefsExpendWorkWithSimpleCase(): void
+    {
         $input = '<ref name="ref1">Full content</ref> Text <ref name="ref1"/>';
         $expected = '<ref name="ref1">Full content</ref> Text <ref name="ref1">Full content</ref>';
         $this->assertEquals($expected, ExpendRefs::refs_expend_work($input));
     }
 
-    public function testRefsExpendWorkWithNoMatchingRef(): void {
+    public function testRefsExpendWorkWithNoMatchingRef(): void
+    {
         $input = '<ref name="ref1">Full content</ref> Text <ref name="ref2"/>';
         $expected = '<ref name="ref1">Full content</ref> Text <ref name="ref2"/>';
         $this->assertEquals($expected, ExpendRefs::refs_expend_work($input));
     }
 
-    public function testRefsExpendWorkWithMultipleRefs(): void {
+    public function testRefsExpendWorkWithMultipleRefs(): void
+    {
         $input = '<ref name="ref1">Content 1</ref> <ref name="ref2">Content 2</ref> Text <ref name="ref1"/> <ref name="ref2"/>';
         $expected = '<ref name="ref1">Content 1</ref> <ref name="ref2">Content 2</ref> Text <ref name="ref1">Content 1</ref> <ref name="ref2">Content 2</ref>';
         $this->assertEquals($expected, ExpendRefs::refs_expend_work($input));
     }
 
-    public function testRefsExpendWorkWithAlltextParameter(): void {
+    public function testRefsExpendWorkWithAlltextParameter(): void
+    {
         $first = 'Text <ref name="ref1"/>';
         $alltext = '<ref name="ref1">Full content</ref>';
         $expected = 'Text <ref name="ref1">Full content</ref>';
         $this->assertEquals($expected, ExpendRefs::refs_expend_work($first, $alltext));
     }
 
-    public function testRefsExpendWorkWithEmptyInput(): void {
+    public function testRefsExpendWorkWithEmptyInput(): void
+    {
         $this->assertEquals("", ExpendRefs::refs_expend_work(""));
     }
 
-    public function testRefsExpendWorkWithNoRefs(): void {
+    public function testRefsExpendWorkWithNoRefs(): void
+    {
         $input = 'No references here';
         $this->assertEquals($input, ExpendRefs::refs_expend_work($input));
     }
 
-    public function testRefsExpendWorkPreservesOriginalFormatting(): void {
+    public function testRefsExpendWorkPreservesOriginalFormatting(): void
+    {
         $input = '<ref name="ref1">  Full content  </ref> Text <ref name="ref1"/>';
         $expected = '<ref name="ref1">  Full content  </ref> Text <ref name="ref1">  Full content  </ref>';
         $this->assertEquals($expected, ExpendRefs::refs_expend_work($input));
     }
 
-    public function testRefsExpendWorkWithSpecialCharacters(): void {
+    public function testRefsExpendWorkWithSpecialCharacters(): void
+    {
         $input = '<ref name="ref1">Content with "quotes" & \'apostrophes\'</ref> Text <ref name="ref1"/>';
         $expected = '<ref name="ref1">Content with "quotes" & \'apostrophes\'</ref> Text <ref name="ref1">Content with "quotes" & \'apostrophes\'</ref>';
         $this->assertEquals($expected, ExpendRefs::refs_expend_work($input));
