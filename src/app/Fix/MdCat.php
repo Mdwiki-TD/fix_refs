@@ -1,103 +1,104 @@
 <?php
 
-namespace App\Fix\MdCat;
+namespace App\Fix;
 
 use App\Logger;
 
-
-
-function get_url_curl(string $url): string
+class MdCat
 {
-    $usrAgent = 'WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)';
+    public static function get_url_curl(string $url): string
+    {
+        $usrAgent = 'WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)';
 
-    $ch = curl_init();
+        $ch = curl_init();
 
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    // curl_setopt($ch, CURLOPT_COOKIEJAR, "cookie.txt");
-    // curl_setopt($ch, CURLOPT_COOKIEFILE, "cookie.txt");
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // curl_setopt($ch, CURLOPT_COOKIEJAR, "cookie.txt");
+        // curl_setopt($ch, CURLOPT_COOKIEFILE, "cookie.txt");
 
-    curl_setopt($ch, CURLOPT_USERAGENT, $usrAgent);
+        curl_setopt($ch, CURLOPT_USERAGENT, $usrAgent);
 
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
 
-    $output = curl_exec($ch);
-    if ($output === false) {
-        Logger::debug("<br>cURL Error: " . curl_error($ch) . "<br>$url");
+        $output = curl_exec($ch);
+        if ($output === false) {
+            Logger::debug("<br>cURL Error: " . curl_error($ch) . "<br>$url");
+        }
+
+        curl_close($ch);
+
+        return $output;
     }
 
-    curl_close($ch);
+    public static function load_from_local_file()
+    {
+        $localFile = dirname(__DIR__) . '/resources/mdwiki_categories.json';
+        if (!is_file($localFile)) {
+            return [];
+        }
 
-    return $output;
-}
+        $content = file_get_contents($localFile);
+        if ($content === false || $content === '') {
+            return [];
+        }
 
-function load_from_local_file()
-{
-    $localFile = dirname(__DIR__) . '/resources/mdwiki_categories.json';
-    if (!is_file($localFile)) {
-        return [];
+        return json_decode($content, true) ?: [];
     }
 
-    $content = file_get_contents($localFile);
-    if ($content === false || $content === '') {
-        return [];
-    }
+    public static function get_cats()
+    {
+        $url = "https://www.wikidata.org/w/rest.php/wikibase/v1/entities/items/Q107014860/sitelinks";
+        static $json = null;
 
-    return json_decode($content, true) ?: [];
-}
+        if (is_array($json)) {
+            return $json;
+        }
 
-function get_cats()
-{
-    $url = "https://www.wikidata.org/w/rest.php/wikibase/v1/entities/items/Q107014860/sitelinks";
-    static $json = null;
+        $data = self::get_url_curl($url);
+        $decoded = json_decode($data, true);
 
-    if (is_array($json)) {
+        if (!is_array($decoded) || empty($decoded)) {
+            $decoded = self::load_from_local_file();
+        }
+
+        $json = is_array($decoded) ? $decoded : [];
+
         return $json;
     }
 
-    $data = get_url_curl($url);
-    $decoded = json_decode($data, true);
+    public static function Get_MdWiki_Category($lang)
+    {
 
-    if (!is_array($decoded) || empty($decoded)) {
-        $decoded = load_from_local_file();
+        // https://it.wikipedia.org/w/index.php?title=Categoria:Translated_from_MDWiki&action=edit&redlink=1
+        $skipLangs = [
+            "it"
+        ];
+
+        if (in_array($lang, $skipLangs)) {
+            return "";
+        }
+
+        $cats = self::get_cats();
+
+        $cat = $cats[$lang . "wiki"]["title"] ?? "Category:Translated from MDWiki";
+
+        return $cat;
     }
 
-    $json = is_array($decoded) ? $decoded : [];
+    public static function add_Translated_from_MDWiki($text, $lang)
+    {
+        if (preg_match("/:\s*Translated[ _]from[ _]MDWiki\s*\]\]/iu", $text)) {
+            return $text;
+        }
 
-    return $json;
-}
+        $cat = self::Get_MdWiki_Category($lang);
 
-function Get_MdWiki_Category($lang)
-{
+        if (!empty($cat) && strpos($text, $cat) === false) {
+            $text .= "\n[[$cat]]\n";
+        }
 
-    // https://it.wikipedia.org/w/index.php?title=Categoria:Translated_from_MDWiki&action=edit&redlink=1
-    $skipLangs = [
-        "it"
-    ];
-
-    if (in_array($lang, $skipLangs)) {
-        return "";
-    }
-
-    $cats = get_cats();
-
-    $cat = $cats[$lang . "wiki"]["title"] ?? "Category:Translated from MDWiki";
-
-    return $cat;
-}
-
-function add_Translated_from_MDWiki($text, $lang)
-{
-    if (preg_match("/:\s*Translated[ _]from[ _]MDWiki\s*\]\]/iu", $text)) {
         return $text;
     }
-
-    $cat = Get_MdWiki_Category($lang);
-
-    if (!empty($cat) && strpos($text, $cat) === false) {
-        $text .= "\n[[$cat]]\n";
-    }
-
-    return $text;
 }

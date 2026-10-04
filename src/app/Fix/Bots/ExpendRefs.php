@@ -1,28 +1,31 @@
 <?php
 
-namespace App\Fix\Bots\ExpendRefs;
+namespace App\Fix\Bots;
 
 use App\Fix\Parse\CitationsReg;
 
-function refs_expend_work($first, $alltext = "")
+class ExpendRefs
 {
-    if (empty($alltext)) {
-        $alltext = $first;
-    }
-    $refs = CitationsReg::get_full_refs($alltext);
-    // echo  "get_full_refs:" . count($refs) . "<br>";
-
-    $shortRefs = CitationsReg::get_short_citations($first);
-    // echo  "short_refs:" . count($shortRefs) . "<br>";
-
-    foreach ($shortRefs as $cite) {
-        $name = $cite["name"];
-        $refe = $cite["tag"];
-
-        $rr = $refs[$name] ?? false;
-        if ($rr) {
-            $first = str_replace($refe, $rr, $first);
+    public static function refs_expend_work($first, $alltext = "")
+    {
+        if (empty($alltext)) {
+            $alltext = $first;
         }
+        $refs = CitationsReg::get_full_refs($alltext);
+        // echo  "get_full_refs:" . count($refs) . "<br>";
+
+        $shortRefs = CitationsReg::get_short_citations($first);
+        // echo  "short_refs:" . count($shortRefs) . "<br>";
+
+        foreach ($shortRefs as $cite) {
+            $name = $cite["name"];
+            $refe = $cite["tag"];
+
+            $rr = $refs[$name] ?? false;
+            if ($rr) {
+                $first = str_replace($refe, $rr, $first);
+            }
+        }
+        return $first;
     }
-    return $first;
 }

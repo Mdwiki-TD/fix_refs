@@ -3,22 +3,21 @@
 namespace App\Fix;
 
 use App\Logger;
-use function App\Fix\Bots\MiniFixesBot\mini_fixes;
-use function App\Fix\Bots\MiniFixesBot\mini_fixes_after_fixing;
-use function App\Fix\Bots\RedirectHelp\page_is_redirect;
-use function App\Fix\Bots\RemoveDuplicateRefs\remove_Duplicate_refs_With_attrs;
-use function App\Fix\HelpsBots\EnLangParam\add_lang_en_to_refs;
-use function App\Fix\HelpsBots\MissingRefs\fix_missing_refs;
-use function App\Fix\HelpsBots\MvDots\move_dots_after_refs;
+use App\Fix\Bots\MiniFixesBot;
+use App\Fix\Bots\RedirectHelp;
+use App\Fix\Bots\RemoveDuplicateRefs;
+use App\Fix\HelpsBots\EnLangParam;
+use App\Fix\HelpsBots\MissingRefs;
+use App\Fix\HelpsBots\MvDots;
 use App\Fix\HelpsBots\RemoveSpace;
 use App\Fix\Infoboxes\Infobox;
-use function App\Fix\LangBots\BgBots\FixBg\bg_fixes;
-use function App\Fix\LangBots\EsBots\ES\fix_es;
-use function App\Fix\LangBots\EsBots\Section\es_section;
-use function App\Fix\LangBots\PlBots\FixPlInfobox\pl_fixes;
-use function App\Fix\LangBots\PtBots\FixPtMonths\pt_fixes;
+use App\Fix\LangBots\BgBots\FixBg;
+use App\Fix\LangBots\EsBots\Es;
+use App\Fix\LangBots\EsBots\Section;
+use App\Fix\LangBots\PlBots\FixPlInfobox;
+use App\Fix\LangBots\PtBots\FixPtMonths;
 use App\Fix\LangBots\SwBot;
-use function App\Fix\MdCat\add_Translated_from_MDWiki;
+use App\Fix\MdCat;
 
 class Index
 {
@@ -26,12 +25,12 @@ class Index
     {
         $textOrg = $text;
 
-        if (page_is_redirect($title, $text)) {
+        if (RedirectHelp::page_is_redirect($title, $text)) {
             return $text;
         }
 
         if ($lang === "pl") {
-            $text = pl_fixes($text);
+            $text = FixPlInfobox::pl_fixes($text);
         }
 
         // print_s("fix page: $title, move_dots:$moveDots, expend_infobox:$infobox");
@@ -45,33 +44,33 @@ class Index
 
         // $text = fix_refs_names($text);
 
-        $text = mini_fixes($text, $lang);
+        $text = MiniFixesBot::mini_fixes($text, $lang);
 
-        $text = fix_missing_refs($text, $sourcetitle, $mdwikiRevid);
+        $text = MissingRefs::fix_missing_refs($text, $sourcetitle, $mdwikiRevid);
 
-        $text = remove_Duplicate_refs_With_attrs($text);
+        $text = RemoveDuplicateRefs::remove_Duplicate_refs_With_attrs($text);
 
         if ($moveDots) {
             Logger::debug("move_dots\n");
-            $text = move_dots_after_refs($text, $lang);
+            $text = MvDots::move_dots_after_refs($text, $lang);
         }
 
         if ($addEnLang) {
             Logger::debug("add_en_lang\n");
-            $text = add_lang_en_to_refs($text);
+            $text = EnLangParam::add_lang_en_to_refs($text);
         }
 
         if ($lang === "pt") {
-            $text = pt_fixes($text);
+            $text = FixPtMonths::pt_fixes($text);
         }
 
         if ($lang === "bg") {
-            $text = bg_fixes($text, $sourcetitle, $mdwikiRevid);
+            $text = FixBg::bg_fixes($text, $sourcetitle, $mdwikiRevid);
         }
 
         if ($lang === "es") {
-            $text = fix_es($text, $title);
-            $text = es_section($sourcetitle, $text, $mdwikiRevid);
+            $text = Es::fix_es($text, $title);
+            $text = Section::es_section($sourcetitle, $text, $mdwikiRevid);
         }
 
         if ($lang == 'sw') {
@@ -84,10 +83,10 @@ class Index
         }
 
         if ($lang !== "bg") {
-            $text = add_Translated_from_MDWiki($text, $lang);
+            $text = MdCat::add_Translated_from_MDWiki($text, $lang);
         }
 
-        $text = mini_fixes_after_fixing($text, $lang);
+        $text = MiniFixesBot::mini_fixes_after_fixing($text, $lang);
 
         if (!empty($text)) {
             return $text;
