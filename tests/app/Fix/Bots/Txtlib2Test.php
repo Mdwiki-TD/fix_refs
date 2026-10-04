@@ -1,21 +1,28 @@
 <?php
 
-
-
 use Tests\MyFunctionTest;
 use App\Fix\Bots\TxtLib2;
 
 class txtlib2Test extends MyFunctionTest
 {
+    private string $textInput = "";
 
-    private $textInput = "";
-    private $jsonData = [];
-    private $tempData = [];
+    /**
+     * @var array<int, array{name: string, item: string, params: array<string, string>}>
+     */
+    private array $jsonData = [];
+
+    /**
+     * @var array<int, array{name: string, item: string, params: array<int|string, string>}>
+     */
+    private array $tempData = [];
 
     protected function setUp(): void
     {
-        $this->textInput = file_get_contents(__DIR__ . "/fixtures/txtlib2/input.txt");
-        $this->jsonData = json_decode(file_get_contents(__DIR__ . "/fixtures/txtlib2/expected.json"), true);
+        $this->textInput = (string)file_get_contents(__DIR__ . "/fixtures/txtlib2/input.txt");
+        /** @var array<int, array{name: string, item: string, params: array<string, string>}> $decoded */
+        $decoded = json_decode((string)file_get_contents(__DIR__ . "/fixtures/txtlib2/expected.json"), true);
+        $this->jsonData = $decoded;
         $this->tempData = TxtLib2::extract_templates_and_params($this->textInput);
     }
 
@@ -54,7 +61,6 @@ class txtlib2Test extends MyFunctionTest
 
     public function testFirstTemplateParams(): void
     {
-        // Check that the extracted parameters match the ones in the JSON file
         $this->assertEquals(
             $this->jsonData[0]["params"],
             $this->tempData[0]["params"],
@@ -64,7 +70,6 @@ class txtlib2Test extends MyFunctionTest
 
     public function testSpecificParamValues(): void
     {
-        // Verify specific parameter values as an additional check
         $params = $this->tempData[0]["params"];
         $this->assertArrayHasKey("tradename", $params);
         $this->assertEquals("Jaypirca", $params["tradename"]);
@@ -78,7 +83,6 @@ class txtlib2Test extends MyFunctionTest
 
     public function testCountOfParams(): void
     {
-        // Verify that the number of extracted parameters matches the expected count
         $expectedCount = count($this->jsonData[0]["params"]);
         $actualCount = count($this->tempData[0]["params"]);
         $this->assertSame(

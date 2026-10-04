@@ -10,16 +10,14 @@ class fixBgTest extends MyFunctionTest
     // Tests for FixBg::bg_section() function
     // =========================================================================
 
-    public function testBgSectionWithExistingTranslationTemplate()
-    {
+    public function testBgSectionWithExistingTranslationTemplate(): void  {
         // Text already has translation template - should return text as is
         $text = "Some text here\n{{Превод от|mdwiki|Example|123456}}\n[[Категория:Test]]";
         $result = FixBg::bg_section($text, "Example", "123456");
         $this->assertEqualCompare($text, $text, $result);
     }
 
-    public function testBgSectionAddTemplateBeforeFirstBulgarianCategory()
-    {
+    public function testBgSectionAddTemplateBeforeFirstBulgarianCategory(): void  {
         // Text has Bulgarian category - should add template before first category
         $text = "Regular text\n[[Категория:Test]]\n[[Category:Another]]";
         $expected = "Regular text\n{{Превод от|mdwiki|TestTitle|789}}\n[[Категория:Test]]\n[[Category:Another]]";
@@ -27,8 +25,7 @@ class fixBgTest extends MyFunctionTest
         $this->assertEqualCompare($expected, $text, $result);
     }
 
-    public function testBgSectionAddTemplateBeforeFirstEnglishCategory()
-    {
+    public function testBgSectionAddTemplateBeforeFirstEnglishCategory(): void  {
         // Text has English category - should add template before first category
         $text = "Some text\n[[Category:English]]\n[[Категория:Bulgarian]]";
         $expected = "Some text\n{{Превод от|mdwiki|EnglishTitle|111}}\n[[Category:English]]\n[[Категория:Bulgarian]]";
@@ -36,8 +33,7 @@ class fixBgTest extends MyFunctionTest
         $this->assertEqualCompare($expected, $text, $result);
     }
 
-    public function testBgSectionWithoutCategories()
-    {
+    public function testBgSectionWithoutCategories(): void  {
         // Text has no categories - should add template at the end
         $text = "Text without categories";
         $expected = "Text without categories\n{{Превод от|mdwiki|Test|222}}\n";
@@ -45,8 +41,7 @@ class fixBgTest extends MyFunctionTest
         $this->assertEqualCompare($expected, $text, $result);
     }
 
-    public function testBgSectionCaseInsensitiveTemplateDetection()
-    {
+    public function testBgSectionCaseInsensitiveTemplateDetection(): void  {
         // Text has translation template with different cases - should be detected
         $text1 = "{{Превод от|mdwiki|Test|123}}";
         $text2 = "{{ превод от |mdwiki|Test|123}}";
@@ -61,8 +56,7 @@ class fixBgTest extends MyFunctionTest
         $this->assertEqualCompare($text3, $text3, $result3);
     }
 
-    public function testBgSectionWithMultipleCategories()
-    {
+    public function testBgSectionWithMultipleCategories(): void  {
         // Text with multiple categories - should add template before first category
         $text = "Text\n[[Category:First]]\n[[Категория:Second]]\n[[Category:Third]]";
         $expected = "Text\n{{Превод от|mdwiki|MultiCat|333}}\n[[Category:First]]\n[[Категория:Second]]\n[[Category:Third]]";
@@ -70,8 +64,7 @@ class fixBgTest extends MyFunctionTest
         $this->assertEqualCompare($expected, $text, $result);
     }
 
-    public function testBgSectionTemplateAddedAtCorrectPosition()
-    {
+    public function testBgSectionTemplateAddedAtCorrectPosition(): void  {
         // Template should be inserted exactly before the first category match
         $text = "Line 1\nLine 2\n[[Category:Test]]\nLine 4";
         $expected = "Line 1\nLine 2\n{{Превод от|mdwiki|Position|444}}\n[[Category:Test]]\nLine 4";
@@ -83,8 +76,7 @@ class fixBgTest extends MyFunctionTest
     // Tests for FixBg::bg_fixes() function
     // =========================================================================
 
-    public function testBgFixesRemoveTranslatedCategoryAndAddTemplate()
-    {
+    public function testBgFixesRemoveTranslatedCategoryAndAddTemplate(): void  {
         // Should remove translated category and add translation template
         $text = "Test text\n[[Category:Translated from MDWiki]]\n[[Категория:Test]]";
         $expected = "Test text\n{{Превод от|mdwiki|TestTitle|444}}\n\n[[Категория:Test]]";
@@ -92,8 +84,7 @@ class fixBgTest extends MyFunctionTest
         $this->assertEqualCompare($expected, $text, $result);
     }
 
-    public function testBgFixesWithExistingTranslationTemplate()
-    {
+    public function testBgFixesWithExistingTranslationTemplate(): void  {
         // Text has existing template - should keep it and remove translated category
         $text = "Text\n{{Превод от|mdwiki|Existing|555}}\n[[Category:Translated from MDWiki]]\n[[Категория:Test]]";
         $expected = "Text\n{{Превод от|mdwiki|Existing|555}}\n\n[[Категория:Test]]";
@@ -101,8 +92,7 @@ class fixBgTest extends MyFunctionTest
         $this->assertEqualCompare($expected, $text, $result);
     }
 
-    public function testBgFixesCaseInsensitiveTranslatedCategoryRemoval()
-    {
+    public function testBgFixesCaseInsensitiveTranslatedCategoryRemoval(): void  {
         // Should remove translated category with different cases
         $text1 = "[[Category:Translated from MDWiki]]\n[[Категория:Test]]";
         $text2 = "[[категория:translated from mdwiki]]\n[[Категория:Test]]";
@@ -119,8 +109,7 @@ class fixBgTest extends MyFunctionTest
         $this->assertEqualCompare($expected, $text3, $result3);
     }
 
-    public function testBgFixesWithoutTranslatedCategory()
-    {
+    public function testBgFixesWithoutTranslatedCategory(): void  {
         // Text without translated category - only add translation template if needed
         $text = "Regular text\n[[Категория:Test]]";
         $expected = "Regular text\n{{Превод от|mdwiki|Simple|888}}\n[[Категория:Test]]";
@@ -128,8 +117,7 @@ class fixBgTest extends MyFunctionTest
         $this->assertEqualCompare($expected, $text, $result);
     }
 
-    public function testBgFixesEmptyText()
-    {
+    public function testBgFixesEmptyText(): void  {
         // Empty text
         $text = "";
         $expected = "\n{{Превод от|mdwiki|Empty|999}}\n";
@@ -137,8 +125,7 @@ class fixBgTest extends MyFunctionTest
         $this->assertEqualCompare($expected, $text, $result);
     }
 
-    public function testBgFixesOnlyTranslatedCategory()
-    {
+    public function testBgFixesOnlyTranslatedCategory(): void  {
         // Text contains only translated category
         $text = "[[Category:Translated from MDWiki]]";
         $expected = "{{Превод от|mdwiki|OnlyTranslated|1010}}\n";
@@ -146,8 +133,7 @@ class fixBgTest extends MyFunctionTest
         $this->assertEqualCompare($expected, $text, $result);
     }
 
-    public function testBgFixesTranslatedCategoryWithoutOtherCategories()
-    {
+    public function testBgFixesTranslatedCategoryWithoutOtherCategories(): void  {
         // Text with translated category but no other categories
         $text = "Regular text\n[[Category:Translated from MDWiki]]";
         $expected = "Regular text\n{{Превод от|mdwiki|NoOtherCats|1111}}\n";
@@ -155,8 +141,7 @@ class fixBgTest extends MyFunctionTest
         $this->assertEqualCompare($expected, $text, $result);
     }
 
-    public function testBgFixesWithWhitespaceInCategory()
-    {
+    public function testBgFixesWithWhitespaceInCategory(): void  {
         // Category with extra whitespace should still be removed
         $text = "Text\n[[Category:  Translated from MDWiki  ]]\n[[Категория:Test]]";
         $expected = "Text\n{{Превод от|mdwiki|Whitespace|1212}}\n\n[[Категория:Test]]";
@@ -168,8 +153,7 @@ class fixBgTest extends MyFunctionTest
     // Edge cases and special scenarios
     // =========================================================================
 
-    public function testBgSectionSpecialCharactersInParameters()
-    {
+    public function testBgSectionSpecialCharactersInParameters(): void  {
         // Special characters in title and revid
         $text = "[[Category:Test]]";
         $expected = "{{Превод от|mdwiki|Title with spaces & special|rev-123}}\n[[Category:Test]]";
@@ -177,8 +161,7 @@ class fixBgTest extends MyFunctionTest
         $this->assertEqualCompare($expected, $text, $result);
     }
 
-    public function testBgSectionMultipleLineText()
-    {
+    public function testBgSectionMultipleLineText(): void  {
         // Multi-line text with categories
         $text = "Line 1\n\nLine 3\n\n[[Category:First]]\nLine 6\n[[Категория:Second]]";
         $expected = "Line 1\n\nLine 3\n\n{{Превод от|mdwiki|MultiLine|1313}}\n[[Category:First]]\nLine 6\n[[Категория:Second]]";
@@ -186,8 +169,7 @@ class fixBgTest extends MyFunctionTest
         $this->assertEqualCompare($expected, $text, $result);
     }
 
-    public function testBgFixesMultipleTranslatedCategories()
-    {
+    public function testBgFixesMultipleTranslatedCategories(): void  {
         // Text with multiple translated categories
         $text = "Text\n[[Category:Translated from MDWiki]]\n[[категория:translated from mdwiki]]\n[[Category:Test]]";
         $expected = "Text\n{{Превод от|mdwiki|Multiple|1414}}\n\n\n[[Category:Test]]";
@@ -195,8 +177,7 @@ class fixBgTest extends MyFunctionTest
         $this->assertEqualCompare($expected, $text, $result);
     }
 
-    public function testBgFixesMixedContent()
-    {
+    public function testBgFixesMixedContent(): void  {
         // Complex text with mixed content
         $text = "Introduction\n{{Some other template}}\n[[Category:Translated from MDWiki]]\n\nContent here\n[[Категория:Main]]\n[[Category:Secondary]]";
         $expected = "Introduction\n{{Some other template}}\n{{Превод от|mdwiki|Mixed|1515}}\n\n\nContent here\n[[Категория:Main]]\n[[Category:Secondary]]";
@@ -204,8 +185,7 @@ class fixBgTest extends MyFunctionTest
         $this->assertEqualCompare($expected, $text, $result);
     }
 
-    public function testBgSectionUnicodeSupport()
-    {
+    public function testBgSectionUnicodeSupport(): void  {
         // Test Unicode support in category names
         $text = "Text with Unicode\n[[Категория:Тест]]\n[[Category:Test]]";
         $expected = "Text with Unicode\n{{Превод от|mdwiki|Unicode|1616}}\n[[Категория:Тест]]\n[[Category:Test]]";
@@ -213,47 +193,41 @@ class fixBgTest extends MyFunctionTest
         $this->assertEqualCompare($expected, $text, $result);
     }
 
-    public function testAlreadyHasTemplate()
-    {
+    public function testAlreadyHasTemplate(): void  {
         $text = "Some intro\n{{Превод от|mdwiki|TestTitle|12345}}\n[[Категория:Drugs]]";
         $result = FixBg::bg_section($text, "Naproxen", 1468415);
         $this->assertEqualCompare($text, $text, $result);
     }
 
-    public function testAddBeforeBgCategory()
-    {
+    public function testAddBeforeBgCategory(): void  {
         $text = "Intro text\n[[Категория:Medicine]]";
         $expected = "Intro text\n{{Превод от|mdwiki|Naproxen|1468415}}\n[[Категория:Medicine]]";
         $result = FixBg::bg_section($text, "Naproxen", 1468415);
         $this->assertEqualCompare($expected, $text, $result);
     }
 
-    public function testAddBeforeEnCategory()
-    {
+    public function testAddBeforeEnCategory(): void  {
         $text = "Intro text\n[[Category:Medicine]]";
         $expected = "Intro text\n{{Превод от|mdwiki|Naproxen|1468415}}\n[[Category:Medicine]]";
         $result = FixBg::bg_section($text, "Naproxen", 1468415);
         $this->assertEqualCompare($expected, $text, $result);
     }
 
-    public function testAddAtEndIfNoCategory()
-    {
+    public function testAddAtEndIfNoCategory(): void  {
         $text = "Some intro\nSome content";
         $expected = "Some intro\nSome content\n{{Превод от|mdwiki|Naproxen|1468415}}\n";
         $result = FixBg::bg_section($text, "Naproxen", 1468415);
         $this->assertEqualCompare($expected, $text, $result);
     }
 
-    public function testAddBeforeFirstOfMultipleCategories()
-    {
+    public function testAddBeforeFirstOfMultipleCategories(): void  {
         $text = "Intro text\n[[Категория:First]]\n[[Category:Second]]";
         $expected = "Intro text\n{{Превод от|mdwiki|Naproxen|1468415}}\n[[Категория:First]]\n[[Category:Second]]";
         $result = FixBg::bg_section($text, "Naproxen", 1468415);
         $this->assertEqualCompare($expected, $text, $result);
     }
 
-    public function testEmptyText()
-    {
+    public function testEmptyText(): void  {
         $text = "";
         $expected = "\n{{Превод от|mdwiki|Naproxen|1468415}}\n";
         $result = FixBg::bg_section($text, "Naproxen", 1468415);

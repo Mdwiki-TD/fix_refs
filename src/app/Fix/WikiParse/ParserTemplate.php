@@ -14,6 +14,10 @@ class ParserTemplate
 {
     private string $templateText;
     private string $name = "";
+
+    /**
+     * @var array<int|string, string>
+     */
     private array $parameters;
     private string $pipe = "|";
     private string $pipeR = "-_-";
@@ -39,7 +43,6 @@ class ParserTemplate
     private function clear_pipes(string $DTemplate): string
     {
         $matches = [];
-        // preg_match_all("/\{\{(.*?)\}\}/su", $DTemplate, $matches);
         preg_match_all("/\{\{((?:[^{}]++|(?R))*)\}\}/su", $DTemplate, $matches);
 
         foreach ($matches[1] as $matche) {
@@ -54,6 +57,7 @@ class ParserTemplate
 
         return $DTemplate;
     }
+
     public function parse(): void
     {
         if (preg_match("/^\{\{(.*?)(\}\})$/su", $this->templateText, $matchesR)) {

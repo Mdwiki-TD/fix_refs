@@ -4,11 +4,10 @@ namespace App\Fix\LangBots\EsBots;
 
 class Section
 {
-    public static function es_section($sourcetitle, $text, $mdwikiRevid)
+    public static function es_section(string $sourcetitle, string $text, int|string $mdwikiRevid): string
     {
         // Replace old template with new one
-        // replace ({{Traducido ref|mdwiki|) with ({{Traducido ref MDWiki|en|)
-        $text = preg_replace(
+        $text = (string)preg_replace(
             '/\{\{\s*Traducido\s*ref\s*\|\s*mdwiki\s*\|/iu',
             "{{Traducido ref MDWiki|en|",
             $text
@@ -21,13 +20,11 @@ class Section
 
         $date = "{{subst:CURRENTDAY}} de {{subst:CURRENTMONTHNAME}} de {{subst:CURRENTYEAR}}";
 
-        // $temp = "{{Traducido ref|mdwiki|$sourcetitle|oldid=$mdwikiRevid|trad=|fecha=$date}}";
         $temp = "{{Traducido ref MDWiki|en|$sourcetitle|oldid=$mdwikiRevid|trad=|fecha=$date}}";
-
 
         // Insert after "== Enlaces externos ==" if it exists, otherwise append
         if (preg_match('/==\s*Enlaces\s*externos\s*==/iu', $text)) {
-            $text = preg_replace(
+            $text = (string)preg_replace(
                 '/(==\s*Enlaces\s*externos\s*==)/iu',
                 "$1\n$temp\n",
                 $text,

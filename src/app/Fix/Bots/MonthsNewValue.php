@@ -4,7 +4,7 @@ namespace App\Fix\Bots;
 
 class MonthsNewValue
 {
-    public static function new_date($val, $lang = 'pt')
+    public static function new_date(string $val, string $lang = 'pt'): string
     {
         // Define month translations per language
         $monthsTranslations = [
@@ -71,12 +71,12 @@ class MonthsNewValue
         return trim($val);
     }
 
-    public static function make_date_new_val_pt($val)
+    public static function make_date_new_val_pt(string $val): string
     {
         return self::new_date($val, 'pt');
     }
 
-    public static function make_date_new_val_es($val)
+    public static function make_date_new_val_es(string $val): string
     {
         return self::new_date($val, 'es');
     }

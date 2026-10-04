@@ -8,12 +8,15 @@ use App\Fix\WikiParse\ParserTemplates;
 
 class EsRefs
 {
+    /**
+     * @param string $text
+     * @return array{refs: array<string, string>, new_text: string}
+     */
     public static function get_refs(string $text): array
     {
         $newText = $text;
         $refs = [];
         $citations = Citations::getCitationsOld($text);
-        $newText = $text;
         $numb = 0;
 
         foreach ($citations as $key => $citation) {
@@ -30,8 +33,6 @@ class EsRefs
 
             $refs[$citeAttrs] = $citeContents;
 
-            // Logger::debug("\n$citeAttrs\n");
-
             $citeNewtext = "<ref $citeAttrs />";
             $newText = str_replace($citeText, $citeNewtext, $newText);
         }
@@ -42,18 +43,21 @@ class EsRefs
         ];
     }
 
-    public static function check_short_refs($line)
+    public static function check_short_refs(string $line): string
     {
         $shorts = CitationsReg::get_short_citations($line);
         foreach ($shorts as $short) {
             $line = str_replace($short["tag"], "", $line);
         }
 
-        // remove \n+
-        $line = preg_replace("/\n+/u", "\n", $line);
+        $line = (string)preg_replace("/\n+/u", "\n", $line);
         return $line;
     }
 
+    /**
+     * @param array<string, string> $refs
+     * @return string
+     */
     public static function make_line(array $refs): string
     {
         $line = "\n";
@@ -65,11 +69,9 @@ class EsRefs
         return $line;
     }
 
-    public static function add_line_to_temp($line, $text)
+    public static function add_line_to_temp(string $line, string $text): string
     {
         $tempsIn = (new ParserTemplates($text))->getTemplates();
-
-        // Logger::debug("lenth temps_in:" . count($tempsIn) . "\n");
 
         $newText = $text;
         $tempAlreadyIn = false;
@@ -77,15 +79,11 @@ class EsRefs
         foreach ($tempsIn as $temp) {
             $name = $temp->getStripName();
 
-            // Logger::debug("\n$name\n");
-
             $oldTextTemplate = $temp->getOriginalText();
 
             if (!in_array(strtolower($name), ["reflist", "listaref"])) {
                 continue;
             }
-
-            // Logger::debug("\n$name\n");
 
             $refnParam = $temp->getParameter("refs");
 
@@ -113,7 +111,6 @@ class EsRefs
     public static function mv_es_refs(string $text): string
     {
         if (empty($text)) {
-            // Logger::debug("text is empty");
             return $text;
         }
 

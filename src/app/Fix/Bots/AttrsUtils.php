@@ -4,7 +4,11 @@ namespace App\Fix\Bots;
 
 class AttrsUtils
 {
-    public static function parseAttributes($text): array
+    /**
+     * @param string $text
+     * @return array<string, string>
+     */
+    public static function parseAttributes(string $text): array
     {
         $text = "<ref " . $text . ">";
 
@@ -31,7 +35,11 @@ class AttrsUtils
         return $attributesArray;
     }
 
-    public static function get_attrs($text)
+    /**
+     * @param string $text
+     * @return array<string, string>
+     */
+    public static function get_attrs(string $text): array
     {
         $text = "<ref $text>";
         $attrfindTolerant = '/((?<=[\'"\s\/])[^\s\/>][^\s\/=>]*)(\s*=+\s*(\'[^\']*\'|"[^"]*"|(?![\'"])[^>\s]*))?(?:\s|\/(?!>))*/u';
@@ -44,8 +52,6 @@ class AttrsUtils
                 $attrs[$attrName] = $attrValue;
             }
         }
-
-        // var_export($attrs);
 
         return $attrs;
     }

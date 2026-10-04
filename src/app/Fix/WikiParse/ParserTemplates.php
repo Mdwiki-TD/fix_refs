@@ -50,9 +50,7 @@ class ParserTemplates
      *
      * @param string $string The string to search for templates.
      *
-     * @return array An array with the matches. The first element is an
-     * array of all matches, the second element is an array of the
-     * matches with the first two and last two characters removed.
+     * @return array<int, array<int, string>> An array with the matches.
      */
     private function find_sub_templates(string $string): array
     {

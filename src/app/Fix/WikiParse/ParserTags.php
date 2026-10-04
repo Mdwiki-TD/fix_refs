@@ -22,7 +22,7 @@ class ParserTags
     /**
      * @var Tag[] Array of extracted tags.
      */
-    private array $tags;
+    private array $tags = [];
 
     /**
      * ParserTags constructor.
@@ -45,7 +45,7 @@ class ParserTags
      * Uses a regular expression to match tags wrapped in <ref> tags.
      *
      * @param string $string The string to search for tags.
-     * @return array An array of matches found in the string.
+     * @return array<int, array{original: string, name: string, attributes: string, content: string, selfClosing: bool}> An array of matches found in the string.
      */
     private function find_sub_tags(string $string): array
     {
@@ -60,7 +60,6 @@ class ParserTags
         );
 
         foreach ($standardMatches as $match) {
-            // echo "\n$match[0]\n";
             $matches[] = [
                 'original'    => $match[0],
                 'name'        => $match['tag'],

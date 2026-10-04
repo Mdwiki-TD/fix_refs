@@ -8,7 +8,7 @@ use App\Fix\WikiParse\ParserTemplates;
 
 class EnLangParam
 {
-    public static function add_lang_en($text)
+    public static function add_lang_en(string $text): string
     {
         // Match references
         $REFS = "/(?is)(?P<pap><ref[^>\/]*>)(?P<ref>.*?<\/ref>)/";
@@ -22,7 +22,7 @@ class EnLangParam
                 if (preg_replace("/\|\s*language\s*\=\s*\w+/u", "", $ref) != $ref) {
                     continue;
                 }
-                $ref2 = preg_replace("/(\|\s*language\s*\=\s*)(\|\}\})/u", "$1en$2", $ref);
+                $ref2 = (string)preg_replace("/(\|\s*language\s*\=\s*)(\|\}\})/u", "$1en$2", $ref);
                 if ($ref2 == $ref) {
                     $ref2 = str_replace("}}</ref>", "|language=en}}</ref>", $ref);
                 }
@@ -34,15 +34,13 @@ class EnLangParam
         return $text;
     }
 
-    public static function add_lang_en_new($tempText)
+    public static function add_lang_en_new(string $tempText): string
     {
         $newText = $tempText;
         $tempText = trim($tempText);
         $temps = (new ParserTemplates($tempText))->getTemplates();
         foreach ($temps as $temp) {
             $tempOld = $temp->getOriginalText();
-
-            // Logger::debug("temp_old:($tempOld)\n");
 
             $params = $temp->parameters;
             $language = $params->get("language", "");
@@ -55,7 +53,7 @@ class EnLangParam
         return $newText;
     }
 
-    public static function add_lang_en_to_refs($text)
+    public static function add_lang_en_to_refs(string $text): string
     {
         Logger::debug("\n add_lang_en_to_refs:\n");
         $newText = $text;

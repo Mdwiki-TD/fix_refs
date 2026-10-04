@@ -5,11 +5,19 @@ namespace App\Fix\LangBots\EsBots;
 use App\Logger;
 use App\Fix\LangBots\EsBots\EsMonths;
 use App\Fix\LangBots\EsBots\EsRefs;
+use App\Fix\WikiParse\DataModel\Template;
 use App\Fix\WikiParse\ParserTemplates;
 
 class ESData
 {
+    /**
+     * @var array<string, string>
+     */
     public static array $argsTo = [];
+
+    /**
+     * @var array<string, string>
+     */
     public static array $refsTemps = [];
 
     public static function init(): void
@@ -42,7 +50,6 @@ class ESData
             "cite av media" => "cita video",
             "cite video game" => "cita videojuego",
         ];
-
 
         // Mapping arguments
         self::$argsTo = [
@@ -151,16 +158,13 @@ class ESData
 
 class Es
 {
-    public static function work_one_temp($temp, $name)
+    public static function work_one_temp(Template $temp, string $name): string
     {
         ESData::init();
-        // Logger::debug("\n$name\n");
         $tempName2 = isset(ESData::$refsTemps[$name]) ? ESData::$refsTemps[$name] : $name;
         if (strtolower($tempName2) !== strtolower($name)) {
             $temp->setName($tempName2);
         }
-
-        // $paramsEsUp = $temp->getParameters();
 
         $temp->changeParametersNames(ESData::$argsTo);
         $temp->deleteParameter("url-status");
@@ -168,22 +172,17 @@ class Es
         return $newTextStr;
     }
 
-    public static function fix_temps($text)
+    public static function fix_temps(string $text): string
     {
         ESData::init();
         $tempsIn = (new ParserTemplates($text))->getTemplates();
-
-        // Logger::debug("lenth temps_in:" . count($tempsIn) . "\n");
 
         $newText = $text;
         foreach ($tempsIn as $temp) {
             $name = $temp->getStripName();
 
-            // Logger::debug("* name: $name\n");
-
             $oldTextTemplate = $temp->getOriginalText();
             if (!array_key_exists($name, ESData::$refsTemps) && !in_array($name, ESData::$refsTemps)) {
-                // Logger::debug("not found: $name\n");
                 continue;
             }
             $newTextStr = self::work_one_temp($temp, $name);
@@ -192,7 +191,7 @@ class Es
         return $newText;
     }
 
-    public static function fix_es($text, $title = "")
+    public static function fix_es(string $text, string $title = ""): string
     {
         // Check for "#REDIRECCIÓN"
         if (strpos($text, "#REDIRECCIÓN") !== false && $title != "test!") {
@@ -202,7 +201,6 @@ class Es
         // Check if the text has fewer than 10 lines
         if (substr_count($text, "\n") < 10 && $title != "test!") {
             Logger::debug("less than 10 lines\n");
-            // return $text;
         }
 
         // Replace <references /> with {{listaref}}

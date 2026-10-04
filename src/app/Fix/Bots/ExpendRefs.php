@@ -6,16 +6,14 @@ use App\Fix\Parse\CitationsReg;
 
 class ExpendRefs
 {
-    public static function refs_expend_work($first, $alltext = "")
+    public static function refs_expend_work(string $first, string $alltext = ""): string
     {
         if (empty($alltext)) {
             $alltext = $first;
         }
         $refs = CitationsReg::get_full_refs($alltext);
-        // echo  "get_full_refs:" . count($refs) . "<br>";
 
         $shortRefs = CitationsReg::get_short_citations($first);
-        // echo  "short_refs:" . count($shortRefs) . "<br>";
 
         foreach ($shortRefs as $cite) {
             $name = $cite["name"];

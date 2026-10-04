@@ -20,7 +20,7 @@ class Citations
     /**
      * @var Citation[] Array of extracted citations.
      */
-    private array $citations;
+    private array $citations = [];
 
     /**
      * Citations constructor.
@@ -32,11 +32,17 @@ class Citations
         $this->text = $text;
         $this->parse();
     }
-    private function find_sub_citations($string)
+
+    /**
+     * @param string $string
+     * @return array<int, mixed>
+     */
+    private function find_sub_citations(string $string): array
     {
         preg_match_all("/<ref([^\/>]*?)>(.+?)<\/ref>/isu", $string, $matches);
         return $matches;
     }
+
     /**
      * Parse the text for <ref> tags using ParserTags and store them.
      *
@@ -46,9 +52,11 @@ class Citations
     {
         $textCitations = $this->find_sub_citations($this->text);
         $this->citations = [];
-        foreach ($textCitations[1] as $key => $textCitation) {
-            $_Citation = new Citation($textCitations[2][$key], $textCitation, $textCitations[0][$key]);
-            $this->citations[] = $_Citation;
+        if (isset($textCitations[1]) && is_array($textCitations[1])) {
+            foreach ($textCitations[1] as $key => $textCitation) {
+                $_Citation = new Citation((string)($textCitations[2][$key] ?? ''), (string)$textCitation, (string)($textCitations[0][$key] ?? ''));
+                $this->citations[] = $_Citation;
+            }
         }
     }
 
@@ -62,7 +70,11 @@ class Citations
         return $this->citations;
     }
 
-    public static function getCitationsOld($text): array
+    /**
+     * @param string $text
+     * @return Citation[]
+     */
+    public static function getCitationsOld(string $text): array
     {
         return (new self($text))->getCitations();
     }

@@ -6,7 +6,7 @@ use App\Logger;
 
 class RemoveSpace
 {
-    public static function match_it($text, $charters)
+    public static function match_it(string $text, string $charters): ?string
     {
         $pattern = '/(<\/ref>|\/>)\s*([' . preg_quote($charters, '/') . ']\s*)$/u';
         if (preg_match($pattern, $text, $m)) {
@@ -15,7 +15,12 @@ class RemoveSpace
         return null;
     }
 
-    public static function get_parts($newtext, $charters)
+    /**
+     * @param string $newtext
+     * @param string $charters
+     * @return array<int, array{0: string, 1: string}>
+     */
+    public static function get_parts(string $newtext, string $charters): array
     {
         $matches = explode("\n\n", $newtext);
 
@@ -39,17 +44,14 @@ class RemoveSpace
         return $newParts;
     }
 
-
-    public static function remove_spaces_between_last_word_and_beginning_of_ref($newtext, $lang)
+    public static function remove_spaces_between_last_word_and_beginning_of_ref(string $newtext, string $lang): string
     {
-
-        // --- 1) تحديد علامات الترقيم
         $dots = ".,。।";
 
         if ($lang === "hy") {
             $dots = ".,。।։:";
         }
-        $newtext = preg_replace('/>\s*<ref/', '><ref', $newtext);
+        $newtext = (string)preg_replace('/>\s*<ref/', '><ref', $newtext);
         $parts = self::get_parts($newtext, $dots);
 
         foreach ($parts as $pair) {
@@ -84,18 +86,16 @@ class RemoveSpace
         return $newtext;
     }
 
-    public static function remove_spaces_between_ref_and_punctuation($text, $lang = null)
+    public static function remove_spaces_between_ref_and_punctuation(string $text, ?string $lang = null): string
     {
         // Use a superset of punctuation across supported languages
         $dots = ".,。։।:";
         $cls = preg_quote($dots, '/');
 
-        // </ref> : to </ref>:
-
         // Keep punctuation right after <ref ... /> with no space
-        $text = preg_replace('/(<ref[^>]*\/>)\s*([' . $cls . '])/u', '$1$2', $text);
+        $text = (string)preg_replace('/(<ref[^>]*\/>)\s*([' . $cls . '])/u', '$1$2', $text);
         // Normalize endings: </ref> followed by any punctuation remains attached
-        $text = preg_replace('/<\/ref>\s*([' . $cls . '])/u', '</ref>$1', $text);
+        $text = (string)preg_replace('/<\/ref>\s*([' . $cls . '])/u', '</ref>$1', $text);
 
         return $text;
     }

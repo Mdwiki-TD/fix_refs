@@ -29,6 +29,10 @@ class Settings
         return $output;
     }
 
+    /**
+     * @param string $filename
+     * @return array<string, mixed>
+     */
     public static function json_load_file(string $filename): array
     {
         if (!is_file($filename)) {

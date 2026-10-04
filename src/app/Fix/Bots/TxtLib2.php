@@ -6,7 +6,11 @@ use App\Fix\WikiParse\ParserTemplates;
 
 class TxtLib2
 {
-    public static function extract_templates_and_params($text)
+    /**
+     * @param string $text
+     * @return array<int, array{name: string, item: string, params: array<int|string, string>}>
+     */
+    public static function extract_templates_and_params(string $text): array
     {
         $temps = [];
         $tempsIn = (new ParserTemplates($text))->getTemplates();

@@ -1,15 +1,14 @@
 <?php
 
-
-
 use Tests\MyFunctionTest;
 use App\Fix\Bots\AttrsUtils;
 
-
 class attrsUtilsTest extends MyFunctionTest
 {
-
-    private $data = [];
+    /**
+     * @var array<string, array{0: string, 1: array<string, string>}>
+     */
+    private array $data = [];
 
     protected function setUp(): void
     {
@@ -53,65 +52,50 @@ class attrsUtilsTest extends MyFunctionTest
         ];
     }
 
-    /**
-     */
-    public function testParseAttributes()
-    {
+    public function testParseAttributes(): void {
         foreach ($this->data as $name => $tab) {
             $result = AttrsUtils::parseAttributes($tab[0]);
             $this->assertEquals($tab[1], $result, $name);
         }
     }
 
-    /**
-     */
-    public function testGetAttrs()
-    {
+    public function testGetAttrs(): void {
         foreach ($this->data as $name => $tab) {
             $result = AttrsUtils::get_attrs($tab[0]);
             $this->assertEquals($tab[1], $result, $name);
         }
     }
-    // اختبارات دالة get_attrs
-    public function testGetAttrsAlt()
-    {
+
+    public function testGetAttrsAlt(): void {
         $tests = [
-            // حالة: سمة واحدة مع قيمة
             [
                 "text" => 'name="test"',
                 "expected" => ["name" => '"test"']
             ],
-            // حالة: سمة واحدة بدون قيمة
             [
                 "text" => 'name',
                 "expected" => ["name" => ""]
             ],
-            // حالة: سمات متعددة
             [
                 "text" => 'name="test" group="notes"',
                 "expected" => ["name" => '"test"', "group" => '"notes"']
             ],
-            // حالة: سمات مع مسافات زائدة
             [
                 "text" => '  name  =  "test"  group  =  "notes"  ',
                 "expected" => ["name" => '"test"', "group" => '"notes"']
             ],
-            // حالة: سمة بعلامات تنصيص مفردة
             [
                 "text" => "name='test'",
                 "expected" => ["name" => "'test'"]
             ],
-            // حالة: سمة بدون علامات تنصيص
             [
                 "text" => "name=test",
                 "expected" => ["name" => "test"]
             ],
-            // حالة: نص فارغ
             [
                 "text" => "",
                 "expected" => []
             ],
-            // حالة: سمة تحتوي على مسافات في القيمة
             [
                 "text" => 'name="test value"',
                 "expected" => ["name" => '"test value"']

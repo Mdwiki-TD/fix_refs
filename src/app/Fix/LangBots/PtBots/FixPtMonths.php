@@ -9,25 +9,22 @@ use App\Fix\WikiParse\ParserTemplates;
 
 class FixPtMonths
 {
-    public static function start_end($citeTemp)
+    public static function start_end(string $citeTemp): bool
     {
         return strpos($citeTemp, "{{") === 0 && strrpos($citeTemp, "}}") === strlen($citeTemp) - 2;
     }
 
-    public static function rm_ref_spaces($newtext)
+    public static function rm_ref_spaces(string $newtext): string
     {
-
-        // \s*(\.|,|。|।)\s*((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)
-
         $dot = "(\.|,|。|।)";
         $regline = "((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)";
         $pattern = "/\s*" . $dot . "\s*" . $regline . "/m";
         $replacement = "$1$2";
-        $newtext = preg_replace($pattern, $replacement, $newtext);
+        $newtext = (string)preg_replace($pattern, $replacement, $newtext);
         return $newtext;
     }
 
-    public static function fix_pt_months_in_texts($tempText)
+    public static function fix_pt_months_in_texts(string $tempText): string
     {
         $newText = $tempText;
         $tempText = trim($tempText);
@@ -35,15 +32,12 @@ class FixPtMonths
         foreach ($temps as $temp) {
             $tempOld = $temp->getOriginalText();
 
-            // Logger::debug("temp_old:($tempOld)\n");
-
             $params = $temp->getParameters();
             foreach ($params as $key => $value) {
                 $newValue = MonthsNewValue::make_date_new_val_pt($value);
 
-                // if ($newValue && $newValue != trim($value)) {
-                if ($newValue !== null && trim((string)$newValue) !== trim((string)$value)) {
-                    $temp->setParameter($key, $newValue);
+                if (trim($newValue) !== trim((string)$value)) {
+                    $temp->setParameter((string)$key, $newValue);
                 }
             }
             $tempNew = $temp->toString();
@@ -52,7 +46,7 @@ class FixPtMonths
         return $newText;
     }
 
-    public static function fix_pt_months_in_refs($text)
+    public static function fix_pt_months_in_refs(string $text): string
     {
         Logger::debug("\n fix_pt_months_in_refs:\n");
         $newText = $text;
@@ -60,21 +54,14 @@ class FixPtMonths
         foreach ($citations as $key => $citation) {
             $citeTemp = $citation->getContent();
 
-            // Logger::debug("\n cite_temp: $citeTemp\n");
-
-            // if $citeTemp startwith {{ and ends with }}
-            // if (start_end($citeTemp) || defined("DEBUG") || True) {
-
             $newTemp = self::fix_pt_months_in_texts($citeTemp);
-
-            // if ($newTemp != $citeTemp) Logger::debug("new_temp != cite_temp\n");
 
             $newText = str_replace($citeTemp, $newTemp, $newText);
         }
         return $newText;
     }
 
-    public static function pt_fixes($text)
+    public static function pt_fixes(string $text): string
     {
         $text = self::fix_pt_months_in_refs($text);
         $text = self::rm_ref_spaces($text);

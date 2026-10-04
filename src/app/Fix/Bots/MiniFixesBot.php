@@ -4,7 +4,7 @@ namespace App\Fix\Bots;
 
 class MiniFixesBot
 {
-    public static function fix_sections_titles($text, $lang)
+    public static function fix_sections_titles(string $text, string $lang): string
     {
         $toReplace = [
             "hr" => [
@@ -42,75 +42,62 @@ class MiniFixesBot
             // Replacement keeps the same '=' count but replaces the key
             $replacement = '$1 ' . $value . ' $1';
 
-            $text = preg_replace($pattern, $replacement, $text);
+            $text = (string)preg_replace($pattern, $replacement, $text);
         }
 
         return $text;
     }
 
-    public static function remove_space_before_ref_tags($text, $lang)
+    public static function remove_space_before_ref_tags(string $text, string $lang): string
     {
-
-        $forLangs = ["sw", "bn", "ar"];
-
-        // if (in_array($lang, $forLangs)) {
-        $text = preg_replace("/\s*(\.|,|。|।)\s*<ref/iu", "$1<ref", $text);
-        // }
+        $text = (string)preg_replace("/\s*(\.|,|。|।)\s*<ref/iu", "$1<ref", $text);
 
         return $text;
     }
 
-    public static function refs_tags_spaces($text)
+    public static function refs_tags_spaces(string $text): string
     {
-        // Remove spaces between reference tags more precisely
-        // $text = preg_replace('/(<\/ref>)\s+(<ref[^>]*>)/', '$1$2', $text);
-
         // </ref> <ref>
-        $text = preg_replace("/<\/ref>\s*<ref/u", "</ref><ref", $text);
+        $text = (string)preg_replace("/<\/ref>\s*<ref/u", "</ref><ref", $text);
 
         // <ref name="A Costa"/><ref name=Gaia>
-        $text = preg_replace("/\/>\s*<ref/u", "/><ref", $text);
+        $text = (string)preg_replace("/\/>\s*<ref/u", "/><ref", $text);
 
         // </ref><ref name=... | </ref><ref>
         $text = str_replace("</ref> <ref", "</ref><ref", $text);
-
 
         $text = str_replace("> <ref", "><ref", $text);
 
         return $text;
     }
 
-    public static function fix_preffix($text, $lang)
+    public static function fix_preffix(string $text, string $lang): string
     {
-        // [[:en:X-сцепленное_рецессивное_наследование|Х-сцепленным рецессивным]], [[:ru:Спинальная_мышечная_атрофия|аутосомно-доминантным]]
-
         // replace [[:{en}: by [[
-        $text = preg_replace('/\[\[:en:/u', "[[", $text);
+        $text = (string)preg_replace('/\[\[:en:/u', "[[", $text);
         // replace [[:{lang}: by [[
-        $text = preg_replace('/\[\[:' . preg_quote($lang, '/') . ':/ui', "[[", $text);
+        $text = (string)preg_replace('/\[\[:' . preg_quote($lang, '/') . ':/ui', "[[", $text);
 
         return $text;
     }
 
-    public static function remove_template_rtt_links($text)
+    public static function remove_template_rtt_links(string $text): string
     {
         // Remove wiki links to Template:RTT like [[Template:RTT|සැකිල්ල:RTT]]
-        // Use [^\[\]]+ to match the second part (anything except square brackets)
-        $text = preg_replace('/\[\[Template:RTT\|[^\[\]]+\]\]/u', '', $text);
+        $text = (string)preg_replace('/\[\[Template:RTT\|[^\[\]]+\]\]/u', '', $text);
 
         return $text;
     }
 
-    public static function mini_fixes_after_fixing($text, $lang)
+    public static function mini_fixes_after_fixing(string $text, string $lang): string
     {
-
         // remove empty lines
-        $text = preg_replace('/^\s*\n/mu', "\n", $text);
+        $text = (string)preg_replace('/^\s*\n/mu', "\n", $text);
         $text = self::fix_preffix($text, $lang);
         return $text;
     }
 
-    public static function mini_fixes($text, $lang)
+    public static function mini_fixes(string $text, string $lang): string
     {
         $text = self::refs_tags_spaces($text);
         $text = self::fix_sections_titles($text, $lang);

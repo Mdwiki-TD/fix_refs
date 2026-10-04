@@ -11,7 +11,7 @@ class ExtendedMiniFixesBotTest extends MyFunctionTest
     /**
      * Data provider for testing section title fixes across different languages.
      *
-     * @return array
+     * @return array<string, array{lang: string, input: string}>
      */
     public static function sectionTitlesProvider(): array
     {
@@ -53,8 +53,7 @@ TXT
     {
         $newText = MiniFixesBot::fix_sections_titles($input, $lang);
 
-        // Assert that the function returns a valid string output
-        $this->assertIsString($newText, "The function fix_sections_titles should return a string.");
+        $this->assertNotEmpty($newText, "The function fix_sections_titles should return non-empty string.");
 
         // Assert that section titles were processed and modified
         $this->assertNotEquals(

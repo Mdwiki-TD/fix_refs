@@ -13,7 +13,7 @@ class IntegrationTest extends MyFunctionTest
     /**
      * Data provider for integration test scenarios covering Polish language fixes.
      *
-     * @return array
+     * @return array<string, array{input: string, title: string, expandInfobox: bool, lang: string, expectedParams: array<int, string>, shouldNotContain: array<int, string>, maxParameterCounts: array<string, int>}>
      */
     public static function integrationTestCasesProvider(): array
     {
@@ -116,9 +116,9 @@ TXT
      * @param string $title
      * @param bool $expandInfobox
      * @param string $lang
-     * @param array $expectedParams
-     * @param array $shouldNotContain
-     * @param array $maxParameterCounts
+     * @param array<int, string> $expectedParams
+     * @param array<int, string> $shouldNotContain
+     * @param array<string, int> $maxParameterCounts
      * @return void
      */
     #[DataProvider('integrationTestCasesProvider')]

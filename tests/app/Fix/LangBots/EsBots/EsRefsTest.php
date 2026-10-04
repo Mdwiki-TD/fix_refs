@@ -6,8 +6,7 @@ use App\Fix\LangBots\EsBots\EsRefs;
 
 class esRefsTest extends MyFunctionTest
 {
-    public function testFileText()
-    {
+    public function testFileText(): void  {
         $textInput   = file_get_contents(__DIR__ . "/fixtures/1/input.txt");
         $expected  = file_get_contents(__DIR__ . "/fixtures/1/expected.txt");
         $file_3  = __DIR__ . "/fixtures/1/output.txt";

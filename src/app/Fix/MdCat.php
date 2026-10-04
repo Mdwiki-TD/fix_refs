@@ -14,8 +14,6 @@ class MdCat
 
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        // curl_setopt($ch, CURLOPT_COOKIEJAR, "cookie.txt");
-        // curl_setopt($ch, CURLOPT_COOKIEFILE, "cookie.txt");
 
         curl_setopt($ch, CURLOPT_USERAGENT, $usrAgent);
 
@@ -25,6 +23,7 @@ class MdCat
         $output = curl_exec($ch);
         if ($output === false) {
             Logger::debug("<br>cURL Error: " . curl_error($ch) . "<br>$url");
+            $output = '';
         }
 
         curl_close($ch);
@@ -32,7 +31,10 @@ class MdCat
         return $output;
     }
 
-    public static function load_from_local_file()
+    /**
+     * @return array<string, mixed>
+     */
+    public static function load_from_local_file(): array
     {
         $localFile = dirname(__DIR__) . '/resources/mdwiki_categories.json';
         if (!is_file($localFile)) {
@@ -44,15 +46,21 @@ class MdCat
             return [];
         }
 
-        return json_decode($content, true) ?: [];
+        /** @var array<string, mixed>|null $decoded */
+        $decoded = json_decode($content, true);
+        return is_array($decoded) ? $decoded : [];
     }
 
-    public static function get_cats()
+    /**
+     * @return array<string, mixed>
+     */
+    public static function get_cats(): array
     {
         $url = "https://www.wikidata.org/w/rest.php/wikibase/v1/entities/items/Q107014860/sitelinks";
+        /** @var array<string, mixed>|null $json */
         static $json = null;
 
-        if (is_array($json)) {
+        if ($json !== null) {
             return $json;
         }
 
@@ -63,14 +71,13 @@ class MdCat
             $decoded = self::load_from_local_file();
         }
 
-        $json = is_array($decoded) ? $decoded : [];
+        $json = $decoded;
 
         return $json;
     }
 
-    public static function Get_MdWiki_Category($lang)
+    public static function Get_MdWiki_Category(string $lang): string
     {
-
         // https://it.wikipedia.org/w/index.php?title=Categoria:Translated_from_MDWiki&action=edit&redlink=1
         $skipLangs = [
             "it"
@@ -84,10 +91,10 @@ class MdCat
 
         $cat = $cats[$lang . "wiki"]["title"] ?? "Category:Translated from MDWiki";
 
-        return $cat;
+        return is_string($cat) ? $cat : "Category:Translated from MDWiki";
     }
 
-    public static function add_Translated_from_MDWiki($text, $lang)
+    public static function add_Translated_from_MDWiki(string $text, string $lang): string
     {
         if (preg_match("/:\s*Translated[ _]from[ _]MDWiki\s*\]\]/iu", $text)) {
             return $text;
