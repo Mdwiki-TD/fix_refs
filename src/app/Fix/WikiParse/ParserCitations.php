@@ -34,7 +34,6 @@ class ParserCitations
         $this->text = $text;
         $this->parse();
     }
-
     /**
      * Parse the text for <ref> tags using ParserTags and store them.
      *

@@ -1,42 +1,32 @@
 <?php
 
-namespace App\Fix\Parse\Citations;
+namespace App\Fix\Parse;
 
+use App\Fix\WikiParse\DataModel\Citation;
 
-
-class CitationOld
+/**
+ * Class Citations
+ *
+ * Parses text to extract citations from wikitext.
+ *
+ */
+class Citations
 {
+    /**
+     * @var string The text to parse for citations.
+     */
     private string $text;
-    private string $options;
-    private string $citeText;
-    public function __construct(string $text, string $options = "", string $citeText = "")
-    {
-        $this->text = $text;
-        $this->options = $options;
-        $this->citeText = $citeText;
-    }
-    public function getOriginalText(): string
-    {
-        return $this->citeText;
-    }
-    public function getContent(): string
-    {
-        return $this->text;
-    }
-    public function getAttributes(): string
-    {
-        return $this->options;
-    }
-    public function toString(): string
-    {
-        return "<ref " . trim($this->options) . ">" . $this->text . "</ref>";
-    }
-}
 
-class ParserCitationsOld
-{
-    private string $text;
+    /**
+     * @var Citation[] Array of extracted citations.
+     */
     private array $citations;
+
+    /**
+     * Citations constructor.
+     *
+     * @param string $text The text to parse.
+     */
     public function __construct(string $text)
     {
         $this->text = $text;
@@ -47,26 +37,33 @@ class ParserCitationsOld
         preg_match_all("/<ref([^\/>]*?)>(.+?)<\/ref>/isu", $string, $matches);
         return $matches;
     }
+    /**
+     * Parse the text for <ref> tags using ParserTags and store them.
+     *
+     * @return void
+     */
     public function parse(): void
     {
         $textCitations = $this->find_sub_citations($this->text);
         $this->citations = [];
         foreach ($textCitations[1] as $key => $textCitation) {
-            $_Citation = new CitationOld($textCitations[2][$key], $textCitation, $textCitations[0][$key]);
+            $_Citation = new Citation($textCitations[2][$key], $textCitation, $textCitations[0][$key]);
             $this->citations[] = $_Citation;
         }
     }
 
+    /**
+     * Get all citations found in the text.
+     *
+     * @return Citation[] Array of Citation objects.
+     */
     public function getCitations(): array
     {
         return $this->citations;
     }
-}
 
-function getCitationsOld($text)
-{
-    $do = new ParserCitationsOld($text);
-    $citations = $do->getCitations();
-
-    return $citations;
+    public static function getCitationsOld($text): array
+    {
+        return (new self($text))->getCitations();
+    }
 }

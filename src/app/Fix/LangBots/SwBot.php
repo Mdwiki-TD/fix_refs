@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Fix\LangBots\SwBot;
+namespace App\Fix\LangBots;
 
-
-function sw_fixes($text)
+class SwBot
 {
-
-    // find == Marejeleo == replace by == Marejeo ==
-    $text = preg_replace('/(=+)\s*Marejeleo\s*(\1)/iu', '\1 Marejeo \1', $text);
-
-    return $text;
+    public static function sw_fixes($text)
+    {
+        // find == Marejeleo == replace by == Marejeo ==
+        $text = preg_replace('/(=+)\s*Marejeleo\s*(\1)/iu', '\1 Marejeo \1', $text);
+        return $text;
+    }
 }

@@ -1,73 +1,64 @@
 <?php
 
-namespace App\Fix\LangBots\PlBots\FixPlInfobox;
+namespace App\Fix\LangBots\PlBots;
 
-
-use App\Fix\WikiParse\ParserTemplates;
 use App\Logger;
+use App\Fix\WikiParse\ParserTemplates;
 
-function add_missing_params_to_choroba_infobox($text)
+class FixPlInfobox
 {
+    public static function add_missing_params_to_choroba_infobox($text)
+    {
+        Logger::debug("\n add_missing_params_to_choroba_infobox:\n");
+        $newText = $text;
 
-    Logger::debug("\n add_missing_params_to_choroba_infobox:\n");
+        // Get all templates
+        $temps = (new ParserTemplates($text))->getTemplates();
 
-    $newText = $text;
+        // Parameters to add if missing
+        $paramsToAdd = [
+            "nazwa naukowa" => "",
+            "ICD11" => "",
+            "ICD11 nazwa" => "",
+            "ICD10" => "",
+            "ICD10 nazwa" => "",
+            "DSM-5" => "",
+            "DSM-5 nazwa" => "",
+            "DSM-IV" => "",
+            "DSM-IV nazwa" => "",
+            "ICDO" => "",
+            "DiseasesDB" => "",
+            "OMIM" => "",
+            "MedlinePlus" => "",
+            "MeshID" => "",
+            "commons" => "",
+        ];
 
-    // Get all templates
-    $temps = (new ParserTemplates($text))->getTemplates();
+        foreach ($temps as $temp) {
+            $name = $temp->getStripName();
 
-    // Parameters to add if missing
-    $paramsToAdd = [
-        "nazwa naukowa" => "",
-        "ICD11" => "",
-        "ICD11 nazwa" => "",
-        "ICD10" => "",
-        "ICD10 nazwa" => "",
-        "DSM-5" => "",
-        "DSM-5 nazwa" => "",
-        "DSM-IV" => "",
-        "DSM-IV nazwa" => "",
-        "ICDO" => "",
-        "DiseasesDB" => "",
-        "OMIM" => "",
-        "MedlinePlus" => "",
-        "MeshID" => "",
-        "commons" => "",
-    ];
+            // Check if template name matches "Choroba infobox" (case-insensitive)
+            if (strtolower($name) === "choroba infobox") {
+                Logger::debug("Found Choroba infobox template\n");
+                $tempOld = $temp->getOriginalText();
+                $params = $temp->getParameters();
 
-    foreach ($temps as $temp) {
-
-        $name = $temp->getStripName();
-
-        // Check if template name matches "Choroba infobox" (case-insensitive)
-        if (strtolower($name) === "choroba infobox") {
-
-            Logger::debug("Found Choroba infobox template\n");
-
-            $tempOld = $temp->getOriginalText();
-            $params = $temp->getParameters();
-
-            // Add missing parameters
-            foreach ($paramsToAdd as $paramName => $paramValue) {
-                if (!array_key_exists($paramName, $params)) {
-                    $temp->setParameter($paramName, $paramValue);
+                // Add missing parameters
+                foreach ($paramsToAdd as $paramName => $paramValue) {
+                    if (!array_key_exists($paramName, $params)) {
+                        $temp->setParameter($paramName, $paramValue);
+                    }
                 }
+                $tempNew = $temp->toString();
+                $newText = str_replace($tempOld, $tempNew, $newText);
             }
-
-            $tempNew = $temp->toString();
-
-            $newText = str_replace($tempOld, $tempNew, $newText);
-
         }
+        return $newText;
     }
 
-    return $newText;
-}
-
-function pl_fixes($text)
-{
-
-    $text = add_missing_params_to_choroba_infobox($text);
-
-    return $text;
+    public static function pl_fixes($text)
+    {
+        $text = self::add_missing_params_to_choroba_infobox($text);
+        return $text;
+    }
 }
