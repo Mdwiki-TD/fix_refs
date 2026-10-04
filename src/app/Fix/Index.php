@@ -54,7 +54,7 @@ class Index
 
         $text = MiniFixesBot::mini_fixes($text, $lang);
 
-        $text = new MissingRefs($text, $sourcetitle, $mdwikiRevid)->fix_missing_refs();
+        $text = (new MissingRefs($text, $sourcetitle, $mdwikiRevid))->fix_missing_refs();
 
         $text = RemoveDuplicateRefs::remove_Duplicate_refs_With_attrs($text);
 
