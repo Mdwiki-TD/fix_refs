@@ -50,13 +50,21 @@ class MiniFixesBot
 
     public static function remove_space_before_ref_tags(string $text, string $lang): string
     {
+
+        $forLangs = ["sw", "bn", "ar"];
+
+        // if (in_array($lang, $forLangs)) {
         $text = (string)preg_replace("/\s*(\.|,|。|।)\s*<ref/iu", "$1<ref", $text);
+        // }
 
         return $text;
     }
 
     public static function refs_tags_spaces(string $text): string
     {
+        // Remove spaces between reference tags more precisely
+        // $text = preg_replace('/(<\/ref>)\s+(<ref[^>]*>)/', '$1$2', $text);
+
         // </ref> <ref>
         $text = (string)preg_replace("/<\/ref>\s*<ref/u", "</ref><ref", $text);
 
@@ -66,6 +74,7 @@ class MiniFixesBot
         // </ref><ref name=... | </ref><ref>
         $text = str_replace("</ref> <ref", "</ref><ref", $text);
 
+
         $text = str_replace("> <ref", "><ref", $text);
 
         return $text;
@@ -73,6 +82,8 @@ class MiniFixesBot
 
     public static function fix_preffix(string $text, string $lang): string
     {
+        // [[:en:X-сцепленное_рецессивное_наследование|Х-сцепленным рецессивным]], [[:ru:Спинальная_мышечная_атрофия|аутосомно-доминантным]]
+
         // replace [[:{en}: by [[
         $text = (string)preg_replace('/\[\[:en:/u', "[[", $text);
         // replace [[:{lang}: by [[
@@ -84,6 +95,7 @@ class MiniFixesBot
     public static function remove_template_rtt_links(string $text): string
     {
         // Remove wiki links to Template:RTT like [[Template:RTT|සැකිල්ල:RTT]]
+        // Use [^\[\]]+ to match the second part (anything except square brackets)
         $text = (string)preg_replace('/\[\[Template:RTT\|[^\[\]]+\]\]/u', '', $text);
 
         return $text;

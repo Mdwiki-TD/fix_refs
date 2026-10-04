@@ -12,8 +12,10 @@ class ExpendRefs
             $alltext = $first;
         }
         $refs = CitationsReg::get_full_refs($alltext);
+        // echo  "get_full_refs:" . count($refs) . "<br>";
 
         $shortRefs = CitationsReg::get_short_citations($first);
+        // echo  "short_refs:" . count($shortRefs) . "<br>";
 
         foreach ($shortRefs as $cite) {
             $name = $cite["name"];

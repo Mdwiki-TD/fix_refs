@@ -6,27 +6,33 @@ use App\Fix\LangBots\SwBot;
 
 class swTest extends MyFunctionTest
 {
-    public function testFixTempsAndMonths_1(): void {
+    public function testFixTempsAndMonths_1(): void
+    {
         $this->assertEquals("== Marejeo ==", SwBot::sw_fixes("== Marejeleo =="));
     }
 
-    public function testFixTempsAndMonths_2(): void {
+    public function testFixTempsAndMonths_2(): void
+    {
         $this->assertEquals("== Marejeo ==", SwBot::sw_fixes("==Marejeleo=="));
     }
 
-    public function testExtraSpacesAroundTheWord(): void {
+    public function testExtraSpacesAroundTheWord(): void
+    {
         $this->assertEquals("==== Marejeo ====", SwBot::sw_fixes("====   Marejeleo   ===="));
     }
 
-    public function testCaseInsensitivityMixed(): void {
+    public function testCaseInsensitivityMixed(): void
+    {
         $this->assertEquals("====== Marejeo ======", SwBot::sw_fixes("====== MaReJeLeO ======"));
     }
 
-    public function testAdditionalText(): void {
+    public function testAdditionalText(): void
+    {
         $this->assertEquals("== Marejeleo na Maoni ==", SwBot::sw_fixes("== Marejeleo na Maoni =="));
     }
 
-    public function testSwFixes(): void {
+    public function testSwFixes(): void
+    {
         $tests = [
             // Case 3: Case insensitivity (lowercase)
             [

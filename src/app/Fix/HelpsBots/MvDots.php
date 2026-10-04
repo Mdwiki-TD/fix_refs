@@ -9,6 +9,9 @@ class MvDots
         // Define punctuation marks based on language
         $punctuation = '\.,،';
 
+        // Pattern to match references followed by punctuation
+        // This pattern handles one or more ref tags followed by punctuation
+        // $pattern = '/((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)([\.,،])/su';
         $pattern = '/((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)([' . $punctuation . ']+)/su';
 
         // Replace by moving punctuation before the reference(s)
@@ -26,6 +29,9 @@ class MvDots
 
     public static function move_dots_after_refs(string $newtext, string $lang): string
     {
+
+        // Logger::debug("move_dots_after_refs\n");
+
         $dot = "\.,。।";
 
         if ($lang === "hy") {

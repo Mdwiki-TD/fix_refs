@@ -22,10 +22,13 @@ class EsMonths
         foreach ($temps as $temp) {
             $tempOld = $temp->getOriginalText();
 
+            // Logger::debug("temp_old:($tempOld)\n");
+
             $params = $temp->getParameters();
             foreach ($params as $key => $value) {
                 $newValue = MonthsNewValue::make_date_new_val_es($value);
 
+                // if ($newValue && $newValue != trim($value)) {
                 if (trim($newValue) !== trim((string)$value)) {
                     $temp->setParameter((string)$key, $newValue);
                 }
@@ -44,9 +47,17 @@ class EsMonths
         foreach ($citations as $key => $citation) {
             $citeTemp = $citation->getContent();
 
+            // Logger::debug("\n cite_temp: $citeTemp\n");
+
+            // if $citeTemp startwith {{ and ends with }}
+            // if (start_end($citeTemp) || defined("DEBUG") || True) {
+
             $newTemp = self::fix_es_months_in_texts($citeTemp);
 
+            // if ($newTemp != $citeTemp) Logger::debug("new_temp != cite_temp\n");
+
             $newText = str_replace($citeTemp, $newTemp, $newText);
+            // }
         }
 
         return $newText;

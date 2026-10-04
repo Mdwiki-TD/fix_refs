@@ -161,10 +161,13 @@ class Es
     public static function work_one_temp(Template $temp, string $name): string
     {
         ESData::init();
+        // Logger::debug("\n$name\n");
         $tempName2 = isset(ESData::$refsTemps[$name]) ? ESData::$refsTemps[$name] : $name;
         if (strtolower($tempName2) !== strtolower($name)) {
             $temp->setName($tempName2);
         }
+
+        // $paramsEsUp = $temp->getParameters();
 
         $temp->changeParametersNames(ESData::$argsTo);
         $temp->deleteParameter("url-status");
@@ -177,12 +180,17 @@ class Es
         ESData::init();
         $tempsIn = (new ParserTemplates($text))->getTemplates();
 
+        // Logger::debug("lenth temps_in:" . count($tempsIn) . "\n");
+
         $newText = $text;
         foreach ($tempsIn as $temp) {
             $name = $temp->getStripName();
 
+            // Logger::debug("* name: $name\n");
+
             $oldTextTemplate = $temp->getOriginalText();
             if (!array_key_exists($name, ESData::$refsTemps) && !in_array($name, ESData::$refsTemps)) {
+                // Logger::debug("not found: $name\n");
                 continue;
             }
             $newTextStr = self::work_one_temp($temp, $name);
@@ -201,6 +209,7 @@ class Es
         // Check if the text has fewer than 10 lines
         if (substr_count($text, "\n") < 10 && $title != "test!") {
             Logger::debug("less than 10 lines\n");
+            // return $text;
         }
 
         // Replace <references /> with {{listaref}}

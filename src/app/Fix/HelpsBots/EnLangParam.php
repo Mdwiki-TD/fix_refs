@@ -42,6 +42,8 @@ class EnLangParam
         foreach ($temps as $temp) {
             $tempOld = $temp->getOriginalText();
 
+            // Logger::debug("temp_old:($tempOld)\n");
+
             $params = $temp->parameters;
             $language = $params->get("language", "");
             if ($language == "") {

@@ -51,6 +51,7 @@ class Infobox2
 
         foreach ($ingr as $temp) {
             $u++;
+            $tmpName = $temp['name'];
             $params = $temp['params'];
             $template = (string)$temp['item'];
 

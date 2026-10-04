@@ -41,10 +41,16 @@ class Index
             $text = FixPlInfobox::pl_fixes($text);
         }
 
+        // print_s("fix page: $title, move_dots:$moveDots, expend_infobox:$infobox");
+
         if ($infobox || $lang === "es") {
             Logger::debug("Expend_Infobox\n");
             $text = Infobox::Expend_Infobox($text, $title, "");
         }
+
+        // $text = remove_False_code($text);
+
+        // $text = fix_refs_names($text);
 
         $text = MiniFixesBot::mini_fixes($text, $lang);
 
