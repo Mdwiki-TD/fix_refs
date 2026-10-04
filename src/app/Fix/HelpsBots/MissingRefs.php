@@ -42,6 +42,7 @@ class MissingRefs
     public static function find_mdwiki_revid($sourcetitle, $jsonFile)
     {
         if (!is_file($jsonFile)) {
+            Logger::debug("jsonFile not found: $jsonFile");
             return "";
         }
         $content = file_get_contents($jsonFile);
@@ -70,6 +71,7 @@ class MissingRefs
         }
         $file = "$revisionsDir/$mdwikiRevid/wikitext.txt";
         if (!file_exists($file)) {
+            Logger::debug("wikitext file not found: $file");
             $file = dirname(__DIR__, 2) . "/resources/revisions/$mdwikiRevid/wikitext.txt";
         }
         Logger::debug($file);
