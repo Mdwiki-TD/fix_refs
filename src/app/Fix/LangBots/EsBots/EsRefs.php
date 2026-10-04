@@ -17,6 +17,7 @@ class EsRefs
         $newText = $text;
         $refs = [];
         $citations = Citations::getCitationsOld($text);
+        $newText = $text;
         $numb = 0;
 
         foreach ($citations as $key => $citation) {
@@ -50,6 +51,7 @@ class EsRefs
             $line = str_replace($short["tag"], "", $line);
         }
 
+        // remove \n+
         $line = (string)preg_replace("/\n+/u", "\n", $line);
         return $line;
     }
@@ -73,17 +75,23 @@ class EsRefs
     {
         $tempsIn = (new ParserTemplates($text))->getTemplates();
 
+        // Logger::debug("lenth temps_in:" . count($tempsIn) . "\n");
+
         $newText = $text;
         $tempAlreadyIn = false;
 
         foreach ($tempsIn as $temp) {
             $name = $temp->getStripName();
 
+            // Logger::debug("\n$name\n");
+
             $oldTextTemplate = $temp->getOriginalText();
 
             if (!in_array(strtolower($name), ["reflist", "listaref"])) {
                 continue;
             }
+
+            // Logger::debug("\n$name\n");
 
             $refnParam = $temp->getParameter("refs");
 
@@ -111,6 +119,7 @@ class EsRefs
     public static function mv_es_refs(string $text): string
     {
         if (empty($text)) {
+            // Logger::debug("text is empty");
             return $text;
         }
 

@@ -15,6 +15,7 @@ class CitationsReg
         if (trim($options) == "") {
             return "";
         }
+        // $pa = "/name\s*=\s*\"(.*?)\"/i";
         $pa = "/name\s*\=\s*[\"\']*([^>\"\']*)[\"\']*\s*/iu";
         preg_match($pa, $options, $matches);
         if (!isset($matches[1])) {

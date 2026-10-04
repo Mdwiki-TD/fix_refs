@@ -150,6 +150,7 @@ class Parameters
             if ($index == $key) {
                 $result .= "|" . $formattedValue;
             } else {
+                // $formattedKey = $ljust > 0 ? str_pad($key, $ljust, " ") : $key;
                 $formattedKey = $ljust > 0 ? $this->str_pad_right((string)$key, $ljust) : $key;
                 $result .= $separator . "|" . $formattedKey . "=" . $formattedValue;
             }

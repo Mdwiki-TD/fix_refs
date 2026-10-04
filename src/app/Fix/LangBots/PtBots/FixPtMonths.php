@@ -16,6 +16,9 @@ class FixPtMonths
 
     public static function rm_ref_spaces(string $newtext): string
     {
+
+        // \s*(\.|,|。|।)\s*((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)
+
         $dot = "(\.|,|。|।)";
         $regline = "((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)";
         $pattern = "/\s*" . $dot . "\s*" . $regline . "/m";
@@ -32,10 +35,13 @@ class FixPtMonths
         foreach ($temps as $temp) {
             $tempOld = $temp->getOriginalText();
 
+            // Logger::debug("temp_old:($tempOld)\n");
+
             $params = $temp->getParameters();
             foreach ($params as $key => $value) {
                 $newValue = MonthsNewValue::make_date_new_val_pt($value);
 
+                // if ($newValue && $newValue != trim($value)) {
                 if (trim($newValue) !== trim((string)$value)) {
                     $temp->setParameter((string)$key, $newValue);
                 }
@@ -54,7 +60,14 @@ class FixPtMonths
         foreach ($citations as $key => $citation) {
             $citeTemp = $citation->getContent();
 
+            // Logger::debug("\n cite_temp: $citeTemp\n");
+
+            // if $citeTemp startwith {{ and ends with }}
+            // if (start_end($citeTemp) || defined("DEBUG") || True) {
+
             $newTemp = self::fix_pt_months_in_texts($citeTemp);
+
+            // if ($newTemp != $citeTemp) Logger::debug("new_temp != cite_temp\n");
 
             $newText = str_replace($citeTemp, $newTemp, $newText);
         }

@@ -15,6 +15,7 @@ class Category
         // This regular expression uses recursion (?R) to correctly handle nested brackets.
         // (?R) matches the entire pattern again, allowing it to match nested structures like [[...[...]...]].
         $pattern = "/\[\[\s*Category\s*:([^\]\]]+?)\]\]/is";
+        // $pattern = "/\[\[\s*Category\s*:(.*?)\]\](?!\])/is";
 
         preg_match_all($pattern, $text, $matches);
 
