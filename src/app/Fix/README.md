@@ -4,7 +4,7 @@ The core PHP library for parsing and fixing MediaWiki references. This is the ma
 
 ## Project Overview
 
-`app/Fix` contains the complete pipeline for transforming wikitext references. It provides a wikitext parser (`WikiParse`), a set of text transformation Bots, language-specific processors, and helper utilities. The main entry point is the `fix_page()` function in `index.php`.
+`app/Fix` contains the complete pipeline for transforming wikitext references. It provides a wikitext parser (`WikiParse`), a set of text transformation Bots, language-specific processors, and helper utilities. The main entry point is the `fixPage()` function in `index.php`.
 
 ### Main Features
 
@@ -31,7 +31,7 @@ No runtime dependencies. Uses only PHP built-in functions (`preg_*`, `str_*`, `c
 
 ```
 app/Fix/
-├── index.php                   # fix_page() - main processing pipeline
+├── index.php                   # fixPage() - main processing pipeline
 ├── bootstrap.php           # Autoloader (glob-based file includes)
 ├── test_bot.php                # Debug output helpers (echo_test, echo_debug)
 ├── md_cat.php                  # MDWiki category via Wikidata API
@@ -63,7 +63,7 @@ app/Fix/
 │   └── Category.php            # get_categories_reg()
 │
 ├── Bots/                       # Core text transformation functions
-│   ├── mini_fixes_bot.php      # Spacing, section titles, prefix cleanup
+│   ├── miniFixes_bot.php      # Spacing, section titles, prefix cleanup
 │   ├── remove_duplicate_refs.php # Duplicate ref detection/removal
 │   ├── expend_refs.php         # Short ref expansion
 │   ├── refs_utils.php          # String helpers (str_starts_with, etc.)
@@ -103,7 +103,7 @@ app/Fix/
 
 ### Processing Pipeline
 
-The `fix_page()` function in `index.php` executes transformations in this order:
+The `fixPage()` function in `index.php` executes transformations in this order:
 
 ```
 Input wikitext
@@ -111,14 +111,14 @@ Input wikitext
   ├─ 1. page_is_redirect() ──── Skip if redirect
   ├─ 2. pl_fixes() ──────────── Polish infobox params
   ├─ 3. Expend_Infobox() ────── Expand infobox templates
-  ├─ 4. mini_fixes() ────────── Spacing, section titles, prefixes
+  ├─ 4. miniFixes() ────────── Spacing, section titles, prefixes
   ├─ 5. fix_missing_refs() ──── Expand short refs from source
-  ├─ 6. remove_Duplicate_refs_With_attrs() ── Deduplicate refs
-  ├─ 7. move_dots_after_refs() ── Punctuation normalization
-  ├─ 8. add_lang_en_to_refs() ── Add |language=en
+  ├─ 6. removeDuplicateRefsWithAttrs() ── Deduplicate refs
+  ├─ 7. moveDotsAfterRefs() ── Punctuation normalization
+  ├─ 8. addLangEnToRefs() ── Add |language=en
   ├─ 9. pt_fixes() / bg_fixes() / fix_es() / sw_fixes() ── Language-specific
   ├─ 10. add_Translated_from_MDWiki() ── Category
-  └─ 11. mini_fixes_after_fixing() ── Final cleanup
+  └─ 11. miniFixes_after_fixing() ── Final cleanup
 Output wikitext
 ```
 
@@ -126,7 +126,7 @@ Output wikitext
 
 | Pattern               | Usage                                                             |
 | --------------------- | ----------------------------------------------------------------- |
-| **Pipeline**          | `fix_page()` chains transformations sequentially                  |
+| **Pipeline**          | `fixPage()` chains transformations sequentially                  |
 | **Strategy**          | Language Bots selected by `$lang` parameter                       |
 | **Value Object**      | `Template`, `Tag`, `Parameters` are immutable-style data carriers |
 | **Facade**            | `WikiParse/Template.php` provides `getTemplates()` entry point    |
@@ -150,14 +150,14 @@ Output wikitext
 ### SOLID Principles
 
 -   **SRP**: Generally good - each file has a focused purpose. Exception: `es.php` contains both translation tables and transformation logic.
--   **OCP**: Poor - adding a language requires modifying `fix_page()` directly. A plugin/strategy pattern would help.
+-   **OCP**: Poor - adding a language requires modifying `fixPage()` directly. A plugin/strategy pattern would help.
 -   **LSP**: N/A - minimal inheritance.
 -   **ISP**: Good - no forced interface implementations.
 -   **DIP**: Poor - all function calls are direct, no abstractions or injection points.
 
 ### Maintainability Rating: 6/10
 
-The modular file structure aids navigation, but the growing `if` chain in `fix_page()` and lack of abstraction layers make extension harder over time.
+The modular file structure aids navigation, but the growing `if` chain in `fixPage()` and lack of abstraction layers make extension harder over time.
 
 ## Strengths
 
@@ -177,9 +177,9 @@ The modular file structure aids navigation, but the growing `if` chain in `fix_p
 
 1. **Duplicate utility functions** - `str_starts_with()` and `str_ends_with()` are defined in both `refs_utils.php` and `remove_space.php` with `function_exists` guards. Should be consolidated.
 
-2. **Mixed naming conventions** - Functions use a mix of `snake_case` (`fix_page`), `PascalCase_Snake` (`Expend_Infobox`), `camelCase` (`getCitationsOld`), and `Mixed_Case` (`remove_Duplicate_refs_With_attrs`).
+2. **Mixed naming conventions** - Functions use a mix of `snake_case` (`fixPage`), `PascalCase_Snake` (`Expend_Infobox`), `camelCase` (`getCitationsOld`), and `Mixed_Case` (`removeDuplicateRefsWithAttrs`).
 
-3. **Commented-out code** - `fix_page()` contains commented-out calls (`// $text = fix_refs_names($text);`), and multiple files have debug lines left in.
+3. **Commented-out code** - `fixPage()` contains commented-out calls (`// $text = fixRefsNames($text);`), and multiple files have debug lines left in.
 
 4. **Static global state** - `ESData` class uses public static arrays populated at include time, creating implicit coupling and making testing harder.
 
@@ -211,7 +211,7 @@ The modular file structure aids navigation, but the growing `if` chain in `fix_p
 
 ### Performance
 
-5. **Repeated full-text parsing** - `getCitationsOld()` is called by multiple functions during a single pipeline run (`remove_Duplicate_refs_With_attrs`, `add_lang_en_to_refs`, `fix_pt_months_in_refs`, `fix_es_months_in_refs`, `mv_es_refs`), each re-parsing the entire text.
+5. **Repeated full-text parsing** - `getCitationsOld()` is called by multiple functions during a single pipeline run (`removeDuplicateRefsWithAttrs`, `addLangEnToRefs`, `fix_pt_months_in_refs`, `fix_es_months_in_refs`, `mv_es_refs`), each re-parsing the entire text.
 
 6. **Regex on large texts** - Several functions apply `preg_replace` or `preg_match_all` on the full article text multiple times. For large articles, this could be slow.
 
@@ -225,7 +225,7 @@ The modular file structure aids navigation, but the growing `if` chain in `fix_p
 
 ### Missing Tests
 
--   No integration test for the complete `fix_page()` pipeline
+-   No integration test for the complete `fixPage()` pipeline
 -   `infobox2.php` has limited test coverage
 -   `sw_fixes()` has a single test case
 -   No tests for edge cases (empty input, malformed wikitext, extremely long articles)
@@ -256,7 +256,7 @@ The modular file structure aids navigation, but the growing `if` chain in `fix_p
 
 1. Replace `bootstrap.php` glob system with Composer PSR-4 autoloading
 2. Add a `LanguageFixerInterface` with per-language implementations
-3. Parse citations once in `fix_page()` and pass the result to all bot functions
+3. Parse citations once in `fixPage()` and pass the result to all bot functions
 4. Replace `$_SERVER['SERVER_NAME']` checks with environment variables
 5. Extract `ESData` mappings into a JSON configuration file
 
@@ -287,9 +287,9 @@ The modular file structure aids navigation, but the growing `if` chain in `fix_p
 require_once __DIR__ . '/bootstrap.php';
 
 // Process wikitext
-use function App\Fix\Index\fix_page;
+use function App\Fix\Index\fixPage;
 
-$result = fix_page(
+$result = fixPage(
     $text,          // Raw wikitext
     $title,         // Article title
     true,           // move_dots

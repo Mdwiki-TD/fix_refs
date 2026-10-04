@@ -101,7 +101,7 @@ class MiniFixesBot
         return $text;
     }
 
-    public static function mini_fixes_after_fixing(string $text, string $lang): string
+    public static function miniFixes_after_fixing(string $text, string $lang): string
     {
         // remove empty lines
         $text = (string)preg_replace('/^\s*\n/mu', "\n", $text);
@@ -109,7 +109,7 @@ class MiniFixesBot
         return $text;
     }
 
-    public static function mini_fixes(string $text, string $lang): string
+    public static function miniFixes(string $text, string $lang): string
     {
         $text = self::refs_tags_spaces($text);
         $text = self::fix_sections_titles($text, $lang);

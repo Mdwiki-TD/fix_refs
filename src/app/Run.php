@@ -43,7 +43,7 @@ class Run
             $addEnLang = $settings['add_en_lang'];
         }
 
-        $newtext = Index::fix_page(
+        $newtext = Index::fixPage(
             $text,
             $title,
             $moveDots,

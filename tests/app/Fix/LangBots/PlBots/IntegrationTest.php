@@ -131,7 +131,7 @@ TXT
         array $shouldNotContain,
         array $maxParameterCounts
     ): void {
-        $result = Index::fix_page($input, $title, false, $expandInfobox, false, $lang, "", "");
+        $result = Index::fixPage($input, $title, false, $expandInfobox, false, $lang, "", "");
 
         // Assert expected parameters are present
         foreach ($expectedParams as $param) {

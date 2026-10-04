@@ -44,8 +44,8 @@ Leczenie astmy obejmuje stosowanie leków wziewnych.
 [[Kategoria:Choroby układu oddechowego]]
 ARTICLE;
 
-        // Process the article through fix_page function for Polish language
-        $processedArticle = Index::fix_page(
+        // Process the article through fixPage function for Polish language
+        $processedArticle = Index::fixPage(
             $originalArticle,
             "Astma oskrzelowa", // title
             false,               // move_dots

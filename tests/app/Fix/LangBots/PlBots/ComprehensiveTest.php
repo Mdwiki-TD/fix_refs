@@ -107,7 +107,7 @@ TXT,
         array $shouldNotAdd,
         array $notDuplicated
     ): void {
-        $result = Index::fix_page($input, "Test Article", false, true, false, $lang, "", "");
+        $result = Index::fixPage($input, "Test Article", false, true, false, $lang, "", "");
 
         // Verify that expected parameters are present
         foreach ($expectedParams as $param) {

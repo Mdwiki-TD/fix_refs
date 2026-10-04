@@ -21,7 +21,7 @@ use App\Fix\MdCat;
 
 class Index
 {
-    public static function fix_page(
+    public static function fixPage(
         string $text,
         string $title,
         bool $moveDots,
@@ -50,22 +50,22 @@ class Index
 
         // $text = remove_False_code($text);
 
-        // $text = fix_refs_names($text);
+        // $text = fixRefsNames($text);
 
-        $text = MiniFixesBot::mini_fixes($text, $lang);
+        $text = MiniFixesBot::miniFixes($text, $lang);
 
         $text = (new MissingRefs($text, $sourcetitle, $mdwikiRevid))->fix_missing_refs();
 
-        $text = RemoveDuplicateRefs::remove_Duplicate_refs_With_attrs($text);
+        $text = RemoveDuplicateRefs::removeDuplicateRefsWithAttrs($text);
 
         if ($moveDots) {
             Logger::debug("move_dots\n");
-            $text = MvDots::move_dots_after_refs($text, $lang);
+            $text = MvDots::moveDotsAfterRefs($text, $lang);
         }
 
         if ($addEnLang) {
             Logger::debug("add_en_lang\n");
-            $text = EnLangParam::add_lang_en_to_refs($text);
+            $text = EnLangParam::addLangEnToRefs($text);
         }
 
         if ($lang === "pt") {
@@ -94,7 +94,7 @@ class Index
             $text = MdCat::add_Translated_from_MDWiki($text, $lang);
         }
 
-        $text = MiniFixesBot::mini_fixes_after_fixing($text, $lang);
+        $text = MiniFixesBot::miniFixes_after_fixing($text, $lang);
 
         if (!empty($text)) {
             return $text;

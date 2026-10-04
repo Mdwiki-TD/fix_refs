@@ -64,11 +64,11 @@ class attrsUtilsTest extends MyFunctionTest
     public function testGetAttrs(): void
     {
         foreach ($this->data as $name => $tab) {
-            $result = AttrsUtils::get_attrs($tab[0]);
+            $result = AttrsUtils::getAttrs($tab[0]);
             $this->assertEquals($tab[1], $result, $name);
         }
     }
-    // اختبارات دالة get_attrs
+    // اختبارات دالة getAttrs
     public function testGetAttrsAlt(): void
     {
         $tests = [
@@ -115,7 +115,7 @@ class attrsUtilsTest extends MyFunctionTest
         ];
 
         foreach ($tests as $test) {
-            $result = AttrsUtils::get_attrs($test['text']);
+            $result = AttrsUtils::getAttrs($test['text']);
             $this->assertEquals($test['expected'], $result);
         }
     }

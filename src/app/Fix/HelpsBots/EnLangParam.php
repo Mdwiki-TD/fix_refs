@@ -55,9 +55,9 @@ class EnLangParam
         return $newText;
     }
 
-    public static function add_lang_en_to_refs(string $text): string
+    public static function addLangEnToRefs(string $text): string
     {
-        Logger::debug("\n add_lang_en_to_refs:\n");
+        Logger::debug("\n addLangEnToRefs:\n");
         $newText = $text;
         $citations = Citations::getCitationsOld($text);
         foreach ($citations as $key => $citation) {

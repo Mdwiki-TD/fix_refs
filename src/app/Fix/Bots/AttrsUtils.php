@@ -39,7 +39,7 @@ class AttrsUtils
      * @param string $text
      * @return array<string, string>
      */
-    public static function get_attrs(string $text): array
+    public static function getAttrs(string $text): array
     {
         $text = "<ref $text>";
         $attrfindTolerant = '/((?<=[\'"\s\/])[^\s\/>][^\s\/=>]*)(\s*=+\s*(\'[^\']*\'|"[^"]*"|(?![\'"])[^>\s]*))?(?:\s|\/(?!>))*/u';

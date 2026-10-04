@@ -9,7 +9,7 @@ use App\Fix\Parse\Citations;
 
 class RemoveDuplicateRefs
 {
-    public static function fix_refs_names(string $text): string
+    public static function fixRefsNames(string $text): string
     {
         $newText = $text;
         $citations = Citations::getCitationsOld($text);
@@ -24,7 +24,7 @@ class RemoveDuplicateRefs
                 continue;
             }
 
-            $attrs = AttrsUtils::get_attrs($citeAttrs);
+            $attrs = AttrsUtils::getAttrs($citeAttrs);
 
             if (empty($citeAttrs)) {
                 continue;
@@ -45,7 +45,7 @@ class RemoveDuplicateRefs
         return $newText;
     }
 
-    public static function remove_Duplicate_refs_With_attrs(string $text): string
+    public static function removeDuplicateRefsWithAttrs(string $text): string
     {
         $newText = $text;
         $refsToCheck = [];

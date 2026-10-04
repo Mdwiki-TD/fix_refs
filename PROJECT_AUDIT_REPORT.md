@@ -24,7 +24,7 @@ Fix Refs is a PHP library that parses and fixes `<ref>` tags and citation templa
 | License              | GPL-3.0-or-later                   |
 | Deployment Target    | Wikimedia Toolforge                |
 
-The architecture follows a pipeline pattern: `fix_page()` in `src/app/Fix/index.php` chains 11 transformation stages, each calling focused functions from `Bots/`, `HelpsBots/`, and `LangBots/` modules. A separate `WikiParse` submodule provides OOP-based wikitext parsing with recursive template extraction.
+The architecture follows a pipeline pattern: `fixPage()` in `src/app/Fix/index.php` chains 11 transformation stages, each calling focused functions from `Bots/`, `HelpsBots/`, and `LangBots/` modules. A separate `WikiParse` submodule provides OOP-based wikitext parsing with recursive template extraction.
 
 ---
 
@@ -36,7 +36,7 @@ The codebase is functional and purpose-built. Core transformation logic is corre
 
 ### Maintainability: 6/10
 
-Language-specific Bots are well-isolated in separate files/directories, making per-language changes safe. The main risk is the growing `if` chain in `fix_page()` -- adding a new language requires modifying this function directly. No abstraction layer (interface, strategy pattern) exists for language-specific processing.
+Language-specific Bots are well-isolated in separate files/directories, making per-language changes safe. The main risk is the growing `if` chain in `fixPage()` -- adding a new language requires modifying this function directly. No abstraction layer (interface, strategy pattern) exists for language-specific processing.
 
 ### Scalability: 7/10
 
@@ -58,7 +58,7 @@ The system is already deployed and running on Wikimedia Toolforge, processing re
 
 All modules within `src/` share these patterns:
 
--   **Function-based API** -- Public interfaces are namespaced functions, not classes. Example: `App\Fix\Index \fix_page()`.
+-   **Function-based API** -- Public interfaces are namespaced functions, not classes. Example: `App\Fix\Index \fixPage()`.
 -   **String-in / string-out transforms** -- Every bot function takes a wikitext string and returns a modified wikitext string.
 -   **cURL with User-Agent** -- All HTTP requests use the same User-Agent string (`WikiProjectMed Translation Dashboard/1.0`) and 5-second timeouts.
 -   **Regex-heavy processing** -- Core logic relies on `preg_replace`, `preg_match_all`, and `str_replace` rather than AST manipulation.
@@ -169,11 +169,11 @@ The `$lang` parameter from user input is inserted directly into API URLs (`https
 
 **File:** `src/app/Fix/index.php` (pipeline)
 
-During a single `fix_page()` call, the following functions each independently parse all citations from the full text:
+During a single `fixPage()` call, the following functions each independently parse all citations from the full text:
 
 1. `fix_missing_refs()` -> `getCitationsOld()` + `get_short_citations()` + `get_full_refs()`
-2. `remove_Duplicate_refs_With_attrs()` -> `getCitationsOld()`
-3. `add_lang_en_to_refs()` -> `getCitationsOld()`
+2. `removeDuplicateRefsWithAttrs()` -> `getCitationsOld()`
+3. `addLangEnToRefs()` -> `getCitationsOld()`
 4. `pt_fixes()` / `fix_es_months_in_refs()` -> `getCitationsOld()`
 5. `mv_es_refs()` -> `getCitationsOld()`
 
@@ -245,9 +245,9 @@ Functions like `add_Translated_from_MDWiki()`, `bg_section()`, and `es_section()
 
 | #   | Refactoring                                                                                                                                                                       | Rationale                                                                               |
 | --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| 1   | **Extract `LanguageFixerInterface`** with per-language implementations. Replace the `if` chain in `fix_page()` with a registry that loads the appropriate fixer based on `$lang`. | Eliminates the growing `if` chain, enables adding languages without modifying core code |
+| 1   | **Extract `LanguageFixerInterface`** with per-language implementations. Replace the `if` chain in `fixPage()` with a registry that loads the appropriate fixer based on `$lang`. | Eliminates the growing `if` chain, enables adding languages without modifying core code |
 | 2   | **Deprecate `CitationOld`** in favor of `WikiParse/src/ParserCitations`. Migrate all bot functions to use the OOP parser.                                                         | Eliminates dual parsing systems                                                         |
-| 3   | **Parse citations once** at the start of `fix_page()` and pass the result to all bot functions.                                                                                   | Eliminates 5+ redundant full-text regex passes                                          |
+| 3   | **Parse citations once** at the start of `fixPage()` and pass the result to all bot functions.                                                                                   | Eliminates 5+ redundant full-text regex passes                                          |
 | 4   | **Extract `WikiParse` as a standalone Composer package.** It has no dependencies on the rest of app/Fix and could be reused.                                                  | Promotes reuse, simplifies testing                                                      |
 | 5   | **Replace `echo_test()`/`echo_debug()`** with PSR-3 logger injection.                                                                                                             | Proper logging, configurable output                                                     |
 | 6   | **Extract `ESData` static arrays** into JSON configuration files.                                                                                                                 | Removes global state, enables non-PHP tooling                                           |
@@ -271,7 +271,7 @@ Functions like `add_Translated_from_MDWiki()`, `bg_section()`, and `es_section()
 | Area                   | Recommendation                                                                             |
 | ---------------------- | ------------------------------------------------------------------------------------------ |
 | **CI/CD**              | Add GitHub Actions workflow running `composer test` on push/PR                             |
-| **Integration Tests**  | Add end-to-end test for `fix_page()` with sample wikitext for each language                |
+| **Integration Tests**  | Add end-to-end test for `fixPage()` with sample wikitext for each language                |
 | **Web Endpoint Tests** | Add tests for `index.php` and `text_post.php` using PHPUnit's HTTP client or a test server |
 | **Mutation Testing**   | Add Infection PHP to verify test quality                                                   |
 | **Code Style**         | Add PHP-CS-Fixer with a consistent ruleset (PSR-12)                                        |
@@ -296,7 +296,7 @@ Functions like `add_Translated_from_MDWiki()`, `bg_section()`, and `es_section()
 
 1. **Apply the 5 immediate fixes** (estimated: 2 hours). The `$new_text` bug and CSRF disable are the highest priority.
 2. **Run the existing test suite** to establish a baseline: `composer test`.
-3. **Add 3 integration tests** for `fix_page()` covering Spanish, Portuguese, and Bulgarian -- the most complex language paths.
+3. **Add 3 integration tests** for `fixPage()` covering Spanish, Portuguese, and Bulgarian -- the most complex language paths.
 4. **Replace glob includes with Composer autoloading** -- this is a high-value, low-risk change.
 5. **Plan the `LanguageFixerInterface` extraction** as a 2-week sprint when the team has capacity.
 

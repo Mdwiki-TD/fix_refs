@@ -27,10 +27,10 @@ class MvDots
         return $result;
     }
 
-    public static function move_dots_after_refs(string $newtext, string $lang): string
+    public static function moveDotsAfterRefs(string $newtext, string $lang): string
     {
 
-        // Logger::debug("move_dots_after_refs\n");
+        // Logger::debug("moveDotsAfterRefs\n");
 
         $dot = "\.,。।";
 
