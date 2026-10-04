@@ -1,109 +1,93 @@
 <?php
 
-namespace App\Fix\Bots\RemoveDuplicateRefs;
+namespace App\Fix\Bots;
 
-
-
-use function App\Fix\Bots\AttrsUtils\get_attrs;
-use function App\Fix\Bots\RefsUtils\remove_start_end_quotes;
-use function App\Fix\Parse\Citations\getCitationsOld;
 use App\Logger;
+use App\Fix\Bots\AttrsUtils;
+use App\Fix\Bots\RefsUtils;
+use App\Fix\Parse\Citations;
 
-function fix_refs_names(string $text): string
+class RemoveDuplicateRefs
 {
+    public static function fix_refs_names(string $text): string
+    {
+        $newText = $text;
+        $citations = Citations::getCitationsOld($text);
+        $newText = $text;
 
-    $newText = $text;
+        foreach ($citations as $key => $citation) {
+            $citeAttrs = $citation->getAttributes();
+            $citeAttrs = $citeAttrs ? trim($citeAttrs) : "";
+            $ifIn = "<ref $citeAttrs>";
 
-    $citations = getCitationsOld($text);
+            if (strpos($newText, $ifIn) === false) {
+                continue;
+            }
 
-    $newText = $text;
+            $attrs = AttrsUtils::get_attrs($citeAttrs);
 
-    foreach ($citations as $key => $citation) {
+            if (empty($citeAttrs)) {
+                continue;
+            }
 
-        $citeAttrs = $citation->getAttributes();
-        $citeAttrs = $citeAttrs ? trim($citeAttrs) : "";
+            $newCiteAttrs = "";
 
-        $ifIn = "<ref $citeAttrs>";
+            foreach ($attrs as $key => $value) {
+                $value2 = RefsUtils::remove_start_end_quotes($value);
+                $newCiteAttrs .= " $key=$value2";
+            }
 
-        if (strpos($newText, $ifIn) === false) {
-            continue;
+            $newCiteAttrs = trim($newCiteAttrs);
+            $citeNewtext = "<ref $newCiteAttrs>";
+            $newText = str_replace($ifIn, $citeNewtext, $newText);
         }
 
-        $attrs = get_attrs($citeAttrs);
-
-        if (empty($citeAttrs)) {
-            continue;
-        }
-
-        $newCiteAttrs = "";
-
-        foreach ($attrs as $key => $value) {
-
-            $value2 = remove_start_end_quotes($value);
-
-            $newCiteAttrs .= " $key=$value2";
-
-        }
-
-        $newCiteAttrs = trim($newCiteAttrs);
-
-        $citeNewtext = "<ref $newCiteAttrs>";
-
-        $newText = str_replace($ifIn, $citeNewtext, $newText);
+        return $newText;
     }
 
-    return $newText;
-}
+    public static function remove_Duplicate_refs_With_attrs(string $text): string
+    {
+        $newText = $text;
+        $refsToCheck = [];
+        $refs = [];
+        $citations = Citations::getCitationsOld($newText);
+        $numb = 0;
 
-function remove_Duplicate_refs_With_attrs(string $text): string
-{
+        foreach ($citations as $key => $citation) {
+            $citeFulltext = $citation->getOriginalText();
+            $citeAttrs = $citation->getAttributes();
+            $citeAttrs = $citeAttrs ? trim($citeAttrs) : "";
 
-    $newText = $text;
+            if (empty($citeAttrs)) {
+                $numb += 1;
+                $name = "autogen_" . $numb;
+                $citeAttrs = "name='$name'";
+            }
 
-    $refsToCheck = [];
+            // Logger::debug("\n cite_text: (($citeFulltext))");
+            Logger::debug("\n cite_attrs: (($citeAttrs))");
 
-    $refs = [];
+            $citeNewtext = "<ref $citeAttrs />";
 
-    $citations = getCitationsOld($newText);
+            if (isset($refs[$citeAttrs])) {
 
-    $numb = 0;
+                $newText = str_replace($citeFulltext, $citeNewtext, $newText);
+            } else {
+                $refsToCheck[$citeNewtext] = $citeFulltext;
 
-    foreach ($citations as $key => $citation) {
-
-        $citeFulltext = $citation->getOriginalText();
-
-        $citeAttrs = $citation->getAttributes();
-        $citeAttrs = $citeAttrs ? trim($citeAttrs) : "";
-
-        if (empty($citeAttrs)) {
-            $numb += 1;
-            $name = "autogen_" . $numb;
-            $citeAttrs = "name='$name'";
+                $refs[$citeAttrs] = $citeNewtext;
+            }
         }
 
-        // Logger::debug("\n cite_text: (($citeFulltext))");
-        Logger::debug("\n cite_attrs: (($citeAttrs))");
-
-        $citeNewtext = "<ref $citeAttrs />";
-
-        if (isset($refs[$citeAttrs])) {
-
-            $newText = str_replace($citeFulltext, $citeNewtext, $newText);
-        } else {
-            $refsToCheck[$citeNewtext] = $citeFulltext;
-
-            $refs[$citeAttrs] = $citeNewtext;
-        };
-    }
-
-    foreach ($refsToCheck as $key => $value) {
-        if (strpos($newText, $value) === false) {
-            $pattern = '/' . preg_quote($key, '/') . '/u';
-            $newText = preg_replace($pattern, $value, $newText, 1);
+        foreach ($refsToCheck as $key => $value) {
+            if (strpos($newText, $value) === false) {
+                $pattern = '/' . preg_quote($key, '/') . '/u';
+                $newText = preg_replace($pattern, $value, $newText, 1);
+            }
         }
+
+        // echo count($citations);
+
+        return $newText;
     }
-
-    // echo count($citations);
-
-    return $newText;
 }

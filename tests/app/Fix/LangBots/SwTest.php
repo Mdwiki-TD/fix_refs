@@ -1,34 +1,34 @@
 <?php
 
 use Tests\MyFunctionTest;
-use function App\Fix\LangBots\SwBot\sw_fixes;
+use App\Fix\LangBots\SwBot;
 
 
 class swTest extends MyFunctionTest
 {
     public function testFixTempsAndMonths_1()
     {
-        $this->assertEquals("== Marejeo ==", sw_fixes("== Marejeleo =="));
+        $this->assertEquals("== Marejeo ==", SwBot::sw_fixes("== Marejeleo =="));
     }
 
     public function testFixTempsAndMonths_2()
     {
-        $this->assertEquals("== Marejeo ==", sw_fixes("==Marejeleo=="));
+        $this->assertEquals("== Marejeo ==", SwBot::sw_fixes("==Marejeleo=="));
     }
 
     public function testExtraSpacesAroundTheWord()
     {
-        $this->assertEquals("==== Marejeo ====", sw_fixes("====   Marejeleo   ===="));
+        $this->assertEquals("==== Marejeo ====", SwBot::sw_fixes("====   Marejeleo   ===="));
     }
 
     public function testCaseInsensitivityMixed()
     {
-        $this->assertEquals("====== Marejeo ======", sw_fixes("====== MaReJeLeO ======"));
+        $this->assertEquals("====== Marejeo ======", SwBot::sw_fixes("====== MaReJeLeO ======"));
     }
 
     public function testAdditionalText()
     {
-        $this->assertEquals("== Marejeleo na Maoni ==", sw_fixes("== Marejeleo na Maoni =="));
+        $this->assertEquals("== Marejeleo na Maoni ==", SwBot::sw_fixes("== Marejeleo na Maoni =="));
     }
 
     public function testSwFixes()
@@ -92,7 +92,7 @@ class swTest extends MyFunctionTest
         ];
 
         foreach ($tests as $test) {
-            $result = sw_fixes($test['input']);
+            $result = SwBot::sw_fixes($test['input']);
             $this->assertEquals($test['expected'], $result);
         }
     }

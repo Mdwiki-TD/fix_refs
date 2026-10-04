@@ -1,30 +1,33 @@
 <?php
 
-namespace App\Fix\Parse\Category;
+namespace App\Fix\Parse;
 
-
-function get_categories_reg(string $text): array
+class Category
 {
-    $categories = array();
 
-    // This regular expression uses recursion (?R) to correctly handle nested brackets.
-    // (?R) matches the entire pattern again, allowing it to match nested structures like [[...[...]...]].
-    $pattern = "/\[\[\s*Category\s*:([^\]\]]+?)\]\]/is";
-    // $pattern = "/\[\[\s*Category\s*:(.*?)\]\](?!\])/is";
+    public static function get_categories_reg(string $text): array
+    {
+        $categories = array();
 
-    preg_match_all($pattern, $text, $matches);
+        // This regular expression uses recursion (?R) to correctly handle nested brackets.
+        // (?R) matches the entire pattern again, allowing it to match nested structures like [[...[...]...]].
+        $pattern = "/\[\[\s*Category\s*:([^\]\]]+?)\]\]/is";
+        // $pattern = "/\[\[\s*Category\s*:(.*?)\]\](?!\])/is";
 
-    if (!empty($matches[1])) {
-        foreach ($matches[0] as $i => $fullMatch) {
-            $categoryContent = $matches[1][$i];
-            // Split the content based on "|" to retrieve only the category name
-            $parts = explode('|', $categoryContent);
-            $categoryName = trim(array_shift($parts));
+        preg_match_all($pattern, $text, $matches);
 
-            // Use the full match as the value in the final array
-            $categories[$categoryName] = $fullMatch;
+        if (!empty($matches[1])) {
+            foreach ($matches[0] as $i => $fullMatch) {
+                $categoryContent = $matches[1][$i];
+                // Split the content based on "|" to retrieve only the category name
+                $parts = explode('|', $categoryContent);
+                $categoryName = trim(array_shift($parts));
+
+                // Use the full match as the value in the final array
+                $categories[$categoryName] = $fullMatch;
+            }
         }
-    }
 
-    return $categories;
+        return $categories;
+    }
 }

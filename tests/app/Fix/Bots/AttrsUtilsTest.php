@@ -3,8 +3,8 @@
 
 
 use Tests\MyFunctionTest;
-use function App\Fix\Bots\AttrsUtils\parseAttributes;
-use function App\Fix\Bots\AttrsUtils\get_attrs;
+use App\Fix\Bots\AttrsUtils;
+
 
 class attrsUtilsTest extends MyFunctionTest
 {
@@ -58,7 +58,7 @@ class attrsUtilsTest extends MyFunctionTest
     public function testParseAttributes()
     {
         foreach ($this->data as $name => $tab) {
-            $result = parseAttributes($tab[0]);
+            $result = AttrsUtils::parseAttributes($tab[0]);
             $this->assertEquals($tab[1], $result, $name);
         }
     }
@@ -68,7 +68,7 @@ class attrsUtilsTest extends MyFunctionTest
     public function testGetAttrs()
     {
         foreach ($this->data as $name => $tab) {
-            $result = get_attrs($tab[0]);
+            $result = AttrsUtils::get_attrs($tab[0]);
             $this->assertEquals($tab[1], $result, $name);
         }
     }
@@ -119,7 +119,7 @@ class attrsUtilsTest extends MyFunctionTest
         ];
 
         foreach ($tests as $test) {
-            $result = get_attrs($test['text']);
+            $result = AttrsUtils::get_attrs($test['text']);
             $this->assertEquals($test['expected'], $result);
         }
     }

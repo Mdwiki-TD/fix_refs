@@ -1,14 +1,17 @@
 <?php
 
-namespace App\Fix\Bots\RedirectHelp;
+namespace App\Fix\Bots;
 
-function page_is_redirect($title, $text)
+class RedirectHelp
 {
-    // #пренасочване
+    public static function page_is_redirect($title, $text)
+    {
+        // #пренасочване
 
-    if (preg_match('/^#(пренасочване|redirect)/', $text)) {
-        return true;
+        // if (preg_match('/^#(пренасочване|redirect)/i', $text)) {
+        if (preg_match('/^#(пренасочване|redirect)/', $text)) {
+            return true;
+        }
+        return false;
     }
-
-    return false;
 }

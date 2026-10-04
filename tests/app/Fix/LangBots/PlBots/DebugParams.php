@@ -23,6 +23,7 @@ class DebugParams extends MyFunctionTest
 |MeshID = D001249
 }}
 TXT;
+
         $templates = (new ParserTemplates($input))->getTemplates();
 
         // Verify that template parsing succeeded

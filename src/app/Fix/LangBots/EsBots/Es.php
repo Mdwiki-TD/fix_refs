@@ -1,227 +1,221 @@
 <?php
 
-namespace App\Fix\LangBots\EsBots\ES;
+namespace App\Fix\LangBots\EsBots;
 
-
-use function App\Fix\LangBots\EsBots\EsMonths\fix_es_months_in_refs;
-use function App\Fix\LangBots\EsBots\EsRefs\mv_es_refs;
-use App\Fix\WikiParse\ParserTemplates;
 use App\Logger;
-
+use App\Fix\LangBots\EsBots\EsMonths;
+use App\Fix\LangBots\EsBots\EsRefs;
+use App\Fix\WikiParse\ParserTemplates;
 
 class ESData
 {
-    public static $argsTo = [];
-    public static $refsTemps = [];
-}
+    public static array $argsTo = [];
+    public static array $refsTemps = [];
 
-// Mapping templates
-ESData::$refsTemps = [
-    "cite web" => "cita web",
-    "cite arxiv" => "cita arxiv",
-    "cite certification" => "cita certificación",
-    "cite conference" => "cita conferencia",
-    "cite encyclopedia" => "cita enciclopedia",
-    "cite interview" => "cita entrevista",
-    "cite episode" => "cita episodio",
-    "cite newsgroup" => "cita grupo de noticias",
-    "cite comic" => "cita historieta",
-    "cite court" => "cita juicio",
-    "cite book" => "cita libro",
-    "cite mailing list" => "cita lista de correo",
-    "cite map" => "cita mapa",
-    "cite av media notes" => "cita notas audiovisual",
-    "cite news" => "cita noticia",
-    "cite podcast" => "cita podcast",
-    "cite journal" => "cita publicación",
-    "citation needed" => "cita requerida",
-    "cite thesis" => "cita tesis",
-    "cite tweet" => "cita tuit",
-    "cite av media" => "cita video",
-    "cite video game" => "cita videojuego",
-];
-
-
-// Mapping arguments
-ESData::$argsTo = [
-    "title" => "título",
-    "website" => "sitioweb",
-    "access-date" => "fechaacceso",
-    "accessdate" => "fechaacceso",
-    "language" => "idioma",
-    "archive-url" => "urlarchivo",
-    "archiveurl" => "urlarchivo",
-    "date" => "fecha",
-    "archive-date" => "fechaarchivo",
-    "archivedate" => "fechaarchivo",
-    "first" => "nombre",
-    "last" => "apellidos",
-    "first1" => "nombre1",
-    "last1" => "apellidos1",
-    "last2" => "apellidos2",
-    "first2" => "nombre2",
-];
+    public static function init(): void
+    {
+        if (!empty(self::$refsTemps)) {
+            return;
+        }
+        // Mapping templates
+        self::$refsTemps = [
+            "cite web" => "cita web",
+            "cite arxiv" => "cita arxiv",
+            "cite certification" => "cita certificación",
+            "cite conference" => "cita conferencia",
+            "cite encyclopedia" => "cita enciclopedia",
+            "cite interview" => "cita entrevista",
+            "cite episode" => "cita episodio",
+            "cite newsgroup" => "cita grupo de noticias",
+            "cite comic" => "cita historieta",
+            "cite court" => "cita juicio",
+            "cite book" => "cita libro",
+            "cite mailing list" => "cita lista de correo",
+            "cite map" => "cita mapa",
+            "cite av media notes" => "cita notas audiovisual",
+            "cite news" => "cita noticia",
+            "cite podcast" => "cita podcast",
+            "cite journal" => "cita publicación",
+            "citation needed" => "cita requerida",
+            "cite thesis" => "cita tesis",
+            "cite tweet" => "cita tuit",
+            "cite av media" => "cita video",
+            "cite video game" => "cita videojuego",
+        ];
 
 
-// More mapping with grouped parameters
-$paramsEsUp = [
-    "nombre1" => ["first1", "given1"],
-    "enlaceautor1" => [
-        "authorlink1",
-        "author1-link",
-        "author-link1",
-    ],
-    "enlaceautor" => [
-        "author-link",
-        "authorlink",
-    ],
-    "título" => ["title"],
-    "fechaacceso" => ["accessdate"],
-    "año" => ["year"],
-    "fecha" => ["date"],
-    "editorial" => ["publisher"],
-    "apellido-editor" => ["editor-last", "editor-surname", "editor1-last"],
-    "nombre-editor" => ["editor-first", "editor-given", "editor1-first", "editor1-given"],
-    "enlace-editor" => ["editor-link", "editor1-link"],
-    "ubicación" => ["place", "location"],
-    "lugar-publicación" => ["publication-place"],
-    "fecha-publicación" => ["publication-date"],
-    "edición" => ["edition"],
-    "sined" => ["noed"],
-    "volumen" => ["volume"],
-    "página" => ["page"],
-    "páginas" => ["pages"],
-    "en" => ["at"],
-    "enlace-pasaje" => ["url-pasaje"],
-    "idioma" => ["language"],
-    "título-trad" => ["trans_title"],
-    "capítulo" => ["chapter"],
-    "url-capítulo" => ["url-chapter"],
-    "capítulo-trad" => ["trans_chapter"],
-    "formato" => ["format"],
-    "cita" => ["quote"],
-    "separador" => ["separator"],
-    "resumen" => ["laysummary", "layurl"],
-    "fecha-resumen" => ["laydate"],
-    "apellidos1" => [
-        "last1",
-    ],
-    "apellidos2" => [
-        "last2",
-    ],
-    "nombre2" => ["first2", "given2"],
-    "enlaceautor2" => ["authorlink2", "author2-link", "authorlink2"],
-    "apellidos3" => ["last3", "surname3", "author3"],
-    "nombre3" => ["first3", "given3"],
-    "enlaceautor3" => ["authorlink3", "author3-link", "authorlink3"],
-    "apellidos4" => ["last4", "surname4", "author4"],
-    "nombre4" => ["first4", "given4"],
-    "enlaceautor4" => ["authorlink4", "author4-link", "authorlink4"],
-    "apellidos5" => ["last5", "surname5", "author5"],
-    "nombre5" => ["first5", "given5"],
-    "enlaceautor5" => ["authorlink5", "author5-link", "authorlink5"],
-    "apellidos6" => ["last6", "surname6", "author6"],
-    "nombre6" => ["first6", "given6"],
-    "enlaceautor6" => ["authorlink6", "author6-link", "authorlink6"],
-    "apellidos7" => ["last7", "surname7", "author7"],
-    "nombre7" => ["first7", "given7"],
-    "enlaceautor7" => ["authorlink7", "author7-link", "authorlink7"],
-    "apellidos8" => ["last8", "surname8", "author8"],
-    "nombre8" => ["first8", "given8"],
-    "enlaceautor8" => ["authorlink8", "author8-link", "authorlink8"],
-    "apellidos9" => ["last9", "surname9", "author9"],
-    "nombre9" => ["first9", "given9"],
-    "enlaceautor9" => ["authorlink9", "author9-link", "authorlink9"],
-    "separador-nombres" => ["author-name-separator"],
-    "separador-autores" => ["author-separator"],
-    "número-autores" => ["display-authors"],
-    "otros" => ["others"],
-];
+        // Mapping arguments
+        self::$argsTo = [
+            "title" => "título",
+            "website" => "sitioweb",
+            "access-date" => "fechaacceso",
+            "accessdate" => "fechaacceso",
+            "language" => "idioma",
+            "archive-url" => "urlarchivo",
+            "archiveurl" => "urlarchivo",
+            "date" => "fecha",
+            "archive-date" => "fechaarchivo",
+            "archivedate" => "fechaarchivo",
+            "first" => "nombre",
+            "last" => "apellidos",
+            "first1" => "nombre1",
+            "last1" => "apellidos1",
+            "last2" => "apellidos2",
+            "first2" => "nombre2",
+        ];
 
-// Populate $argsTo with $paramsEsUp
-foreach ($paramsEsUp as $new => $list) {
-    foreach ($list as $old) {
-        ESData::$argsTo[$old] = $new;
+        // More mapping with grouped parameters
+        $paramsEsUp = [
+            "nombre1" => ["first1", "given1"],
+            "enlaceautor1" => [
+                "authorlink1",
+                "author1-link",
+                "author-link1",
+            ],
+            "enlaceautor" => [
+                "author-link",
+                "authorlink",
+            ],
+            "título" => ["title"],
+            "fechaacceso" => ["accessdate"],
+            "año" => ["year"],
+            "fecha" => ["date"],
+            "editorial" => ["publisher"],
+            "apellido-editor" => ["editor-last", "editor-surname", "editor1-last"],
+            "nombre-editor" => ["editor-first", "editor-given", "editor1-first", "editor1-given"],
+            "enlace-editor" => ["editor-link", "editor1-link"],
+            "ubicación" => ["place", "location"],
+            "lugar-publicación" => ["publication-place"],
+            "fecha-publicación" => ["publication-date"],
+            "edición" => ["edition"],
+            "sined" => ["noed"],
+            "volumen" => ["volume"],
+            "página" => ["page"],
+            "páginas" => ["pages"],
+            "en" => ["at"],
+            "enlace-pasaje" => ["url-pasaje"],
+            "idioma" => ["language"],
+            "título-trad" => ["trans_title"],
+            "capítulo" => ["chapter"],
+            "url-capítulo" => ["url-chapter"],
+            "capítulo-trad" => ["trans_chapter"],
+            "formato" => ["format"],
+            "cita" => ["quote"],
+            "separador" => ["separator"],
+            "resumen" => ["laysummary", "layurl"],
+            "fecha-resumen" => ["laydate"],
+            "apellidos1" => [
+                "last1",
+            ],
+            "apellidos2" => [
+                "last2",
+            ],
+            "nombre2" => ["first2", "given2"],
+            "enlaceautor2" => ["authorlink2", "author2-link", "authorlink2"],
+            "apellidos3" => ["last3", "surname3", "author3"],
+            "nombre3" => ["first3", "given3"],
+            "enlaceautor3" => ["authorlink3", "author3-link", "authorlink3"],
+            "apellidos4" => ["last4", "surname4", "author4"],
+            "nombre4" => ["first4", "given4"],
+            "enlaceautor4" => ["authorlink4", "author4-link", "authorlink4"],
+            "apellidos5" => ["last5", "surname5", "author5"],
+            "nombre5" => ["first5", "given5"],
+            "enlaceautor5" => ["authorlink5", "author5-link", "authorlink5"],
+            "apellidos6" => ["last6", "surname6", "author6"],
+            "nombre6" => ["first6", "given6"],
+            "enlaceautor6" => ["authorlink6", "author6-link", "authorlink6"],
+            "apellidos7" => ["last7", "surname7", "author7"],
+            "nombre7" => ["first7", "given7"],
+            "enlaceautor7" => ["authorlink7", "author7-link", "authorlink7"],
+            "apellidos8" => ["last8", "surname8", "author8"],
+            "nombre8" => ["first8", "given8"],
+            "enlaceautor8" => ["authorlink8", "author8-link", "authorlink8"],
+            "apellidos9" => ["last9", "surname9", "author9"],
+            "nombre9" => ["first9", "given9"],
+            "enlaceautor9" => ["authorlink9", "author9-link", "authorlink9"],
+            "separador-nombres" => ["author-name-separator"],
+            "separador-autores" => ["author-separator"],
+            "número-autores" => ["display-authors"],
+            "otros" => ["others"],
+        ];
+
+        // Populate $argsTo with $paramsEsUp
+        foreach ($paramsEsUp as $new => $list) {
+            foreach ($list as $old) {
+                self::$argsTo[$old] = $new;
+            }
+        }
     }
 }
 
 
-function work_one_temp($temp, $name)
+class Es
 {
-
-    // Logger::debug("\n$name\n");
-
-    $tempName2 = isset(ESData::$refsTemps[$name]) ? ESData::$refsTemps[$name] : $name;
-
-    if (strtolower($tempName2) !== strtolower($name)) {
-        $temp->setName($tempName2);
-    }
-
-    // $paramsEsUp = $temp->getParameters();
-
-    $temp->changeParametersNames(ESData::$argsTo);
-
-    $temp->deleteParameter("url-status");
-
-    $newTextStr = $temp->toString();
-
-    return $newTextStr;
-}
-
-function fix_temps($text)
-{
-
-    $tempsIn = (new ParserTemplates($text))->getTemplates();
-
-    // Logger::debug("lenth temps_in:" . count($tempsIn) . "\n");
-
-    $newText = $text;
-
-    foreach ($tempsIn as $temp) {
-
-        $name = $temp->getStripName();
-
-        // Logger::debug("* name: $name\n");
-
-        $oldTextTemplate = $temp->getOriginalText();
-
-        if (!array_key_exists($name, ESData::$refsTemps) && !in_array($name, ESData::$refsTemps)) {
-            // Logger::debug("not found: $name\n");
-            continue;
+    public static function work_one_temp($temp, $name)
+    {
+        ESData::init();
+        // Logger::debug("\n$name\n");
+        $tempName2 = isset(ESData::$refsTemps[$name]) ? ESData::$refsTemps[$name] : $name;
+        if (strtolower($tempName2) !== strtolower($name)) {
+            $temp->setName($tempName2);
         }
 
-        $newTextStr = work_one_temp($temp, $name);
+        // $paramsEsUp = $temp->getParameters();
 
-        $newText = str_replace($oldTextTemplate, $newTextStr, $newText);
-
-    };
-
-    return $newText;
-}
-
-function fix_es($text, $title = "")
-{
-    // Check for "#REDIRECCIÓN"
-    if (strpos($text, "#REDIRECCIÓN") !== false && $title != "test!") {
-        return $text;
+        $temp->changeParametersNames(ESData::$argsTo);
+        $temp->deleteParameter("url-status");
+        $newTextStr = $temp->toString();
+        return $newTextStr;
     }
 
-    // Check if the text has fewer than 10 lines
-    if (substr_count($text, "\n") < 10 && $title != "test!") {
-        Logger::debug("less than 10 lines\n");
-        // return $text;
+    public static function fix_temps($text)
+    {
+        ESData::init();
+        $tempsIn = (new ParserTemplates($text))->getTemplates();
+
+        // Logger::debug("lenth temps_in:" . count($tempsIn) . "\n");
+
+        $newText = $text;
+        foreach ($tempsIn as $temp) {
+            $name = $temp->getStripName();
+
+            // Logger::debug("* name: $name\n");
+
+            $oldTextTemplate = $temp->getOriginalText();
+            if (!array_key_exists($name, ESData::$refsTemps) && !in_array($name, ESData::$refsTemps)) {
+                // Logger::debug("not found: $name\n");
+                continue;
+            }
+            $newTextStr = self::work_one_temp($temp, $name);
+            $newText = str_replace($oldTextTemplate, $newTextStr, $newText);
+        }
+        return $newText;
     }
 
-    // Replace <references /> with {{listaref}}
-    if (strpos($text, "<references />") !== false) {
-        $text = str_replace("<references />", "{{listaref}}", $text);
+    public static function fix_es($text, $title = "")
+    {
+        // Check for "#REDIRECCIÓN"
+        if (strpos($text, "#REDIRECCIÓN") !== false && $title != "test!") {
+            return $text;
+        }
+
+        // Check if the text has fewer than 10 lines
+        if (substr_count($text, "\n") < 10 && $title != "test!") {
+            Logger::debug("less than 10 lines\n");
+            // return $text;
+        }
+
+        // Replace <references /> with {{listaref}}
+        if (strpos($text, "<references />") !== false) {
+            $text = str_replace("<references />", "{{listaref}}", $text);
+        }
+
+        // Apply transformations
+        $newtext = $text;
+        $newtext = EsMonths::fix_es_months_in_refs($newtext);
+        $newtext = self::fix_temps($newtext);
+        $newtext = EsRefs::mv_es_refs($newtext);
+
+        return $newtext;
     }
-
-    // Apply transformations
-    $newtext = $text;
-    $newtext = fix_es_months_in_refs($newtext);
-    $newtext = fix_temps($newtext);
-    $newtext = mv_es_refs($newtext);
-
-    return $newtext;
 }
