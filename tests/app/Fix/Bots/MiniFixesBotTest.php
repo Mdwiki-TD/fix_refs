@@ -3,11 +3,10 @@
 
 
 use Tests\MyFunctionTest;
-use function App\Fix\Bots\MiniFixesBot\remove_space_before_ref_tags;
-use function App\Fix\Bots\MiniFixesBot\fix_sections_titles;
-use function App\Fix\Bots\MiniFixesBot\refs_tags_spaces;
-use function App\Fix\Bots\MiniFixesBot\fix_preffix;
-use function App\Fix\Bots\MiniFixesBot\remove_template_rtt_links;
+use App\Fix\Bots\MiniFixesBot;
+
+
+
 
 class miniFixesBotTest extends MyFunctionTest
 {
@@ -29,7 +28,7 @@ class miniFixesBotTest extends MyFunctionTest
             $text = $tab['old'];
             $new  = $tab['new'];
 
-            $newText = fix_sections_titles($text, "ru");
+            $newText = MiniFixesBot::fix_sections_titles($text, "ru");
 
             $this->assertEqualCompare($new, $text, $newText);
         }
@@ -52,7 +51,7 @@ class miniFixesBotTest extends MyFunctionTest
             $text = $tab['old'];
             $new  = $tab['new'];
 
-            $newText = fix_sections_titles($text, "hr");
+            $newText = MiniFixesBot::fix_sections_titles($text, "hr");
 
             $this->assertEqualCompare($new, $text, $newText);
         }
@@ -62,7 +61,7 @@ class miniFixesBotTest extends MyFunctionTest
         $text = "== Marejeleo 1 ==\n\n====Marejeleo====\n\n=== Marejeleo ===";
         $new  = "== Marejeleo 1 ==\n\n==== Marejeo ====\n\n=== Marejeo ===";
 
-        $newText = fix_sections_titles($text, "sw");
+        $newText = MiniFixesBot::fix_sections_titles($text, "sw");
 
         $this->assertEqualCompare($new, $text, $newText);
     }
@@ -110,7 +109,7 @@ class miniFixesBotTest extends MyFunctionTest
         ];
 
         foreach ($tests as $test) {
-            $result = remove_space_before_ref_tags($test['text'], $test['lang']);
+            $result = MiniFixesBot::remove_space_before_ref_tags($test['text'], $test['lang']);
             $this->assertEqualCompare($test['expected'], $test['text'], $result);
         }
     }
@@ -152,7 +151,7 @@ class miniFixesBotTest extends MyFunctionTest
         ];
 
         foreach ($tests as $test) {
-            $result = refs_tags_spaces($test['text']);
+            $result = MiniFixesBot::refs_tags_spaces($test['text']);
             $this->assertEqualCompare($test['expected'], $test['text'], $result);
         }
     }
@@ -200,7 +199,7 @@ class miniFixesBotTest extends MyFunctionTest
         ];
 
         foreach ($tests as $test) {
-            $result = fix_preffix($test['text'], $test['lang']);
+            $result = MiniFixesBot::fix_preffix($test['text'], $test['lang']);
             $this->assertEqualCompare($test['expected'], $test['text'], $result);
         }
     }
@@ -247,7 +246,7 @@ class miniFixesBotTest extends MyFunctionTest
         ];
 
         foreach ($tests as $test) {
-            $result = remove_template_rtt_links($test['text']);
+            $result = MiniFixesBot::remove_template_rtt_links($test['text']);
             $this->assertEqualCompare($test['expected'], $test['text'], $result);
         }
     }

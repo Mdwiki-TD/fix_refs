@@ -3,7 +3,7 @@
 
 
 use Tests\MyFunctionTest;
-use function App\Fix\Parse\Category\get_categories_reg;
+use App\Fix\Parse\Category;
 
 class CategoryTest extends MyFunctionTest
 {
@@ -15,7 +15,7 @@ class CategoryTest extends MyFunctionTest
             "Test" => "[[Category:Test]]"
         ];
 
-        $result = get_categories_reg($text);
+        $result = Category::get_categories_reg($text);
         $this->assertEquals($expected, $result);
     }
 
@@ -24,7 +24,7 @@ class CategoryTest extends MyFunctionTest
         $text = "This is some text without any categories";
         $expected = [];
 
-        $result = get_categories_reg($text);
+        $result = Category::get_categories_reg($text);
         $this->assertEquals($expected, $result);
     }
 
@@ -36,7 +36,7 @@ class CategoryTest extends MyFunctionTest
             "Test" => "[[Category:Test|another key]]"
         ];
 
-        $result = get_categories_reg($text);
+        $result = Category::get_categories_reg($text);
         $this->assertEquals($expected, $result);
     }
 
@@ -48,7 +48,7 @@ class CategoryTest extends MyFunctionTest
             "Test" => "[[  Category:Test  ]]"
         ];
 
-        $result = get_categories_reg($text);
+        $result = Category::get_categories_reg($text);
         $this->assertEquals($expected, $result);
     }
 
@@ -60,7 +60,7 @@ class CategoryTest extends MyFunctionTest
             "Something (else)" => "[[Category:Something (else)]]"
         ];
 
-        $result = get_categories_reg($text);
+        $result = Category::get_categories_reg($text);
         $this->assertEquals($expected, $result);
     }
 
@@ -71,7 +71,7 @@ class CategoryTest extends MyFunctionTest
             "Example" => "[[Category:Example]]"
         ];
 
-        $result = get_categories_reg($text);
+        $result = Category::get_categories_reg($text);
         $this->assertEquals($expected, $result);
     }
 
@@ -83,7 +83,7 @@ class CategoryTest extends MyFunctionTest
             "Second category" => "[[Category:Second category]]"
         ];
 
-        $result = get_categories_reg($text);
+        $result = Category::get_categories_reg($text);
         $this->assertEquals($expected, $result);
     }
 
@@ -92,7 +92,7 @@ class CategoryTest extends MyFunctionTest
         $text = "";
         $expected = [];
 
-        $result = get_categories_reg($text);
+        $result = Category::get_categories_reg($text);
         $this->assertEquals($expected, $result);
     }
 
@@ -104,7 +104,7 @@ class CategoryTest extends MyFunctionTest
             "Test" => "[[Category:Test]]"
         ];
 
-        $result = get_categories_reg($text);
+        $result = Category::get_categories_reg($text);
         $this->assertEquals($expected, $result);
     }
 
@@ -116,7 +116,7 @@ class CategoryTest extends MyFunctionTest
             "測試" => "[[Category:測試]]"
         ];
 
-        $result = get_categories_reg($text);
+        $result = Category::get_categories_reg($text);
         $this->assertEquals($expected, $result);
     }
 
@@ -128,7 +128,7 @@ class CategoryTest extends MyFunctionTest
             "TEST" => "[[CATEGORY:TEST]]"
         ];
 
-        $result = get_categories_reg($text);
+        $result = Category::get_categories_reg($text);
         $this->assertEquals($expected, $result);
     }
 
@@ -140,7 +140,7 @@ class CategoryTest extends MyFunctionTest
             "Test" => "[[Category:Test]]"
         ];
 
-        $result = get_categories_reg($text);
+        $result = Category::get_categories_reg($text);
         $this->assertEquals($expected, $result);
     }
 
@@ -154,7 +154,7 @@ class CategoryTest extends MyFunctionTest
         $expected = [
             "PHP" => "[[Category:PHP]]"
         ];
-        $this->assertEquals($expected, get_categories_reg($text));
+        $this->assertEquals($expected, Category::get_categories_reg($text));
     }
 
     /**
@@ -167,7 +167,7 @@ class CategoryTest extends MyFunctionTest
             "Programming" => "[[Category:Programming]]",
             "Web development" => "[[Category:Web development]]"
         ];
-        $this->assertEquals($expected, get_categories_reg($text));
+        $this->assertEquals($expected, Category::get_categories_reg($text));
     }
 
     /**
@@ -176,7 +176,7 @@ class CategoryTest extends MyFunctionTest
     public function testNoCategoriesFound()
     {
         $text = "This is a text with no categories.";
-        $this->assertEmpty(get_categories_reg($text));
+        $this->assertEmpty(Category::get_categories_reg($text));
     }
 
     /**
@@ -188,7 +188,7 @@ class CategoryTest extends MyFunctionTest
         $expected = [
             "Test Category" => "[[Category:  Test Category  ]]"
         ];
-        $this->assertEquals($expected, get_categories_reg($text));
+        $this->assertEquals($expected, Category::get_categories_reg($text));
     }
 
     /**
@@ -200,7 +200,7 @@ class CategoryTest extends MyFunctionTest
         $expected = [
             "Case Insensitive" => "[[category:Case Insensitive]]"
         ];
-        $this->assertEquals($expected, get_categories_reg($text));
+        $this->assertEquals($expected, Category::get_categories_reg($text));
     }
 
     /**
@@ -212,7 +212,7 @@ class CategoryTest extends MyFunctionTest
         $expected = [
             "Musicians" => "[[Category:Musicians|Beatles]]"
         ];
-        $this->assertEquals($expected, get_categories_reg($text));
+        $this->assertEquals($expected, Category::get_categories_reg($text));
     }
 
     /**
@@ -225,7 +225,7 @@ class CategoryTest extends MyFunctionTest
             "Software" => "[[Category:Software|S]]",
             "Databases" => "[[  category :  Databases  ]]"
         ];
-        $this->assertEquals($expected, get_categories_reg($text));
+        $this->assertEquals($expected, Category::get_categories_reg($text));
     }
 
     public function testGetCategoriesWithNestedBrackets()
@@ -236,7 +236,7 @@ class CategoryTest extends MyFunctionTest
             "Test" => "[[CategorY:Test]]"
         ];
 
-        $result = get_categories_reg($text);
+        $result = Category::get_categories_reg($text);
         $this->assertEquals($expected, $result);
     }
 }

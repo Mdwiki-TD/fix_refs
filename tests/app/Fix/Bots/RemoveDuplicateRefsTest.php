@@ -2,8 +2,8 @@
 
 use Tests\MyFunctionTest;
 
-use function App\Fix\Bots\RemoveDuplicateRefs\remove_Duplicate_refs_With_attrs;
-use function App\Fix\Bots\RemoveDuplicateRefs\fix_refs_names;
+use App\Fix\Bots\RemoveDuplicateRefs;
+
 
 
 class removeDuplicateRefsTest extends MyFunctionTest
@@ -57,7 +57,7 @@ class removeDuplicateRefsTest extends MyFunctionTest
         ];
 
         foreach ($tests as $test) {
-            $result = fix_refs_names($test['input']);
+            $result = RemoveDuplicateRefs::fix_refs_names($test['input']);
             $this->assertEqualCompare($test['expected'], $test['input'], $result);
         }
     }
@@ -97,7 +97,7 @@ class removeDuplicateRefsTest extends MyFunctionTest
         ];
 
         foreach ($tests as $test) {
-            $result = remove_Duplicate_refs_With_attrs($test['input']);
+            $result = RemoveDuplicateRefs::remove_Duplicate_refs_With_attrs($test['input']);
             $this->assertEqualCompare($test['expected'], $test['input'], $result);
         }
     }
@@ -105,21 +105,21 @@ class removeDuplicateRefsTest extends MyFunctionTest
     {
         $input = '<ref name="test" group="notes">Ref</ref> <ref name="test" group="notes">Ref</ref>';
         $expected = '<ref name="test" group="notes">Ref</ref> <ref name="test" group="notes" />';
-        $result = remove_Duplicate_refs_With_attrs($input);
+        $result = RemoveDuplicateRefs::remove_Duplicate_refs_With_attrs($input);
         $this->assertEqualCompare($expected, $input, $result);
     }
     public function testRemoveMedRefs()
     {
         $input = '<ref name="PI2023">{{Cite web|title=DailyMed - SKYCLARYS- omaveloxolone capsule|url=https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1a1100e-8318-1596-e053-2995a90a533e|website=dailymed.nlm.nih.gov|access-date=24 May 2023|archive-date=1 July 2023|archive-url=https://web.archive.org/web/20230701174203/https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1a1100e-8318-1596-e053-2995a90a533e|url-status=live}}</ref> ଅତିକମରେ ୧୬ ବର୍ଷ ବୟସରେ ଏହା ବ୍ୟବହୃତ ହୁଏ ।<ref name="PI2023" /> ଏହା ପାଟିରେ ଦିଆଯାଏ ।<ref name="PI2023">{{Cite web|title=DailyMed - SKYCLARYS- omaveloxolone capsule|url=https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1a1100e-8318-1596-e053-2995a90a533e|website=dailymed.nlm.nih.gov|access-date=24 May 2023|archive-date=1 July 2023|archive-url=https://web.archive.org/web/20230701174203/https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1a1100e-8318-1596-e053-2995a90a533e|url-status=live}}<cite class="citation web cs1" data-ve-ignore="true">[https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1a1100e-8318-1596-e053-2995a90a533e "DailyMed - SKYCLARYS- omaveloxolone capsule"]. \'\'dailymed.nlm.nih.gov\'\'. [https://web.archive.org/web/20230701174203/https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1a1100e-8318-1596-e053-2995a90a533e Archived] from the original on 1 July 2023<span class="reference-accessdate">. Retrieved <span class="nowrap">24 May</span> 2023</span>.</cite></ref>';
         $expected = '<ref name="PI2023">{{Cite web|title=DailyMed - SKYCLARYS- omaveloxolone capsule|url=https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1a1100e-8318-1596-e053-2995a90a533e|website=dailymed.nlm.nih.gov|access-date=24 May 2023|archive-date=1 July 2023|archive-url=https://web.archive.org/web/20230701174203/https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1a1100e-8318-1596-e053-2995a90a533e|url-status=live}}</ref> ଅତିକମରେ ୧୬ ବର୍ଷ ବୟସରେ ଏହା ବ୍ୟବହୃତ ହୁଏ ।<ref name="PI2023" /> ଏହା ପାଟିରେ ଦିଆଯାଏ ।<ref name="PI2023" />';
-        $result = remove_Duplicate_refs_With_attrs($input);
+        $result = RemoveDuplicateRefs::remove_Duplicate_refs_With_attrs($input);
         $this->assertEqualCompare($expected, $input, $result);
     }
     public function _testRemoveGroupRefs()
     {
         $input = '<ref name="test" group="notes">Ref</ref> <ref group="notes" name="test">Ref</ref>';
         $expected = '<ref name="test" group="notes">Ref</ref> <ref group="notes" name="test" />';
-        $result = remove_Duplicate_refs_With_attrs($input);
+        $result = RemoveDuplicateRefs::remove_Duplicate_refs_With_attrs($input);
         $this->assertEqualCompare($expected, $input, $result);
     }
     public function testRemoveIdenticalRefsWithGroupAttribute()
@@ -127,7 +127,7 @@ class removeDuplicateRefsTest extends MyFunctionTest
         $input = '<ref group="notes">Refs3</ref> <ref group="notes">Refs3</ref>';
         // $expected = '<ref name="autogen_1" group="notes">Refs3</ref> <ref name="autogen_1" group="notes" />';
         $expected = '<ref group="notes">Refs3</ref> <ref group="notes" />';
-        $result = remove_Duplicate_refs_With_attrs($input);
+        $result = RemoveDuplicateRefs::remove_Duplicate_refs_With_attrs($input);
         $this->assertEqualCompare($expected, $input, $result);
     }
     public function testFileText()
@@ -135,7 +135,7 @@ class removeDuplicateRefsTest extends MyFunctionTest
         $textInput   = file_get_contents(__DIR__ . "/fixtures/del_dup/input.txt");
         $textOutput  = file_get_contents(__DIR__ . "/fixtures/del_dup/expected.txt");
         // --
-        $result = remove_Duplicate_refs_With_attrs($textInput);
+        $result = RemoveDuplicateRefs::remove_Duplicate_refs_With_attrs($textInput);
         // --
         $this->assertEqualCompare($textOutput, $textInput, $result);
     }

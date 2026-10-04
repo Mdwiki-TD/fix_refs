@@ -4,8 +4,8 @@
 
 use Tests\MyFunctionTest;
 
-use function App\Fix\Bots\RefsUtils\rm_str_from_start_and_end;
-use function App\Fix\Bots\RefsUtils\remove_start_end_quotes;
+use App\Fix\Bots\RefsUtils;
+
 
 
 class refsUtilsTest extends MyFunctionTest
@@ -16,7 +16,7 @@ class refsUtilsTest extends MyFunctionTest
      */
     public function testAddsDoubleQuotesToPlainString()
     {
-        $this->assertEquals('"value"', remove_start_end_quotes('value'));
+        $this->assertEquals('"value"', RefsUtils::remove_start_end_quotes('value'));
     }
 
     /**
@@ -25,7 +25,7 @@ class refsUtilsTest extends MyFunctionTest
     public function testReplacesSingleQuotesWithDoubleQuotes()
     {
         // سلوك الدالة هو إزالة الاقتباسات الموجودة ثم إضافة جديدة.
-        $this->assertEquals('"value"', remove_start_end_quotes("'value'"));
+        $this->assertEquals('"value"', RefsUtils::remove_start_end_quotes("'value'"));
     }
 
     /**
@@ -33,7 +33,7 @@ class refsUtilsTest extends MyFunctionTest
      */
     public function testReplacesDoubleQuotesWithDoubleQuotes()
     {
-        $this->assertEquals('"value"', remove_start_end_quotes('"value"'));
+        $this->assertEquals('"value"', RefsUtils::remove_start_end_quotes('"value"'));
     }
 
     /**
@@ -41,7 +41,7 @@ class refsUtilsTest extends MyFunctionTest
      */
     public function testWrapsWithSingleQuotesIfContainsDoubleQuotes()
     {
-        $this->assertEquals("'val\"ue'", remove_start_end_quotes('val"ue'));
+        $this->assertEquals("'val\"ue'", RefsUtils::remove_start_end_quotes('val"ue'));
     }
 
     /**
@@ -49,7 +49,7 @@ class refsUtilsTest extends MyFunctionTest
      */
     public function testTrimsWhitespace()
     {
-        $this->assertEquals('"value"', remove_start_end_quotes('  value  '));
+        $this->assertEquals('"value"', RefsUtils::remove_start_end_quotes('  value  '));
     }
 
     /**
@@ -57,15 +57,15 @@ class refsUtilsTest extends MyFunctionTest
      */
     public function testHandlesEmptyString()
     {
-        $this->assertEquals('""', remove_start_end_quotes(''));
+        $this->assertEquals('""', RefsUtils::remove_start_end_quotes(''));
     }
     public function testOneQuotesDouble()
     {
-        $this->assertEquals("'\"value'", remove_start_end_quotes('  "value '));
+        $this->assertEquals("'\"value'", RefsUtils::remove_start_end_quotes('  "value '));
     }
     public function testOneQuotesSingle()
     {
-        $this->assertEquals('"\'value"', remove_start_end_quotes("  'value "));
+        $this->assertEquals('"\'value"', RefsUtils::remove_start_end_quotes("  'value "));
     }
 
     // اختبارات دالة str_ends_with
@@ -150,7 +150,7 @@ class refsUtilsTest extends MyFunctionTest
         ];
 
         foreach ($tests as $test) {
-            $result = rm_str_from_start_and_end($test['text'], $test['find']);
+            $result = RefsUtils::rm_str_from_start_and_end($test['text'], $test['find']);
             $this->assertEqualCompare($test['expected'], $test['text'], $result);
         }
     }
@@ -176,7 +176,7 @@ class refsUtilsTest extends MyFunctionTest
         ];
 
         foreach ($tests as $test) {
-            $result = remove_start_end_quotes($test['text']);
+            $result = RefsUtils::remove_start_end_quotes($test['text']);
             $this->assertEqualCompare($test['expected'], $test['text'], $result);
         }
     }
@@ -186,16 +186,16 @@ class refsUtilsTest extends MyFunctionTest
     }
     public function testFixOnlyQuotes()
     {
-        $this->assertEquals('""', remove_start_end_quotes('""'));
+        $this->assertEquals('""', RefsUtils::remove_start_end_quotes('""'));
     }
     public function testFixOnlySingleQuotes()
     {
-        $this->assertEquals('""', remove_start_end_quotes("''"));
+        $this->assertEquals('""', RefsUtils::remove_start_end_quotes("''"));
     }
     // اختبارات دالة rm_str_from_start_and_end
     public function testDelStartEndEmpty()
     {
-        $result = rm_str_from_start_and_end('testzz', '');
+        $result = RefsUtils::rm_str_from_start_and_end('testzz', '');
         $this->assertEqualCompare('testzz', 'testzz', $result);
     }
 }

@@ -4,7 +4,7 @@ namespace Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\MyFunctionTest;
-use function App\Fix\Bots\MiniFixesBot\fix_sections_titles;
+use App\Fix\Bots\MiniFixesBot;
 
 class ExtendedMiniFixesBotTest extends MyFunctionTest
 {
@@ -51,7 +51,7 @@ TXT
     #[DataProvider('sectionTitlesProvider')]
     public function testFixSectionTitles(string $lang, string $input): void
     {
-        $newText = fix_sections_titles($input, $lang);
+        $newText = MiniFixesBot::fix_sections_titles($input, $lang);
 
         // Assert that the function returns a valid string output
         $this->assertIsString($newText, "The function fix_sections_titles should return a string.");
