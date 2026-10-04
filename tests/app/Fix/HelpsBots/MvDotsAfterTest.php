@@ -8,255 +8,255 @@ use App\Fix\HelpsBots\MvDots;
 class mvDotsAfterTest extends MyFunctionTest
 {
 
-    // Tests for move_dots_after_refs function
-    public function testMoveDotsAfterSingleDot()
+    // Tests for moveDotsAfterRefs function
+    public function testMoveDotsAfterSingleDot(): void
     {
         $input = "This is a sentence。<ref>Reference 1</ref>";
         $expected = "This is a sentence<ref>Reference 1</ref>。";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
 
-    public function testMoveDotsAfterMultipleDots()
+    public function testMoveDotsAfterMultipleDots(): void
     {
         $input = "First sentence. Second sentence.<ref>Reference 1</ref>";
         $expected = "First sentence. Second sentence<ref>Reference 1</ref>.";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
 
-    public function testMoveDotsAfterMultipleRefs()
+    public function testMoveDotsAfterMultipleRefs(): void
     {
         $input = "Text।<ref>Ref1</ref><ref>Ref2</ref>";
         $expected = "Text<ref>Ref1</ref><ref>Ref2</ref>।";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
 
-    public function testMoveDotsAfterNoDot()
+    public function testMoveDotsAfterNoDot(): void
     {
         $input = "Text<ref>Reference</ref>";
         $expected = "Text<ref>Reference</ref>";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
 
-    public function testMoveDotsAfterDifferentPunctuation()
+    public function testMoveDotsAfterDifferentPunctuation(): void
     {
         $input = "Text, <ref>Reference</ref>";
         $expected = "Text<ref>Reference</ref>,";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
 
     // Additional test cases
 
-    public function testMoveDotsAfterWithWhitespace()
+    public function testMoveDotsAfterWithWhitespace(): void
     {
         $input = "Text.  <ref>Reference</ref>";
         $expected = "Text<ref>Reference</ref>.";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
 
-    public function testMoveDotsAfterSelfClosingRef()
+    public function testMoveDotsAfterSelfClosingRef(): void
     {
         $input = "Text.<ref name=\"ref1\" />";
         $expected = "Text<ref name=\"ref1\" />.";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
 
-    public function testMoveDotsAfterMultipleRefsWithWhitespace()
+    public function testMoveDotsAfterMultipleRefsWithWhitespace(): void
     {
         $input = "Text. <ref>Ref1</ref> <ref>Ref2</ref>";
         $expected = "Text<ref>Ref1</ref> <ref>Ref2</ref>.";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
 
-    public function testMoveDotsAfterNotBeforeRefs()
+    public function testMoveDotsAfterNotBeforeRefs(): void
     {
         $input = "This is a sentence. This is another sentence<ref>Reference</ref>";
         $expected = "This is a sentence. This is another sentence<ref>Reference</ref>";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
 
-    public function testMoveDotsAfterMultiplePunctuation()
+    public function testMoveDotsAfterMultiplePunctuation(): void
     {
         $input = "Text.,<ref>Reference</ref>";
         $expected = "Text<ref>Reference</ref>.,";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
 
-    public function testMoveDotsAfterEmptyText()
+    public function testMoveDotsAfterEmptyText(): void
     {
         $input = "";
         $expected = "";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
 
-    public function testMoveDotsAfterNoReferences()
+    public function testMoveDotsAfterNoReferences(): void
     {
         $input = "This is a sentence.";
         $expected = "This is a sentence.";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
 
-    public function testMoveDotsAfterComplexRefs()
+    public function testMoveDotsAfterComplexRefs(): void
     {
         $input = "Text.<ref name=\"ref1\" group=\"group1\">Reference content</ref>";
         $expected = "Text<ref name=\"ref1\" group=\"group1\">Reference content</ref>.";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
 
-    public function testMoveDotsAfterNestedTags()
+    public function testMoveDotsAfterNestedTags(): void
     {
         $input = "Text.<ref>Reference with <i>italic</i> text</ref>";
         $expected = "Text<ref>Reference with <i>italic</i> text</ref>.";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
 
-    public function testMoveDotsAfterChinesePunctuation()
+    public function testMoveDotsAfterChinesePunctuation(): void
     {
         $input = "这是句子。<ref>参考文献1</ref>";
         $expected = "这是句子<ref>参考文献1</ref>。";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
 
-    public function testMoveDotsAfterDevanagariPunctuation()
+    public function testMoveDotsAfterDevanagariPunctuation(): void
     {
         $input = "यह वाक्य है।<ref>संदर्भ 1</ref>";
         $expected = "यह वाक्य है<ref>संदर्भ 1</ref>।";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
 
-    public function testMoveDotsAfterArmenianMultiplePunctuation()
+    public function testMoveDotsAfterArmenianMultiplePunctuation(): void
     {
         $input = "Տեքստ.,<ref>Հղում</ref>";
         $expected = "Տեքստ<ref>Հղում</ref>.,";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'hy'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'hy'));
     }
 
-    public function testMoveDotsAtEndOfText()
+    public function testMoveDotsAtEndOfText(): void
     {
         $input = "Text.<ref>Reference</ref>";
         $expected = "Text<ref>Reference</ref>.";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
 
-    public function testMoveDotsAfterMultipleInstances()
+    public function testMoveDotsAfterMultipleInstances(): void
     {
         $input = "First sentence.<ref>Ref1</ref> Second sentence.<ref>Ref2</ref>";
         $expected = "First sentence<ref>Ref1</ref>. Second sentence<ref>Ref2</ref>.";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
 
-    public function _testMoveDotsAfterMultilineText()
+    public function _testMoveDotsAfterMultilineText(): void
     {
         $input = "This is a sentence.\n<ref>Reference</ref>";
         $expected = "This is a sentence<ref>Reference</ref>.\n";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
 
-    public function testMoveDotsAfterOnlyPunctuation()
+    public function testMoveDotsAfterOnlyPunctuation(): void
     {
         $input = ".<ref>Reference</ref>";
         $expected = "<ref>Reference</ref>.";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
-    public function testMoveDotsAfterDotWithSpace()
+    public function testMoveDotsAfterDotWithSpace(): void
     {
         $input = "Text. <ref>Reference</ref>";
         $expected = "Text<ref>Reference</ref>.";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
 
-    public function testMoveDotsAfterCommaWithSpace()
+    public function testMoveDotsAfterCommaWithSpace(): void
     {
         $input = "Text, <ref>Reference</ref>";
         $expected = "Text<ref>Reference</ref>,";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
 
-    public function testMoveDotsAfterDotNoSpace()
+    public function testMoveDotsAfterDotNoSpace(): void
     {
         $input = "Text.<ref>Reference</ref>";
         $expected = "Text<ref>Reference</ref>.";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
 
-    public function testMoveDotsAfterCommaNoSpace()
+    public function testMoveDotsAfterCommaNoSpace(): void
     {
         $input = "Text,<ref>Reference</ref>";
         $expected = "Text<ref>Reference</ref>,";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
 
-    public function testMoveDotsAfterDotWithMultipleRefs()
+    public function testMoveDotsAfterDotWithMultipleRefs(): void
     {
         $input = "Text.<ref>Ref1</ref><ref>Ref2</ref>";
         $expected = "Text<ref>Ref1</ref><ref>Ref2</ref>.";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
 
-    public function testMoveDotsAfterDotWithMultipleRefsAndSpaces()
+    public function testMoveDotsAfterDotWithMultipleRefsAndSpaces(): void
     {
         $input = "Text. <ref>Ref1</ref> <ref>Ref2</ref>";
         $expected = "Text<ref>Ref1</ref> <ref>Ref2</ref>.";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
 
-    public function testMoveDotsAfterDotWithMultipleRefsAndSpacesAndText()
+    public function testMoveDotsAfterDotWithMultipleRefsAndSpacesAndText(): void
     {
         $input = "Text. Some text <ref>Ref1</ref> More text <ref>Ref2</ref>";
         $expected = "Text. Some text <ref>Ref1</ref> More text <ref>Ref2</ref>";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
 
-    public function testMoveDotsAfterDotWithMultipleRefsAndSpacesAndTextAndDot()
+    public function testMoveDotsAfterDotWithMultipleRefsAndSpacesAndTextAndDot(): void
     {
         $input = "Text. Some text. <ref>Ref1</ref> More text. <ref>Ref2</ref>";
         $expected = "Text. Some text<ref>Ref1</ref>. More text<ref>Ref2</ref>.";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
 
-    public function testMoveDotsAfterDotWithMultipleRefsAndSpacesAndTextAndDotAndComma()
+    public function testMoveDotsAfterDotWithMultipleRefsAndSpacesAndTextAndDotAndComma(): void
     {
         $input = "Text, Some text. <ref>Ref1</ref> More text, <ref>Ref2</ref>";
         $expected = "Text, Some text<ref>Ref1</ref>. More text<ref>Ref2</ref>,";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
 
-    public function testMoveDotsAfterDotWithMultipleRefsAndSpacesAndTextAndDotAndCommaAndDot()
+    public function testMoveDotsAfterDotWithMultipleRefsAndSpacesAndTextAndDotAndCommaAndDot(): void
     {
         $input = "Text. Some text, <ref>Ref1</ref> More text. <ref>Ref2</ref>";
         $expected = "Text. Some text<ref>Ref1</ref>, More text<ref>Ref2</ref>.";
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'en'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'en'));
     }
-    public function testMoveDotsAfterHy()
+    public function testMoveDotsAfterHy(): void
     {
         $input = 'Հետծննդյան հոգեբանական խանգարումը հանդիպում է 1000 ծննդաբերությունից 1-2-ի մոտ։ <ref name="Os2018" /><ref name="Li2018" /> Տարբեր [[Մշակույթ|մշակույթներում]] և [[Դասակարգային կառուցվածք|սոցիալական դասերում]] գները նման են թվում։ <ref name="Luc2021" /> Ավելի հաճախ այն հանդիպում է հայտնի կամ նոր սկսվող երկբևեռ խանգարման համատեքստում, որը հայտնի է որպես հետծննդյան երկբևեռ խանգարում : <ref name="Luc2021" /> Այս վիճակը նկարագրվել է դեռևս մ.թ.ա. 400 թվականից [[Հիպոկրատ|Հիպոկրատի]] կողմից ։ <ref name="Os2018" />\r\n\r\n== test ==';
 
         $expected = 'Հետծննդյան հոգեբանական խանգարումը հանդիպում է 1000 ծննդաբերությունից 1-2-ի մոտ<ref name="Os2018" /><ref name="Li2018" />։ Տարբեր [[Մշակույթ|մշակույթներում]] և [[Դասակարգային կառուցվածք|սոցիալական դասերում]] գները նման են թվում<ref name="Luc2021" />։ Ավելի հաճախ այն հանդիպում է հայտնի կամ նոր սկսվող երկբևեռ խանգարման համատեքստում, որը հայտնի է որպես հետծննդյան երկբևեռ խանգարում <ref name="Luc2021" />: Այս վիճակը նկարագրվել է դեռևս մ.թ.ա. 400 թվականից [[Հիպոկրատ|Հիպոկրատի]] կողմից <ref name="Os2018" />։\r\n\r\n== test ==';
 
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'hy'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'hy'));
     }
-    public function testPart1()
+    public function testPart1(): void
     {
         $input = '[[Category:Translated from MDWiki]] ռետինոիդներ. <ref name="NORD2006" /><ref name="Gli2017" />';
 
         $expected = '[[Category:Translated from MDWiki]] ռետինոիդներ<ref name="NORD2006" /><ref name="Gli2017" />.';
 
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'hy'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'hy'));
     }
-    public function testPart2()
+    public function testPart2(): void
     {
         $input = '[[Category:Translated from MDWiki]] ռետինոիդներ, <ref name="NORD2006" /><ref name="Gli2017" />';
 
         $expected = '[[Category:Translated from MDWiki]] ռետինոիդներ<ref name="NORD2006" /><ref name="Gli2017" />,';
 
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'hy'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'hy'));
     }
 
-    public function testPart5()
+    public function testPart5(): void
     {
         $input = 'text part 1 <ref name="NIH2016" />։ text part 2: <ref name="AFP2013">{{Cite journal|last=Iser|first=D|last2=Ryan|first2=M|title=Fatty liver disease—a practical guide for GPs.|journal=Australian Family Physician|date=July 2013|volume=42|issue=7|pages=444–7|pmid=23826593}}</ref><ref name="NIH2016" /> some text [[links|label]] other [[text]] <small>text</small> <ref name="Ant2019" /><ref name="NIH2016" />։ hello!! [[2020|hi]] և [[Հեպատիտ C|հեպատիտ C-ն]] : <ref name="NIH2016" /> random texts: <ref name="NIH2016" /> last part <ref name="NIH2016" />։';
 
         $expected = 'text part 1 <ref name="NIH2016" />։ text part 2<ref name="AFP2013">{{Cite journal|last=Iser|first=D|last2=Ryan|first2=M|title=Fatty liver disease—a practical guide for GPs.|journal=Australian Family Physician|date=July 2013|volume=42|issue=7|pages=444–7|pmid=23826593}}</ref><ref name="NIH2016" />: some text [[links|label]] other [[text]] <small>text</small> <ref name="Ant2019" /><ref name="NIH2016" />։ hello!! [[2020|hi]] և [[Հեպատիտ C|հեպատիտ C-ն]] <ref name="NIH2016" />: random texts<ref name="NIH2016" />: last part <ref name="NIH2016" />։';
 
-        $this->assertEqualCompare($expected, $input, MvDots::move_dots_after_refs($input, 'hy'));
+        $this->assertEqualCompare($expected, $input, MvDots::moveDotsAfterRefs($input, 'hy'));
     }
 }

@@ -2,40 +2,28 @@
 
 namespace App;
 
-use App\Settings;
+use App\LanguageSettings;
 use App\Fix\Index;
 
 class Run
 {
-    public static function fixPageNoSetting(
-        string $text,
-        string $title,
-        string $langcode,
-        string $sourcetitle,
-        int|string $mdwikiRevid
-    ): string {
-        $setting = Settings::loadSettings();
+    /**
+     * Get language-specific settings or fallback defaults.
+     *
+     * @return array{move_dots: bool, expand: bool, add_en_lang: bool}
+     */
+    public static function getLangSettings(string $langcode): array
+    {
+        $setting = LanguageSettings::loadSettings();
         $langDefault = isset($setting[$langcode]) && is_array($setting[$langcode])
             ? $setting[$langcode]
             : [];
 
-        $moveDots = isset($langDefault['move_dots']) && (int)$langDefault['move_dots'] === 1;
-        $expand = true; // (isset($langDefault['expend']) && (int)$langDefault['expend'] === 1);
-
-        $addEnLang = isset($langDefault['add_en_lang']) && (int)$langDefault['add_en_lang'] === 1;
-
-        $processedText = Index::fix_page(
-            $text,
-            $title,
-            $moveDots,
-            $expand,
-            $addEnLang,
-            $langcode,
-            $sourcetitle,
-            $mdwikiRevid,
-        );
-
-        return (string)$processedText;
+        return [
+            'move_dots'  => isset($langDefault['move_dots']) && (int)$langDefault['move_dots'] === 1,
+            'expand'     => true, // (isset($langDefault['expend']) && (int)$langDefault['expend'] === 1),
+            'add_en_lang' => isset($langDefault['add_en_lang']) && (int)$langDefault['add_en_lang'] === 1,
+        ];
     }
 
     public static function fixPgeWithSetting(
@@ -49,24 +37,23 @@ class Run
         ?bool $addEnLang = null
     ): string {
         if ($moveDots === null && $expand === null && $addEnLang === null) {
-            $newtext = self::fixPageNoSetting($text, $title, $lang, $sourcetitle, $mdwikiRevid);
-        } else {
-            $newtext = Index::fix_page(
-                $text,
-                $title,
-                $moveDots,
-                $expand,
-                $addEnLang,
-                $lang,
-                $sourcetitle,
-                $mdwikiRevid,
-            );
+            $settings = self::getLangSettings($lang);
+            $moveDots  = $settings['move_dots'];
+            $expand    = $settings['expand'];
+            $addEnLang = $settings['add_en_lang'];
         }
 
-        if (empty($newtext)) {
-            $newtext = $text;
-        }
+        $newtext = Index::fixPage(
+            $text,
+            $title,
+            $moveDots,
+            $expand,
+            $addEnLang,
+            $lang,
+            $sourcetitle,
+            $mdwikiRevid
+        );
 
-        return (string)$newtext;
+        return !empty($newtext) ? (string)$newtext : $text;
     }
 }

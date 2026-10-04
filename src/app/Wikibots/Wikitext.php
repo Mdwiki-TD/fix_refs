@@ -4,7 +4,7 @@ namespace App\Wikibots;
 
 class Wikitext
 {
-	public static function from_api($title, $lang)
+	public static function from_api(string $title, string $lang): string
 	{
 		$usrAgent = 'WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)';
 		$url = "https://{$lang}.wikipedia.org/w/api.php";
@@ -27,21 +27,29 @@ class Wikitext
 		$response = curl_exec($ch);
 		curl_close($ch);
 
+		if (!is_string($response)) {
+			return '';
+		}
+
+		/** @var array<string, mixed>|null $json */
 		$json = json_decode($response, true);
 
+		/** @var array<string, mixed> $pages */
 		$pages = $json['query']['pages'] ?? [];
 
 		foreach ($pages as $page) {
-			$text = $page['revisions'][0]['slots']['main']['*'] ?? '';
-			if (!empty($text)) {
-				return $text;
+			if (is_array($page)) {
+				$text = $page['revisions'][0]['slots']['main']['*'] ?? '';
+				if (is_string($text) && !empty($text)) {
+					return $text;
+				}
 			}
 		}
 
 		return '';
 	}
 
-	public static function from_rest($title, $lang)
+	public static function from_rest(string $title, string $lang): string
 	{
 		$usrAgent = 'WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)';
 
@@ -60,20 +68,23 @@ class Wikitext
 		$output = curl_exec($ch);
 		curl_close($ch);
 
+		if (!is_string($output)) {
+			return '';
+		}
+
+		/** @var array<string, mixed>|null $json */
 		$json = json_decode($output, true);
 		// var_export(json_encode($json, JSON_PRETTY_PRINT));
 
-		if (isset($json['source'])) {
+		if (is_array($json) && isset($json['source']) && is_string($json['source'])) {
 			return $json['source'];
 		}
 		return '';
 	}
 
-	public static function get_wikipedia_text($title, $lang)
+	public static function get_wikipedia_text(string $title, string $lang): string
 	{
 		// replace / with "%2F"
-
-		$text = "";
 
 		$text = self::from_api($title, $lang);
 

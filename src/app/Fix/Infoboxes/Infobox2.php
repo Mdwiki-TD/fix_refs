@@ -7,7 +7,7 @@ use App\Fix\WikiParse\ParserTemplate;
 
 class Infobox2
 {
-    public static function do_comments($text)
+    public static function do_comments(string $text): string
     {
         $pattern = '/\s*\n*\s*(<!-- (Monoclonal antibody data|External links|Names*|Clinical data|Legal data|Legal status|Pharmacokinetic data|Chemical and physical data|Definition and medical uses|Chemical data|\w+ \w+ data|\w+ \w+ \w+ data|\w+ data|\w+ status|Identifiers) -->)\s*\n*/s';
         preg_match_all($pattern, $text, $matches);
@@ -19,16 +19,16 @@ class Infobox2
 
         return $text;
     }
-    public static function expend_new($mainTemp)
-    {
 
+    public static function expend_new(string $mainTemp): string
+    {
         $mainTemp = trim($mainTemp);
 
         $parser = new ParserTemplate($mainTemp);
 
         $temp = $parser->getTemplate();
 
-        $newTemp = $temp->toString($newLine = true, $ljust = 17);
+        $newTemp = $temp->toString(true, 17);
 
         $newTemp = self::do_comments($newTemp);
 
@@ -37,7 +37,11 @@ class Infobox2
         return $newTemp;
     }
 
-    public static function make_tempse($section_0)
+    /**
+     * @param string $section_0
+     * @return array{tempse_by_u: array<int, array<string, mixed>>, tempse: array<int, int>}
+     */
+    public static function make_tempse(string $section_0): array
     {
         $tempseBy_u = [];
         $tempse = [];
@@ -49,13 +53,11 @@ class Infobox2
             $u++;
             $tmpName = $temp['name'];
             $params = $temp['params'];
-            $template = $temp['item'];
+            $template = (string)$temp['item'];
 
             if (count($params) > 4 && strpos($section_0, ">$template") === false) {
                 $tempseBy_u[$u] = $temp;
                 $tempse[$u] = strlen($template);
-
-                // print_s($namestrip);
             }
         }
 

@@ -14,7 +14,7 @@ class ManualTest extends MyFunctionTest
     /**
      * Data provider for testing Polish infobox parameter addition functionality.
      *
-     * @return array
+     * @return array<string, array{input: string, targetFunction: string, expectedParams: array<int, string>, shouldNotContain: array<int, string>, maxParameterCounts: array<string, int>, expectUnchanged: bool}>
      */
     public static function manualTestCasesProvider(): array
     {
@@ -84,9 +84,9 @@ TXT
      *
      * @param string $input
      * @param string $targetFunction
-     * @param array $expectedParams
-     * @param array $shouldNotContain
-     * @param array $maxParameterCounts
+     * @param array<int, string> $expectedParams
+     * @param array<int, string> $shouldNotContain
+     * @param array<string, int> $maxParameterCounts
      * @param bool $expectUnchanged
      * @return void
      */

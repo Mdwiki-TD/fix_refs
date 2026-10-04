@@ -11,7 +11,7 @@ class ExtendedMiniFixesBotTest extends MyFunctionTest
     /**
      * Data provider for testing section title fixes across different languages.
      *
-     * @return array
+     * @return array<string, array{lang: string, input: string}>
      */
     public static function sectionTitlesProvider(): array
     {

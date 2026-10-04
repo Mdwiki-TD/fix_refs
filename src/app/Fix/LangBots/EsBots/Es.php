@@ -5,11 +5,19 @@ namespace App\Fix\LangBots\EsBots;
 use App\Logger;
 use App\Fix\LangBots\EsBots\EsMonths;
 use App\Fix\LangBots\EsBots\EsRefs;
+use App\Fix\WikiParse\DataModel\Template;
 use App\Fix\WikiParse\ParserTemplates;
 
 class ESData
 {
+    /**
+     * @var array<string, string>
+     */
     public static array $argsTo = [];
+
+    /**
+     * @var array<string, string>
+     */
     public static array $refsTemps = [];
 
     public static function init(): void
@@ -42,7 +50,6 @@ class ESData
             "cite av media" => "cita video",
             "cite video game" => "cita videojuego",
         ];
-
 
         // Mapping arguments
         self::$argsTo = [
@@ -151,7 +158,7 @@ class ESData
 
 class Es
 {
-    public static function work_one_temp($temp, $name)
+    public static function work_one_temp(Template $temp, string $name): string
     {
         ESData::init();
         // Logger::debug("\n$name\n");
@@ -168,7 +175,7 @@ class Es
         return $newTextStr;
     }
 
-    public static function fix_temps($text)
+    public static function fix_temps(string $text): string
     {
         ESData::init();
         $tempsIn = (new ParserTemplates($text))->getTemplates();
@@ -192,7 +199,7 @@ class Es
         return $newText;
     }
 
-    public static function fix_es($text, $title = "")
+    public static function fix_es(string $text, string $title = ""): string
     {
         // Check for "#REDIRECCIÓN"
         if (strpos($text, "#REDIRECCIÓN") !== false && $title != "test!") {

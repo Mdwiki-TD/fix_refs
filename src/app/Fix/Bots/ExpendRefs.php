@@ -6,7 +6,7 @@ use App\Fix\Parse\CitationsReg;
 
 class ExpendRefs
 {
-    public static function refs_expend_work($first, $alltext = "")
+    public static function refs_expend_work(string $first, string $alltext = ""): string
     {
         if (empty($alltext)) {
             $alltext = $first;

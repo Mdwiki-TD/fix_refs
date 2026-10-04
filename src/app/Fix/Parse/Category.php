@@ -4,7 +4,10 @@ namespace App\Fix\Parse;
 
 class Category
 {
-
+    /**
+     * @param string $text
+     * @return array<string, string>
+     */
     public static function get_categories_reg(string $text): array
     {
         $categories = array();
@@ -21,7 +24,7 @@ class Category
                 $categoryContent = $matches[1][$i];
                 // Split the content based on "|" to retrieve only the category name
                 $parts = explode('|', $categoryContent);
-                $categoryName = trim(array_shift($parts));
+                $categoryName = trim((string)array_shift($parts));
 
                 // Use the full match as the value in the final array
                 $categories[$categoryName] = $fullMatch;

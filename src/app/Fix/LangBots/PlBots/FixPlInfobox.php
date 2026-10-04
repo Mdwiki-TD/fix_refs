@@ -7,7 +7,7 @@ use App\Fix\WikiParse\ParserTemplates;
 
 class FixPlInfobox
 {
-    public static function add_missing_params_to_choroba_infobox($text)
+    public static function add_missing_params_to_choroba_infobox(string $text): string
     {
         Logger::debug("\n add_missing_params_to_choroba_infobox:\n");
         $newText = $text;
@@ -56,7 +56,7 @@ class FixPlInfobox
         return $newText;
     }
 
-    public static function pl_fixes($text)
+    public static function pl_fixes(string $text): string
     {
         $text = self::add_missing_params_to_choroba_infobox($text);
         return $text;

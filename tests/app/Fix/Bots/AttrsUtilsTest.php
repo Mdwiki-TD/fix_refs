@@ -1,15 +1,11 @@
 <?php
 
-
-
 use Tests\MyFunctionTest;
 use App\Fix\Bots\AttrsUtils;
 
-
 class attrsUtilsTest extends MyFunctionTest
 {
-
-    private $data = [];
+    private array $data = [];
 
     protected function setUp(): void
     {
@@ -55,7 +51,7 @@ class attrsUtilsTest extends MyFunctionTest
 
     /**
      */
-    public function testParseAttributes()
+    public function testParseAttributes(): void
     {
         foreach ($this->data as $name => $tab) {
             $result = AttrsUtils::parseAttributes($tab[0]);
@@ -65,15 +61,15 @@ class attrsUtilsTest extends MyFunctionTest
 
     /**
      */
-    public function testGetAttrs()
+    public function testGetAttrs(): void
     {
         foreach ($this->data as $name => $tab) {
-            $result = AttrsUtils::get_attrs($tab[0]);
+            $result = AttrsUtils::getAttrs($tab[0]);
             $this->assertEquals($tab[1], $result, $name);
         }
     }
-    // اختبارات دالة get_attrs
-    public function testGetAttrsAlt()
+    // اختبارات دالة getAttrs
+    public function testGetAttrsAlt(): void
     {
         $tests = [
             // حالة: سمة واحدة مع قيمة
@@ -119,7 +115,7 @@ class attrsUtilsTest extends MyFunctionTest
         ];
 
         foreach ($tests as $test) {
-            $result = AttrsUtils::get_attrs($test['text']);
+            $result = AttrsUtils::getAttrs($test['text']);
             $this->assertEquals($test['expected'], $result);
         }
     }

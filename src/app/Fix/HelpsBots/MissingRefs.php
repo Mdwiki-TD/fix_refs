@@ -3,88 +3,89 @@
 namespace App\Fix\HelpsBots;
 
 use App\Logger;
-use App\Fix\MdCat;
 use App\Fix\Parse\CitationsReg;
 
 class MissingRefs
 {
-    public static function get_full_text_url($sourcetitle, $mdwikiRevid)
+    private string $text;
+    private string $sourcetitle;
+    private int|string $mdwikiRevid;
+
+    public function __construct(string $text, string $sourcetitle, int|string $mdwikiRevid)
     {
-        $server = $_SERVER["SERVER_NAME"] ?? "localhost";
-        $serverPath = ($server == "localhost")
-            ? "http://localhost:9001"
-            : "https://mdwikicx.toolforge.org";
-
-        if (empty($mdwikiRevid) || $mdwikiRevid == 0) {
-            $jsonFile = "$serverPath/revisions_new1/json_data.json";
-            $data = json_decode(MdCat::get_url_curl($jsonFile), true) ?? [];
-            Logger::debug("url" . $jsonFile);
-            Logger::debug("count of data: " . count($data));
-            $mdwikiRevid = $data[str_replace(" ", "_", $sourcetitle)] ?? "";
-        }
-
-        if (empty($mdwikiRevid)) {
-            Logger::debug("empty mdwiki_revid");
-            return "";
-        }
-
-        $fullUrl = "$serverPath/revisions_new1/$mdwikiRevid/wikitext.txt";
-        Logger::debug("url" . $fullUrl);
-        $text = MdCat::get_url_curl($fullUrl);
-        if (!$text) {
-            Logger::debug("Failed to fetch URL: $fullUrl");
-            return "";
-        }
-
-        return $text;
+        $this->text = $text;
+        $this->sourcetitle = str_replace(" ", "_", $sourcetitle);
+        $this->mdwikiRevid = $mdwikiRevid;
     }
 
-    public static function find_mdwiki_revid($sourcetitle, $jsonFile)
+    private function find_mdwiki_revid(string $jsonFile): string
     {
         if (!is_file($jsonFile)) {
             Logger::debug("jsonFile not found: $jsonFile");
             return "";
         }
+
         $content = file_get_contents($jsonFile);
-        $data = json_decode($content, true) ?? [];
+        /** @var array<string, mixed> $data */
+        $data = ($content !== false) ? (json_decode($content, true) ?? []) : [];
+
         Logger::debug("url" . $jsonFile);
         Logger::debug("count of data: " . count($data));
-        $mdwikiRevid = $data[$sourcetitle] ?? "";
+
+        $mdwikiRevid = is_scalar($data[$this->sourcetitle] ?? '')
+            ? (string)$data[$this->sourcetitle]
+            : "";
+
         return $mdwikiRevid;
     }
 
-    public static function get_full_text($sourcetitle, $mdwikiRevid)
+    private function resolve_mdwiki_revid(string $revisionsDir): string
     {
-        $sourcetitle = str_replace(" ", "_", $sourcetitle);
+        if (empty($this->mdwikiRevid)) {
+            $jsonFile = "$revisionsDir/json_data.json";
+            $this->mdwikiRevid = $this->find_mdwiki_revid($jsonFile);
+        }
+
+        return (string)$this->mdwikiRevid;
+    }
+
+    private function get_full_text(): string
+    {
         $revisionsDir = getenv('REVISIONS_DIR') ?: ($_ENV['REVISIONS_DIR'] ?? null);
         if (!$revisionsDir) {
             $home = getenv('HOME') ?: ($_ENV['HOME'] ?? '');
             $revisionsDir = $home ? $home . '/public_html/revisions_new1' : dirname(__DIR__) . '/revisions_new1';
         }
-        $jsonFile = "$revisionsDir/json_data.json";
-        if (empty($mdwikiRevid) || $mdwikiRevid == 0) {
-            $mdwikiRevid = self::find_mdwiki_revid($sourcetitle, $jsonFile);
-        }
-        if (empty($mdwikiRevid)) {
-            Logger::debug("empty mdwiki_revid, sourcetitle:($sourcetitle)");
+
+        $revid = $this->resolve_mdwiki_revid($revisionsDir);
+        if (empty($revid)) {
+            Logger::debug("empty mdwiki_revid, sourcetitle:({$this->sourcetitle})");
             return "";
         }
-        $file = "$revisionsDir/$mdwikiRevid/wikitext.txt";
+
+        $file = "$revisionsDir/{$revid}/wikitext.txt";
         if (!file_exists($file)) {
             Logger::debug("wikitext file not found: $file");
-            $file = dirname(__DIR__, 2) . "/resources/revisions/$mdwikiRevid/wikitext.txt";
+            $file = dirname(__DIR__, 2) . "/resources/revisions/{$revid}/wikitext.txt";
         }
+
         Logger::debug($file);
         if (!file_exists($file)) {
             Logger::debug("file not found: $file");
             return "";
         }
+
         Logger::debug("url" . $file);
-        $text = file_get_contents($file) ?: "";
-        return $text;
+
+        return file_get_contents($file) ?: "";
     }
 
-    public static function refs_expend($shortRefs, $text, $alltext)
+    /**
+     * @param array<int|string, array{name: string, tag: string}> $shortRefs
+     * @param string $alltext
+     * @return string
+     */
+    private function refs_expend(array $shortRefs, string $alltext): string
     {
         $refs = CitationsReg::get_full_refs($alltext);
 
@@ -94,16 +95,19 @@ class MissingRefs
             $rr = $refs[$name] ?? false;
             if ($rr) {
                 Logger::debug("refs_expend: $name");
-                $text = str_replace($refe, $rr, $text);
+                $this->text = str_replace($refe, $rr, $this->text);
             }
         }
-        return $text;
+        return $this->text;
     }
 
-    public static function find_empty_short($text)
+    /**
+     * @return array<string, array{content: string, tag: string, name: string, options: string}>
+     */
+    private function find_empty_short(): array
     {
-        $shorts = CitationsReg::get_short_citations($text);
-        $fulls = CitationsReg::get_full_refs($text);
+        $shorts = CitationsReg::get_short_citations($this->text);
+        $fulls = CitationsReg::get_full_refs($this->text);
         $emptyRefs = [];
         foreach ($shorts as $cite) {
             $name = $cite["name"];
@@ -115,14 +119,21 @@ class MissingRefs
         return $emptyRefs;
     }
 
-    public static function fix_missing_refs($text, $sourcetitle, $mdwikiRevid)
+    public function fix_missing_refs(): string
     {
-        $emptyShort = self::find_empty_short($text);
+        $emptyShort = $this->find_empty_short();
         Logger::debug("empty refs: " . count($emptyShort));
-        if (empty($emptyShort)) return $text;
-        $fullText = self::get_full_text($sourcetitle, $mdwikiRevid);
-        if (empty($fullText)) return $text;
-        $text = self::refs_expend($emptyShort, $text, $fullText);
-        return $text;
+        if (empty($emptyShort)) {
+            return $this->text;
+        }
+
+        $fullText = $this->get_full_text();
+
+        if (empty($fullText)) {
+            return $this->text;
+        }
+
+        $this->text = $this->refs_expend($emptyShort, $fullText);
+        return $this->text;
     }
 }

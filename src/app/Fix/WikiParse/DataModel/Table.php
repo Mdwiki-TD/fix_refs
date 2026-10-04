@@ -10,13 +10,15 @@ namespace App\Fix\WikiParse\DataModel;
 class Table
 {
     /**
-     * @var array $data The data of the table.
+     * @var array<int, array<int, string>> $data The data of the table.
      */
     private array $data;
+
     /**
-     * @var array $header The header of the table.
+     * @var array<int, string> $header The header of the table.
      */
     private array $header;
+
     /**
      * @var string $classes The classes of the table.
      */
@@ -25,8 +27,8 @@ class Table
     /**
      * Table constructor.
      *
-     * @param array $header The header of the table.
-     * @param array $data The data of the table.
+     * @param array<int, string> $header The header of the table.
+     * @param array<int, array<int, string>> $data The data of the table.
      * @param string $classes The classes of the table.
      */
     public function __construct(array $header, array $data, string $classes = "")
@@ -39,7 +41,7 @@ class Table
     /**
      * Get the headers of the table.
      *
-     * @return array The headers of the table.
+     * @return array<int, string> The headers of the table.
      */
     public function getHeaders(): array
     {
@@ -49,7 +51,7 @@ class Table
     /**
      * Get the data of the table.
      *
-     * @return array The data of the table.
+     * @return array<int, array<int, string>> The data of the table.
      */
     public function getData(): array
     {
@@ -71,7 +73,8 @@ class Table
         if (!in_array($key, $this->header)) {
             throw new \InvalidArgumentException("The key \"$key\" does not exist in the header.");
         }
-        return $this->data[$position][array_search($key, $this->header)];
+        $keyIndex = array_search($key, $this->header);
+        return $this->data[$position][$keyIndex];
     }
 
     /**
@@ -90,7 +93,8 @@ class Table
         if (!in_array($key, $this->header)) {
             throw new \InvalidArgumentException("The key \"$key\" does not exist in the header.");
         }
-        $this->data[$position][array_search($key, $this->header)] = $value;
+        $keyIndex = array_search($key, $this->header);
+        $this->data[$position][$keyIndex] = $value;
     }
 
     /**
@@ -126,6 +130,7 @@ class Table
         $tableMarkup .= "|}";
         return $tableMarkup;
     }
+
     public function __toString(): string
     {
         return $this->toString();

@@ -19,11 +19,10 @@ require __DIR__ . '/../src/bootstrap.php';
 
 class MyFunctionTest extends TestCase
 {
-    protected function assertEqualCompare(string $expected, string $input, string $result)
+    protected function assertEqualCompare(string $expected, string $input, string $result): void
     {
-
-        $result = preg_replace("/\r\n/", "\n", $result);
-        $expected = preg_replace("/\r\n/", "\n", $expected);
+        $result = (string)preg_replace("/\r\n/", "\n", $result);
+        $expected = (string)preg_replace("/\r\n/", "\n", $expected);
 
         if ($result === $input && $result !== $expected) {
             $this->fail("No changes were made! The function returned the input unchanged:\n$result");

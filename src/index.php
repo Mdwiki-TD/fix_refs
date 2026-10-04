@@ -42,7 +42,7 @@ $footer = <<<HTML
 </html>
 HTML;
 
-function make_result($lang, $title, $sourcetitle, $mdwikiRevid)
+function make_result(string $lang, string $title, string $sourcetitle, int|string $mdwikiRevid): string
 {
 
     $text = Wikitext::get_wikipedia_text($title, $lang);

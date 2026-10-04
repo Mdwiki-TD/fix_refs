@@ -14,6 +14,10 @@ class ParserTemplate
 {
     private string $templateText;
     private string $name = "";
+
+    /**
+     * @var array<int|string, string>
+     */
     private array $parameters;
     private string $pipe = "|";
     private string $pipeR = "-_-";
@@ -54,6 +58,7 @@ class ParserTemplate
 
         return $DTemplate;
     }
+
     public function parse(): void
     {
         if (preg_match("/^\{\{(.*?)(\}\})$/su", $this->templateText, $matchesR)) {

@@ -14,16 +14,15 @@ class Parameters
     /**
      * The parameters of the template.
      *
-     * @var array
+     * @var array<int|string, string>
      */
     private array $parameters;
 
     /**
      * Parameters constructor.
      *
-     * @param array $parameters The parameters of the template.
+     * @param array<int|string, string> $parameters The parameters of the template.
      */
-
     public function __construct(array $parameters = [])
     {
         $this->parameters = $parameters;
@@ -32,9 +31,8 @@ class Parameters
     /**
      * Get the parameters of the template.
      *
-     * @return array The parameters of the template.
+     * @return array<int|string, string> The parameters of the template.
      */
-
     public function getParameters(): array
     {
         return $this->parameters;
@@ -47,7 +45,6 @@ class Parameters
      *
      * @return void
      */
-
     public function delete(string $key): void
     {
         if (array_key_exists($key, $this->parameters)) {
@@ -59,10 +56,10 @@ class Parameters
      * Get a parameter of the template.
      *
      * @param string $key The key of the parameter to get.
+     * @param string $default The default value if not found.
      *
      * @return string The value of the parameter.
      */
-
     public function get(string $key, string $default = ""): string
     {
         return $this->parameters[$key] ?? $default;
@@ -79,6 +76,7 @@ class Parameters
     {
         return array_key_exists($key, $this->parameters);
     }
+
     /**
      * Set a parameter of the template.
      *
@@ -87,7 +85,6 @@ class Parameters
      *
      * @return void
      */
-
     public function set(string $key, string $value): void
     {
         $this->parameters[$key] = $value;
@@ -96,11 +93,10 @@ class Parameters
     /**
      * Change the names of multiple parameters of the template.
      *
-     * @param array $map The new names of the parameters.
+     * @param array<string, string> $map The new names of the parameters.
      *
      * @return void
      */
-
     public function changeParametersNames(array $map): void
     {
         $newParameters = [];
@@ -132,17 +128,17 @@ class Parameters
      *
      * @return void
      */
-
     public function changeParameterName(string $old, string $new): void
     {
         $this->changeParametersNames([$old => $new]);
     }
 
-    public function str_pad_right($str, $length, $pad = " ", $encoding = "UTF-8")
+    public function str_pad_right(string $str, int $length, string $pad = " ", string $encoding = "UTF-8"): string
     {
         $diff = $length - mb_strlen($str, $encoding);
         return $diff > 0 ? $str . str_repeat($pad, $diff) : $str;
     }
+
     public function toString(int $ljust = 0, bool $newLine = false): string
     {
         $separator = $newLine ? "\n" : "";
@@ -155,7 +151,7 @@ class Parameters
                 $result .= "|" . $formattedValue;
             } else {
                 // $formattedKey = $ljust > 0 ? str_pad($key, $ljust, " ") : $key;
-                $formattedKey = $ljust > 0 ? $this->str_pad_right($key, $ljust) : $key;
+                $formattedKey = $ljust > 0 ? $this->str_pad_right((string)$key, $ljust) : $key;
                 $result .= $separator . "|" . $formattedKey . "=" . $formattedValue;
             }
             $index++;
@@ -163,6 +159,7 @@ class Parameters
 
         return trim($result);
     }
+
     public function __toString(): string
     {
         return $this->toString();

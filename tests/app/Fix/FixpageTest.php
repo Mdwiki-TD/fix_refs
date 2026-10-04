@@ -5,18 +5,17 @@ use App\Fix\Index;
 
 class FixpageTest extends MyFunctionTest
 {
-
-    private function fix_page_wrap(string $text, string $lang)
+    private function fixPageWrap(string $text, string $lang): string
     {
-        return Index::fix_page($text, "", true, true, false, $lang, "", 0);
+        return Index::fixPage($text, "", true, true, false, $lang, "", 0);
     }
 
-    public function testPart1()
+    public function testPart1(): void
     {
         $input = '[[Category:Translated from MDWiki]] ռետինոիդներ։ <ref name="NORD2006" /><ref name="Gli2017" />';
 
         $expected = '[[Category:Translated from MDWiki]] ռետինոիդներ<ref name="NORD2006" /><ref name="Gli2017" />։';
 
-        $this->assertEqualCompare($expected, $input, $this->fix_page_wrap($input, 'hy'));
+        $this->assertEqualCompare($expected, $input, $this->fixPageWrap($input, 'hy'));
     }
 }

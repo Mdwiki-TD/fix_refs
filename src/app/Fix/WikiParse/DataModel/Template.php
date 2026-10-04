@@ -4,7 +4,6 @@ namespace App\Fix\WikiParse\DataModel;
 
 use App\Fix\WikiParse\DataModel\Parameters;
 
-
 /**
  * Class Template
  *
@@ -20,6 +19,7 @@ class Template
      * @var string The name.
      */
     private string $name;
+
     /**
      * The name stripped of any underscores.
      *
@@ -40,7 +40,7 @@ class Template
      * Template constructor.
      *
      * @param string $name The name.
-     * @param array $parameters The parameters.
+     * @param array<int|string, string> $parameters The parameters.
      * @param string $originalText The text.
      */
     public function __construct(string $name, array $parameters = [], string $originalText = "")
@@ -56,7 +56,6 @@ class Template
      *
      * @return string The name stripped of any underscores.
      */
-
     public function getStripName(): string
     {
         return $this->nameStrip;
@@ -67,7 +66,6 @@ class Template
      *
      * @return string The name.
      */
-
     public function getName(): string
     {
         return $this->name;
@@ -78,7 +76,6 @@ class Template
      * Example: {{cite web|...}}
      * @return string The original text.
      */
-
     public function getOriginalText(): string
     {
         return $this->originalText;
@@ -87,21 +84,23 @@ class Template
     /**
      * Get the parameters.
      *
-     * @return array The parameters.
+     * @return array<int|string, string> The parameters.
      */
-
     public function getParameters(): array
     {
         return $this->parameters->getParameters();
     }
+
     public function deleteParameter(string $key): void
     {
         $this->parameters->delete($key);
     }
+
     public function getParameter(string $key): string
     {
         return $this->parameters->get($key);
     }
+
     /**
      * Set the name.
      *
@@ -109,30 +108,36 @@ class Template
      *
      * @return void
      */
-
     public function setName(string $name): void
     {
         $this->name = $name;
         $this->nameStrip = trim(str_replace('_', ' ', $name));
     }
+
     public function setParameter(string $key, string $value): void
     {
         $this->parameters->set($key, $value);
     }
+
     public function changeParameterName(string $old, string $new): void
     {
         $this->parameters->changeParametersNames([$old => $new]);
     }
+
+    /**
+     * @param array<string, string> $paramsNew
+     */
     public function changeParametersNames(array $paramsNew): void
     {
         $this->parameters->changeParametersNames($paramsNew);
     }
+
     /**
      * Convert the content to a string.
      *
      * @return string The tag as a string.
      */
-    public function toString(bool $newLine = false, $ljust = 0): string
+    public function toString(bool $newLine = false, int $ljust = 0): string
     {
         $separator = $newLine ? "\n" : "";
         $templateName = $newLine ? trim($this->name) : $this->name;
@@ -144,6 +149,7 @@ class Template
         $result .= $separator . "}}";
         return $result;
     }
+
     public function __toString(): string
     {
         return $this->toString();

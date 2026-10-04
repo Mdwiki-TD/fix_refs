@@ -4,7 +4,7 @@ namespace App\Fix\Bots;
 
 class RedirectHelp
 {
-    public static function page_is_redirect($title, $text)
+    public static function page_is_redirect(string $title, string $text): bool
     {
         // #пренасочване
 

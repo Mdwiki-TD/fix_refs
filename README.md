@@ -66,7 +66,7 @@ fix_refs_repo/
 │   ├── test.php                  # Test form UI for manual testing
 │   ├── csrf.php                  # CSRF token generation and verification
 │   ├── app/Fix/                  # Core library (PSR-4: App\)
-│   │   ├── index.php             # fix_page() - main processing pipeline
+│   │   ├── index.php             # fixPage() - main processing pipeline
 │   │   ├── bootstrap.php     # Autoloader via glob includes
 │   │   ├── debug_helper.php          # Debug/test output helpers
 │   │   ├── md_cat.php            # MDWiki category management (Wikidata integration)
@@ -95,7 +95,7 @@ fix_refs_repo/
 │   │   │   ├── Citations_reg.php # Short/full ref extraction by name
 │   │   │   └── Category.php      # Category regex parser
 │   │   ├── Bots/                 # Core text transformation functions
-│   │   │   ├── mini_fixes_bot.php        # Spacing, section titles, prefix cleanup
+│   │   │   ├── miniFixes_bot.php        # Spacing, section titles, prefix cleanup
 │   │   │   ├── remove_duplicate_refs.php # Duplicate ref detection/removal
 │   │   │   ├── expend_refs.php           # Short ref expansion
 │   │   │   ├── refs_utils.php            # String helpers (str_starts_with, etc.)
@@ -143,7 +143,7 @@ fix_refs_repo/
 
 1. **Web Layer** (`src/index.php`, `src/text_post.php`, `src/test.php`) - HTML forms and POST handlers
 2. **Orchestration Layer** (`src/work.php`) - Settings loading, environment detection, entry points
-3. **Pipeline Layer** (`src/app/Fix/index.php`) - Sequential processing pipeline in `fix_page()`
+3. **Pipeline Layer** (`src/app/Fix/index.php`) - Sequential processing pipeline in `fixPage()`
 4. **Bot Layer** (`src/app/Fix/Bots/`, `src/app/Fix/HelpsBots/`) - Individual text transformations
 5. **Language Layer** (`src/app/Fix/LangBots/`) - Language-specific transformations
 6. **Parser Layer** (`src/app/Fix/WikiParse/`, `src/app/Fix/Parse/`) - Wikitext parsing
@@ -154,11 +154,11 @@ fix_refs_repo/
 
 ### Code Organization
 
-The project follows a modular architecture with clear separation between parsing, transformation, and language-specific logic. The `fix_page()` function in `src/app/Fix/index.php` serves as the main pipeline orchestrator, calling functions in a defined sequence.
+The project follows a modular architecture with clear separation between parsing, transformation, and language-specific logic. The `fixPage()` function in `src/app/Fix/index.php` serves as the main pipeline orchestrator, calling functions in a defined sequence.
 
 ### Design Patterns
 
--   **Pipeline Pattern** - `fix_page()` chains transformations sequentially
+-   **Pipeline Pattern** - `fixPage()` chains transformations sequentially
 -   **Strategy Pattern** - Language-specific Bots are selected based on `$lang` parameter
 -   **Data Model / Value Object** - `Template`, `Tag`, `Parameters` encapsulate parsed structures
 -   **Facade** - `WikiParse/Template.php` provides simple `getTemplates()` entry point
@@ -169,7 +169,7 @@ The project follows a modular architecture with clear separation between parsing
 | Principle | Assessment                                                                                            |
 | --------- | ----------------------------------------------------------------------------------------------------- |
 | **S**RP   | Moderate - Most functions have single responsibilities, but some files mix parsing and transformation |
-| **O**CP   | Low - Adding a new language requires modifying `fix_page()` directly with new `if` branches           |
+| **O**CP   | Low - Adding a new language requires modifying `fixPage()` directly with new `if` branches           |
 | **L**SP   | N/A - Minimal inheritance hierarchy                                                                   |
 | **I**SP   | Good - Interfaces are minimal (no forced implementations)                                             |
 | **D**IP   | Low - Direct function calls, no dependency injection or abstractions                                  |
@@ -179,11 +179,11 @@ The project follows a modular architecture with clear separation between parsing
 -   **Good**: Each language bot is in its own file/directory, making language-specific changes isolated
 -   **Good**: The WikiParse module is well-structured with proper data models
 -   **Concern**: The `bootstrap.php` uses glob-based includes rather than Composer autoloading for all files
--   **Concern**: The `fix_page()` function has a growing list of language-specific `if` blocks
+-   **Concern**: The `fixPage()` function has a growing list of language-specific `if` blocks
 
 ### Readability
 
--   **Good**: Function names are descriptive (e.g., `remove_Duplicate_refs_With_attrs`, `move_dots_after_refs`)
+-   **Good**: Function names are descriptive (e.g., `removeDuplicateRefsWithAttrs`, `moveDotsAfterRefs`)
 -   **Good**: Arabic comments provide context for bilingual developers
 -   **Concern**: Inconsistent naming conventions (camelCase, snake_case, PascalCase mixed)
 -   **Concern**: Some commented-out code remains in production files
@@ -191,7 +191,7 @@ The project follows a modular architecture with clear separation between parsing
 ### Scalability
 
 -   The current architecture works well for the existing set of ~11 languages
--   Adding more languages requires: creating a new lang_bot file, adding `if` block to `fix_page()`, and updating settings
+-   Adding more languages requires: creating a new lang_bot file, adding `if` block to `fixPage()`, and updating settings
 -   The cURL-based API calls have 5-second timeouts, which is reasonable for the use case
 
 ### Dependency Management
@@ -224,9 +224,9 @@ The project follows a modular architecture with clear separation between parsing
 
 2. **Mixed parsing approaches** - Two parallel parsing systems (`Parse/Citations.php` with `CitationOld` class and `WikiParse/src/ParserCitations.php`) create confusion about which to use.
 
-3. **Inconsistent naming** - Mixed conventions: `Expend_Infobox` (Pascal+snake), `fix_page` (snake), `getCitationsOld` (camel), `remove_Duplicate_refs_With_attrs` (mixed).
+3. **Inconsistent naming** - Mixed conventions: `Expend_Infobox` (Pascal+snake), `fixPage` (snake), `getCitationsOld` (camel), `removeDuplicateRefsWithAttrs` (mixed).
 
-4. **Commented-out code** - Multiple files contain commented-out code blocks (e.g., `// $text = fix_refs_names($text);` in `app/Fix/index.php`).
+4. **Commented-out code** - Multiple files contain commented-out code blocks (e.g., `// $text = fixRefsNames($text);` in `app/Fix/index.php`).
 
 5. **Global state in ESData** - `ESData` uses public static properties populated at file include time, creating implicit coupling.
 
@@ -254,7 +254,7 @@ The project follows a modular architecture with clear separation between parsing
 
 6. **Regex complexity** - The recursive regex in `ParserTemplates::find_sub_templates()` (`(?R)`) can be slow on deeply nested templates. The `$maxDepth = 10` limit helps but doesn't prevent exponential backtracking on malformed input.
 
-7. **Repeated parsing** - `getCitationsOld()` is called multiple times during a single `fix_page()` invocation (by different bot functions), re-parsing the same text each time.
+7. **Repeated parsing** - `getCitationsOld()` is called multiple times during a single `fixPage()` invocation (by different bot functions), re-parsing the same text each time.
 
 ## Areas That Need Attention
 
@@ -266,7 +266,7 @@ The project follows a modular architecture with clear separation between parsing
 
 ### Missing Tests
 
--   No integration tests for the full `fix_page()` pipeline
+-   No integration tests for the full `fixPage()` pipeline
 -   No tests for the web endpoints (`index.php`, `text_post.php`)
 -   No tests for CSRF module
 -   No tests for `wikibots/wikitext.php` (API calls)
@@ -305,13 +305,13 @@ The project follows a modular architecture with clear separation between parsing
 1. Replace glob-based includes with proper Composer PSR-4 autoloading
 2. Consolidate duplicate `str_starts_with`/`str_ends_with` polyfills into a single location
 3. Add `$lang` whitelist validation in `work.php`
-4. Cache parsed citations to avoid repeated parsing in `fix_page()`
+4. Cache parsed citations to avoid repeated parsing in `fixPage()`
 5. Add integration tests for the full pipeline
 6. Standardize naming conventions across the codebase
 
 ### Long-term Refactoring (1-2 months)
 
-1. Extract language handling into a plugin/strategy pattern - create a `LanguageFixerInterface` with implementations per language, eliminating the `if` chain in `fix_page()`
+1. Extract language handling into a plugin/strategy pattern - create a `LanguageFixerInterface` with implementations per language, eliminating the `if` chain in `fixPage()`
 2. Depare `CitationOld` in favor of `ParserCitations` from WikiParse
 3. Add a proper dependency injection container or at minimum constructor-based DI
 4. Create an abstraction for HTTP requests (injectable client for testing)

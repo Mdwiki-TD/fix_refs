@@ -8,8 +8,9 @@ class Attribute
      * @var string The attribute of the citation.
      */
     private string $content;
+
     /**
-     * @var array The attributes of the citation.
+     * @var array<string, string> The attributes of the citation.
      */
     private array $attributesArray = [];
 
@@ -21,7 +22,6 @@ class Attribute
      *
      * @param string $content The content containing attributes.
      */
-
     public function __construct(string $content)
     {
         $this->content = $content;
@@ -35,12 +35,12 @@ class Attribute
      *
      * @return void
      */
-
-    public function setContent($content): void
+    public function setContent(string $content): void
     {
         $this->content = $content;
         $this->parseAttributes();
     }
+
     /**
      * Parse the attributes of the citation and store them in an array.
      *
@@ -51,7 +51,6 @@ class Attribute
         // <ref name="source" group="bar">This is a citation</ref>
 
         $text = "<ref " . $this->content . ">";
-        // $attrfindTolerant = '/((?<=[\'"\s\/])[^\s\/>][^\s\/=>]*)(\s*=+\s*(\'[^\']*\'|"[^"]*"|(?![\'"])[^>\s]*))?(?:\s|\/(?!>))*/';
 
         $attrfindTolerant = '/
             ((?<=[\'"\s\/])[^\s\/>][^\s\/=>]*)             # Attribute name
@@ -73,12 +72,12 @@ class Attribute
             }
         }
     }
+
     /**
      * Get the parsed attributes as an associative array.
      *
-     * @return array An associative array of attributes where the key is the attribute name and the value is the attribute value.
+     * @return array<string, string> An associative array of attributes where the key is the attribute name and the value is the attribute value.
      */
-
     public function getAttributesArray(): array
     {
         return $this->attributesArray;
@@ -91,11 +90,11 @@ class Attribute
      *
      * @return bool True if the attribute exists, false otherwise.
      */
-
     public function has(string $key): bool
     {
         return array_key_exists($key, $this->attributesArray);
     }
+
     /**
      * Get the value of an attribute of the citation.
      *
@@ -104,7 +103,6 @@ class Attribute
      *
      * @return string The value of the attribute. If the attribute does not exist, the default value is returned.
      */
-
     public function get(string $key, string $default = ""): string
     {
         return $this->attributesArray[$key] ?? $default;
@@ -118,18 +116,10 @@ class Attribute
      *
      * @return void
      */
-
     public function set(string $key, string $value): void
     {
         $this->attributesArray[$key] = $value;
     }
-    /**
-     * Delete an attribute of the citation.
-     *
-     * @param string $key The name of the attribute to delete.
-     *
-     * @return void
-     */
 
     /**
      * Delete an attribute from the citation.
@@ -138,7 +128,6 @@ class Attribute
      *
      * @return void
      */
-
     public function delete(string $key): void
     {
         if (array_key_exists($key, $this->attributesArray)) {
@@ -153,7 +142,7 @@ class Attribute
      *
      * @return string The attributes as a string.
      */
-    public function toString($addQuotes = false): string
+    public function toString(bool $addQuotes = false): string
     {
         $result = [];
 
@@ -177,6 +166,7 @@ class Attribute
 
         return implode(' ', $result);
     }
+
     public function __toString(): string
     {
         return $this->toString();

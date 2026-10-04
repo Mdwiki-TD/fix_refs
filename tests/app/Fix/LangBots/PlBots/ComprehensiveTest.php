@@ -12,7 +12,7 @@ class ComprehensiveTest extends MyFunctionTest
     /**
      * Data provider for Polish Choroba infobox test cases.
      *
-     * @return array
+     * @return array<string, array{input: string, lang: string, expectedParams: array<int, string>, shouldNotAdd: array<int, string>, notDuplicated: array<int, string>}>
      */
     public static function chorobaInfoboxProvider(): array
     {
@@ -94,9 +94,9 @@ TXT,
      *
      * @param string $input
      * @param string $lang
-     * @param array $expectedParams
-     * @param array $shouldNotAdd
-     * @param array $notDuplicated
+     * @param array<int, string> $expectedParams
+     * @param array<int, string> $shouldNotAdd
+     * @param array<int, string> $notDuplicated
      * @return void
      */
     #[DataProvider('chorobaInfoboxProvider')]
@@ -107,7 +107,7 @@ TXT,
         array $shouldNotAdd,
         array $notDuplicated
     ): void {
-        $result = Index::fix_page($input, "Test Article", false, true, false, $lang, "", "");
+        $result = Index::fixPage($input, "Test Article", false, true, false, $lang, "", "");
 
         // Verify that expected parameters are present
         foreach ($expectedParams as $param) {

@@ -11,7 +11,7 @@ use App\Fix\Bots\MiniFixesBot;
 class miniFixesBotTest extends MyFunctionTest
 {
 
-    public function testSectionsTitlesRu()
+    public function testSectionsTitlesRu(): void
     {
         $texts = [
             [
@@ -34,7 +34,7 @@ class miniFixesBotTest extends MyFunctionTest
         }
     }
 
-    public function testSectionsTitleshr()
+    public function testSectionsTitleshr(): void
     {
         $texts = [
             [
@@ -56,7 +56,7 @@ class miniFixesBotTest extends MyFunctionTest
             $this->assertEqualCompare($new, $text, $newText);
         }
     }
-    public function testSectionsTitlesSw()
+    public function testSectionsTitlesSw(): void
     {
         $text = "== Marejeleo 1 ==\n\n====Marejeleo====\n\n=== Marejeleo ===";
         $new  = "== Marejeleo 1 ==\n\n==== Marejeo ====\n\n=== Marejeo ===";
@@ -67,7 +67,7 @@ class miniFixesBotTest extends MyFunctionTest
     }
 
     // اختبارات دالة remove_space_before_ref_tags
-    public function testRemoveSpaceBeforeRefTags()
+    public function testRemoveSpaceBeforeRefTags(): void
     {
         $tests = [
             // حالة: مسافة قبل <ref> بعد نقطة
@@ -115,7 +115,7 @@ class miniFixesBotTest extends MyFunctionTest
     }
 
     // اختبارات دالة refs_tags_spaces
-    public function testRefsTagsSpaces()
+    public function testRefsTagsSpaces(): void
     {
         $tests = [
             // حالة: مسافة بين </ref> و <ref>
@@ -157,7 +157,7 @@ class miniFixesBotTest extends MyFunctionTest
     }
 
     // اختبارات دالة fix_preffix
-    public function testFixPreffix()
+    public function testFixPreffix(): void
     {
         $tests = [
             // حالة: رابط باللغة الإنجليزية
@@ -205,7 +205,7 @@ class miniFixesBotTest extends MyFunctionTest
     }
 
     // Test for remove_template_rtt_links
-    public function testRemoveTemplateRttLinks()
+    public function testRemoveTemplateRttLinks(): void
     {
         $tests = [
             // Basic case: Template:RTT with Sinhala text

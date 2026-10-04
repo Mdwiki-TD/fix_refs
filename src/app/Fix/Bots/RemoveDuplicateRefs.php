@@ -9,7 +9,7 @@ use App\Fix\Parse\Citations;
 
 class RemoveDuplicateRefs
 {
-    public static function fix_refs_names(string $text): string
+    public static function fixRefsNames(string $text): string
     {
         $newText = $text;
         $citations = Citations::getCitationsOld($text);
@@ -24,7 +24,7 @@ class RemoveDuplicateRefs
                 continue;
             }
 
-            $attrs = AttrsUtils::get_attrs($citeAttrs);
+            $attrs = AttrsUtils::getAttrs($citeAttrs);
 
             if (empty($citeAttrs)) {
                 continue;
@@ -32,9 +32,9 @@ class RemoveDuplicateRefs
 
             $newCiteAttrs = "";
 
-            foreach ($attrs as $key => $value) {
+            foreach ($attrs as $attrKey => $value) {
                 $value2 = RefsUtils::remove_start_end_quotes($value);
-                $newCiteAttrs .= " $key=$value2";
+                $newCiteAttrs .= " $attrKey=$value2";
             }
 
             $newCiteAttrs = trim($newCiteAttrs);
@@ -45,7 +45,7 @@ class RemoveDuplicateRefs
         return $newText;
     }
 
-    public static function remove_Duplicate_refs_With_attrs(string $text): string
+    public static function removeDuplicateRefsWithAttrs(string $text): string
     {
         $newText = $text;
         $refsToCheck = [];
@@ -82,7 +82,7 @@ class RemoveDuplicateRefs
         foreach ($refsToCheck as $key => $value) {
             if (strpos($newText, $value) === false) {
                 $pattern = '/' . preg_quote($key, '/') . '/u';
-                $newText = preg_replace($pattern, $value, $newText, 1);
+                $newText = (string)preg_replace($pattern, $value, $newText, 1);
             }
         }
 

@@ -5,7 +5,7 @@ use App\Fix\Infoboxes\Infobox2;
 
 class infobox2Test extends MyFunctionTest
 {
-    public function testExpendNewFileText()
+    public function testExpendNewFileText(): void
     {
         $textInput   = file_get_contents(__DIR__ . "/fixtures/1/input.txt");
         $expected  = file_get_contents(__DIR__ . "/fixtures/1/expected.txt");
@@ -20,7 +20,7 @@ class infobox2Test extends MyFunctionTest
         // --
         $this->assertEquals(trim($expected), trim($result), "Unexpected result");
     }
-    public function testMakeTempseFileText()
+    public function testMakeTempseFileText(): void
     {
         $textInput   = file_get_contents(__DIR__ . "/fixtures/infobox2_tempse/input.txt");
         $expected  = json_decode(file_get_contents(__DIR__ . "/fixtures/infobox2_tempse/expected.json"), true);

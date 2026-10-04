@@ -8,6 +8,10 @@ use App\Fix\WikiParse\ParserTemplates;
 
 class EsRefs
 {
+    /**
+     * @param string $text
+     * @return array{refs: array<string, string>, new_text: string}
+     */
     public static function get_refs(string $text): array
     {
         $newText = $text;
@@ -30,8 +34,6 @@ class EsRefs
 
             $refs[$citeAttrs] = $citeContents;
 
-            // Logger::debug("\n$citeAttrs\n");
-
             $citeNewtext = "<ref $citeAttrs />";
             $newText = str_replace($citeText, $citeNewtext, $newText);
         }
@@ -42,7 +44,7 @@ class EsRefs
         ];
     }
 
-    public static function check_short_refs($line)
+    public static function check_short_refs(string $line): string
     {
         $shorts = CitationsReg::get_short_citations($line);
         foreach ($shorts as $short) {
@@ -50,10 +52,14 @@ class EsRefs
         }
 
         // remove \n+
-        $line = preg_replace("/\n+/u", "\n", $line);
+        $line = (string)preg_replace("/\n+/u", "\n", $line);
         return $line;
     }
 
+    /**
+     * @param array<string, string> $refs
+     * @return string
+     */
     public static function make_line(array $refs): string
     {
         $line = "\n";
@@ -65,7 +71,7 @@ class EsRefs
         return $line;
     }
 
-    public static function add_line_to_temp($line, $text)
+    public static function add_line_to_temp(string $line, string $text): string
     {
         $tempsIn = (new ParserTemplates($text))->getTemplates();
 

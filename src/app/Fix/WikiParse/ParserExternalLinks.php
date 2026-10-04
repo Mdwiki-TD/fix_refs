@@ -18,9 +18,9 @@ class ParserExternalLinks
 
     /**
      * Array of ExternalLink objects
-     * @var array
+     * @var ExternalLink[]
      */
-    private array $links;
+    private array $links = [];
 
     /**
      * ParserExternalLinks constructor.
@@ -35,7 +35,7 @@ class ParserExternalLinks
     /**
      * Find all external links in the given text
      * @param string $string
-     * @return array
+     * @return array<int, mixed>
      */
     private function find_sub_links(string $string): array
     {
@@ -50,15 +50,17 @@ class ParserExternalLinks
     {
         $textLinks = $this->find_sub_links($this->text);
         $this->links = [];
-        foreach ($textLinks[1] as $key => $textLink) {
-            $_ExternalLinks = new ExternalLink($textLink, trim($textLinks[2][$key]));
-            $this->links[] = $_ExternalLinks;
+        if (isset($textLinks[1]) && is_array($textLinks[1])) {
+            foreach ($textLinks[1] as $key => $textLink) {
+                $_ExternalLinks = new ExternalLink((string)$textLink, trim((string)($textLinks[2][$key] ?? '')));
+                $this->links[] = $_ExternalLinks;
+            }
         }
     }
 
     /**
      * Get all external links found in the text
-     * @return array
+     * @return ExternalLink[]
      */
     public function getLinks(): array
     {

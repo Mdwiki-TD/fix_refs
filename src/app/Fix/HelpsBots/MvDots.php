@@ -15,22 +15,22 @@ class MvDots
         $pattern = '/((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)([' . $punctuation . ']+)/su';
 
         // Replace by moving punctuation before the reference(s)
-        $result = preg_replace_callback($pattern, function ($matches) {
+        $result = (string)preg_replace_callback($pattern, function (array $matches): string {
             // Handle multiple dots by replacing with a single dot
-            $punctuation = $matches[2];
-            if (substr_count($punctuation, '.') > 1) {
-                $punctuation = '.';
+            $punctuationMark = $matches[2];
+            if (substr_count($punctuationMark, '.') > 1) {
+                $punctuationMark = '.';
             }
-            return $punctuation . ' ' . trim($matches[1]);
+            return $punctuationMark . ' ' . trim($matches[1]);
         }, $text);
 
         return $result;
     }
 
-    public static function move_dots_after_refs($newtext, $lang)
+    public static function moveDotsAfterRefs(string $newtext, string $lang): string
     {
 
-        // Logger::debug("move_dots_after_refs\n");
+        // Logger::debug("moveDotsAfterRefs\n");
 
         $dot = "\.,。।";
 
@@ -43,7 +43,7 @@ class MvDots
         $pattern = "/([" . $dot . "]+)\s*" . $regline . "/mu";
         $replacement = "$2$1";
 
-        $newtext = preg_replace($pattern, $replacement, $newtext);
+        $newtext = (string)preg_replace($pattern, $replacement, $newtext);
 
         return $newtext;
     }
