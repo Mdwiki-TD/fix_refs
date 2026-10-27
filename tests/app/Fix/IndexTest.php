@@ -1,14 +1,14 @@
 <?php
 
 use Tests\MyFunctionTest;
-use App\Fix\Index;
+use App\Fix\PageFixer;
 
 class indexTest extends MyFunctionTest
 {
 
     private function fixPageWrap(string $text, string $lang, bool $moveDots, bool $infobox, bool $addEnLang): string
     {
-        return Index::fixPage($text, "title", $moveDots, $infobox, $addEnLang, $lang, 'SomeTitle', 0);
+        return PageFixer::fixPage($text, "title", $moveDots, $infobox, $addEnLang, $lang, 'SomeTitle', 0);
     }
 
     public function testPart1(): void

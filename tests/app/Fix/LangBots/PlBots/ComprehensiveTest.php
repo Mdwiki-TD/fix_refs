@@ -5,7 +5,7 @@ namespace Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\MyFunctionTest;
-use App\Fix\Index;
+use App\Fix\PageFixer;
 
 class ComprehensiveTest extends MyFunctionTest
 {
@@ -107,7 +107,7 @@ TXT,
         array $shouldNotAdd,
         array $notDuplicated
     ): void {
-        $result = Index::fixPage($input, "Test Article", false, true, false, $lang, "", "");
+        $result = PageFixer::fixPage($input, "Test Article", false, true, false, $lang, "", "");
 
         // Verify that expected parameters are present
         foreach ($expectedParams as $param) {

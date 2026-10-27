@@ -96,7 +96,7 @@ class MdCat
         return is_string($cat) ? $cat : "Category:Translated from MDWiki";
     }
 
-    public static function add_Translated_from_MDWiki(string $text, string $lang): string
+    public static function addTranslatedFromMdwiki(string $text, string $lang): string
     {
         if (preg_match("/:\s*Translated[ _]from[ _]MDWiki\s*\]\]/iu", $text)) {
             return $text;
