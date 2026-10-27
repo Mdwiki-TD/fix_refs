@@ -3,7 +3,7 @@
 namespace App;
 
 use App\LanguageSettings;
-use App\Fix\Index;
+use App\Fix\PageFixer;
 
 class Run
 {
@@ -20,9 +20,9 @@ class Run
             : [];
 
         return [
-            'move_dots'  => isset($langDefault['move_dots']) && (int)$langDefault['move_dots'] === 1,
-            'expand'     => true, // (isset($langDefault['expend']) && (int)$langDefault['expend'] === 1),
-            'add_en_lang' => isset($langDefault['add_en_lang']) && (int)$langDefault['add_en_lang'] === 1,
+            'move_dots'   => isset($langDefault['move_dots']) && (int) $langDefault['move_dots'] === 1,
+            'expand'      => true, // (isset($langDefault['expend']) && (int)$langDefault['expend'] === 1),
+            'add_en_lang' => isset($langDefault['add_en_lang']) && (int) $langDefault['add_en_lang'] === 1,
         ];
     }
 
@@ -38,12 +38,12 @@ class Run
     ): string {
         if ($moveDots === null && $expand === null && $addEnLang === null) {
             $settings = self::getLangSettings($lang);
-            $moveDots  = $settings['move_dots'];
-            $expand    = $settings['expand'];
+            $moveDots = $settings['move_dots'];
+            $expand = $settings['expand'];
             $addEnLang = $settings['add_en_lang'];
         }
 
-        $newtext = Index::fixPage(
+        $newtext = PageFixer::fixPage(
             $text,
             $title,
             $moveDots,
@@ -54,6 +54,6 @@ class Run
             $mdwikiRevid
         );
 
-        return !empty($newtext) ? (string)$newtext : $text;
+        return !empty($newtext) ? (string) $newtext : $text;
     }
 }

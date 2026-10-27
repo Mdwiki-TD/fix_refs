@@ -19,7 +19,7 @@ use App\Fix\LangBots\PtBots\FixPtMonths;
 use App\Fix\LangBots\SwBot;
 use App\Fix\MdCat;
 
-class Index
+class PageFixer
 {
     public static function fixPage(
         string $text,
@@ -40,8 +40,6 @@ class Index
         if ($lang === "pl") {
             $text = FixPlInfobox::pl_fixes($text);
         }
-
-        // print_s("fix page: $title, move_dots:$moveDots, expend_infobox:$infobox");
 
         if ($infobox || $lang === "es") {
             Logger::debug("Expend_Infobox\n");
@@ -91,7 +89,7 @@ class Index
         }
 
         if ($lang !== "bg") {
-            $text = MdCat::add_Translated_from_MDWiki($text, $lang);
+            $text = MdCat::addTranslatedFromMdwiki($text, $lang);
         }
 
         $text = MiniFixesBot::miniFixes_after_fixing($text, $lang);

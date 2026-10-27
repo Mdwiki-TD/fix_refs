@@ -6,7 +6,7 @@ namespace Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\MyFunctionTest;
-use App\Fix\Index;
+use App\Fix\PageFixer;
 
 class IntegrationTest extends MyFunctionTest
 {
@@ -131,7 +131,7 @@ TXT
         array $shouldNotContain,
         array $maxParameterCounts
     ): void {
-        $result = Index::fixPage($input, $title, false, $expandInfobox, false, $lang, "", "");
+        $result = PageFixer::fixPage($input, $title, false, $expandInfobox, false, $lang, "", "");
 
         // Assert expected parameters are present
         foreach ($expectedParams as $param) {

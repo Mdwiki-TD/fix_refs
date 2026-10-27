@@ -10,7 +10,7 @@ class mdCatTest extends MyFunctionTest
     {
         $text = "[[Kategorija:Translated from MDWiki]]";
 
-        $result = MdCat::add_Translated_from_MDWiki($text, "hr");
+        $result = MdCat::addTranslatedFromMdwiki($text, "hr");
 
         $this->assertEquals($text, $result);
     }
@@ -18,7 +18,7 @@ class mdCatTest extends MyFunctionTest
     public function testSkipLangsIt(): void
     {
         $text = "This is a sample text";
-        $result = MdCat::add_Translated_from_MDWiki($text, "it");
+        $result = MdCat::addTranslatedFromMdwiki($text, "it");
         $this->assertEquals($text, $result);
     }
 
@@ -26,7 +26,7 @@ class mdCatTest extends MyFunctionTest
     public function testAppendsCategoryWhenConditionsMet(): void
     {
         $text = "This is a sample text";
-        $result = MdCat::add_Translated_from_MDWiki($text, "fr");
+        $result = MdCat::addTranslatedFromMdwiki($text, "fr");
 
         $expected = "This is a sample text\n[[Catégorie:Traduit de MDWiki]]\n";
         $this->assertEquals($expected, $result);
@@ -36,7 +36,7 @@ class mdCatTest extends MyFunctionTest
     public function testDoesNotAppendWhenCategoryEmpty(): void
     {
         $text = "This is a sample text";
-        $result = MdCat::add_Translated_from_MDWiki($text, "fr");
+        $result = MdCat::addTranslatedFromMdwiki($text, "fr");
         $expected = "This is a sample text\n[[Catégorie:Traduit de MDWiki]]\n";
         $this->assertEquals($expected, $result);
     }
@@ -47,7 +47,7 @@ class mdCatTest extends MyFunctionTest
         $category = "[[Category:Translated from MDWiki (de)]]";
         $text = "This is a sample text\n" . $category;
 
-        $result = MdCat::add_Translated_from_MDWiki($text, "de");
+        $result = MdCat::addTranslatedFromMdwiki($text, "de");
 
         $this->assertEquals($text, $result);
     }
@@ -57,7 +57,7 @@ class mdCatTest extends MyFunctionTest
     {
         $text = "This is a sample text\n[[Category:Translated from MDWiki]]";
 
-        $result = MdCat::add_Translated_from_MDWiki($text, "es");
+        $result = MdCat::addTranslatedFromMdwiki($text, "es");
 
         $this->assertEquals($text, $result);
     }
@@ -67,7 +67,7 @@ class mdCatTest extends MyFunctionTest
     {
         $text = "This is a sample text\n[[Category:Translated from MDWiki]]\n";
 
-        $result = MdCat::add_Translated_from_MDWiki($text, "ja");
+        $result = MdCat::addTranslatedFromMdwiki($text, "ja");
 
         $this->assertEquals($text, $result);
     }
@@ -77,7 +77,7 @@ class mdCatTest extends MyFunctionTest
     {
         $text = "This is a sample text\n\n";
 
-        $result = MdCat::add_Translated_from_MDWiki($text, "ru");
+        $result = MdCat::addTranslatedFromMdwiki($text, "ru");
 
         $expected = "This is a sample text\n\n\n[[Категория:Статьи, переведённые с MDWiki]]\n";
         $this->assertEquals($expected, $result);
@@ -91,15 +91,15 @@ class mdCatTest extends MyFunctionTest
         foreach ($langs as $lang => $cat) {
             $textNoCat = "This is a sample text\n\n";
             $expected = "{$textNoCat}\n[[{$cat}]]\n";
-            $result = MdCat::add_Translated_from_MDWiki($textNoCat, $lang);
+            $result = MdCat::addTranslatedFromMdwiki($textNoCat, $lang);
             $this->assertEqualCompare($expected, $textNoCat, $result);
 
             $textWithCat = "This is a sample text\n\n[[{$cat}]]\n";
-            $result = MdCat::add_Translated_from_MDWiki($textWithCat, $lang);
+            $result = MdCat::addTranslatedFromMdwiki($textWithCat, $lang);
             $this->assertEquals($textWithCat, $result);
 
             $textWithCat2 = "This is a sample text\n\n[[category:Translated_from_MDWiki]]\n";
-            $result = MdCat::add_Translated_from_MDWiki($textWithCat2, $lang);
+            $result = MdCat::addTranslatedFromMdwiki($textWithCat2, $lang);
             $this->assertEquals($textWithCat2, $result);
 
         }

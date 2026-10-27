@@ -1,13 +1,13 @@
 <?php
 
 use Tests\MyFunctionTest;
-use App\Fix\Index;
+use App\Fix\PageFixer;
 
 class FixpageTest extends MyFunctionTest
 {
     private function fixPageWrap(string $text, string $lang): string
     {
-        return Index::fixPage($text, "", true, true, false, $lang, "", 0);
+        return PageFixer::fixPage($text, "", true, true, false, $lang, "", 0);
     }
 
     public function testPart1(): void
